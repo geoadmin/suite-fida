@@ -4,4 +4,4 @@ Client and server part of FiDa
 
 structure\
 Clinet (contains all client parts and the webapp)\
-Server (contains all server parts like the gptools\
+Server (contains all server parts like the gptools)\
