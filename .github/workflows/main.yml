@@ -52,6 +52,6 @@ jobs:
     - name: flake8 Lint
       run: |
         flake8 --config=.style.flake8 .
-    - name: yapf Lint
-      run: | 
-        yapf -i -r .
+#    - name: yapf Lint
+#      run: | 
+#        yapf -i -r .
