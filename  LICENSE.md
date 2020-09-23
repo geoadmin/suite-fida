@@ -18,5 +18,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ==============================  
 
 Portions of suite-fida are based on works by others. A non-extensive list:    
-ArcGIS API for JavaScript  
-ArcGIS Pro Python  
+
+- [ArcGIS API for JavaScript](https://developers.arcgis.com/javascript/)    
+- [ArcGIS Pro Python](https://pro.arcgis.com/de/pro-app/arcpy/main/arcgis-pro-arcpy-reference.htm)   
+  
