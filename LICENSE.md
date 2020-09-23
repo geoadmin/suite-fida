@@ -1,3 +1,2 @@
 
-# suite-fida is available for use under the following license, commonly known  
-# as the 3-clause (or "modified") BSD license
+# suite-fida is available for use under the following license, commonly known as the 3-clause (or "modified") BSD license
