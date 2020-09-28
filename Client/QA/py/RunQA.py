@@ -3,17 +3,18 @@
 # -- RunQA.py
 #    Run Verification Tool based on XML from ProSuite.
 # -- Author: flu, 28.09.2020
-# -- commandline: # D:\work\git\suite-fida\Client\QA\xml\QALFP1a.xml \\v0t0020a.adr.admin.ch\iprod\gisprod\01_Auftraege-Projekte\13_FIDA\gdb\gdb_all_pkt_viele_attribute\FIDA-DB-Schema.gdb d:\temp\qafida
-#                 # D:\work\git\suite-fida\Client\QA\xml\QALFP1a.xml D:\work\FIDA\FIDA.gdb d:\temp\qafida
+# -- commandline: # XML GDB OUT
 # -------------------------------------------------------------------------------------------------
 # -- History
 # -------------------------------------------------------------------------------------------------
 
-import arcpy
+import datetime
 import os
-import sys
 import shutil
+import sys
 import time
+
+import arcpy
 
 idxTool = 1
 idxXml = 2
@@ -36,9 +37,16 @@ def log(text):
 # ------------------------------------------------------------------------------
 # Check input parameter
 # ------------------------------------------------------------------------------
-def checkParams(args):
-    if (args[idxTool] == "#"):
-        args[idxTool] = os.path.join("C:\\","Program Files","Esri Switzerland","ProSuite Geoprocessing","gp","ProSuite.tbx")
+def check_params(args):
+    if args[idxTool] == "#":
+        args[idxTool] = os.path.join(
+            "C:\\",
+            "Program Files",
+            "Esri Switzerland",
+            "ProSuite Geoprocessing",
+            "gp",
+            "ProSuite.tbx",
+        )
     if not os.path.isfile(args[idxTool]):
         arcpy.AddMessage("Path to toolbox is not correct")
         sys.exit(-1)
@@ -53,10 +61,13 @@ def checkParams(args):
 
     if os.path.isdir(args[idxOut]):
         try:
-            arcpy.AddMessage("Output directory does already exist. Deleting output directory")
+            arcpy.AddMessage(
+                "Output directory does already exist. Deleting output directory"
+            )
             shutil.rmtree(args[idxOut])
-        except:
-            arcpy.AddMessage('Error while deleting output directory')
+        except Exception as e:
+            arcpy.AddMessage("Error while deleting output directory")
+            arcpy.AddMessage(e.message)
             sys.exit(-1)
 
 
@@ -69,21 +80,23 @@ def main(args):
     log("Start")
     _start_time = time.time()
 
-    res = arcpy.XmlBasedVerificationTool_ProSuite(in_xmlfile=args[idxXml],
-                                                  in_qualityspecification="FIDA Base",
-                                                  in_tilesize="100000",
-                                                  in_datasources="FIDA " + args[idxGdb],
-                                                  # in_ignoreconditionsforunknowndatasets="No",
-                                                  out_outputdirectory=args[idxOut],
-                                                  in_issuerepositorytype="File Geodatabase")
-                                                  # in_compressissuefgdb="Yes",
-                                                  # in_options_xmlfile="",
-                                                  # in_aoi_layer="",
-                                                  # in_aoi_whereclause="",
-                                                  # in_aoi_bufferdistance="",
-                                                  # in_aoi_generalizationtolerance="",
-                                                  # in_aoi_description="",
-                                                  # in_report_properties=""
+    res = arcpy.XmlBasedVerificationTool_ProSuite(
+        in_xmlfile=args[idxXml],
+        in_qualityspecification="FIDA Base",
+        in_tilesize="100000",
+        in_datasources="FIDA " + args[idxGdb],
+        # in_ignoreconditionsforunknowndatasets="No",
+        out_outputdirectory=args[idxOut],
+        in_issuerepositorytype="File Geodatabase",
+    )
+    # in_compressissuefgdb="Yes",
+    # in_options_xmlfile="",
+    # in_aoi_layer="",
+    # in_aoi_whereclause="",
+    # in_aoi_bufferdistance="",
+    # in_aoi_generalizationtolerance="",
+    # in_aoi_description="",
+    # in_report_properties=""
 
     _elapsed = time.time() - _start_time
     log("Outputdirectory: " + str(res.getOutput(0)))
@@ -95,18 +108,20 @@ def main(args):
     log("Number of unused exception objects: " + str(res.getOutput(6)))
     log("Processingtime                    : " + str(_elapsed))
     log(" ")
-    #log("Messages: " + str(res.getMessages()))
+    # log("Messages: " + str(res.getMessages()))
 
 
 # ------------------------------------------------------------------------------
 # __main__
 # ------------------------------------------------------------------------------
-if __name__ == '__main__':
+if __name__ == "__main__":
     if len(sys.argv) == 5:
         args = sys.argv
-        checkParams(args)
-        logfile = os.path.join(os.path.dirname(args[idxOut]),
-                               datetime.datetime.now().strftime('%Y-%m-%d_%H%M%S') + "_log.txt")
+        check_params(args)
+        logfile = os.path.join(
+            os.path.dirname(args[idxOut]),
+            datetime.datetime.now().strftime("%Y-%m-%d_%H%M%S") + "_log.txt",
+        )
         arcpy.AddMessage("Logfile: " + logfile)
         main(args)
 
