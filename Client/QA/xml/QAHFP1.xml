@@ -40,6 +40,11 @@
 		<Element qualityCondition="FIDA_SCHWEREMESSUNGHFP SCHWEREWERT is mandatory" />		
 		<Element qualityCondition="FIDA_SCHWEREMESSUNGHFP SCHWEREHERKUNFT is mandatory" />		
 		<Element qualityCondition="FIDA_SCHWEREMESSUNGHFP DATUM is mandatory" />		
+      	<!-- FIDA_SCHAEDENHFP -->
+		<Element qualityCondition="FIDA_SCHAEDENHFP MELDUNG is mandatory" />		
+		<Element qualityCondition="FIDA_SCHAEDENHFP UEBERMITTLER is mandatory" />		
+		<Element qualityCondition="FIDA_SCHAEDENHFP DATUM is mandatory" />		
+		<Element qualityCondition="FIDA_SCHAEDENHFP STATUS is mandatory" />				
 		
 	  </Elements>
     </QualitySpecification>
@@ -249,6 +254,31 @@
       <Parameters>
         <Dataset parameter="table" value="FIDA_SCHWEREMESSUNGHFP" workspace="FIDA" />
         <Scalar parameter="constraint" value="DATUM IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <!-- FIDA_SCHAEDENHFP -->	
+    <QualityCondition name="FIDA_SCHAEDENHFP MELDUNG is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_SCHAEDENHFP" workspace="FIDA" />
+        <Scalar parameter="constraint" value="MELDUNG IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_SCHAEDENHFP UEBERMITTLER is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_SCHAEDENHFP" workspace="FIDA" />
+        <Scalar parameter="constraint" value="UEBERMITTLER IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_SCHAEDENHFP DATUM is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_SCHAEDENHFP" workspace="FIDA" />
+        <Scalar parameter="constraint" value="DATUM IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_SCHAEDENHFP STATUS is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_SCHAEDENHFP" workspace="FIDA" />
+        <Scalar parameter="constraint" value="STATUS IS NOT NULL" />
       </Parameters>
     </QualityCondition>	
 	
