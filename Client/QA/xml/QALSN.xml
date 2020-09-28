@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DataQuality xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:EsriDE.ProSuite.QA.QualitySpecifications-2.0" xsi:noNamespaceSchemaLocation="./EsriDE.ProSuite.QA.QualitySpecifications-2.0.xsd">
+  <QualitySpecifications>
+    <QualitySpecification name="FIDA Base" listOrder="0">
+      <Elements>
+		<!-- FIDA_LSN -->
+        <Element qualityCondition="FIDA_LSN OBJEKTART is mandatory" />		
+        <Element qualityCondition="FIDA_LSN LN02 is mandatory" />
+        <Element qualityCondition="FIDA_LSN LV95E is mandatory" />
+        <Element qualityCondition="FIDA_LSN LV95N is mandatory" />
+        <Element qualityCondition="FIDA_LSN PUNKT_STATUS is mandatory" />
+        <Element qualityCondition="FIDA_LSN ORDNUNG is mandatory" />
+        <Element qualityCondition="FIDA_LSN NUMMER is mandatory" />
+        <Element qualityCondition="FIDA_LSN NAME is mandatory" />
+        <Element qualityCondition="FIDA_LSN SCHWEREWERT is mandatory" />
+        <Element qualityCondition="FIDA_LSN GRADIENT_INTERPOLIERT is mandatory" />
+        <Element qualityCondition="FIDA_LSN VERTIKAL_OFFSET is mandatory" />
+        <Element qualityCondition="FIDA_LSN PUNKT_GUELTIG is mandatory" />
+        <Element qualityCondition="FIDA_LSN MESSDATUM is mandatory" />
+	  </Elements>
+    </QualitySpecification>
+  </QualitySpecifications>
+  <QualityConditions>
+   <!-- FIDA_LSN -->
+   <QualityCondition name="FIDA_LSN OBJEKTART is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_LSN" workspace="FIDA" />
+        <Scalar parameter="constraint" value="OBJEKTART IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_LSN LN02 is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_LSN" workspace="FIDA" />
+        <Scalar parameter="constraint" value="LN02 IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_LSN LV95E is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_LSN" workspace="FIDA" />
+        <Scalar parameter="constraint" value="LV95E IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_LSN LV95N is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_LSN" workspace="FIDA" />
+        <Scalar parameter="constraint" value="LV95N IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_LSN PUNKT_STATUS is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_LSN" workspace="FIDA" />
+        <Scalar parameter="constraint" value="PUNKT_STATUS IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_LSN ORDNUNG is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_LSN" workspace="FIDA" />
+        <Scalar parameter="constraint" value="ORDNUNG IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_LSN NUMMER is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_LSN" workspace="FIDA" />
+        <Scalar parameter="constraint" value="NUMMER IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_LSN NAME is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_LSN" workspace="FIDA" />
+        <Scalar parameter="constraint" value="NAME IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_LSN SCHWEREWERT is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_LSN" workspace="FIDA" />
+        <Scalar parameter="constraint" value="SCHWEREWERT IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_LSN GRADIENT_INTERPOLIERT is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_LSN" workspace="FIDA" />
+        <Scalar parameter="constraint" value="GRADIENT_INTERPOLIERT IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_LSN VERTIKAL_OFFSET is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_LSN" workspace="FIDA" />
+        <Scalar parameter="constraint" value="VERTIKAL_OFFSET IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_LSN PUNKT_GUELTIG is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_LSN" workspace="FIDA" />
+        <Scalar parameter="constraint" value="PUNKT_GUELTIG IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_LSN MESSDATUM is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_LSN" workspace="FIDA" />
+        <Scalar parameter="constraint" value="MESSDATUM IS NOT NULL" />
+      </Parameters>
+	</QualityCondition>	
+    <QualityCondition name="FIDA_LSN CheckXYZ" testDescriptor="QaValidCoordinateFields(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="featureClass" value="FIDA_LSN" workspace="FIDA" />
+        <Scalar parameter="xCoordinateFieldName" value="LV95E" />
+		<Scalar parameter="yCoordinateFieldName" value="LV95N" />
+		<Scalar parameter="zCoordinateFieldName" value="LN02" />
+		<Scalar parameter="xyTolerance" value="0.1" />
+		<Scalar parameter="zTolerance" value="0.1" />
+		<Scalar parameter="culture" value="de-CH" />
+		<Scalar parameter="AllowXYFieldValuesForUndefinedShape" value="TRUE" />
+		<Scalar parameter="AllowZFieldValueForUndefinedShape" value="TRUE" />
+		<Scalar parameter="AllowMissingZFieldValueForDefinedShape" value="TRUE" />
+		<Scalar parameter="AllowMissingXYFieldValueForDefinedShape" value="TRUE" />
+      </Parameters>
+    </QualityCondition>	
+  </QualityConditions>
+  <TestDescriptors>
+    <TestDescriptor name="QaConstraint(0)" allowErrors="false">
+      <TestClass type="EsriDE.ProSuite.QA.Tests.QaConstraint" assembly="EsriDE.ProSuite.QA.Tests" constructorIndex="0" />
+    </TestDescriptor>
+    <TestDescriptor name="QaValidCoordinateFields(0)" allowErrors="false">
+      <TestClass type="EsriDE.ProSuite.QA.Tests.QaValidCoordinateFields" assembly="EsriDE.ProSuite.QA.Tests" constructorIndex="0" />
+    </TestDescriptor>
+  </TestDescriptors>
+  <Workspaces>
+	<Workspace id="FIDA" modelName="FIDA" />
+  </Workspaces>
+</DataQuality>
