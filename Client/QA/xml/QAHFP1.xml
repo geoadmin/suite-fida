@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DataQuality xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:EsriDE.ProSuite.QA.QualitySpecifications-2.0" xsi:noNamespaceSchemaLocation="./EsriDE.ProSuite.QA.QualitySpecifications-2.0.xsd">
+  <QualitySpecifications>
+    <QualitySpecification name="FIDA Base" listOrder="0">
+      <Elements>
+		<!-- FIDA_HFP -->
+        <Element qualityCondition="FIDA_HFP OBJEKTART is mandatory" />		
+        <Element qualityCondition="FIDA_HFP LN02 is mandatory" />
+        <Element qualityCondition="FIDA_HFP LV95E is mandatory" />
+        <Element qualityCondition="FIDA_HFP LV95N is mandatory" />
+        <Element qualityCondition="FIDA_HFP GENLAGELV95 is mandatory" />
+        <Element qualityCondition="FIDA_HFP GENHOEHELN02 is mandatory" />
+        <Element qualityCondition="FIDA_HFP ZUVLAGELV95 is mandatory" />
+        <Element qualityCondition="FIDA_HFP ZUVHOEHELN02 is mandatory" />
+        <Element qualityCondition="FIDA_HFP GESCHWINDIGKEIT_UP is mandatory" />
+        <Element qualityCondition="FIDA_HFP LK25 is mandatory" />
+        <Element qualityCondition="FIDA_HFP HFPKANTON is mandatory" />
+        <Element qualityCondition="FIDA_HFP HFPNR is mandatory" />
+        <Element qualityCondition="FIDA_HFP KENNZEICHNUNG is mandatory" />
+        <Element qualityCondition="FIDA_HFP BEGEHBAR is mandatory" />
+        <Element qualityCondition="FIDA_HFP ERSTELLUNGSDATUM is mandatory" />
+        <Element qualityCondition="FIDA_HFP PUNKT_STATUS is mandatory" />
+        <Element qualityCondition="FIDA_HFP REALISIERUNG_STATUS is mandatory" />
+        <Element qualityCondition="FIDA_HFP SCHUTZART is mandatory" />
+        <Element qualityCondition="FIDA_HFP STABILITAET is mandatory" />
+		<Element qualityCondition="FIDA_HFP CheckXYZ" />
+		<!-- FIDA_NACHFUEHRUNGHFP -->
+		<Element qualityCondition="FIDA_NACHFUEHRUNGHFP NACHFUEHRUNGSDATUM is mandatory" />		
+		<Element qualityCondition="FIDA_NACHFUEHRUNGHFP NACHFUER_HERKUNFT is mandatory" />		
+		<!-- FIDA_GRUNDBUCHHFP -->
+		<Element qualityCondition="FIDA_GRUNDBUCHHFP LAND is mandatory" />		
+		<Element qualityCondition="FIDA_GRUNDBUCHHFP KANTON is mandatory" />		
+		<Element qualityCondition="FIDA_GRUNDBUCHHFP GEMEINDE is mandatory" />		
+		<!-- FIDA_AUSLANDPUNKTHFP -->
+		<Element qualityCondition="FIDA_AUSLANDPUNKTHFP PUNKTNAME is mandatory" />		
+		<Element qualityCondition="FIDA_AUSLANDPUNKTHFP HOEHE is mandatory" />		
+		<Element qualityCondition="FIDA_AUSLANDPUNKTHFP HOEHENBEZUGSRAHMEN is mandatory" />		
+		<Element qualityCondition="FIDA_AUSLANDPUNKTHFP DELTAHOEHE is mandatory" />				
+      	<!-- FIDA_SCHWEREMESSUNGHFP -->
+		<Element qualityCondition="FIDA_SCHWEREMESSUNGHFP SCHWEREWERT is mandatory" />		
+		<Element qualityCondition="FIDA_SCHWEREMESSUNGHFP SCHWEREHERKUNFT is mandatory" />		
+		<Element qualityCondition="FIDA_SCHWEREMESSUNGHFP DATUM is mandatory" />		
+		
+	  </Elements>
+    </QualitySpecification>
+  </QualitySpecifications>
+  <QualityConditions>
+   <!-- FIDA_HFP -->
+   <QualityCondition name="FIDA_HFP OBJEKTART is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_HFP" workspace="FIDA" />
+        <Scalar parameter="constraint" value="OBJEKTART IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+     <QualityCondition name="FIDA_HFP LN02 is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_HFP" workspace="FIDA" />
+        <Scalar parameter="constraint" value="LN02 IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_HFP LV95E is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_HFP" workspace="FIDA" />
+        <Scalar parameter="constraint" value="LV95E IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_HFP LV95N is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_HFP" workspace="FIDA" />
+        <Scalar parameter="constraint" value="LV95N IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_HFP GENLAGELV95 is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_HFP" workspace="FIDA" />
+        <Scalar parameter="constraint" value="GENLAGELV95 IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_HFP GENHOEHELN02 is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_HFP" workspace="FIDA" />
+        <Scalar parameter="constraint" value="GENHOEHELN02 IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_HFP ZUVLAGELV95 is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_HFP" workspace="FIDA" />
+        <Scalar parameter="constraint" value="ZUVLAGELV95 IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_HFP ZUVHOEHELN02 is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_HFP" workspace="FIDA" />
+        <Scalar parameter="constraint" value="ZUVHOEHELN02 IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_HFP GESCHWINDIGKEIT_UP is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_HFP" workspace="FIDA" />
+        <Scalar parameter="constraint" value="GESCHWINDIGKEIT_UP IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_HFP LK25 is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_HFP" workspace="FIDA" />
+        <Scalar parameter="constraint" value="LK25 IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_HFP HFPKANTON is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_HFP" workspace="FIDA" />
+        <Scalar parameter="constraint" value="HFPKANTON IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_HFP HFPNR is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_HFP" workspace="FIDA" />
+        <Scalar parameter="constraint" value="HFPNR IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_HFP KENNZEICHNUNG is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_HFP" workspace="FIDA" />
+        <Scalar parameter="constraint" value="KENNZEICHNUNG IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_HFP BEGEHBAR is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_HFP" workspace="FIDA" />
+        <Scalar parameter="constraint" value="BEGEHBAR IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_HFP ERSTELLUNGSDATUM is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_HFP" workspace="FIDA" />
+        <Scalar parameter="constraint" value="ERSTELLUNGSDATUM IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_HFP PUNKT_STATUS is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_HFP" workspace="FIDA" />
+        <Scalar parameter="constraint" value="PUNKT_STATUS IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_HFP REALISIERUNG_STATUS is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_HFP" workspace="FIDA" />
+        <Scalar parameter="constraint" value="REALISIERUNG_STATUS IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_HFP SCHUTZART is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_HFP" workspace="FIDA" />
+        <Scalar parameter="constraint" value="SCHUTZART IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_HFP STABILITAET is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_HFP" workspace="FIDA" />
+        <Scalar parameter="constraint" value="STABILITAET IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_HFP CheckXYZ" testDescriptor="QaValidCoordinateFields(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="featureClass" value="FIDA_HFP" workspace="FIDA" />
+        <Scalar parameter="xCoordinateFieldName" value="LV95E" />
+		<Scalar parameter="yCoordinateFieldName" value="LV95N" />
+		<Scalar parameter="zCoordinateFieldName" value="LN02" />
+		<Scalar parameter="xyTolerance" value="0.1" />
+		<Scalar parameter="zTolerance" value="4000.0" />
+		<Scalar parameter="culture" value="de-CH" />
+		<Scalar parameter="AllowXYFieldValuesForUndefinedShape" value="TRUE" />
+		<Scalar parameter="AllowZFieldValueForUndefinedShape" value="TRUE" />
+		<Scalar parameter="AllowMissingZFieldValueForDefinedShape" value="TRUE" />
+		<Scalar parameter="AllowMissingXYFieldValueForDefinedShape" value="TRUE" />
+      </Parameters>
+    </QualityCondition>	
+  <!-- FIDA_NACHFUEHRUNGHFP -->	
+    <QualityCondition name="FIDA_NACHFUEHRUNGHFP NACHFUEHRUNGSDATUM is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_NACHFUEHRUNGHFP" workspace="FIDA" />
+        <Scalar parameter="constraint" value="NACHFUEHRUNGSDATUM IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_NACHFUEHRUNGHFP NACHFUER_HERKUNFT is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_NACHFUEHRUNGHFP" workspace="FIDA" />
+        <Scalar parameter="constraint" value="NACHFUER_HERKUNFT IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+	<!-- FIDA_GRUNDBUCHHFP -->  
+    <QualityCondition name="FIDA_GRUNDBUCHHFP LAND is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_GRUNDBUCHHFP" workspace="FIDA" />
+        <Scalar parameter="constraint" value="LAND IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_GRUNDBUCHHFP KANTON is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_GRUNDBUCHHFP" workspace="FIDA" />
+        <Scalar parameter="constraint" value="KANTON IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_GRUNDBUCHHFP GEMEINDE is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_GRUNDBUCHHFP" workspace="FIDA" />
+        <Scalar parameter="constraint" value="GEMEINDE IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+	<!-- FIDA_AUSLANDPUNKTHFP -->	
+    <QualityCondition name="FIDA_AUSLANDPUNKTHFP PUNKTNAME is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_AUSLANDPUNKTHFP" workspace="FIDA" />
+        <Scalar parameter="constraint" value="PUNKTNAME IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_AUSLANDPUNKTHFP HOEHE is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_AUSLANDPUNKTHFP" workspace="FIDA" />
+        <Scalar parameter="constraint" value="HOEHE IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_AUSLANDPUNKTHFP HOEHENBEZUGSRAHMEN is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_AUSLANDPUNKTHFP" workspace="FIDA" />
+        <Scalar parameter="constraint" value="HOEHENBEZUGSRAHMEN IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_AUSLANDPUNKTHFP DELTAHOEHE is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_AUSLANDPUNKTHFP" workspace="FIDA" />
+        <Scalar parameter="constraint" value="DELTAHOEHE IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <!-- FIDA_SCHWEREMESSUNGHFP -->	
+    <QualityCondition name="FIDA_SCHWEREMESSUNGHFP SCHWEREWERT is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_SCHWEREMESSUNGHFP" workspace="FIDA" />
+        <Scalar parameter="constraint" value="SCHWEREWERT IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_SCHWEREMESSUNGHFP SCHWEREHERKUNFT is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_SCHWEREMESSUNGHFP" workspace="FIDA" />
+        <Scalar parameter="constraint" value="SCHWEREHERKUNFT IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_SCHWEREMESSUNGHFP DATUM is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_SCHWEREMESSUNGHFP" workspace="FIDA" />
+        <Scalar parameter="constraint" value="DATUM IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+	
+  </QualityConditions>
+  <TestDescriptors>
+    <TestDescriptor name="QaConstraint(0)" allowErrors="false">
+      <TestClass type="EsriDE.ProSuite.QA.Tests.QaConstraint" assembly="EsriDE.ProSuite.QA.Tests" constructorIndex="0" />
+    </TestDescriptor>
+    <TestDescriptor name="QaValidCoordinateFields(0)" allowErrors="false">
+      <TestClass type="EsriDE.ProSuite.QA.Tests.QaValidCoordinateFields" assembly="EsriDE.ProSuite.QA.Tests" constructorIndex="0" />
+    </TestDescriptor>
+  </TestDescriptors>
+  <Workspaces>
+	<Workspace id="FIDA" modelName="FIDA" />
+  </Workspaces>
+</DataQuality>
