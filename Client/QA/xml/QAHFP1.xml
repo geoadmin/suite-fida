@@ -45,7 +45,10 @@
 		<Element qualityCondition="FIDA_SCHAEDENHFP UEBERMITTLER is mandatory" />		
 		<Element qualityCondition="FIDA_SCHAEDENHFP DATUM is mandatory" />		
 		<Element qualityCondition="FIDA_SCHAEDENHFP STATUS is mandatory" />				
-		
+      	<!-- FIDA_NIVLINIEN -->
+		<Element qualityCondition="FIDA_NIVLINIEN OBJEKTART is mandatory" />		
+		<Element qualityCondition="FIDA_NIVLINIEN KAMPAGNE is mandatory" />		
+		<Element qualityCondition="FIDA_NIVLINIEN STATUS is mandatory" />		
 	  </Elements>
     </QualitySpecification>
   </QualitySpecifications>
@@ -281,7 +284,25 @@
         <Scalar parameter="constraint" value="STATUS IS NOT NULL" />
       </Parameters>
     </QualityCondition>	
-	
+    <!-- FIDA_NIVLINIEN -->	
+    <QualityCondition name="FIDA_NIVLINIEN OBJEKTART is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_NIVLINIEN" workspace="FIDA" />
+        <Scalar parameter="constraint" value="OBJEKTART IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_NIVLINIEN KAMPAGNE is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_NIVLINIEN" workspace="FIDA" />
+        <Scalar parameter="constraint" value="KAMPAGNE IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_NIVLINIEN STATUS is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_NIVLINIEN" workspace="FIDA" />
+        <Scalar parameter="constraint" value="STATUS IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>	
   </QualityConditions>
   <TestDescriptors>
     <TestDescriptor name="QaConstraint(0)" allowErrors="false">
