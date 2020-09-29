@@ -32,30 +32,72 @@
         <Element qualityCondition="FIDA_LFP BEGEHUNGSZYKLUS is mandatory" />
         <Element qualityCondition="FIDA_LFP ABSTURZGEFAHR is mandatory" />
 		<Element qualityCondition="FIDA_LFP CheckXYZ" />
+		<Element qualityCondition="FIDA_LFP DomainCheck" />
+		<Element qualityCondition="FIDA_LFP NoNull" />
+		<Element qualityCondition="FIDA_LSN 2 FIDA_LFP FK" /> 
+		<Element qualityCondition="FIDA_LFP GlobalID unique" />
+		<Element qualityCondition="FIDA_LFP Punktnummer unique" />
+		<Element qualityCondition="FIDA_LFP REG LK25" />
+		<Element qualityCondition="FIDA_LFP REG LFPNR" />
+		<Element qualityCondition="FIDA_LFP REG LFPNR_NR" />
+		<Element qualityCondition="FIDA_LFP REG LFPNR_EX" />		
+		<Element qualityCondition="FIDA_LFP REG LV95E" />		
+		<Element qualityCondition="FIDA_LFP REG LV95N" />				
+		<Element qualityCondition="FIDA_LFP REG LN02" />
+        <Element qualityCondition="FIDA_LFP TrimmedText" />
+        <Element qualityCondition="FIDA_LFP NonEmptyGeometry" />
+        <Element qualityCondition="FIDA_LFP WithinZRange" />		
 		<!-- FIDA_RUECKVERSICHERUNGLFP -->
 		<Element qualityCondition="FIDA_RUECKVERSICHERUNGLFP PUNKTBEZEICHNUNG is mandatory" />
 		<Element qualityCondition="FIDA_RUECKVERSICHERUNGLFP AZIMUT is mandatory" />
 		<Element qualityCondition="FIDA_RUECKVERSICHERUNGLFP MATERIALISIERUNG is mandatory" />
+		<Element qualityCondition="FIDA_RUECKVERSICHERUNGLFP DomainCheck" />
+		<Element qualityCondition="FIDA_RUECKVERSICHERUNGLFP NoNull" />
+		<Element qualityCondition="FIDA_RUECKVERSICHERUNGLFP 2 FIDA_LFP FK" />
+		<Element qualityCondition="FIDA_RUECKVERSICHERUNGLFP GlobalID unique" />
+		<Element qualityCondition="FIDA_RUECKVERSICHERUNGLFP PUNKTBEZEICHNUNG unique" />		
+		<Element qualityCondition="FIDA_RUECKVERSICHERUNGLFP TrimmedText" />
+		<Element qualityCondition="FIDA_RUECKVERSICHERUNGLFP 2 FIDA_LFP PK" />		
 		<!-- FIDA_NACHFUEHRUNGLFP -->
 		<Element qualityCondition="FIDA_NACHFUEHRUNGLFP NACHFUEHRUNGSDATUM is mandatory" />		
 		<Element qualityCondition="FIDA_NACHFUEHRUNGLFP NACHFUEHRUNGSPERIMETER is mandatory" />		
 		<Element qualityCondition="FIDA_NACHFUEHRUNGLFP UNTERHALTART is mandatory" />		
 		<Element qualityCondition="FIDA_NACHFUEHRUNGLFP ARBEITSKUERZELTEXT is mandatory" />		
-		<Element qualityCondition="FIDA_NACHFUEHRUNGLFP ERLEDARBBESCHREIBUNG is mandatory" />		
+		<Element qualityCondition="FIDA_NACHFUEHRUNGLFP ERLEDARBBESCHREIBUNG is mandatory" />	
+		<Element qualityCondition="FIDA_NACHFUEHRUNGLFP DomainCheck" />
+		<Element qualityCondition="FIDA_NACHFUEHRUNGLFP NoNull" />
+		<Element qualityCondition="FIDA_NACHFUEHRUNGLFP 2 FIDA_LFP FK" />
+		<Element qualityCondition="FIDA_NACHFUEHRUNGLFP GlobalID unique" />
+		<Element qualityCondition="FIDA_NACHFUEHRUNGLFP ARBEITSKUERZELTEXT unique" />
+		<Element qualityCondition="FIDA_NACHFUEHRUNGLFP TrimmedText" />
+		<Element qualityCondition="FIDA_NACHFUEHRUNGLFP 2 FIDA_LFP PK" />		
 		<!-- FIDA_GRUNDBUCHLFP -->
 		<Element qualityCondition="FIDA_GRUNDBUCHLFP LAND is mandatory" />		
 		<Element qualityCondition="FIDA_GRUNDBUCHLFP KANTON is mandatory" />		
 		<Element qualityCondition="FIDA_GRUNDBUCHLFP GEMEINDE is mandatory" />		
-		<Element qualityCondition="FIDA_GRUNDBUCHLFP PARZ is mandatory" />				
+		<Element qualityCondition="FIDA_GRUNDBUCHLFP PARZ is mandatory" />
+		<Element qualityCondition="FIDA_GRUNDBUCHLFP DomainCheck" />
+		<Element qualityCondition="FIDA_GRUNDBUCHLFP NoNull" />
+		<Element qualityCondition="FIDA_GRUNDBUCHLFP 2 FIDA_LFP FK" />
+		<Element qualityCondition="FIDA_GRUNDBUCHLFP GlobalID unique" />
+		<Element qualityCondition="FIDA_GRUNDBUCHLFP PARZ unique" />
+		<Element qualityCondition="FIDA_GRUNDBUCHLFP TrimmedText" />
+		<Element qualityCondition="FIDA_GRUNDBUCHLFP 2 FIDA_LFP PK" />		
 		<!-- FIDA_KONTAKT -->		
 		<Element qualityCondition="FIDA_KONTAKT ART is mandatory" />				
 		<Element qualityCondition="FIDA_KONTAKT NAME is mandatory" />				
-		<Element qualityCondition="FIDA_KONTAKT VORNAME is mandatory" />				
-      </Elements>
+		<Element qualityCondition="FIDA_KONTAKT VORNAME is mandatory" />
+		<Element qualityCondition="FIDA_KONTAKT DomainCheck" />
+		<Element qualityCondition="FIDA_KONTAKT NoNull" />	
+		<Element qualityCondition="FIDA_KONTAKT 2 FIDA_LFP FK" />
+		<Element qualityCondition="FIDA_KONTAKT GlobalID unique" />		
+		<Element qualityCondition="FIDA_KONTAKT NAME unique" />	
+		<Element qualityCondition="FIDA_KONTAKT TrimmedText" />
+		<Element qualityCondition="FIDA_KONTAKT 2 FIDA_LFP PK" />	  
+	  </Elements>
     </QualitySpecification>
   </QualitySpecifications>
   <QualityConditions>
-   <!-- FIDA_LFP -->
    <QualityCondition name="FIDA_LFP OBJEKTART is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
       <Parameters>
         <Dataset parameter="table" value="FIDA_LFP" workspace="FIDA" />
@@ -233,7 +275,6 @@
 		<Scalar parameter="AllowMissingXYFieldValueForDefinedShape" value="TRUE" />
       </Parameters>
     </QualityCondition>	
-	<!-- FIDA_RUECKVERSICHERUNGLFP -->
     <QualityCondition name="FIDA_RUECKVERSICHERUNGLFP PUNKTBEZEICHNUNG is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
       <Parameters>
         <Dataset parameter="table" value="FIDA_RUECKVERSICHERUNGLFP" workspace="FIDA" />
@@ -252,7 +293,6 @@
         <Scalar parameter="constraint" value="MATERIALISIERUNG IS NOT NULL" />
       </Parameters>
     </QualityCondition>	
-  <!-- FIDA_NACHFUEHRUNGLFP -->	
     <QualityCondition name="FIDA_NACHFUEHRUNGLFP NACHFUEHRUNGSDATUM is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
       <Parameters>
         <Dataset parameter="table" value="FIDA_NACHFUEHRUNGLFP" workspace="FIDA" />
@@ -283,7 +323,6 @@
         <Scalar parameter="constraint" value="ERLEDARBBESCHREIBUNG IS NOT NULL" />
       </Parameters>
     </QualityCondition>	
-	<!-- FIDA_GRUNDBUCHLFP -->  
     <QualityCondition name="FIDA_GRUNDBUCHLFP LAND is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
       <Parameters>
         <Dataset parameter="table" value="FIDA_GRUNDBUCHLFP" workspace="FIDA" />
@@ -308,7 +347,6 @@
         <Scalar parameter="constraint" value="PARZ IS NOT NULL" />
       </Parameters>
     </QualityCondition>	
-	<!-- FIDA_KONTAKT -->			
     <QualityCondition name="FIDA_KONTAKT ART is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
       <Parameters>
         <Dataset parameter="table" value="FIDA_KONTAKT" workspace="FIDA" />
@@ -327,6 +365,302 @@
         <Scalar parameter="constraint" value="VORNAME IS NOT NULL" />
       </Parameters>
     </QualityCondition>	
+    <QualityCondition name="FIDA_LFP DomainCheck" testDescriptor="QaGdbConstraintFactory" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_LFP" workspace="FIDA" />
+        <Scalar parameter="AllowNullValuesForCodedValueDomains" value="FALSE" />
+        <Scalar parameter="AllowNullValuesForRangeDomains" value="FALSE" />		
+      </Parameters>
+    </QualityCondition>
+    <QualityCondition name="FIDA_RUECKVERSICHERUNGLFP DomainCheck" testDescriptor="QaGdbConstraintFactory" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_RUECKVERSICHERUNGLFP" workspace="FIDA" />
+        <Scalar parameter="AllowNullValuesForCodedValueDomains" value="FALSE" />
+        <Scalar parameter="AllowNullValuesForRangeDomains" value="FALSE" />		
+      </Parameters>
+    </QualityCondition>
+    <QualityCondition name="FIDA_NACHFUEHRUNGLFP DomainCheck" testDescriptor="QaGdbConstraintFactory" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_NACHFUEHRUNGLFP" workspace="FIDA" />
+        <Scalar parameter="AllowNullValuesForCodedValueDomains" value="FALSE" />
+        <Scalar parameter="AllowNullValuesForRangeDomains" value="FALSE" />		
+      </Parameters>
+    </QualityCondition>
+    <QualityCondition name="FIDA_GRUNDBUCHLFP DomainCheck" testDescriptor="QaGdbConstraintFactory" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_GRUNDBUCHLFP" workspace="FIDA" />
+        <Scalar parameter="AllowNullValuesForCodedValueDomains" value="FALSE" />
+        <Scalar parameter="AllowNullValuesForRangeDomains" value="FALSE" />		
+      </Parameters>
+    </QualityCondition>
+    <QualityCondition name="FIDA_KONTAKT DomainCheck" testDescriptor="QaGdbConstraintFactory" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_KONTAKT" workspace="FIDA" />
+        <Scalar parameter="AllowNullValuesForCodedValueDomains" value="FALSE" />
+        <Scalar parameter="AllowNullValuesForRangeDomains" value="FALSE" />		
+      </Parameters>
+    </QualityCondition>
+    <QualityCondition name="FIDA_LFP NoNull" testDescriptor="QaRequiredFields(3)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_LFP" workspace="FIDA" />
+        <Scalar parameter="requiredFieldNamesString" value= "OBJEKTART,LN02,LV95E,LV95N,GENLAGELV95,GENHOEHELN02,ZUVLAGELV95,ZUVHOEHELN02,GESCHWINDIGKEIT_E,GESCHWINDIGKEIT_N,GESCHWINDIGKEIT_UP,LK25,LFPNR_NR,LFPNR_EX,HERKUNFT,KENNZEICHNUNG,BEGEHBAR,GNSSSICHTBARKEIT,GSMEMPFANG,ERSTELLUNGSDATUM,PUNKTNAME,PUNKT_STATUS,REALISIERUNG_STATUS,SCHUTZART,STABILITAET,BEGEHUNGSZYKLUS,ABSTURZGEFAHR" />
+		<Scalar parameter="allowEmptyStrings" value= "False" />
+		<Scalar parameter="allowMissingFields" value= "False" />
+      </Parameters>
+    </QualityCondition>
+    <QualityCondition name="FIDA_RUECKVERSICHERUNGLFP NoNull" testDescriptor="QaRequiredFields(3)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_RUECKVERSICHERUNGLFP" workspace="FIDA" />
+        <Scalar parameter="requiredFieldNamesString" value= "PUNKTBEZEICHNUNG,MATERIALISIERUNG" />
+		<Scalar parameter="allowEmptyStrings" value= "False" />
+		<Scalar parameter="allowMissingFields" value= "False" />
+      </Parameters>
+    </QualityCondition>
+    <QualityCondition name="FIDA_NACHFUEHRUNGLFP NoNull" testDescriptor="QaRequiredFields(3)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_NACHFUEHRUNGLFP" workspace="FIDA" />
+        <Scalar parameter="requiredFieldNamesString" value= "NACHFUEHRUNGSDATUM,NACHFUEHRUNGSPERIMETER,UNTERHALTART,ARBEITSKUERZELTEXT,ERLEDARBBESCHREIBUNG" />
+		<Scalar parameter="allowEmptyStrings" value= "False" />
+		<Scalar parameter="allowMissingFields" value= "False" />
+      </Parameters>
+    </QualityCondition>
+    <QualityCondition name="FIDA_GRUNDBUCHLFP NoNull" testDescriptor="QaRequiredFields(3)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_GRUNDBUCHLFP" workspace="FIDA" />
+        <Scalar parameter="requiredFieldNamesString" value= "LAND,KANTON,GEMEINDE,PARZ" />
+		<Scalar parameter="allowEmptyStrings" value= "False" />
+		<Scalar parameter="allowMissingFields" value= "False" />
+      </Parameters>
+    </QualityCondition>
+    <QualityCondition name="FIDA_KONTAKT NoNull" testDescriptor="QaRequiredFields(3)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_KONTAKT" workspace="FIDA" />
+        <Scalar parameter="requiredFieldNamesString" value= "ART,NAME,VORNAME" />
+		<Scalar parameter="allowEmptyStrings" value= "False" />
+		<Scalar parameter="allowMissingFields" value= "False" />
+      </Parameters>
+    </QualityCondition>
+    <QualityCondition name="FIDA_RUECKVERSICHERUNGLFP 2 FIDA_LFP FK" testDescriptor="QaForeignKey(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_RUECKVERSICHERUNGLFP" workspace="FIDA" />
+        <Scalar parameter="foreignKeyField" value= "FK_FIDA_LFP" />
+		<Dataset parameter="referencedTable" value= "FIDA_LFP" workspace="FIDA" />
+		<Scalar parameter="referencedKeyField" value= "GlobalID" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_NACHFUEHRUNGLFP 2 FIDA_LFP FK" testDescriptor="QaForeignKey(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_NACHFUEHRUNGLFP" workspace="FIDA" />
+        <Scalar parameter="foreignKeyField" value= "FK_FIDA_LFP" />
+		<Dataset parameter="referencedTable" value= "FIDA_LFP" workspace="FIDA" />
+		<Scalar parameter="referencedKeyField" value= "GlobalID" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_GRUNDBUCHLFP 2 FIDA_LFP FK" testDescriptor="QaForeignKey(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_GRUNDBUCHLFP" workspace="FIDA" />
+        <Scalar parameter="foreignKeyField" value= "FK_FIDA_LFP" />
+		<Dataset parameter="referencedTable" value= "FIDA_LFP" workspace="FIDA" />
+		<Scalar parameter="referencedKeyField" value= "GlobalID" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_KONTAKT 2 FIDA_LFP FK" testDescriptor="QaForeignKey(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_KONTAKT" workspace="FIDA" />
+        <Scalar parameter="foreignKeyField" value= "FK_FIDA_LFP" />
+		<Dataset parameter="referencedTable" value= "FIDA_LFP" workspace="FIDA" />
+		<Scalar parameter="referencedKeyField" value= "GlobalID" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_LSN 2 FIDA_LFP FK" testDescriptor="QaForeignKey(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_LSN" workspace="FIDA" />
+        <Scalar parameter="foreignKeyField" value= "FK_FIDA_LFP" />
+		<Dataset parameter="referencedTable" value= "FIDA_LFP" workspace="FIDA" />
+		<Scalar parameter="referencedKeyField" value= "GlobalID" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_LFP GlobalID unique" testDescriptor="QaUnique(0)">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_LFP" workspace="FIDA" />
+        <Scalar parameter="unique" value="GlobalID" />
+      </Parameters>
+    </QualityCondition>
+    <QualityCondition name="FIDA_LFP Punktnummer unique" testDescriptor="QaUnique(0)">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_LFP" workspace="FIDA" />
+        <Scalar parameter="unique" value="LK25, LFPNR_NR, LFPNR_EX" />
+      </Parameters>
+    </QualityCondition>
+    <QualityCondition name="FIDA_RUECKVERSICHERUNGLFP GlobalID unique" testDescriptor="QaUnique(0)">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_RUECKVERSICHERUNGLFP" workspace="FIDA" />
+        <Scalar parameter="unique" value="GlobalID" />
+      </Parameters>
+    </QualityCondition>
+    <QualityCondition name="FIDA_RUECKVERSICHERUNGLFP PUNKTBEZEICHNUNG unique" testDescriptor="QaUnique(0)">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_RUECKVERSICHERUNGLFP" workspace="FIDA" />
+        <Scalar parameter="unique" value="FK_FIDA_LFP, PUNKTBEZEICHNUNG" />
+      </Parameters>
+    </QualityCondition>
+    <QualityCondition name="FIDA_NACHFUEHRUNGLFP GlobalID unique" testDescriptor="QaUnique(0)">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_NACHFUEHRUNGLFP" workspace="FIDA" />
+        <Scalar parameter="unique" value="GlobalID" />
+      </Parameters>
+    </QualityCondition>
+    <QualityCondition name="FIDA_NACHFUEHRUNGLFP ARBEITSKUERZELTEXT unique" testDescriptor="QaUnique(0)">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_NACHFUEHRUNGLFP" workspace="FIDA" />
+        <Scalar parameter="unique" value="FK_FIDA_LFP, NACHFUEHRUNGSDATUM, ARBEITSKUERZELTEXT" />
+      </Parameters>
+    </QualityCondition>
+    <QualityCondition name="FIDA_GRUNDBUCHLFP GlobalID unique" testDescriptor="QaUnique(0)">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_GRUNDBUCHLFP" workspace="FIDA" />
+        <Scalar parameter="unique" value="GlobalID" />
+      </Parameters>
+    </QualityCondition>
+    <QualityCondition name="FIDA_GRUNDBUCHLFP PARZ unique" testDescriptor="QaUnique(0)">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_GRUNDBUCHLFP" workspace="FIDA" />
+        <Scalar parameter="unique" value="FK_FIDA_LFP, LAND, KANTON, GEMEINDE, PARZ" />
+      </Parameters>
+    </QualityCondition>
+    <QualityCondition name="FIDA_KONTAKT GlobalID unique" testDescriptor="QaUnique(0)">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_KONTAKT" workspace="FIDA" />
+        <Scalar parameter="unique" value="GlobalID" />
+      </Parameters>
+    </QualityCondition>
+    <QualityCondition name="FIDA_KONTAKT NAME unique" testDescriptor="QaUnique(0)">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_KONTAKT" workspace="FIDA" />
+        <Scalar parameter="unique" value="FK_FIDA_LFP, NAME, VORNAME" />
+      </Parameters>
+    </QualityCondition>
+    <QualityCondition name="FIDA_LFP REG LK25" testDescriptor="QaRegularExpression(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_LFP" workspace="FIDA" />
+		<Scalar parameter="pattern" value= "1[0-9]{3}" />
+		<Scalar parameter="fieldName" value= "LK25" />
+		<Scalar parameter="FieldListType" value= "RelevantFields" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_LFP REG LFPNR" testDescriptor="QaRegularExpression(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_LFP" workspace="FIDA" />
+		<Scalar parameter="pattern" value= "1[0-9]{7}" />
+		<Scalar parameter="fieldName" value= "LFPNR" />
+		<Scalar parameter="FieldListType" value= "RelevantFields" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_LFP REG LFPNR_NR" testDescriptor="QaRegularExpression(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_LFP" workspace="FIDA" />
+		<Scalar parameter="pattern" value= "[0-9]{1,3}" />
+		<Scalar parameter="fieldName" value= "LFPNR_NR" />
+		<Scalar parameter="FieldListType" value= "RelevantFields" />
+      </Parameters>
+    </QualityCondition>
+    <QualityCondition name="FIDA_LFP REG LFPNR_EX" testDescriptor="QaRegularExpression(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_LFP" workspace="FIDA" />
+		<Scalar parameter="pattern" value= "[0-9]{1}" />
+		<Scalar parameter="fieldName" value= "LFPNR_EX" />
+		<Scalar parameter="FieldListType" value= "RelevantFields" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_LFP REG LV95E" testDescriptor="QaRegularExpression(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_LFP" workspace="FIDA" />
+		<Scalar parameter="pattern" value= "2[0-9]{6}.*[0-9]*" />
+		<Scalar parameter="fieldName" value= "LV95E" />
+		<Scalar parameter="FieldListType" value= "RelevantFields" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_LFP REG LV95N" testDescriptor="QaRegularExpression(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_LFP" workspace="FIDA" />
+		<Scalar parameter="pattern" value= "1[0-9]{6}.*[0-9]*" />
+		<Scalar parameter="fieldName" value= "LV95N" />
+		<Scalar parameter="FieldListType" value= "RelevantFields" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_LFP REG LN02" testDescriptor="QaRegularExpression(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_LFP" workspace="FIDA" />
+		<Scalar parameter="pattern" value= "[0-9]{3,4}.*[0-9]*" />
+		<Scalar parameter="fieldName" value= "LN02" />
+		<Scalar parameter="FieldListType" value= "RelevantFields" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_LFP TrimmedText" testDescriptor="QaTrimmedTextFields(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_LFP" workspace="FIDA" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_RUECKVERSICHERUNGLFP TrimmedText" testDescriptor="QaTrimmedTextFields(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_RUECKVERSICHERUNGLFP" workspace="FIDA" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_NACHFUEHRUNGLFP TrimmedText" testDescriptor="QaTrimmedTextFields(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_NACHFUEHRUNGLFP" workspace="FIDA" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_GRUNDBUCHLFP TrimmedText" testDescriptor="QaTrimmedTextFields(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_GRUNDBUCHLFP" workspace="FIDA" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_KONTAKT TrimmedText" testDescriptor="QaTrimmedTextFields(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_KONTAKT" workspace="FIDA" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_LFP NonEmptyGeometry" testDescriptor="QaNonEmptyGeometry(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="featureClass" value="FIDA_LFP" workspace="FIDA" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_LFP WithinZRange" testDescriptor="QaWithinZRange(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="featureClass" value="FIDA_LFP" workspace="FIDA" />
+		<Scalar parameter="minimumZValue" value= "190.0" />
+		<Scalar parameter="maximumZValue" value= "4700.00" />		
+      </Parameters>
+    </QualityCondition>		
+    <QualityCondition name="FIDA_RUECKVERSICHERUNGLFP 2 FIDA_LFP PK" testDescriptor="QaUnreferencedRows(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="referencedTable" value="FIDA_RUECKVERSICHERUNGLFP" workspace="FIDA" />
+		<Dataset parameter="referencingTables" value= "FIDA_LFP"  workspace="FIDA" />
+		<Scalar parameter="relations" value= "FK_FIDA_LFP, GlobalID" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_NACHFUEHRUNGLFP 2 FIDA_LFP PK" testDescriptor="QaUnreferencedRows(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="referencedTable" value="FIDA_NACHFUEHRUNGLFP" workspace="FIDA" />
+		<Dataset parameter="referencingTables" value= "FIDA_LFP"  workspace="FIDA" />
+		<Scalar parameter="relations" value= "FK_FIDA_LFP, GlobalID" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_GRUNDBUCHLFP 2 FIDA_LFP PK" testDescriptor="QaUnreferencedRows(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="referencedTable" value="FIDA_GRUNDBUCHLFP" workspace="FIDA" />
+		<Dataset parameter="referencingTables" value= "FIDA_LFP"  workspace="FIDA" />
+		<Scalar parameter="relations" value= "FK_FIDA_LFP, GlobalID" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_KONTAKT 2 FIDA_LFP PK" testDescriptor="QaUnreferencedRows(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="referencedTable" value="FIDA_KONTAKT" workspace="FIDA" />
+		<Dataset parameter="referencingTables" value= "FIDA_LFP"  workspace="FIDA" />
+		<Scalar parameter="relations" value= "FK_FIDA_LFP, GlobalID" />
+      </Parameters>
+    </QualityCondition>		
   </QualityConditions>
   <TestDescriptors>
     <TestDescriptor name="QaConstraint(0)" allowErrors="false">
@@ -335,6 +669,33 @@
     <TestDescriptor name="QaValidCoordinateFields(0)" allowErrors="false">
       <TestClass type="EsriDE.ProSuite.QA.Tests.QaValidCoordinateFields" assembly="EsriDE.ProSuite.QA.Tests" constructorIndex="0" />
     </TestDescriptor>
+    <TestDescriptor name="QaGdbConstraintFactory" allowErrors="false">
+      <TestFactory type="EsriDE.ProSuite.QA.TestFactories.QaGdbConstraintFactory" assembly="EsriDE.ProSuite.QA.TestFactories" />
+    </TestDescriptor>
+    <TestDescriptor name="QaRequiredFields(3)" allowErrors="false">
+      <TestClass type="EsriDE.ProSuite.QA.Tests.QaRequiredFields" assembly="EsriDE.ProSuite.QA.Tests" constructorIndex="3" />
+    </TestDescriptor>
+    <TestDescriptor name="QaForeignKey(0)" allowErrors="false">
+      <TestClass type="EsriDE.ProSuite.QA.Tests.QaForeignKey" assembly="EsriDE.ProSuite.QA.Tests" constructorIndex="0" />
+    </TestDescriptor>
+    <TestDescriptor name="QaUnique(0)" allowErrors="false">
+      <TestClass type="EsriDE.ProSuite.QA.Tests.QaUnique" assembly="EsriDE.ProSuite.QA.Tests" constructorIndex="0" />
+    </TestDescriptor>
+    <TestDescriptor name="QaRegularExpression(0)" allowErrors="false">
+      <TestClass type="EsriDE.ProSuite.QA.Tests.QaRegularExpression" assembly="EsriDE.ProSuite.QA.Tests" constructorIndex="0" />
+    </TestDescriptor>
+    <TestDescriptor name="QaTrimmedTextFields(0)" allowErrors="false">
+      <TestClass type="EsriDE.ProSuite.QA.Tests.QaTrimmedTextFields" assembly="EsriDE.ProSuite.QA.Tests" constructorIndex="0" />
+    </TestDescriptor>
+    <TestDescriptor name="QaNonEmptyGeometry(0)" allowErrors="false">
+      <TestClass type="EsriDE.ProSuite.QA.Tests.QaNonEmptyGeometry" assembly="EsriDE.ProSuite.QA.Tests" constructorIndex="0" />
+    </TestDescriptor>
+    <TestDescriptor name="QaWithinZRange(0)" allowErrors="false">
+      <TestClass type="EsriDE.ProSuite.QA.Tests.QaWithinZRange" assembly="EsriDE.ProSuite.QA.Tests" constructorIndex="0" />
+    </TestDescriptor>
+    <TestDescriptor name="QaUnreferencedRows(0)" allowErrors="false">
+      <TestClass type="EsriDE.ProSuite.QA.Tests.QaUnreferencedRows" assembly="EsriDE.ProSuite.QA.Tests" constructorIndex="0" />
+    </TestDescriptor>		
   </TestDescriptors>
   <Workspaces>
 	<Workspace id="FIDA" modelName="FIDA" />

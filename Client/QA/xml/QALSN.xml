@@ -17,6 +17,16 @@
         <Element qualityCondition="FIDA_LSN VERTIKAL_OFFSET is mandatory" />
         <Element qualityCondition="FIDA_LSN PUNKT_GUELTIG is mandatory" />
         <Element qualityCondition="FIDA_LSN MESSDATUM is mandatory" />
+		<Element qualityCondition="FIDA_LSN DomainCheck" />
+		<Element qualityCondition="FIDA_LSN NoNull" />
+		<Element qualityCondition="FIDA_LSN GlobalID unique" />		
+		<Element qualityCondition="FIDA_LSN NUMMER unique" />
+		<Element qualityCondition="FIDA_LSN REG LV95E" />		
+		<Element qualityCondition="FIDA_LSN REG LV95N" />				
+		<Element qualityCondition="FIDA_LSN REG LN02" />
+        <Element qualityCondition="FIDA_LSN TrimmedText" />	
+        <Element qualityCondition="FIDA_LSN NonEmptyGeometry" />
+		<Element qualityCondition="FIDA_LSN WithinZRange" />
 	  </Elements>
     </QualitySpecification>
   </QualitySpecifications>
@@ -114,7 +124,75 @@
 		<Scalar parameter="AllowMissingZFieldValueForDefinedShape" value="TRUE" />
 		<Scalar parameter="AllowMissingXYFieldValueForDefinedShape" value="TRUE" />
       </Parameters>
+    </QualityCondition>
+    <QualityCondition name="FIDA_LSN DomainCheck" testDescriptor="QaGdbConstraintFactory" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_LSN" workspace="FIDA" />
+        <Scalar parameter="AllowNullValuesForCodedValueDomains" value="FALSE" />
+        <Scalar parameter="AllowNullValuesForRangeDomains" value="FALSE" />		
+      </Parameters>
+    </QualityCondition>
+    <QualityCondition name="FIDA_LSN NoNull" testDescriptor="QaRequiredFields(3)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_LSN" workspace="FIDA" />
+        <Scalar parameter="requiredFieldNamesString" value= "OBJEKTART,LN02,LV95E,LV95N,PUNKT_STATUS,ORDNUNG,NUMMER,NAME,SCHWEREWERT,GRADIENT_INTERPOLIERT,VERTIKAL_OFFSET,PUNKT_GUELTIG,MESSDATUM" />
+		<Scalar parameter="allowEmptyStrings" value= "False" />
+		<Scalar parameter="allowMissingFields" value= "False" />
+      </Parameters>
+	</QualityCondition>	 
+    <QualityCondition name="FIDA_LSN GlobalID unique" testDescriptor="QaUnique(0)">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_LSN" workspace="FIDA" />
+        <Scalar parameter="unique" value="GlobalID" />
+      </Parameters>
+    </QualityCondition>
+    <QualityCondition name="FIDA_LSN NUMMER unique" testDescriptor="QaUnique(0)">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_LSN" workspace="FIDA" />
+        <Scalar parameter="unique" value="NUMMER" />
+      </Parameters>
+    </QualityCondition>
+    <QualityCondition name="FIDA_LSN REG LV95E" testDescriptor="QaRegularExpression(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_LSN" workspace="FIDA" />
+		<Scalar parameter="pattern" value= "2[0-9]{6}.*[0-9]*" />
+		<Scalar parameter="fieldName" value= "LV95E" />
+		<Scalar parameter="FieldListType" value= "RelevantFields" />
+      </Parameters>
     </QualityCondition>	
+    <QualityCondition name="FIDA_LSN REG LV95N" testDescriptor="QaRegularExpression(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_LSN" workspace="FIDA" />
+		<Scalar parameter="pattern" value= "1[0-9]{6}.*[0-9]*" />
+		<Scalar parameter="fieldName" value= "LV95N" />
+		<Scalar parameter="FieldListType" value= "RelevantFields" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_LSN REG LN02" testDescriptor="QaRegularExpression(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_LSN" workspace="FIDA" />
+		<Scalar parameter="pattern" value= "[0-9]{3,4}.*[0-9]*" />
+		<Scalar parameter="fieldName" value= "LN02" />
+		<Scalar parameter="FieldListType" value= "RelevantFields" />
+      </Parameters>
+    </QualityCondition>
+    <QualityCondition name="FIDA_LSN TrimmedText" testDescriptor="QaTrimmedTextFields(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_LSN" workspace="FIDA" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_LSN NonEmptyGeometry" testDescriptor="QaNonEmptyGeometry(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="featureClass" value="FIDA_LSN" workspace="FIDA" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_LSN WithinZRange" testDescriptor="QaWithinZRange(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="featureClass" value="FIDA_LSN" workspace="FIDA" />
+		<Scalar parameter="minimumZValue" value= "190.0" />
+		<Scalar parameter="maximumZValue" value= "4700.00" />		
+      </Parameters>
+    </QualityCondition>		
   </QualityConditions>
   <TestDescriptors>
     <TestDescriptor name="QaConstraint(0)" allowErrors="false">
@@ -123,6 +201,27 @@
     <TestDescriptor name="QaValidCoordinateFields(0)" allowErrors="false">
       <TestClass type="EsriDE.ProSuite.QA.Tests.QaValidCoordinateFields" assembly="EsriDE.ProSuite.QA.Tests" constructorIndex="0" />
     </TestDescriptor>
+    <TestDescriptor name="QaGdbConstraintFactory" allowErrors="false">
+      <TestFactory type="EsriDE.ProSuite.QA.TestFactories.QaGdbConstraintFactory" assembly="EsriDE.ProSuite.QA.TestFactories" />
+    </TestDescriptor>
+    <TestDescriptor name="QaRequiredFields(3)" allowErrors="false">
+      <TestClass type="EsriDE.ProSuite.QA.Tests.QaRequiredFields" assembly="EsriDE.ProSuite.QA.Tests" constructorIndex="3" />
+    </TestDescriptor>
+    <TestDescriptor name="QaUnique(0)" allowErrors="false">
+      <TestClass type="EsriDE.ProSuite.QA.Tests.QaUnique" assembly="EsriDE.ProSuite.QA.Tests" constructorIndex="0" />
+    </TestDescriptor>
+    <TestDescriptor name="QaRegularExpression(0)" allowErrors="false">
+      <TestClass type="EsriDE.ProSuite.QA.Tests.QaRegularExpression" assembly="EsriDE.ProSuite.QA.Tests" constructorIndex="0" />
+    </TestDescriptor>
+    <TestDescriptor name="QaTrimmedTextFields(0)" allowErrors="false">
+      <TestClass type="EsriDE.ProSuite.QA.Tests.QaTrimmedTextFields" assembly="EsriDE.ProSuite.QA.Tests" constructorIndex="0" />
+    </TestDescriptor>
+    <TestDescriptor name="QaNonEmptyGeometry(0)" allowErrors="false">
+      <TestClass type="EsriDE.ProSuite.QA.Tests.QaNonEmptyGeometry" assembly="EsriDE.ProSuite.QA.Tests" constructorIndex="0" />
+    </TestDescriptor>
+    <TestDescriptor name="QaWithinZRange(0)" allowErrors="false">
+      <TestClass type="EsriDE.ProSuite.QA.Tests.QaWithinZRange" assembly="EsriDE.ProSuite.QA.Tests" constructorIndex="0" />
+    </TestDescriptor>	
   </TestDescriptors>
   <Workspaces>
 	<Workspace id="FIDA" modelName="FIDA" />
