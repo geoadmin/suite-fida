@@ -1,3 +1,4 @@
 # igeb
 /.idea/
 /Server/py/Services/.idea/
+/Client/QA/*.cmd
