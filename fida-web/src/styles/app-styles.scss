@@ -1,0 +1,43 @@
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Frutiger Neue', 'Helvetica Neue', sans-serif;
+}
+
+:root {
+  --header-height: 95px;
+}
+
+:focus {
+  outline: none;
+}
+// ----------------------------------------------------------------------------------------------------
+// esri-widget styles
+// ----------------------------------------------------------------------------------------------------
+
+.esri-widget {
+	font-family: 'Frutiger Neue', 'Helvetica Neue', sans-serif;
+	color: var(--dark-contrast);
+  }
+  
+.esri-widget--button:not(.esri-search__submit-button) {
+	border: 1px solid var(--dark-contrast);
+}
+
+.esri-expand__panel {
+	//border: 1px solid var(--dark-contrast);
+}
+
+.esri-view {
+  .esri-view-surface--inset-outline:focus::after,
+  .esri-component:focus,
+  .esri-widget:focus,
+  .esri-attribution__sources:focus {
+	outline: none !important;
+  }
+}
