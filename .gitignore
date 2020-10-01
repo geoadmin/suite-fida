@@ -2,3 +2,37 @@
 /.idea/
 /Server/py/Services/.idea/
 /Client/QA/*.cmd
+
+# fida-web
+#------------
+# compiled output
+/fida-web/dist
+/fida-web/tmp
+/fida-web/out-tsc
+/fida-web/bazel-out
+
+# dependencies
+/fida-web/node_modules
+
+# profiling files
+chrome-profiler-events*.json
+speed-measure-plugin*.json
+
+# IDE - VSCode
+/fida-web/.vscode/*
+/fida-web/.history/*
+
+# misc
+/fida-web/.sass-cache
+/fida-web/connect.lock
+/fida-web/coverage
+/fida-web/junit
+/fida-web/libpeerconnection.log
+/fida-webn/pm-debug.log
+/fida-web/yarn-error.log
+/fida-web/testem.log
+/fida-web/typings
+
+# System Files
+.DS_Store
+Thumbs.db

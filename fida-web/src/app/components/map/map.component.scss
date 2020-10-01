@@ -1,0 +1,18 @@
+.esri-view {
+    --navigation-button-size: 32px;
+    --border-distance: 10px;
+    --attribution-height: 16px;
+  
+    height: calc(100vh - var(--header-height));
+  
+    .scale {
+      $padding: 5px;
+      position: absolute;
+      bottom: calc(var(--attribution-height) + var(--border-distance));
+      right: calc(2 * var(--border-distance) + var(--navigation-button-size));
+      height: var(--navigation-button-size);
+      line-height: calc(var(--navigation-button-size) - 2 * #{$padding});
+      padding: $padding;
+    }
+  }
+  

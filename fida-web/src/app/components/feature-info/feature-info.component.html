@@ -1,0 +1,28 @@
+<div #featureInfo class="feature-info py-2" [hidden]="!feature">
+    <!-- title -->
+    <div clas="row">
+        <div class="col feature-info-title pb-2">
+            {{ feature?.layer.title }}: {{ feature?.attributes.OBJECTID }}
+        </div>
+    </div>
+    
+    <!-- table -->
+    <div clas="row">
+        <div class="col mt-2">
+            <table>
+                <thead>
+                    <th><strong>Name</strong></th>
+                    <th>Wert</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let attribute of feature?.attributes | keyvalue">
+                        <td>{{ attribute.key }}</td> 
+                        <td>{{ attribute.value }}</td>
+                    </tr>
+                </tbody>
+            </table>        
+        </div>
+    </div>
+    
+</div>
+
