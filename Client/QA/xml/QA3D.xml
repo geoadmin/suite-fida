@@ -14,7 +14,7 @@
       <Parameters>
         <Dataset parameter="featureClass" value="FIDA_LFP" workspace="FIDA" />
         <Dataset parameter="mosaicLayer" value="PRODAS_MANAGER.TLM_DTM_MOSAIC_EXTENDED" workspace="PRODAS" />
-        <Scalar parameter="limit" value="1" />
+        <Scalar parameter="limit" value="1.0" />
         <Scalar parameter="zOffsetConstraint" value="WithinLimit" />
       </Parameters>
     </QualityCondition>
@@ -22,7 +22,7 @@
       <Parameters>
         <Dataset parameter="featureClass" value="FIDA_HFP" workspace="FIDA" />
         <Dataset parameter="mosaicLayer" value="PRODAS_MANAGER.TLM_DTM_MOSAIC_EXTENDED" workspace="PRODAS" />
-        <Scalar parameter="limit" value="1" />
+        <Scalar parameter="limit" value="1.0" />
         <Scalar parameter="zOffsetConstraint" value="WithinLimit" />
       </Parameters>
     </QualityCondition>
@@ -30,7 +30,7 @@
       <Parameters>
         <Dataset parameter="featureClass" value="FIDA_LSN" workspace="FIDA" />
         <Dataset parameter="mosaicLayer" value="PRODAS_MANAGER.TLM_DTM_MOSAIC_EXTENDED" workspace="PRODAS" />
-        <Scalar parameter="limit" value="1" />
+        <Scalar parameter="limit" value="1.0" />
         <Scalar parameter="zOffsetConstraint" value="WithinLimit" />
       </Parameters>
     </QualityCondition>
