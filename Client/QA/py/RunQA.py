@@ -4,8 +4,17 @@
 #    Run Verification Tool based on XML from ProSuite.
 # -- Author: flu, 28.09.2020
 # -- commandline: # XML GDB OUT
+#                 GDB is WorkspaceID,Workspace and if more then one, separated with ;
+#                 example: #
+#                          D:\work\git\suite-fida\Client\QA\xml\QA3D.xml
+#                          FIDA,
+#                          \\v0t0020a.adr.admin.ch\iprod\gisprod\01_Auftraege-Projekte\13_FIDA\gdb\
+#                            gdb_all_pkt_viele_attribute\FIDA-DB-Schema.gdb;
+#                          PRODAS,D:\work\git\tool-fida\sde\PRODASP@Prodas_reader.sde
+#                          d:\temp
 # -------------------------------------------------------------------------------------------------
 # -- History
+# -- 0.2, 05.10.2020, flu, added idxDS
 # -------------------------------------------------------------------------------------------------
 
 import datetime
@@ -55,9 +64,19 @@ def check_params(args):
         arcpy.AddMessage("Path to XML-file is not correct")
         sys.exit(-1)
 
-    if not os.path.isdir(args[idxGdb]):
-        arcpy.AddMessage("Path to datasource GDB is not correct")
-        sys.exit(-1)
+    _ws_list = args[idxGdb].split(";")
+    for _ws in _ws_list:
+        _ws_name = str(_ws.split(",")[1])
+        if _ws_name.endswith(".gdb"):
+            if not os.path.isdir(_ws_name):
+                arcpy.AddMessage("Path to datasource GDB is not correct")
+                sys.exit(-1)
+        elif _ws_name.endswith(".sde"):
+            if not os.path.isfile(_ws_name):
+                arcpy.AddMessage("Path to datasource SDE is not correct")
+        else:
+            arcpy.AddMessage("unknown datasourc {0}, script will exit".format(_ws_name))
+            sys.exit(-1)
 
     if os.path.isdir(args[idxOut]):
         try:
@@ -84,7 +103,7 @@ def main(args):
         in_xmlfile=args[idxXml],
         in_qualityspecification="FIDA Base",
         in_tilesize="100000",
-        in_datasources="FIDA " + args[idxGdb],
+        in_datasources=args[idxGdb].replace(",", " "),
         # in_ignoreconditionsforunknowndatasets="No",
         out_outputdirectory=args[idxOut],
         in_issuerepositorytype="File Geodatabase",
@@ -123,8 +142,13 @@ if __name__ == "__main__":
             datetime.datetime.now().strftime("%Y-%m-%d_%H%M%S") + "_log.txt",
         )
         arcpy.AddMessage("Logfile: " + logfile)
+        log(args[idxGdb].replace(",", " "))
         main(args)
 
     else:
-        arcpy.AddMessage("Not the correct number of input parameter!")
+        arcpy.AddMessage(
+            "Not the correct number of input parameter! {0} is not 5".format(
+                str(len(sys.argv))
+            )
+        )
         exit(-1)
