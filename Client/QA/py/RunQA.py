@@ -57,11 +57,11 @@ def check_params(args):
             "ProSuite.tbx",
         )
     if not os.path.isfile(args[idxTool]):
-        arcpy.AddMessage("Path to toolbox is not correct")
+        arcpy.AddError("Path to toolbox is not correct")
         sys.exit(-1)
 
     if not os.path.isfile(args[idxXml]):
-        arcpy.AddMessage("Path to XML-file is not correct")
+        arcpy.AddError("Path to XML-file is not correct")
         sys.exit(-1)
 
     _ws_list = args[idxGdb].split(";")
@@ -69,24 +69,24 @@ def check_params(args):
         _ws_name = str(_ws.split(",")[1])
         if _ws_name.endswith(".gdb"):
             if not os.path.isdir(_ws_name):
-                arcpy.AddMessage("Path to datasource GDB is not correct")
+                arcpy.AddError("Path to datasource GDB is not correct")
                 sys.exit(-1)
         elif _ws_name.endswith(".sde"):
             if not os.path.isfile(_ws_name):
-                arcpy.AddMessage("Path to datasource SDE is not correct")
+                arcpy.AddError("Path to datasource SDE is not correct")
         else:
-            arcpy.AddMessage("unknown datasourc {0}, script will exit".format(_ws_name))
+            arcpy.AddError("unknown datasourc {0}, script will exit".format(_ws_name))
             sys.exit(-1)
 
     if os.path.isdir(args[idxOut]):
         try:
-            arcpy.AddMessage(
+            arcpy.AddError(
                 "Output directory does already exist. Deleting output directory"
             )
             shutil.rmtree(args[idxOut])
         except Exception as e:
-            arcpy.AddMessage("Error while deleting output directory")
-            arcpy.AddMessage(e.message)
+            arcpy.AddError("Error while deleting output directory")
+            arcpy.AddError(e.message)
             sys.exit(-1)
 
 
@@ -141,12 +141,12 @@ if __name__ == "__main__":
             os.path.dirname(args[idxOut]),
             datetime.datetime.now().strftime("%Y-%m-%d_%H%M%S") + "_log.txt",
         )
-        arcpy.AddMessage("Logfile: " + logfile)
+        log("Logfile: " + logfile)
         log(args[idxGdb].replace(",", " "))
         main(args)
 
     else:
-        arcpy.AddMessage(
+        arcpy.AddError(
             "Not the correct number of input parameter! {0} is not 5".format(
                 str(len(sys.argv))
             )
