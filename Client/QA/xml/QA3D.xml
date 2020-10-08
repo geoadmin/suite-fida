@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DataQuality xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:EsriDE.ProSuite.QA.QualitySpecifications-2.0" xsi:noNamespaceSchemaLocation="./EsriDE.ProSuite.QA.QualitySpecifications-2.0.xsd">
+  <QualitySpecifications>
+    <QualitySpecification name="FIDA Base" listOrder="0">
+      <Elements>
+        <Element qualityCondition="LFP auf DTM" />
+		<Element qualityCondition="HFP auf DTM" />
+		<Element qualityCondition="LSN auf DTM" />
+	  </Elements>
+    </QualitySpecification>
+  </QualitySpecifications>
+  <QualityConditions>
+    <QualityCondition name="LFP auf DTM" testDescriptor="qa3dSmoothing(5)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="featureClass" value="FIDA_LFP" workspace="FIDA" />
+        <Dataset parameter="mosaicLayer" value="PRODAS_MANAGER.TLM_DTM_MOSAIC_EXTENDED" workspace="PRODAS" />
+        <Scalar parameter="limit" value="1.0" />
+        <Scalar parameter="zOffsetConstraint" value="WithinLimit" />
+      </Parameters>
+    </QualityCondition>
+    <QualityCondition name="HFP auf DTM" testDescriptor="qa3dSmoothing(5)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="featureClass" value="FIDA_HFP" workspace="FIDA" />
+        <Dataset parameter="mosaicLayer" value="PRODAS_MANAGER.TLM_DTM_MOSAIC_EXTENDED" workspace="PRODAS" />
+        <Scalar parameter="limit" value="1.0" />
+        <Scalar parameter="zOffsetConstraint" value="WithinLimit" />
+      </Parameters>
+    </QualityCondition>
+    <QualityCondition name="LSN auf DTM" testDescriptor="qa3dSmoothing(5)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="featureClass" value="FIDA_LSN" workspace="FIDA" />
+        <Dataset parameter="mosaicLayer" value="PRODAS_MANAGER.TLM_DTM_MOSAIC_EXTENDED" workspace="PRODAS" />
+        <Scalar parameter="limit" value="1.0" />
+        <Scalar parameter="zOffsetConstraint" value="WithinLimit" />
+      </Parameters>
+    </QualityCondition>
+  </QualityConditions>
+  <TestDescriptors>
+    <TestDescriptor name="qa3dSmoothing(5)" allowErrors="false">
+      <TestClass type="EsriDE.ProSuite.QA.Tests.Qa3dSmoothing" assembly="EsriDE.ProSuite.QA.Tests" constructorIndex="5" />
+    </TestDescriptor>
+  </TestDescriptors>
+  <Workspaces>
+	<Workspace id="FIDA" modelName="FIDA" />
+	<Workspace id="PRODAS" modelName="PRODAS" schemaOwner="PRODAS_MANAGER" />
+  </Workspaces>
+</DataQuality>
