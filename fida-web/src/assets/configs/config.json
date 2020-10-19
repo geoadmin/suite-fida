@@ -1,0 +1,35 @@
+{
+    "arcGisUrlPlaceholder": "[EVIRONMENT_ARCGISURL]",
+    "layers": [
+        {
+            "type": "FeatureLayer",
+            "properties": {
+                "id": "LSN",
+                "gdbVersion": "SDE.DEFAULT",
+                "url": "[EVIRONMENT_ARCGISURL]/rest/services/FIDA/FIDA/FeatureServer/2",
+                "visible": false,
+                "outFields": ["*"]
+            }
+        },
+        {
+            "type": "FeatureLayer",
+            "properties": {
+                "id": "HFP",
+                "gdbVersion": "SDE.DEFAULT",
+                "url": "[EVIRONMENT_ARCGISURL]/rest/services/FIDA/FIDA/FeatureServer/1",
+                "visible": false,
+                "outFields": ["*"]
+            }
+        },
+        {
+            "type": "FeatureLayer",
+            "properties": {
+                "id": "LFN",
+                "gdbVersion": "SDE.DEFAULT",
+                "url": "[EVIRONMENT_ARCGISURL]/rest/services/FIDA/FIDA/FeatureServer/0",
+                "visible": false,
+                "outFields": ["*"]
+            }
+        }
+    ]
+}

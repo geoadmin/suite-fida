@@ -1,0 +1,27 @@
+container
+<div class="feature-container py-2" [hidden]="!feature">
+
+    <!-- view -->
+    <div class="row" *ngIf="!editMode">
+        <div class="col mt-2">
+            <!--<div #viewContainer></div>-->
+            <app-feature-view [feature]="feature"></app-feature-view>
+        </div>
+    </div>
+
+    <!-- edit -->
+    <div class="row" *ngIf="editMode">
+        <div class="col mt-2">
+            <!--<div #editContainer></div>-->
+            <app-feature-edit [feature]="feature" (save)="onSave($event)" (cancel)="onCancel()"></app-feature-edit>
+        </div>
+    </div>
+
+    <!-- buttons -->
+    <div class="row" [hidden]="editMode">
+        <div class="col">
+            <button type="button" class="btn btn-default" (click)="editClick()">edit</button>
+        </div>
+    </div>
+
+</div>

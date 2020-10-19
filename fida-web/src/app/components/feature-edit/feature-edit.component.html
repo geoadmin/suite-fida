@@ -1,0 +1,10 @@
+<form (ngSubmit)="saveClick()" #featureForm="ngForm">
+
+    <div *ngFor="let attribute of feature?.attributes | keyvalue let idx=index">
+        <app-feature-attribute-edit [attributes]="feature.attributes" [name]="attribute.key" [displayName]="attribute.key">
+        </app-feature-attribute-edit>
+    </div>
+
+    <button type="submit" class="btn btn-success" [disabled]="!featureForm.form.valid">Save</button>
+    <button type="button" class="btn btn-default" (click)="cancelClick()">Cancel</button>
+</form>

@@ -1,0 +1,18 @@
+<div class="row form-group">
+    <!--name-->
+    <div class="col-6">
+        <label for="{{ name }}">{{ displayName }}</label>
+    </div>
+    <!--value-->
+    <div class="col-6">
+        <input type="text" class="form-control" id="{{ name }}" required [(ngModel)]="attributes[name]"
+            #inupt="ngModel">
+    </div>
+</div>
+
+<!--validation-->
+<div class="row alert alert-danger" [hidden]="inupt.valid || inupt.pristine">
+    <div class="row">
+        '{{ displayName }}' is required
+    </div>
+</div>

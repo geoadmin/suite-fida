@@ -3,6 +3,7 @@ import {
   OnInit,
   ViewChild,
   ElementRef,
+  ViewContainerRef,
   ViewEncapsulation
 } from '@angular/core';
 
@@ -15,11 +16,11 @@ import { MapService } from 'src/app/services/map.service';
   encapsulation: ViewEncapsulation.None
 })
 export class MapComponent implements OnInit {
-  @ViewChild('map', { static: true }) private mapViewElement: ElementRef;
+  @ViewChild('map', { static: true }) private mapContainer: ElementRef;
 
   constructor(private mapservice: MapService) {}
 
-  ngOnInit(): void {
-    this.mapservice.initMap(this.mapViewElement.nativeElement);
+  ngOnInit(): void { 
+    this.mapservice.initMap(this.mapContainer);
   }
 }

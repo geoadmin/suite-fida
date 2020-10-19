@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ViewContainerRef, ElementRef } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { WidgetsService } from 'src/app/services/widgets.service';
 import { LayersService } from 'src/app/services/layers.service';
@@ -20,7 +20,7 @@ export class MapService {
     private widgetNotifyService: WidgetNotifyService
   ) { }
 
-  async initMap(container: HTMLDivElement): Promise<void> {
+  async initMap(mapContainer: ElementRef): Promise<void> {
     // create esri-map
     const basemap = await this.layersService.getBasemap();
     const layers = this.layersService.getLayers();
@@ -35,28 +35,31 @@ export class MapService {
     });
 
     // add widgets to map
-    this.view.container = container;
+    this.view.container = mapContainer.nativeElement;
     this.view.ui.components = ['attribution'];
     this.view.ui.add(this.widgetsService.getBasemapWidget(this.view), "bottom-left");
     this.view.ui.add(this.widgetsService.getZoomWidget(this.view), "top-left");
     this.view.ui.add(this.widgetsService.getSearchWidget(this.view), "top-right");
-    this.view.ui.add(this.widgetsService.getLayerListWidget(this.view), "top-right");
-    this.view.ui.add(this.widgetsService.getFeatureInfoWidget(this.view), "top-left");
-
+    this.view.ui.add(this.widgetsService.getLayerListWidget(this.view), "top-right");     
+    
     await this.view.when().then(() => {
       this.zoomToSwitzerland();
     });
 
-    this.view.on('click', (event: any) => {
+     // init popup 
+     this.view.popup.dockOptions.position = 'top-left'
+     this.view.popup.dockEnabled = true;
+    
+    /*this.view.on('click', (event: any) => {
       this.view.hitTest(event).then((response: any) => {
         // TODO show all found features
         const feature = response.results[0].graphic;
-        console.log(feature);
         this.widgetNotifyService.onShowFeatureSubject.next(feature);
       });
+        
 
 
-      /*const point = this.view.toMap({ x: event.x, y: event.y });
+      const point = this.view.toMap({ x: event.x, y: event.y });
       const toleranceInMeters: number = 300;
       const url = 'https://s7t2530a.adr.admin.ch/arcgis/rest/services/FIDA/FIDA/FeatureServer/0'
       console.log('click', point);
@@ -78,8 +81,8 @@ export class MapService {
             console.log(result1);
           });
         }
-      });*/
-    });
+      });
+    });*/
   }
 
   zoomToSwitzerland(): void {

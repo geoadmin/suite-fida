@@ -2,8 +2,12 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-export const environment = {
-  production: false 
+import { EnvironmentInterface } from './environment interface';
+
+export const environment: EnvironmentInterface = {
+  production: false,
+  //arcGisUrl: 'https://s7t4530a.adr.admin.ch/arcgis/'
+  arcGisUrl: 'https://jsapi.maps.arcgis.com',
 };
 
 /*
@@ -13,4 +17,4 @@ export const environment = {
  * This import should be commented out in production mode because it will have a negative impact
  * on performance if an error is thrown.
  */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+import 'zone.js/dist/zone-error';  // Included with Angular CLI.

@@ -1,0 +1,12 @@
+<table>
+    <thead>
+        <th><strong>Name</strong></th>
+        <th>Wert</th>
+    </thead>
+    <tbody>
+        <tr *ngFor="let attribute of feature?.attributes | keyvalue">
+            <td>{{ attribute.key }}</td>
+            <td>{{ attribute.value }}</td>
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,11 @@
+{
+    "arcGisUrlPlaceholder": "[EVIRONMENT_ARCGISURL]",   
+    "layers": [
+        {
+            "type": "FeatureLayer",
+            "properties": {
+                "url": "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/World_Countries_Cities/FeatureServer/2"
+            }
+        }
+    ]
+}

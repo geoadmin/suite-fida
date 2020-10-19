@@ -1,4 +1,4 @@
-<div #featureInfo class="feature-info py-2" [hidden]="!feature">
+<div #featureInfo class="py-2" [hidden]="!feature">
     <!-- title -->
     <div clas="row">
         <div class="col feature-info-title pb-2">
@@ -24,5 +24,14 @@
         </div>
     </div>
     
+    <!-- buttons -->
+    <div clas="row">
+        <div class="col">
+            <button (click)="edit($event)">edit</button>
+        </div>
+    </div>
+    
 </div>
+
+
 
