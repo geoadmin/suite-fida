@@ -21,7 +21,7 @@ export class LayersService {
     private templateService: TemplateService,
     private configService: ConfigService
   ) {
-    esriConfig.portalUrl = configService.getArcGisUrl();
+    esriConfig.portalUrl = configService.getArcGisPortal();
     this.portal = new Portal();
   }
 

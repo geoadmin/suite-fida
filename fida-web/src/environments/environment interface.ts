@@ -1,4 +1,5 @@
 export interface EnvironmentInterface {
   production: boolean;
-  arcGisUrl: string;
+  arcGisServer: string;
+  arcGisPortal: string;
 }

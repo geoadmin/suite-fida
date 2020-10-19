@@ -40,7 +40,7 @@ export class TemplateService {
     const factory = this.componentFactoryResolver.resolveComponentFactory(FeatureContainerComponent);
     const component = factory.create(this.injector);
     // set feature and trigger change
-    component.instance.feature = feature;
+    component.instance.setFeature(feature);
     component.changeDetectorRef.detectChanges();
     // return dom-element
     return component.location.nativeElement;
@@ -55,7 +55,7 @@ export class TemplateService {
     const component = factory.create(this.injector);
 
     // set feature and trigger change
-    component.instance.feature = feature;
+    component.instance.setFeature(feature);
     component.changeDetectorRef.detectChanges();
 
     // return dom-element

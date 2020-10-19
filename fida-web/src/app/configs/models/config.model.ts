@@ -3,9 +3,15 @@ export enum LayerType {
     MapImageLayer = "MapImageLayer"
 }
 
+export class RelationshipConfig {
+    name: string;
+    relationshipId: number;
+}
+
 export class LayerConfig {
     type: LayerType;
     properties: any;
+    relationships: [RelationshipConfig];
 }
 
 export class Config {

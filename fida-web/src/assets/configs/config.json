@@ -8,8 +8,11 @@
                 "gdbVersion": "SDE.DEFAULT",
                 "url": "[EVIRONMENT_ARCGISURL]/rest/services/FIDA/FIDA/FeatureServer/2",
                 "visible": false,
-                "outFields": ["*"]
-            }
+                "outFields": [
+                    "*"
+                ]
+            },
+            "relationships": []
         },
         {
             "type": "FeatureLayer",
@@ -18,8 +21,40 @@
                 "gdbVersion": "SDE.DEFAULT",
                 "url": "[EVIRONMENT_ARCGISURL]/rest/services/FIDA/FIDA/FeatureServer/1",
                 "visible": false,
-                "outFields": ["*"]
-            }
+                "outFields": [
+                    "*"
+                ]
+            },
+            "relationships": [
+                {
+                    "name": "nachfuehrungen",
+                    "relationshipId": 7
+                },
+                {
+                    "name": "grundbuchhfp",
+                    "relationshipId": 8
+                },
+                {
+                    "name": "auslandppunkthfp",
+                    "relationshipId": 9
+                },
+                {
+                    "name": "schweremessunghfp",
+                    "relationshipId": 10
+                },
+                {
+                    "name": "schaedenhfp",
+                    "relationshipId": 11
+                },
+                {
+                    "name": "LFP",
+                    "relationshipId": 6
+                },
+                {
+                    "name": "LSN",
+                    "relationshipId": 12
+                }
+            ]
         },
         {
             "type": "FeatureLayer",
@@ -27,9 +62,37 @@
                 "id": "LFN",
                 "gdbVersion": "SDE.DEFAULT",
                 "url": "[EVIRONMENT_ARCGISURL]/rest/services/FIDA/FIDA/FeatureServer/0",
-                "visible": false,
-                "outFields": ["*"]
-            }
+                "visible": true,
+                "outFields": [
+                    "*"
+                ]
+            },
+            "relationships": [
+                {
+                    "name": "nachfuehrungen",
+                    "relationshipId": 0
+                },
+                {
+                    "name": "rueckversicherunglfp",
+                    "relationshipId": 1
+                },
+                {
+                    "name": "grundbuchlfp",
+                    "relationshipId": 2
+                },
+                {
+                    "name": "kontakt",
+                    "relationshipId": 3
+                },
+                {
+                    "name": "LSN",
+                    "relationshipId": 4
+                },
+                {
+                    "name": "HFP",
+                    "relationshipId": 6
+                }
+            ]
         }
     ]
 }

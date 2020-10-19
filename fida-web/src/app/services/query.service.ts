@@ -1,4 +1,4 @@
-  import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import Geometry from 'esri/geometry/Geometry';
 import Query from 'esri/tasks/support/Query';

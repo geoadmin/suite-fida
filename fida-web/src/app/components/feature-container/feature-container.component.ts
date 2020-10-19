@@ -1,5 +1,5 @@
-import { ChangeDetectorRef, Component, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { FeatureService } from 'src/app/services/feature.service';
 import Feature from 'esri/Graphic'
 
 @Component({
@@ -11,20 +11,28 @@ export class FeatureContainerComponent implements OnInit {
   @ViewChild('viewContainer', { read: ViewContainerRef }) viewContainer: ViewContainerRef;
   @ViewChild('editContainer', { read: ViewContainerRef }) editContainer: ViewContainerRef;
 
-  @Input() feature: Feature;
   public editMode: boolean = false;
+  public feature: Feature
 
-  constructor(private changeDetectorRef:ChangeDetectorRef) { }
+  constructor(
+    private changeDetectorRef: ChangeDetectorRef,
+    private featureService: FeatureService
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  setFeature(feature: Feature): void {
+    this.feature = feature;
+    this.featureService.loadRelated(this.feature);
   }
 
   editClick() {
     this.setEditMode(true);
   }
 
-  onSave(feature: Feature) {
-    console.log("saved", feature.attributes.OBJECTID);
+  async onSave(feature: Feature) {
+    await this.featureService.updateFeature(feature);
     this.setEditMode(false);
   }
 
@@ -33,7 +41,7 @@ export class FeatureContainerComponent implements OnInit {
     this.setEditMode(false);
   }
 
-  private setEditMode(editMode: boolean){
+  private setEditMode(editMode: boolean) {
     this.editMode = editMode;
     this.changeDetectorRef.detectChanges();
   }

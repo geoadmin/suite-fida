@@ -6,8 +6,9 @@ import { EnvironmentInterface } from './environment interface';
 
 export const environment: EnvironmentInterface = {
   production: false,
-  //arcGisUrl: 'https://s7t4530a.adr.admin.ch/arcgis/'
-  arcGisUrl: 'https://jsapi.maps.arcgis.com',
+  arcGisServer: 'https://s7t2530a.adr.admin.ch/arcgis/',
+  arcGisPortal: 'https://s7t4530a.adr.admin.ch/arcgis/'
+  //arcGisUrl: 'https://jsapi.maps.arcgis.com',
 };
 
 /*

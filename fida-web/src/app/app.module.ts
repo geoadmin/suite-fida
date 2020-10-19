@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 // vendors
 import "./configs/esri-config";
+import  { SimpleNotificationsModule } from 'angular2-notifications';
 
 // components
 import { AppComponent } from './app.component';
@@ -47,7 +48,8 @@ export function createCompiler(compilerFactory: CompilerFactory) {
     FormsModule,
     BrowserModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    SimpleNotificationsModule.forRoot()
   ],
   providers: [
     { provide: COMPILER_OPTIONS, useValue: {}, multi: true },
