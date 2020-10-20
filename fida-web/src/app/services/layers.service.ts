@@ -55,6 +55,11 @@ export class LayersService {
     return this.layers;
   }
 
+  public getEditableFeatureLayers(): FeatureLayer[] {
+    // TODO filter editable layers only
+    return this.getLayers().map( m => m as FeatureLayer);
+  }
+
   private createLayer(layerConfig: LayerConfig): Layer {
     if (layerConfig.type == LayerType.FeatureLayer) {
       return new FeatureLayer(layerConfig.properties);

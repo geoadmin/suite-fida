@@ -9,12 +9,35 @@ import LayerList from 'esri/widgets/LayerList';
 
 @Injectable({ providedIn: 'root' })
 export class WidgetsService {
+  private featureCreateWidget: Expand;
 
   constructor() {
   }
 
   public getFeatureTableWidget() {
 
+  }
+
+  public registerFeatureCreateWidgetContent(element: ElementRef): void {
+    this.featureCreateWidget = new Expand({
+      expandIconClass: "esri-icon-edit",
+      expandTooltip: "Create Feature",
+      expanded: false,
+      content: element.nativeElement
+    });
+
+    //this.widgetNotifyService.onShowFeatureSubject.subscribe(feature => {
+    //  this.createWidget.expanded = true;
+    //});
+  }
+
+  public getFeatureCreateWidget(mapView: MapView): Expand {
+    if(!this.featureCreateWidget){
+      throw new Error('no feature-create-widget registered.');
+    }
+
+    this.featureCreateWidget.view = mapView;
+    return this.featureCreateWidget;
   }
 
   public getBasemapWidget(mapView: MapView): Expand {

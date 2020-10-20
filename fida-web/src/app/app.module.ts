@@ -14,14 +14,15 @@ import  { SimpleNotificationsModule } from 'angular2-notifications';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { MapComponent } from './components/map/map.component';
-import { FeatureInfoComponent } from './components/feature-info/feature-info.component';
-import { FeatureContainerComponent } from './components/feature-container/feature-container.component';
-import { FeatureEditComponent } from './components/feature-edit/feature-edit.component'
-import { FeatureViewComponent } from './components/feature-view/feature-view.component';
-import { FeatureAttributeEditComponent } from './components/feature-attribute-edit/feature-attribute-edit.component';
+import { FeatureInfoComponent } from './components/feature/feature-info/feature-info.component';
+import { FeatureContainerComponent } from './components/feature/feature-container/feature-container.component';
+import { FeatureEditComponent } from './components/feature/feature-edit/feature-edit.component'
+import { FeatureViewComponent } from './components/feature/feature-view/feature-view.component';
+import { AttributeEditComponent } from './components/feature/attribute-edit/attribute-edit.component';
 
 // config
 import { ConfigService } from './configs/config.service';
+import { FeatureCreateComponent } from './components/feature/feature-create/feature-create.component';
 
 export function initApp(configService: ConfigService) {
   return () => configService.load();
@@ -42,7 +43,8 @@ export function createCompiler(compilerFactory: CompilerFactory) {
     FeatureContainerComponent,
     FeatureEditComponent,
     FeatureViewComponent,
-    FeatureAttributeEditComponent
+    AttributeEditComponent,
+    FeatureCreateComponent
   ],
   imports: [
     FormsModule,

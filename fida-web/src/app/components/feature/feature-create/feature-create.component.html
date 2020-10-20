@@ -1,0 +1,19 @@
+<div #featureCreate class="feature-create" >
+    <div class="row h-100">
+        <!--- layer selection -->
+        <div class="col-9">
+            <select class="w-100 h-100" [(ngModel)]="selectedLayer" [disabled]="activated">
+                <option *ngFor="let layer of editableLayers" [ngValue]="layer" [selected]="layer === selectedLayer">
+                    {{layer.id}}
+                </option>
+            </select>
+        </div>
+        <!--- start button -->
+        <div class="col-3">
+            <button class="h-100" (click)="activate()" [class.activated]="activated"
+                [disabled]="isDisabled()">
+                <span class="esri-icon-edit"></span>
+            </button>
+        </div>
+    </div>
+</div>

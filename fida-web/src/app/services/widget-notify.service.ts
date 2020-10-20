@@ -6,9 +6,9 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class WidgetNotifyService {
-  public onShowFeatureSubject: Subject<any>;
+  public onFeatureCreatedSubject: Subject<any>;
   
   constructor() { 
-    this.onShowFeatureSubject = new Subject();
+    this.onFeatureCreatedSubject = new Subject();
   }
 }

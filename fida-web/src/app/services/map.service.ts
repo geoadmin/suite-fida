@@ -8,10 +8,12 @@ import { WidgetNotifyService } from 'src/app/services/widget-notify.service'
 import Map from 'esri/Map';
 import MapView from 'esri/views/MapView';
 import Extent from 'esri/geometry/Extent';
+import GraphicsLayer from 'esri/layers/GraphicsLayer';
 
 @Injectable({ providedIn: 'root' })
 export class MapService {
   private view: MapView;
+  private graphicsLayer: GraphicsLayer;
 
   constructor(
     private widgetsService: WidgetsService,
@@ -20,7 +22,7 @@ export class MapService {
     private widgetNotifyService: WidgetNotifyService
   ) { }
 
-  async initMap(mapContainer: ElementRef): Promise<void> {
+  public async initMap(mapContainer: ElementRef): Promise<void> {
     // create esri-map
     const basemap = await this.layersService.getBasemap();
     const layers = this.layersService.getLayers();
@@ -28,6 +30,10 @@ export class MapService {
       basemap: basemap,
       layers: layers
     });
+
+    // create graphic layer
+    this.graphicsLayer = new GraphicsLayer();
+    map.layers.add(this.graphicsLayer);
 
     // create esri-map-view
     this.view = new MapView({
@@ -41,6 +47,7 @@ export class MapService {
     this.view.ui.add(this.widgetsService.getZoomWidget(this.view), "top-left");
     this.view.ui.add(this.widgetsService.getSearchWidget(this.view), "top-right");
     this.view.ui.add(this.widgetsService.getLayerListWidget(this.view), "top-right");     
+    this.view.ui.add(this.widgetsService.getFeatureCreateWidget(this.view), "top-right");     
     
     await this.view.when().then(() => {
       this.zoomToSwitzerland();
@@ -85,7 +92,7 @@ export class MapService {
     });*/
   }
 
-  zoomToSwitzerland(): void {
+  public zoomToSwitzerland(): void {
     this.view.goTo(
       new Extent({
         xmax: 2852897,
@@ -95,5 +102,13 @@ export class MapService {
         spatialReference: this.view.spatialReference
       })
     );
+  }
+
+  public getMapView(): MapView {
+    return this.view;
+  }
+  
+  public getGraphicsLayer(): GraphicsLayer {
+    return this.graphicsLayer;
   }
 }

@@ -20,7 +20,7 @@ export class MapComponent implements OnInit {
 
   constructor(private mapservice: MapService) {}
 
-  ngOnInit(): void { 
-    this.mapservice.initMap(this.mapContainer);
+  async ngOnInit(): Promise<any> { 
+    await this.mapservice.initMap(this.mapContainer);
   }
 }

@@ -7,7 +7,7 @@
                 "id": "LSN",
                 "gdbVersion": "SDE.DEFAULT",
                 "url": "[EVIRONMENT_ARCGISURL]/rest/services/FIDA/FIDA/FeatureServer/2",
-                "visible": false,
+                "visible": true,
                 "outFields": [
                     "*"
                 ]
@@ -62,7 +62,7 @@
                 "id": "LFN",
                 "gdbVersion": "SDE.DEFAULT",
                 "url": "[EVIRONMENT_ARCGISURL]/rest/services/FIDA/FIDA/FeatureServer/0",
-                "visible": true,
+                "visible": false,
                 "outFields": [
                     "*"
                 ]

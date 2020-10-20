@@ -16,23 +16,44 @@ export class FeatureService {
   constructor(
     private configService: ConfigService,
     private messageService: MessageService
-    ) { }
+  ) { }
+
+  public addFeature(feature: Feature): Promise<any> {
+    // TODO save related
+    const applyEditProperties = {
+      addFeatures: [feature]
+    };
+    const featureLayer = this.getFeatureLayer(feature);
+    return this.applyEdits(featureLayer, applyEditProperties, 'successfully created');
+  }
 
   public updateFeature(feature: Feature): Promise<any> {
     // TODO save related
-    const featureLayer = this.getFeatureLayer(feature);
     const applyEditProperties = {
       updateFeatures: [feature]
     };
+    const featureLayer = this.getFeatureLayer(feature);
+    return this.applyEdits(featureLayer, applyEditProperties, 'successfully updated');
+  }
 
+  public deleteFeature(feature: Feature): Promise<any> {
+    // TODO delete related
+    const applyEditProperties = {
+      deleteFeatures: [feature]
+    };
+    const featureLayer = this.getFeatureLayer(feature);
+    return this.applyEdits(featureLayer, applyEditProperties, 'successfully deleted');
+  }
+
+  private applyEdits(featureLayer: FeatureLayer, applyEditProperties: any, successMessage: string): Promise<any> {
     const applyEditResponse = new Promise((resolve, reject) => {
       featureLayer.applyEdits(applyEditProperties)
         .then((result: any) => {
-          this.messageService.success('Successfully saved.');
+          this.messageService.success(successMessage);
           resolve(result);
         })
         .catch((error: any) => {
-          this.messageService.error('Save failed.', error);
+          this.messageService.error('Save failed.', this.formatError(error));
           reject(error);
         });
     })
@@ -40,6 +61,9 @@ export class FeatureService {
   }
 
   public loadRelated(feature: Feature) {
+    if (!feature.layer) {
+      throw new Error('no layer found');
+    }
     const relationshipConfigs = this.configService.getRelationshipConfigs(feature.layer.id);
 
     relationshipConfigs.forEach(relationshipConfig => {
@@ -70,6 +94,10 @@ export class FeatureService {
       throw new Error(`layer ${feature.layer.id} is no FeatureLayer`);
     }
     return featureLayer;
+
   }
 
+  private formatError(error: any): string {
+    return error.details ? error.details.messages.join('. ') : error;
+  }
 }

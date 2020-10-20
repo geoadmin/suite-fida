@@ -1,15 +1,16 @@
 import { Injectable, ComponentFactoryResolver, Injector, Compiler, ComponentFactory, Component, ModuleWithComponentFactories, NgModule } from '@angular/core';
-import { FeatureContainerComponent } from '../components/feature-container/feature-container.component'
+import { FeatureContainerComponent, FeatureMode } from '../components/feature/feature-container/feature-container.component'
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
-import PopupTemplate from 'esri/PopupTemplate';
 import { CommonModule } from '@angular/common';
+import PopupTemplate from 'esri/PopupTemplate';
+import Feature from 'esri/Graphic';
 
 @Injectable({ providedIn: 'root' })
 export class TemplateService {
-  componentRef: any;
-  featureViewTemplate: string;
-  featureEditTemplate: string;
+  private componentRef: any;
+  private featureViewTemplate: string;
+  private featureEditTemplate: string;
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
@@ -24,29 +25,32 @@ export class TemplateService {
       .subscribe(data => this.featureEditTemplate = data);
   }
 
-  public getFeatureTemplate(): PopupTemplate {
+  public getFeatureTemplate(createMode?: boolean): PopupTemplate {
+    let self = this;
     return new PopupTemplate({
       title: 'Population in {OBJECTID}',
       content: (result: any) => {
         //return this.createFeatureComponent(feature);
-        return this.createFeatureContainerComponent(result.graphic);
+        const feature: Feature = result.graphic;
+        const featureMode: FeatureMode = createMode === true? FeatureMode.Create: FeatureMode.View;
+        return self.createFeatureContainerComponent(feature, featureMode);
       },
       outFields: ['*']
-    })
+    });
   }
 
-  private createFeatureContainerComponent(feature: any): any {
+  private createFeatureContainerComponent(feature: Feature, featureMode: FeatureMode): any {
     // create feature component
     const factory = this.componentFactoryResolver.resolveComponentFactory(FeatureContainerComponent);
     const component = factory.create(this.injector);
     // set feature and trigger change
-    component.instance.setFeature(feature);
+    component.instance.setFeature(feature, featureMode);
     component.changeDetectorRef.detectChanges();
     // return dom-element
     return component.location.nativeElement;
   }
 
-  private createFeatureComponent(feature: any): any {
+  private createFeatureComponent(feature: Feature): any {
     let metadata = {
       selector: 'runtime-component',
       template: this.featureViewTemplate
