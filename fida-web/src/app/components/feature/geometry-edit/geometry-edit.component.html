@@ -1,0 +1,6 @@
+<div #geometryEdit class="geometry-edit d-flex flex-row">
+    <div *ngIf="activated">
+        <button type="button" class="btn btn-success" (click)="saveClick()">Save</button>
+        <button type="button" class="btn btn-default ml-2" (click)="cancelClick()">Cancel</button>
+    </div>
+</div>

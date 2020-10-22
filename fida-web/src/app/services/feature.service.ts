@@ -62,7 +62,7 @@ export class FeatureService {
 
   public loadRelated(feature: Feature) {
     if (!feature.layer) {
-      throw new Error('no layer found');
+      return;
     }
     const relationshipConfigs = this.configService.getRelationshipConfigs(feature.layer.id);
 
@@ -89,12 +89,15 @@ export class FeatureService {
   }
 
   private getFeatureLayer(feature: Feature): FeatureLayer {
-    const featureLayer = feature.layer as FeatureLayer;
+    let featureLayer = feature.layer as FeatureLayer;
     if (!featureLayer) {
-      throw new Error(`layer ${feature.layer.id} is no FeatureLayer`);
+      // try sourceLayer
+      featureLayer = (feature as any).sourceLayer as FeatureLayer;
+      if (!featureLayer) {
+        throw new Error(`layer ${feature.layer.id} is no FeatureLayer`);
+      }
     }
     return featureLayer;
-
   }
 
   private formatError(error: any): string {

@@ -23,6 +23,7 @@ import { AttributeEditComponent } from './components/feature/attribute-edit/attr
 // config
 import { ConfigService } from './configs/config.service';
 import { FeatureCreateComponent } from './components/feature/feature-create/feature-create.component';
+import { GeometryEditComponent } from './components/feature/geometry-edit/geometry-edit.component';
 
 export function initApp(configService: ConfigService) {
   return () => configService.load();
@@ -44,7 +45,8 @@ export function createCompiler(compilerFactory: CompilerFactory) {
     FeatureEditComponent,
     FeatureViewComponent,
     AttributeEditComponent,
-    FeatureCreateComponent
+    FeatureCreateComponent,
+    GeometryEditComponent
   ],
   imports: [
     FormsModule,

@@ -2,13 +2,13 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MapService } from 'src/app/services/map.service';
 import { WidgetsService } from 'src/app/services/widgets.service';
 import { LayersService } from 'src/app/services/layers.service';
-import MapView from 'esri/views/MapView';
-import FeatureLayer from 'esri/layers/FeatureLayer';
-import Graphic from 'esri/Graphic';
-import SketchViewModel from 'esri/widgets/Sketch/SketchViewModel';
-import GraphicsLayer from 'esri/layers/GraphicsLayer';
 import { TemplateService } from 'src/app/services/template.service';
 import { WidgetNotifyService } from 'src/app/services/widget-notify.service';
+import MapView from 'esri/views/MapView';
+import FeatureLayer from 'esri/layers/FeatureLayer';
+import Feature from 'esri/Graphic';
+import SketchViewModel from 'esri/widgets/Sketch/SketchViewModel';
+import GraphicsLayer from 'esri/layers/GraphicsLayer';
 
 @Component({
   selector: 'app-feature-create',
@@ -16,14 +16,14 @@ import { WidgetNotifyService } from 'src/app/services/widget-notify.service';
   styleUrls: ['./feature-create.component.scss']
 })
 export class FeatureCreateComponent implements OnInit {
-  @ViewChild('featureCreate', { static: true }) private featureInfoElement: ElementRef;
+  @ViewChild('featureCreate', { static: true }) private featureCreateElement: ElementRef;
   public editableLayers: FeatureLayer[] = [];
   public selectedLayer: FeatureLayer;
   public activated: boolean = false;
   public sketchViewModel: SketchViewModel
   private mapView: MapView;
   private graphicsLayer: GraphicsLayer;
-
+  private feature: Feature;
 
   constructor(
     private widgetsService: WidgetsService,
@@ -34,69 +34,82 @@ export class FeatureCreateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.widgetsService.registerFeatureCreateWidgetContent(this.featureInfoElement);
+    this.widgetsService.registerFeatureCreateWidgetContent(this.featureCreateElement);
     this.editableLayers = this.layerService.getEditableFeatureLayers();
-    this.selectedLayer = this.editableLayers.length > 0 ? this.editableLayers[0] : undefined;
-
+    
+    // select layer
+    this.editableLayers.forEach(layer => {
+      if(layer.visible === true){
+        this.selectedLayer = layer;    
+      }
+    });
+    if(!this.selectedLayer){
+      this.selectedLayer = this.editableLayers.length > 0 ? this.editableLayers[0] : undefined;
+    }
+    
     this.widgetNotifyService.onFeatureCreatedSubject.subscribe(() => {
-      this.onCreationComplete();
+      this.deactivate();
     });
   }
 
-  private startSketching() {
-    // init sketching
+  startClick(): void {
+    this.initSketch();
+    this.activate();
+    this.sketchViewModel.create(this.selectedLayer.templates[0].drawingTool as any);
+  }
+
+  createClick(): void {
+    // create feature
+    this.feature.attributes = { ...this.selectedLayer.templates[0].prototype.attributes };
+    this.feature.layer = this.selectedLayer; /* wieso kommt dieses property nicht beim popup an? */
+    (this.feature as any).sourceLayer = this.selectedLayer; /* sende layer über sourceLayer anstelle layer-property */
+
+    // send to edit-template
+    this.feature.popupTemplate = this.templateService.getFeatureTemplate(true);
+    this.mapView.popup.features = [this.feature];
+    this.mapView.popup.visible = true;
+  }
+
+  cancelClick(): void {
+    this.deactivate();
+    this.sketchViewModel.cancel();
+  }
+
+  private initSketch(): void {
     if (!this.sketchViewModel) {
       this.mapView = this.mapService.getMapView();
       this.graphicsLayer = this.mapService.getGraphicsLayer();
       this.sketchViewModel = new SketchViewModel({ view: this.mapView, layer: this.graphicsLayer })
-    }
-
-    this.sketchViewModel.create(this.selectedLayer.templates[0].drawingTool as any);
-    this.sketchViewModel.on('create', (event) => {
-      this.onSketchingComplete(event);
-      this.stopSketching();
-    });
-  }
-
-  private onSketchingComplete(event: any) {
-    // create feature
-    const feature: Graphic = event.graphic;
-    feature.attributes = { ...this.selectedLayer.templates[0].prototype.attributes };
-    feature.layer = this.selectedLayer;
-
-    // send to edit-template
-    feature.popupTemplate = this.templateService.getFeatureTemplate(true);
-    this.mapView.popup.features = [feature];
-    this.mapView.popup.visible = true;
-  }
-
-  private onCreationComplete() {
-    // clear popup template
-    this.mapView.popup.visible = false;
-    this.mapView.popup.clear();
-  }
-
-
-  public activate() {
-    if (this.activated || !this.selectedLayer) {
-      this.activated = false;
-      this.stopSketching();
-    } else {
-      this.activated = true;
-      this.startSketching();
+      
+      this.sketchViewModel.on(['create','update'] as any , (event: any) => {
+        console.log("update", event.state, event.toolEventInfo);
+        if (event.state === "complete") {
+          // do not allow stop sketching on map click
+          if (this.activated === true) {
+            this.feature = event.graphic;
+            this.sketchViewModel.update(this.feature, { tool: 'move' });
+          }
+        }
+      });
     }
   }
-  private stopSketching(): void {
-    // TODO
-    this.graphicsLayer.removeAll();
-  }
 
-  public deactivate() {
+  private deactivate(): void {
     this.activated = false;
-    this.stopSketching();
+    this.feature = undefined;
+    this.graphicsLayer.removeAll();
+
+    this.mapView.popup.visible = false;
+    this.mapService.enablePopup(true);
   }
 
-  public isDisabled(): boolean {
-    return this.editableLayers.length === 0;
+  private activate(): void {
+    this.activated = true;
+    this.feature = undefined;
+    this.graphicsLayer.removeAll();
+
+    this.mapView.popup.visible = false;
+    this.mapService.enablePopup(false);
   }
+
 }

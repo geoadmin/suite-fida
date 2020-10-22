@@ -2,6 +2,8 @@ import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, ViewContain
 import { FeatureService } from 'src/app/services/feature.service';
 import Feature from 'esri/Graphic'
 import { WidgetNotifyService } from 'src/app/services/widget-notify.service';
+import { MapService } from 'src/app/services/map.service';
+import Geometry from 'esri/geometry/Geometry';
 
 export enum FeatureMode {
   View = 'view',
@@ -27,33 +29,38 @@ export class FeatureContainerComponent implements OnInit, OnDestroy {
     private widgetNotifyService: WidgetNotifyService
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     console.log('Items destroyed');
   }
 
-  public setFeature(feature: Feature, featureMode: FeatureMode): void {
-    this.feature = feature;
-    this.setFeatureMode(featureMode);
-    this.featureService.loadRelated(this.feature);
-  }
-
-  isViewMode() {
+  isViewMode(): boolean {
     return this.featureMode === FeatureMode.View;
   }
 
-  editClick() {
+  editClick(): void {
     this.setFeatureMode(FeatureMode.Edit);
   }
 
-  async deleteClick() {
-    await this.featureService.deleteFeature(this.feature);
-    this.ngOnDestroy();
+  editGeometryClick(): void {
+    let onGeometryEditCompleteSubscription = this.widgetNotifyService.onGeometryEditCompleteSubject.subscribe((geometry: Geometry) => {
+      onGeometryEditCompleteSubscription.unsubscribe();
+      this.feature.geometry = geometry;
+      this.featureService.updateFeature(this.feature);
+    });
+    
+    this.widgetNotifyService.onGeometryEditSubject.next(this.feature.geometry);
   }
 
-  async onSave(feature: Feature) {
+  async deleteClick(): Promise<void> {
+    await this.featureService.deleteFeature(this.feature);
+    // TODO destroy itself...
+    //this.ngOnDestroy();
+  }
+
+  async onSave(feature: Feature): Promise<void> {
     // on edit
     if (this.featureMode == FeatureMode.Edit) {
       await this.featureService.updateFeature(feature);
@@ -67,11 +74,17 @@ export class FeatureContainerComponent implements OnInit, OnDestroy {
     }
   }
 
-  onCancle() {
+  onCancel(): void {
     this.setFeatureMode(FeatureMode.View);
   }
 
-  private setFeatureMode(featureMode: FeatureMode) {
+  public setFeature(feature: Feature, featureMode: FeatureMode): void {
+    this.feature = feature;
+    this.setFeatureMode(featureMode);
+    this.featureService.loadRelated(this.feature);
+  }
+  
+  private setFeatureMode(featureMode: FeatureMode): void {
     this.featureMode = featureMode;
     this.changeDetectorRef.detectChanges();
   }

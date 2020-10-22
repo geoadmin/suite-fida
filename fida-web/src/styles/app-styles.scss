@@ -1,4 +1,3 @@
-
 html,
 body {
   height: 100%;
@@ -6,7 +5,7 @@ body {
 
 body {
   margin: 0;
-  font-family: 'Frutiger Neue', 'Helvetica Neue', sans-serif;
+  font-family: "Frutiger Neue", "Helvetica Neue", sans-serif;
 }
 
 :root {
@@ -16,21 +15,64 @@ body {
 :focus {
   outline: none;
 }
+
+// ----------------------------------------------------------------------------------------------------
+// form styles
+// ----------------------------------------------------------------------------------------------------
+.form-control {
+  padding: 0;
+  margin: 0;
+  border-radius: 0;
+}
+
+.form-group {
+  margin: 0;
+}
+
+// ----------------------------------------------------------------------------------------------------
+// button styles
+// ----------------------------------------------------------------------------------------------------
+.btn {
+  padding-top: 0;
+  padding-bottom: 0;
+  margin: 0;
+  border-radius: 0;
+}
+
+// ----------------------------------------------------------------------------------------------------
+// simple-notification styles
+// ----------------------------------------------------------------------------------------------------
+.simple-notification {
+  min-height: 0px !important;
+}
+
+.simple-notification .icon svg {
+  width: 24px !important;
+  height: 24px !important;
+}
+
+.sn-title {
+  font-size: 14px !important;
+}
+
+.sn-content {
+  font-size: 12px !important;
+}
+
 // ----------------------------------------------------------------------------------------------------
 // esri-widget styles
 // ----------------------------------------------------------------------------------------------------
-
 .esri-widget {
-	font-family: 'Frutiger Neue', 'Helvetica Neue', sans-serif;
-	color: var(--dark-contrast);
-  }
-  
+  font-family: "Frutiger Neue", "Helvetica Neue", sans-serif;
+  color: var(--dark-contrast);
+}
+
 .esri-widget--button:not(.esri-search__submit-button) {
-	border: 1px solid var(--dark-contrast);
+  border: 1px solid var(--dark-contrast);
 }
 
 .esri-expand__panel {
-	//border: 1px solid var(--dark-contrast);
+  //border: 1px solid var(--dark-contrast);
 }
 
 .esri-view {
@@ -38,14 +80,13 @@ body {
   .esri-component:focus,
   .esri-widget:focus,
   .esri-attribution__sources:focus {
-	outline: none !important;
+    outline: none !important;
   }
 }
 
 .esri-view-width-xlarge .esri-popup__main-container,
 .esri-view-width-large .esri-popup__main-container,
-.esri-view-width-medium .esri-popup__main-container
-{
+.esri-view-width-medium .esri-popup__main-container {
   min-height: 100% !important;
   min-width: 50% !important;
 }
