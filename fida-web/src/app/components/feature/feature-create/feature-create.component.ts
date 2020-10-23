@@ -20,6 +20,7 @@ export class FeatureCreateComponent implements OnInit {
   public editableLayers: FeatureLayer[] = [];
   public selectedLayer: FeatureLayer;
   public activated: boolean = false;
+  public wating: boolean = false;
   public sketchViewModel: SketchViewModel
   private mapView: MapView;
   private graphicsLayer: GraphicsLayer;
@@ -36,18 +37,18 @@ export class FeatureCreateComponent implements OnInit {
   ngOnInit(): void {
     this.widgetsService.registerFeatureCreateWidgetContent(this.featureCreateElement);
     this.editableLayers = this.layerService.getEditableFeatureLayers();
-    
+
     // select layer
     this.editableLayers.forEach(layer => {
-      if(layer.visible === true){
-        this.selectedLayer = layer;    
+      if (layer.visible === true) {
+        this.selectedLayer = layer;
       }
     });
-    if(!this.selectedLayer){
+    if (!this.selectedLayer) {
       this.selectedLayer = this.editableLayers.length > 0 ? this.editableLayers[0] : undefined;
     }
-    
-    this.widgetNotifyService.onFeatureCreatedSubject.subscribe(() => {
+
+    this.widgetNotifyService.onFeatureCreatedSubject.subscribe((success: boolean) => {
       this.deactivate();
     });
   }
@@ -68,6 +69,8 @@ export class FeatureCreateComponent implements OnInit {
     this.feature.popupTemplate = this.templateService.getFeatureTemplate(true);
     this.mapView.popup.features = [this.feature];
     this.mapView.popup.visible = true;
+
+    this.wating = true;
   }
 
   cancelClick(): void {
@@ -80,13 +83,14 @@ export class FeatureCreateComponent implements OnInit {
       this.mapView = this.mapService.getMapView();
       this.graphicsLayer = this.mapService.getGraphicsLayer();
       this.sketchViewModel = new SketchViewModel({ view: this.mapView, layer: this.graphicsLayer })
-      
-      this.sketchViewModel.on(['create','update'] as any , (event: any) => {
-        console.log("update", event.state, event.toolEventInfo);
+
+      this.sketchViewModel.on(['create', 'update'] as any, (event: any) => {
         if (event.state === "complete") {
           // do not allow stop sketching on map click
           if (this.activated === true) {
-            this.feature = event.graphic;
+            if (event.graphic) {
+              this.feature = event.graphic;
+            }
             this.sketchViewModel.update(this.feature, { tool: 'move' });
           }
         }
@@ -96,6 +100,7 @@ export class FeatureCreateComponent implements OnInit {
 
   private deactivate(): void {
     this.activated = false;
+    this.wating = false;
     this.feature = undefined;
     this.graphicsLayer.removeAll();
 
@@ -106,6 +111,7 @@ export class FeatureCreateComponent implements OnInit {
   private activate(): void {
     this.activated = true;
     this.feature = undefined;
+    this.wating = false;
     this.graphicsLayer.removeAll();
 
     this.mapView.popup.visible = false;

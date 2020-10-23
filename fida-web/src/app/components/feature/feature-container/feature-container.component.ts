@@ -45,12 +45,14 @@ export class FeatureContainerComponent implements OnInit, OnDestroy {
   }
 
   editGeometryClick(): void {
-    let onGeometryEditCompleteSubscription = this.widgetNotifyService.onGeometryEditCompleteSubject.subscribe((geometry: Geometry) => {
+    let onGeometryEditCompleteSubscription = this.widgetNotifyService.onGeometryEditCompleteSubject.subscribe(async (geometry: Geometry) => {
       onGeometryEditCompleteSubscription.unsubscribe();
       this.feature.geometry = geometry;
+
+      await this.featureService.refreshRelatedGrundbuchFeatures(this.feature);
       this.featureService.updateFeature(this.feature);
     });
-    
+
     this.widgetNotifyService.onGeometryEditSubject.next(this.feature.geometry);
   }
 
@@ -70,12 +72,15 @@ export class FeatureContainerComponent implements OnInit, OnDestroy {
     // on create
     else if (this.featureMode == FeatureMode.Create) {
       await this.featureService.addFeature(feature);
-      this.widgetNotifyService.onFeatureCreatedSubject.next();
+      this.widgetNotifyService.onFeatureCreatedSubject.next(true);
     }
   }
 
   onCancel(): void {
-    this.setFeatureMode(FeatureMode.View);
+    if (this.featureMode == FeatureMode.Create) {
+      this.widgetNotifyService.onFeatureCreatedSubject.next(false);
+    }
+    this.setFeatureMode(FeatureMode.View);    
   }
 
   public setFeature(feature: Feature, featureMode: FeatureMode): void {

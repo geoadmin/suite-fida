@@ -1,6 +1,7 @@
 export enum LayerType {
     FeatureLayer = "FeatureLayer",
-    MapImageLayer = "MapImageLayer"
+    MapImageLayer = "MapImageLayer",
+    QueryLayer = "QueryLayer"
 }
 
 export class RelationshipConfig {
@@ -11,7 +12,7 @@ export class RelationshipConfig {
 export class LayerConfig {
     type: LayerType;
     properties: any;
-    relationships: [RelationshipConfig];
+    relationships?: [RelationshipConfig];
 }
 
 export class Config {

@@ -58,8 +58,6 @@ export class MapService {
      // init popup 
      this.view.popup.dockOptions.position = 'top-left'
      this.view.popup.dockEnabled = true;
-    
-    
   }
 
   private zoomToSwitzerland(): void {

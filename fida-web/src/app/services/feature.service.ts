@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Observable, from } from 'rxjs';
 import { ConfigService } from '../configs/config.service';
 import { RelationshipConfig } from '../configs/models/config.model';
 import { MessageService } from './message.service';
 
 import Feature from 'esri/Graphic';
-import RelationshipQuery from 'esri/tasks/support/RelationshipQuery';
 import FeatureLayer from 'esri/layers/FeatureLayer';
+import { LayersService } from './layers.service';
+import { QueryService } from './query.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,9 @@ export class FeatureService {
 
   constructor(
     private configService: ConfigService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private layersService: LayersService,
+    private queryService: QueryService
   ) { }
 
   public addFeature(feature: Feature): Promise<any> {
@@ -53,7 +55,7 @@ export class FeatureService {
           resolve(result);
         })
         .catch((error: any) => {
-          this.messageService.error('Save failed.', this.formatError(error));
+          this.messageService.error('Save failed.', error);
           reject(error);
         });
     })
@@ -69,23 +71,30 @@ export class FeatureService {
     relationshipConfigs.forEach(relationshipConfig => {
       this.querRelated(feature, relationshipConfig);
     });
+  }
 
+  public async refreshRelatedGrundbuchFeatures(feature: Feature) {
+    // TODO create buffer geometry
+    // query gemeinde
+    const gemeindeLayerConfig = this.layersService.getQueryLayerConfig('gemeinde');
+    const gemeindeUrl = gemeindeLayerConfig.properties.url;
+    return this.queryService.intersect(gemeindeUrl, feature.geometry).then((features) => {
+      features.forEach((feature) => {
+        console.log(feature.attributes.bezirksnummer,feature.attributes.kantonsnummer,feature.attributes.name);
+      })
+    });
+    // TODO lade land kanton bezirk und parzellen info
   }
 
   private querRelated(feature: Feature, relationshipConfig: RelationshipConfig) {
-    const query = new RelationshipQuery();
-    query.objectIds = [feature.attributes.OBJECTID];
-    query.relationshipId = relationshipConfig.relationshipId;
-    query.outFields = ["*"];
-
+    const objectIds = [feature.attributes.OBJECTID];
+    const relationshipId = relationshipConfig.relationshipId;
     const featureLayer = this.getFeatureLayer(feature);
-    featureLayer.queryRelatedFeatures(query).then((result: any) => {
-      //feature[RelationshipConfig.name] = result
-      // TODO
-      console.log(result);
-    }).catch((error) => {
-      console.log(error);
-    });
+
+    this.queryService.relatedFeatures(featureLayer, objectIds, relationshipId).then((result) => {
+        // TODO
+      });
+
   }
 
   private getFeatureLayer(feature: Feature): FeatureLayer {
@@ -98,9 +107,5 @@ export class FeatureService {
       }
     }
     return featureLayer;
-  }
-
-  private formatError(error: any): string {
-    return error.details ? error.details.messages.join('. ') : error;
   }
 }

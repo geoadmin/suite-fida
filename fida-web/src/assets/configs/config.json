@@ -2,15 +2,52 @@
     "arcGisUrlPlaceholder": "[EVIRONMENT_ARCGISURL]",
     "layers": [
         {
+            "type": "QueryLayer",
+            "properties": {
+                "id": "parzelle",
+                "gdbVersion": "SDE.DEFAULT",
+                "url": "[EVIRONMENT_ARCGISURL]/rest/services/FIDA/NP_BUND_MOGIS/MapServer/0"
+            }
+        },
+        {
+            "type": "QueryLayer",
+            "properties": {
+                "id": "gemeinde",
+                "gdbVersion": "SDE.DEFAULT",
+                "url": "[EVIRONMENT_ARCGISURL]/rest/services/FIDA/NP_BUND_MOGIS/MapServer/1"
+            }
+        },
+        {
+            "type": "QueryLayer",
+            "properties": {
+                "id": "bezirk",
+                "gdbVersion": "SDE.DEFAULT",
+                "url": "[EVIRONMENT_ARCGISURL]/rest/services/FIDA/NP_BUND_MOGIS/MapServer/2"
+            }
+        },
+        {
+            "type": "QueryLayer",
+            "properties": {
+                "id": "kanton",
+                "gdbVersion": "SDE.DEFAULT",
+                "url": "[EVIRONMENT_ARCGISURL]/rest/services/FIDA/NP_BUND_MOGIS/MapServer/3"
+            }
+        },
+        {
+            "type": "QueryLayer",
+            "properties": {
+                "id": "land",
+                "gdbVersion": "SDE.DEFAULT",
+                "url": "[EVIRONMENT_ARCGISURL]/rest/services/FIDA/NP_BUND_MOGIS/MapServer/4"
+            }
+        },
+        {
             "type": "FeatureLayer",
             "properties": {
                 "id": "LSN",
                 "gdbVersion": "SDE.DEFAULT",
                 "url": "[EVIRONMENT_ARCGISURL]/rest/services/FIDA/FIDA/FeatureServer/2",
-                "visible": false,
-                "outFields": [
-                    "*"
-                ]
+                "visible": false
             },
             "relationships": []
         },
@@ -20,10 +57,7 @@
                 "id": "HFP",
                 "gdbVersion": "SDE.DEFAULT",
                 "url": "[EVIRONMENT_ARCGISURL]/rest/services/FIDA/FIDA/FeatureServer/1",
-                "visible": false,
-                "outFields": [
-                    "*"
-                ]
+                "visible": false
             },
             "relationships": [
                 {
@@ -62,10 +96,7 @@
                 "id": "LFN",
                 "gdbVersion": "SDE.DEFAULT",
                 "url": "[EVIRONMENT_ARCGISURL]/rest/services/FIDA/FIDA/FeatureServer/0",
-                "visible": true,
-                "outFields": [
-                    "*"
-                ]
+                "visible": true
             },
             "relationships": [
                 {

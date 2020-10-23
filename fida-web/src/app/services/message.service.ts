@@ -21,9 +21,24 @@ export class MessageService {
   public error(title: string, body?: string) {
     this.notificationsService.error(
       title, 
-      body ? body : null,
+      body ? this.formatError(body) : null,
       {
         timeOut: this.TIMEOUT
       });
+  }
+
+  private formatError(error: any): string {
+    let errors: string [] = [];
+    if(error.message){
+      errors.push(error.message);
+    }
+    if(error.details && error.details.messages){
+      errors.concat(error.messages);
+    }
+    if(errors.length === 0){
+      errors.push(error);
+    }
+
+    return errors.join('. ');
   }
 }

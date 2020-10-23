@@ -14,7 +14,6 @@ import  { SimpleNotificationsModule } from 'angular2-notifications';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { MapComponent } from './components/map/map.component';
-import { FeatureInfoComponent } from './components/feature/feature-info/feature-info.component';
 import { FeatureContainerComponent } from './components/feature/feature-container/feature-container.component';
 import { FeatureEditComponent } from './components/feature/feature-edit/feature-edit.component'
 import { FeatureViewComponent } from './components/feature/feature-view/feature-view.component';
@@ -40,7 +39,6 @@ export function createCompiler(compilerFactory: CompilerFactory) {
     AppComponent,
     HeaderComponent,
     MapComponent,
-    FeatureInfoComponent,
     FeatureContainerComponent,
     FeatureEditComponent,
     FeatureViewComponent,
@@ -63,7 +61,6 @@ export function createCompiler(compilerFactory: CompilerFactory) {
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    FeatureInfoComponent,
     FeatureContainerComponent
   ]
 })

@@ -13,7 +13,7 @@ export class TemplateService {
   public getFeatureTemplate(createMode?: boolean): PopupTemplate {
     let self = this;
     return new PopupTemplate({
-      title: 'Population in {OBJECTID}',
+      title: 'Feature {OBJECTID}',
       content: (result: any) => {
         //return this.createFeatureComponent(feature);
         const feature: Feature = result.graphic;

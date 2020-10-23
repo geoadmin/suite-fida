@@ -59,7 +59,6 @@ export class GeometryEditComponent implements OnInit {
       this.sketchViewModel = new SketchViewModel({ view: this.mapView, layer: this.graphicsLayer })
 
       this.sketchViewModel.on('update', (event) => {
-        //console.log("update", event.state, event.toolEventInfo);
         if (event.state === "complete") {
           // do not allow stop sketching on map click
           if (this.activated === true) {

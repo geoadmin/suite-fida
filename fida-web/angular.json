@@ -17,7 +17,10 @@
         "build": {
           "builder": "@angular-builders/custom-webpack:browser",
           "options": {
-            "allowedCommonJsDependencies": ["esri", "tslib"],
+            "allowedCommonJsDependencies": [
+              "esri",
+              "tslib"
+            ],
             "customWebpackConfig": {
               "path": "./extra-webpack.config.js"
             },
@@ -36,7 +39,11 @@
               "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/jquery/dist/jquery.min.js",
+              "./node_modules/popper.js/dist/umd/popper.min.js",
+              "./node_modules/bootstrap/dist/js/bootstrap.min.js"
+            ]
           },
           "configurations": {
             "production": {

@@ -18,7 +18,7 @@
 
     <!-- edit -->
     <div class="row" *ngIf="!isViewMode()">
-        <div class="col mt-2">
+        <div class="col">
             <!--<div #editContainer></div>-->
             <app-feature-edit [feature]="feature" (save)="onSave($event)" (cancel)="onCancel()"></app-feature-edit>
         </div>

@@ -1,17 +1,17 @@
 <div #featureCreate class="feature-create d-flex flex-row">
-    <div *ngIf="!activated">
+    <div *ngIf="!activated && !wating">
         <!--- layer selection -->
-        <select class="flex-fill" [(ngModel)]="selectedLayer" [disabled]="activated">
+        <select class="flex-fill h-100" [(ngModel)]="selectedLayer" [disabled]="activated">
             <option *ngFor="let layer of editableLayers" [ngValue]="layer" [selected]="layer === selectedLayer">
                 {{layer.id}}
             </option>
         </select>
 
         <!--- start button -->
-        <button class="" (click)="startClick()">start</button>
+        <button class="btn btn-primary" (click)="startClick()">start</button>
     </div>
 
-    <div *ngIf="activated">
+    <div *ngIf="activated && !wating">
         <button type="button" class="btn btn-success" (click)="createClick()">Create</button>
         <button type="button" class="btn btn-default ml-2" (click)="cancelClick()">Cancel</button>
     </div>

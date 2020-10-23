@@ -8,7 +8,7 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class WidgetNotifyService {
-  public onFeatureCreatedSubject: Subject<any>;
+  public onFeatureCreatedSubject: Subject<boolean>;
   public onGeometryEditSubject: Subject<Geometry>;
   public onGeometryEditCompleteSubject: Subject<Geometry>;
 
