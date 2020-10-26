@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Observable, from } from 'rxjs';
 import { MessageService } from './message.service';
 import Geometry from 'esri/geometry/Geometry';
 import Query from 'esri/tasks/support/Query';
@@ -7,6 +6,7 @@ import QueryTask from 'esri/tasks/QueryTask';
 import RelationshipQuery from 'esri/tasks/support/RelationshipQuery'
 import FeatureLayer from 'esri/layers/FeatureLayer';
 import Feature from 'esri/Graphic';
+import EsriError from 'esri/core/Error';
 
 @Injectable({
   providedIn: 'root'
@@ -15,16 +15,16 @@ export class QueryService {
 
   constructor(private messageService: MessageService) { }
 
-  public relatedFeatures(featureLayer: FeatureLayer, objectIds: number[], relationshipId: number): Promise<any> {
+  public relatedFeatures(featureLayer: FeatureLayer, objectId: number, relationshipId: number): Promise<Feature[]> {
     const query = new RelationshipQuery();
-    query.objectIds = objectIds;
+    query.objectIds = [objectId];
     query.relationshipId = relationshipId;
     query.outFields = ["*"];
 
     return new Promise((resolve, reject) => {
       featureLayer.queryRelatedFeatures(query)
-        .then((result: any) => resolve(result))
-        .catch((error: any) => {
+        .then((result: any) => resolve(result[objectId].features))
+        .catch((error: EsriError) => {
           this.messageService.error('Query failed.', error);
           reject(error);
         });
@@ -39,7 +39,7 @@ export class QueryService {
     const queryTask = new QueryTask();
     queryTask.url = layerUrl;
 
-    return this.execute(queryTask, query).then((result:any)=>{
+    return this.execute(queryTask, query).then((result: any) => {
       return result.features;
     });
   }
@@ -57,7 +57,7 @@ export class QueryService {
     return new Promise((resolve, reject) => {
       queryTask.execute(query)
         .then((result: any) => resolve(result))
-        .catch((error: any) => {
+        .catch((error: EsriError) => {
           this.messageService.error('Query failed.', error);
           reject(error);
         });

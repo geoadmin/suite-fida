@@ -1,12 +1,58 @@
-<table>
-    <thead>
-        <th><strong>Name</strong></th>
-        <th>Wert</th>
-    </thead>
-    <tbody>
-        <tr *ngFor="let attribute of feature?.attributes | keyvalue">
-            <td>{{ attribute.key }}</td>
-            <td>{{ attribute.value }}</td>
-        </tr>
-    </tbody>
-</table>
+<!-- tab nav -->
+<ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" href="#general_tab" role="tab" data-toggle="tab">Allgemein</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#attachments_tab" role="tab" data-toggle="tab">Attachments</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#grundbuch_tab" role="tab" data-toggle="tab">Grundbuch</a>
+    </li>
+    <!-- <li class="nav-item">
+        <a class="nav-link" href="#nachfuerung_tab" role="tab" data-toggle="tab">Nachfuerung</a>
+    </li> -->
+</ul>
+
+<!-- tab panes -->
+<div class="tab-content">
+
+    <!--general attributes -->
+    <div role="tabpanel" class="tab-pane fade in active show py-2" id="general_tab">
+        <table>
+            <thead>
+                <th><strong>Name</strong></th>
+                <th>Wert</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let attribute of feature?.attributes | keyvalue">
+                    <td>{{ attribute.key }}</td>
+                    <td>{{ attribute.value }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!--attachments -->
+    <div role="tabpanel" class="tab-pane fade py-2" id="attachments_tab">
+        <div #attachemts></div>
+    </div>
+
+    <div role="tabpanel" class="tab-pane fade py-2" id="grundbuch_tab">
+        <div *ngFor="let relatedFeature of feature?.grundbuchFeatures">
+            <table>
+                <thead>
+                    <th><strong>Name</strong></th>
+                    <th>Wert</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let attribute of relatedFeature.attributes | keyvalue">
+                        <td>{{ attribute.key }}</td>
+                        <td>{{ attribute.value }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div role="tabpanel" class="tab-pane fade py-2" id="nachfuerung_tab">nachfuerung</div>
+</div>

@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
+import { from, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { QueryService } from './query.service';
 import { ConfigService } from '../configs/config.service';
-import { RelationshipConfig } from '../configs/models/config.model';
+import { RelationshipConfig } from '../models/config.model';
 import { MessageService } from './message.service';
-
 import Feature from 'esri/Graphic';
 import FeatureLayer from 'esri/layers/FeatureLayer';
-import { LayersService } from './layers.service';
-import { QueryService } from './query.service';
+import Relationship from 'esri/layers/support/Relationship';
+import { FidaFeature } from '../models/FidaFeature.model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +19,6 @@ export class FeatureService {
   constructor(
     private configService: ConfigService,
     private messageService: MessageService,
-    private layersService: LayersService,
     private queryService: QueryService
   ) { }
 
@@ -48,53 +50,43 @@ export class FeatureService {
   }
 
   private applyEdits(featureLayer: FeatureLayer, applyEditProperties: any, successMessage: string): Promise<any> {
-    const applyEditResponse = new Promise((resolve, reject) => {
-      featureLayer.applyEdits(applyEditProperties)
-        .then((result: any) => {
-          this.messageService.success(successMessage);
-          resolve(result);
-        })
-        .catch((error: any) => {
-          this.messageService.error('Save failed.', error);
-          reject(error);
-        });
-    })
-    return applyEditResponse;
+    return new Promise((resolve, reject) => {
+      featureLayer.applyEdits(applyEditProperties).then((result: any) => {
+        this.messageService.success(successMessage);
+        resolve(result);
+      }).catch((error: any) => {
+        this.messageService.error('Save failed.', error);
+        reject(error);
+      });
+    });
   }
 
-  public loadRelated(feature: Feature) {
+  public loadRelated(feature: FidaFeature): Promise<any> {
     if (!feature.layer) {
       return;
     }
-    const relationshipConfigs = this.configService.getRelationshipConfigs(feature.layer.id);
-
-    relationshipConfigs.forEach(relationshipConfig => {
-      this.querRelated(feature, relationshipConfig);
+    const featureLayer = this.getFeatureLayer(feature);
+    // query all related features then return
+    return Promise.all(featureLayer.relationships.map((relationship: Relationship) => {
+      return this.queryService.relatedFeatures(featureLayer, feature.attributes.OBJECTID, relationship.id);
+    })).then((result: Feature[][]) =>{
+      // TODO 
+      return feature.grundbuchFeatures = result[0];
     });
   }
 
-  public async refreshRelatedGrundbuchFeatures(feature: Feature) {
+  public refreshRelatedGrundbuchFeatures(feature: Feature): Promise<any> {
     // TODO create buffer geometry
     // query gemeinde
-    const gemeindeLayerConfig = this.layersService.getQueryLayerConfig('gemeinde');
+    const gemeindeLayerConfig = this.configService.getQueryLayerConfig('gemeinde');
     const gemeindeUrl = gemeindeLayerConfig.properties.url;
-    return this.queryService.intersect(gemeindeUrl, feature.geometry).then((features) => {
+    return this.queryService.intersect(gemeindeUrl, feature.geometry).then((features: Feature[]) => {
       features.forEach((feature) => {
-        console.log(feature.attributes.bezirksnummer,feature.attributes.kantonsnummer,feature.attributes.name);
-      })
+        console.log(feature.attributes.bezirksnummer, feature.attributes.kantonsnummer, feature.attributes.name);
+      });
+      return true;
     });
     // TODO lade land kanton bezirk und parzellen info
-  }
-
-  private querRelated(feature: Feature, relationshipConfig: RelationshipConfig) {
-    const objectIds = [feature.attributes.OBJECTID];
-    const relationshipId = relationshipConfig.relationshipId;
-    const featureLayer = this.getFeatureLayer(feature);
-
-    this.queryService.relatedFeatures(featureLayer, objectIds, relationshipId).then((result) => {
-        // TODO
-      });
-
   }
 
   private getFeatureLayer(feature: Feature): FeatureLayer {

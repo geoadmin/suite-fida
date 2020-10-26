@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NotificationsService } from 'angular2-notifications';
+import EsriError from 'esri/core/Error';
 
 @Injectable({
   providedIn: 'root'
@@ -18,27 +19,25 @@ export class MessageService {
       });
   }
 
-  public error(title: string, body?: string) {
+  public error(title: string, error: EsriError) {
     this.notificationsService.error(
       title, 
-      body ? this.formatError(body) : null,
+       this.formatError(error),
       {
         timeOut: this.TIMEOUT
       });
   }
 
-  private formatError(error: any): string {
-    let errors: string [] = [];
+  private formatError(error: EsriError): string {
+    let errors: string [] = [error.name];
+    
     if(error.message){
       errors.push(error.message);
     }
     if(error.details && error.details.messages){
-      errors.concat(error.messages);
+      errors.concat(error.details.messages);
     }
-    if(errors.length === 0){
-      errors.push(error);
-    }
-
+    
     return errors.join('. ');
   }
 }

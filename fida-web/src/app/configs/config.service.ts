@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Config, LayerConfig, RelationshipConfig } from './models/config.model';
+import { Config, LayerConfig, LayerType, RelationshipConfig } from '../models/config.model';
 
 import { environment } from '../../environments/environment';
 
@@ -28,19 +28,27 @@ export class ConfigService {
             });
     }
 
-    public getLayerConfigs(): [LayerConfig] {
-        return this.config.layers;
+    public getLayerConfigs(): LayerConfig[] {
+        return this.config.layers.filter(f => f.type === LayerType.FeatureLayer);
     }
 
     public getArcGisPortal(): string {
         return environment.arcGisPortal;
     }
 
-    public getRelationshipConfigs(featureLayerId: string) : [RelationshipConfig] {
+    public getRelationshipConfigs(featureLayerId: string): RelationshipConfig[] {
         const layerConfigs = this.config.layers.filter(c => c.properties.id === featureLayerId);
-        if(layerConfigs.length !== 1){
-            throw new Error("invalid relationships configuration");
+        if (layerConfigs.length !== 1) {
+            throw new Error(`on layer with id "${featureLayerId}" found in configuration`);
         }
-        return layerConfigs[0].relationships;
+        return layerConfigs[0].relationships ?? [];
     }
+
+    public getQueryLayerConfig(id: string): LayerConfig {
+        const queryLayerConfigs = this.config.layers.filter(f => f.type === LayerType.QueryLayer && f.properties.id === id);
+        if (queryLayerConfigs.length !== 1) {
+          throw new Error('invalid query-layer configuration');
+        }
+        return queryLayerConfigs[0];
+      }
 }

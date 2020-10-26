@@ -1,4 +1,4 @@
-import { Injectable, ComponentFactoryResolver, Injector, Compiler, ComponentFactory, Component, ModuleWithComponentFactories, NgModule, ElementRef } from '@angular/core';
+import { Injectable, ComponentFactoryResolver, Injector, Compiler, ComponentFactory, Component, ModuleWithComponentFactories, NgModule, ElementRef, ComponentRef } from '@angular/core';
 import { FeatureContainerComponent, FeatureMode } from '../components/feature/feature-container/feature-container.component'
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -9,6 +9,7 @@ import Feature from 'esri/Graphic';
 export class ComponentService {
   private featureViewTemplate: string;
   private featureEditTemplate: string;
+
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
@@ -23,15 +24,14 @@ export class ComponentService {
       .subscribe(data => this.featureEditTemplate = data);
   }
 
-  public createFeatureContainerComponent(feature: Feature, featureMode: FeatureMode): ElementRef<any> {
+  public createFeatureContainerComponent(feature: Feature, featureMode: FeatureMode): ComponentRef<FeatureContainerComponent> {
     // create  component
     const factory = this.componentFactoryResolver.resolveComponentFactory(FeatureContainerComponent);
     const component = factory.create(this.injector);
     // set feature and trigger change
     component.instance.setFeature(feature, featureMode);
     component.changeDetectorRef.detectChanges();
-    // return dom-element
-    return component.location;
+    return component;
   }
   private createFeatureComponent(feature: Feature): any {
     let metadata = {

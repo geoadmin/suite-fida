@@ -5,7 +5,7 @@
         <button type="button" class="btn btn-primary" (click)="editClick()">
             <span class="esri-icon-edit"></span>edit</button>
         <button type="button" class="btn btn-primary ml-2" (click)="editGeometryClick()">edit geometry</button>
-        <button type="button" class="btn btn-danger ml-2" (click)="deleteClick()">delete</button>
+        <button type="button" class="btn btn-danger ml-2" (click)="showDeleteDialog(template)">delete</button>
     </div>
 
     <!-- view -->
@@ -23,5 +23,13 @@
             <app-feature-edit [feature]="feature" (save)="onSave($event)" (cancel)="onCancel()"></app-feature-edit>
         </div>
     </div>
-
 </div>
+
+<!-- delete dialog -->
+<ng-template #template>
+    <div class="modal-body text-center">
+        <p>Do you realy want to delete Feature {{ feature?.attributes.OBJECTID }}?</p>
+        <button type="button" class="btn btn-secondary" (click)="deleteCancelClick()">cancel</button>
+        <button type="button" class="btn btn-danger ml-2" (click)="deleteClick()">delete</button>
+    </div>
+</ng-template>

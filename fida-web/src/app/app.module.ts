@@ -8,7 +8,8 @@ import { HttpClientModule } from '@angular/common/http';
 
 // vendors
 import "./configs/esri-config";
-import  { SimpleNotificationsModule } from 'angular2-notifications';
+import { SimpleNotificationsModule } from 'angular2-notifications';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 // components
 import { AppComponent } from './app.component';
@@ -51,7 +52,8 @@ export function createCompiler(compilerFactory: CompilerFactory) {
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    SimpleNotificationsModule.forRoot()
+    SimpleNotificationsModule.forRoot(),
+    ModalModule.forRoot()
   ],
   providers: [
     { provide: COMPILER_OPTIONS, useValue: {}, multi: true },
