@@ -10,10 +10,9 @@ import FeatureLayer from 'esri/layers/FeatureLayer';
 
 
 @Injectable({ providedIn: 'root' })
-export class LayersService {
+export class LayerService {
   private portal: Portal;
   private layers: Array<Layer>;
-
 
   constructor(
     private templateService: TemplateService,
@@ -59,7 +58,7 @@ export class LayersService {
   }
 
   private createLayer(layerConfig: LayerConfig): Layer {
-    if (layerConfig.type == LayerType.FeatureLayer) {
+    if (layerConfig.type == LayerType.FeatureLayer || layerConfig.type == LayerType.RelatedLayer) {
       return new FeatureLayer(layerConfig.properties);
     } else {
       throw new Error(`LayerType [${layerConfig.type}] is not supported.`)

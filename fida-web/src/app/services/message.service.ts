@@ -19,10 +19,10 @@ export class MessageService {
       });
   }
 
-  public error(title: string, error: EsriError) {
+  public error(title: string, error?: EsriError) {
     this.notificationsService.error(
       title, 
-       this.formatError(error),
+       error ? this.formatError(error): undefined,
       {
         timeOut: this.TIMEOUT
       });

@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import Feature from 'esri/Graphic';
+import { FidaFeature } from '../models/FidaFeature.model';
 
 @Injectable({ providedIn: 'root' })
 export class ComponentService {
@@ -24,12 +25,12 @@ export class ComponentService {
       .subscribe(data => this.featureEditTemplate = data);
   }
 
-  public createFeatureContainerComponent(feature: Feature, featureMode: FeatureMode): ComponentRef<FeatureContainerComponent> {
+  public createFeatureContainerComponent(feature: FidaFeature): ComponentRef<FeatureContainerComponent> {
     // create  component
     const factory = this.componentFactoryResolver.resolveComponentFactory(FeatureContainerComponent);
     const component = factory.create(this.injector);
     // set feature and trigger change
-    component.instance.setFeature(feature, featureMode);
+    component.instance.setFeature(feature);
     component.changeDetectorRef.detectChanges();
     return component;
   }

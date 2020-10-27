@@ -28,13 +28,13 @@ export class ConfigService {
             });
     }
 
-    public getLayerConfigs(): LayerConfig[] {
-        return this.config.layers.filter(f => f.type === LayerType.FeatureLayer);
-    }
-
     public getArcGisPortal(): string {
         return environment.arcGisPortal;
     }
+
+    /**
+     *  get configs
+     **/
 
     public getRelationshipConfigs(featureLayerId: string): RelationshipConfig[] {
         const layerConfigs = this.config.layers.filter(c => c.properties.id === featureLayerId);
@@ -44,11 +44,31 @@ export class ConfigService {
         return layerConfigs[0].relationships ?? [];
     }
 
-    public getQueryLayerConfig(id: string): LayerConfig {
-        const queryLayerConfigs = this.config.layers.filter(f => f.type === LayerType.QueryLayer && f.properties.id === id);
-        if (queryLayerConfigs.length !== 1) {
-          throw new Error('invalid query-layer configuration');
+    public getLayerConfigs(): LayerConfig[] {
+        return this.config.layers.filter(f => f.type === LayerType.FeatureLayer);
+    }
+
+    public getLayerConfigById(id: string): LayerConfig {
+        const layerConfigs = this.config.layers.filter(f => f.properties.id === id);
+        if (layerConfigs.length !== 1) {
+            throw new Error(`invalid configuration for id "${id}"`);
         }
-        return queryLayerConfigs[0];
-      }
+        return layerConfigs[0];
+    }
+
+    public getLayerConfigByUrl(url: string): LayerConfig {
+        const layerConfigs = this.config.layers.filter(f => f.properties.url === url);
+        if (layerConfigs.length !== 1) {
+            throw new Error(`invalid configuration for url "${url}"`);
+        }
+        return layerConfigs[0];
+    }
+
+    public getLayerConfig(type: LayerType, id: string): LayerConfig {
+        const layerConfigs = this.config.layers.filter(f => f.type === type && f.properties.id === id);
+        if (layerConfigs.length !== 1) {
+            throw new Error(`invalid configuration for layer-type "${type}" and id "${id}"`);
+        }
+        return layerConfigs[0];
+    }
 }

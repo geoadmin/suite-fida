@@ -4,6 +4,7 @@ import { ComponentService } from './component.service';
 import PopupTemplate from 'esri/PopupTemplate';
 import Feature from 'esri/Graphic';
 import CustomContent from 'esri/popup/content/CustomContent';
+import { FeatureState, FidaFeature } from '../models/FidaFeature.model';
 
 @Injectable({ providedIn: 'root' })
 export class TemplateService {
@@ -19,9 +20,9 @@ export class TemplateService {
       content: (result: any) => {
         const featureContainerContent = new CustomContent({
           creator: () => {
-            const feature: Feature = result.graphic;
-            const featureMode: FeatureMode = createMode === true ? FeatureMode.Create : FeatureMode.View;
-            componentRef = self.componentService.createFeatureContainerComponent(feature, featureMode);
+            const feature: FidaFeature = result.graphic;
+            feature.state = createMode === true ? FeatureState.Create : undefined;
+            componentRef = self.componentService.createFeatureContainerComponent(feature);
             return componentRef.location.nativeElement;
           },
           destroyer: () => {

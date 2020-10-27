@@ -4,7 +4,7 @@ import Feature from 'esri/Graphic'
 import { WidgetNotifyService } from 'src/app/services/widget-notify.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import Geometry from 'esri/geometry/Geometry';
-import { FidaFeature } from 'src/app/models/FidaFeature.model';
+import { FeatureState, FidaFeature } from 'src/app/models/FidaFeature.model';
 
 export enum FeatureMode {
   View = 'view',
@@ -50,8 +50,8 @@ export class FeatureContainerComponent implements OnInit, OnDestroy {
     let subscription = this.widgetNotifyService.onGeometryEditCompleteSubject.subscribe(async (geometry: Geometry) => {
       subscription.unsubscribe();
       this.feature.geometry = geometry;
-      await this.featureService.refreshRelatedGrundbuchFeatures(this.feature);
-      this.featureService.updateFeature(this.feature);
+      await this.featureService.createGrundbuchFeatures(this.feature);
+      this.featureService.saveFeature(this.feature);
     });
 
     this.widgetNotifyService.onGeometryEditSubject.next(this.feature.geometry);
@@ -62,7 +62,8 @@ export class FeatureContainerComponent implements OnInit, OnDestroy {
   }
 
   async deleteClick(): Promise<void> {
-    await this.featureService.deleteFeature(this.feature);
+    this.feature.state = FeatureState.Delete;
+    await this.featureService.saveFeature(this.feature);
     // TODO destroy itself...
     //this.ngOnDestroy();
     this.modalRef.hide();
@@ -72,18 +73,18 @@ export class FeatureContainerComponent implements OnInit, OnDestroy {
     this.modalRef.hide();
   }
 
-  async onSave(feature: Feature): Promise<void> {
-    // on edit
-    if (this.featureMode == FeatureMode.Edit) {
-      await this.featureService.updateFeature(feature);
-      this.setFeatureMode(FeatureMode.View);
-    }
-
-    // on create
-    else if (this.featureMode == FeatureMode.Create) {
-      await this.featureService.addFeature(feature);
-      this.widgetNotifyService.onFeatureCreatedSubject.next(true);
-    }
+  async onSave(feature: FidaFeature): Promise<void> {
+      await this.featureService.saveFeature(feature);
+      
+      // on edit
+      if (this.featureMode === FeatureMode.Edit) {
+        this.setFeatureMode(FeatureMode.View);
+      }
+  
+      // on create
+      else if (this.featureMode == FeatureMode.Create) {
+        this.widgetNotifyService.onFeatureCreatedSubject.next(true);
+      }
   }
 
   onCancel(): void {
@@ -93,11 +94,13 @@ export class FeatureContainerComponent implements OnInit, OnDestroy {
     this.setFeatureMode(FeatureMode.View);
   }
 
-  public async setFeature(feature: FidaFeature, featureMode: FeatureMode): Promise<void> {
+  public async setFeature(feature: FidaFeature): Promise<void> {
     try {
       this.feature = feature;
-      this.setFeatureMode(featureMode);
-      await this.featureService.loadRelated(this.feature);
+      this.featureMode = feature.state === FeatureState.Create ? FeatureMode.Create:  FeatureMode.View;
+      this.featureService.loadRelatedFeatures(this.feature).then(() => {
+        this.changeDetectorRef.detectChanges();
+      });
       this.changeDetectorRef.detectChanges();
     } catch (error) {
       console.error(error);

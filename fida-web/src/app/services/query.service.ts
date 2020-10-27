@@ -23,7 +23,10 @@ export class QueryService {
 
     return new Promise((resolve, reject) => {
       featureLayer.queryRelatedFeatures(query)
-        .then((result: any) => resolve(result[objectId].features))
+        .then((result: any) => {
+          const resultGroup = result[objectId]; 
+          resolve(resultGroup ? resultGroup.features : []);
+        })
         .catch((error: EsriError) => {
           this.messageService.error('Query failed.', error);
           reject(error);

@@ -1,6 +1,6 @@
 import { Injectable, ElementRef } from '@angular/core';
 import { WidgetsService } from 'src/app/services/widgets.service';
-import { LayersService } from 'src/app/services/layers.service';
+import { LayerService } from 'src/app/services/layer.service';
 import { MessageService } from 'src/app/services/message.service';
 
 import Map from 'esri/Map';
@@ -17,15 +17,15 @@ export class MapService {
 
   constructor(
     private widgetsService: WidgetsService,
-    private layersService: LayersService,
+    private layerService: LayerService,
     private messageService: MessageService
   ) { }
 
   public async initMap(mapContainer: ElementRef): Promise<void> {
     try {
       // create esri-map
-      const basemap = await this.layersService.getBasemap();
-      const layers = this.layersService.getLayers();
+      const basemap = await this.layerService.getBasemap();
+      const layers = this.layerService.getLayers();
       const map = new Map({
         basemap: basemap,
         layers: layers
