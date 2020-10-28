@@ -7,9 +7,16 @@ export enum FeatureState {
     EditGeometry = 'edit-geometry'
 }
 
+export class RelatedFeatures {
+    grundbuch?: Feature[];
+    kontakt?: Feature[];
+    nachfuehrung?: Feature[];
+    rueckversicherung?: Feature[];
+}
+
 export class FidaFeature extends Feature {
     state: FeatureState;
-    grundbuchFeatures?: Feature[];
+    relatedFeatures: RelatedFeatures;
 }
 
 /*export class LfpFeature extends Feature {

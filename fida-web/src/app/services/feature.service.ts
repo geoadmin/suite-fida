@@ -3,13 +3,13 @@ import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { QueryService } from './query.service';
 import { ConfigService } from '../configs/config.service';
-import { RelationshipConfig } from '../models/config.model';
 import { MessageService } from './message.service';
 import Feature from 'esri/Graphic';
 import FeatureLayer from 'esri/layers/FeatureLayer';
 import Relationship from 'esri/layers/support/Relationship';
 import { FeatureState, FidaFeature } from '../models/FidaFeature.model';
 import { GrundbuchService } from './grundbuch.service';
+import { RelationshipsConfig } from '../models/config.model';
 
 
 @Injectable({
@@ -47,15 +47,25 @@ export class FeatureService {
         feature.attributes.GLOBALID = addFeatureResults[0].globalId;
       }
 
+      // TODO auslagern
       // update grundbuch features
       if (featureLayer.id === "LFP" && feature.state === FeatureState.Create) {
-        const grundbuchFeatures = await this.createGrundbuchFeatures(feature);
-        //TODO save all
-        if (grundbuchFeatures.length > 0) {
+        feature.relatedFeatures.grundbuch = await this.createGrundbuchFeatures(feature);
+      }
 
-          const relatedFeatureLayer = await this.getRelatedFeatureLayer(featureLayer, 'Grundbuchlfp');          
-          await this.saveRelatedFeatures(relatedFeatureLayer, grundbuchFeatures);
-        }
+      // save related features
+      if (feature.state !== FeatureState.Delete) {
+        const relationshipsConfig = this.configService.getRelationshipsConfigs(featureLayer.id);
+        await Promise.all(Object.entries(feature.relatedFeatures).map(async ([key, value]) => {
+          const relationshipName = relationshipsConfig[key];
+          const relatedFeatures = value as FidaFeature[]
+
+          if (relationshipName && relatedFeatures && relatedFeatures.length > 0) {
+            const relatedFeatureLayer = await this.getRelatedFeatureLayer(featureLayer, relationshipName);
+            await this.saveRelatedFeatures(relatedFeatureLayer, relatedFeatures);
+            console.log(`related features "${relationshipName}" saved.`);
+          }
+        }));
       }
 
       const successMessage = feature.state === FeatureState.Delete
@@ -100,22 +110,24 @@ export class FeatureService {
     });
   }
 
-  public async loadRelatedFeatures(feature: FidaFeature): Promise<any> {
+  public async loadRelatedFeatures(feature: FidaFeature, loadedCallback: () => void): Promise<any> {
     if (!feature.layer) {
       return;
     }
+    feature.relatedFeatures = {};
     const featureLayer = this.getFeatureLayer(feature);
-    // query all related features then return
-    const grundbuchRelationship = this.getRelationship(featureLayer, 'Grundbuchlfp');
-    feature.grundbuchFeatures = await this.queryService.relatedFeatures(featureLayer, feature.attributes.OBJECTID, grundbuchRelationship.id);
 
-    /*return Promise.all(featureLayer.relationships.map((relationship: Relationship) => {
-      return this.queryService.relatedFeatures(featureLayer, feature.attributes.OBJECTID, relationship.id);
-    })).then((result: Feature[][]) => {
-      // TODO 
-      return feature.grundbuchFeatures = result[0];
-    });
-    */
+    // query all related features async
+    const relationshipsConfig = this.configService.getRelationshipsConfigs(featureLayer.id);
+    return Promise.all(Object.entries(relationshipsConfig).map(async ([key, value]) => {
+      const relationship = featureLayer.relationships.find(f => f.name.toLowerCase() === value.toLowerCase())
+      if (relationship) {
+        const resultFeatures = await this.queryService.relatedFeatures(featureLayer, feature.attributes.OBJECTID, relationship.id);
+        (feature.relatedFeatures as any)[key] = resultFeatures;
+        console.log(`related features "${value}" loaded. count=${resultFeatures.length}`);
+        loadedCallback();
+      }
+    }));
   }
 
   public async createGrundbuchFeatures(feature: FidaFeature): Promise<FidaFeature[]> {
@@ -127,6 +139,27 @@ export class FeatureService {
       grundbuchFeature.attributes.FK_FIDA_LFP = feature.attributes.GLOBALID;
     });
     return grundbuchFeatures;
+  }
+
+  public async createRelatedFeature(feature: FidaFeature, relatedFeaturesPropertyName: string): Promise<FidaFeature> {
+    const featureLayer = this.getFeatureLayer(feature);
+    const relationshipsConfig = this.configService.getRelationshipsConfigs(featureLayer.id);
+    const relationshipName = this.getRelationshipName(relationshipsConfig, relatedFeaturesPropertyName)
+    const relationship = this.getRelationship(featureLayer, relationshipName);    
+    const fkField = "FK_FIDA_LFP"; // TODO load aus config
+    const relatedFeatureLayer = await this.getRelatedFeatureLayer(featureLayer, relationshipName);
+    
+    // create related feature              
+    const relatedFeature = new FidaFeature();
+    relatedFeature.attributes = { ...relatedFeatureLayer.templates[0].prototype.attributes };
+    relatedFeature.layer = relatedFeatureLayer;
+    relatedFeature.state = FeatureState.Create;
+    relatedFeature.attributes[fkField] = feature.attributes[relationship.keyField.toUpperCase()];
+
+    // add related feature to list
+    (feature.relatedFeatures as any)[relatedFeaturesPropertyName].push(relatedFeature);
+    
+    return relatedFeature;
   }
 
   private getFeatureLayer(feature: Feature): FeatureLayer {
@@ -154,10 +187,18 @@ export class FeatureService {
   }
 
   private getRelationship(featureLayer: FeatureLayer, relationshipName: string): Relationship {
-    const relationship = featureLayer.relationships.find(f => f.name === relationshipName);
+    const relationship = featureLayer.relationships.find(f => f.name.toLowerCase() === relationshipName.toLowerCase());
     if (!relationship) {
-      throw new Error(`relationship "${relationshipName}" not found`);
+      throw new Error(`relationship wiht name "${relationshipName}" not found`);
     }
     return relationship;
+  }
+
+  private getRelationshipName(relationshipsConfig: RelationshipsConfig, relatedFeaturesPropertyName: string): string {
+    const name = (relationshipsConfig as any)[relatedFeaturesPropertyName];
+    if(name === undefined){
+      throw new Error(`relationshipConfig with property "${relatedFeaturesPropertyName}" not found`)
+    }
+    return name;
   }
 }

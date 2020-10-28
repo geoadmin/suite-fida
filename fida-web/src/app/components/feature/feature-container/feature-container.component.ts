@@ -74,17 +74,17 @@ export class FeatureContainerComponent implements OnInit, OnDestroy {
   }
 
   async onSave(feature: FidaFeature): Promise<void> {
-      await this.featureService.saveFeature(feature);
-      
-      // on edit
-      if (this.featureMode === FeatureMode.Edit) {
-        this.setFeatureMode(FeatureMode.View);
-      }
-  
-      // on create
-      else if (this.featureMode == FeatureMode.Create) {
-        this.widgetNotifyService.onFeatureCreatedSubject.next(true);
-      }
+    await this.featureService.saveFeature(feature);
+
+    // on edit
+    if (this.featureMode === FeatureMode.Edit) {
+      this.setFeatureMode(FeatureMode.View);
+    }
+
+    // on create
+    else if (this.featureMode == FeatureMode.Create) {
+      this.widgetNotifyService.onFeatureCreatedSubject.next(true);
+    }
   }
 
   onCancel(): void {
@@ -97,10 +97,8 @@ export class FeatureContainerComponent implements OnInit, OnDestroy {
   public async setFeature(feature: FidaFeature): Promise<void> {
     try {
       this.feature = feature;
-      this.featureMode = feature.state === FeatureState.Create ? FeatureMode.Create:  FeatureMode.View;
-      this.featureService.loadRelatedFeatures(this.feature).then(() => {
-        this.changeDetectorRef.detectChanges();
-      });
+      this.featureMode = feature.state === FeatureState.Create ? FeatureMode.Create : FeatureMode.View;
+      this.featureService.loadRelatedFeatures(this.feature, () => { this.changeDetectorRef.detectChanges() });
       this.changeDetectorRef.detectChanges();
     } catch (error) {
       console.error(error);

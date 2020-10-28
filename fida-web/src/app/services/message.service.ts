@@ -20,12 +20,7 @@ export class MessageService {
   }
 
   public error(title: string, error?: EsriError) {
-    this.notificationsService.error(
-      title, 
-       error ? this.formatError(error): undefined,
-      {
-        timeOut: this.TIMEOUT
-      });
+    this.notificationsService.error(title, error ? this.formatError(error): undefined)
   }
 
   private formatError(error: EsriError): string {
@@ -35,7 +30,7 @@ export class MessageService {
       errors.push(error.message);
     }
     if(error.details && error.details.messages){
-      errors.concat(error.details.messages);
+      errors = errors.concat(error.details.messages);
     }
     
     return errors.join('. ');

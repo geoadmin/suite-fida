@@ -14,9 +14,9 @@
         <li class="nav-item">
             <a class="nav-link" href="#grundbuch_tab" role="tab" data-toggle="tab">Grundbuch</a>
         </li>
-        <!-- <li class="nav-item">
-            <a class="nav-link" href="#nachfuerung_tab" role="tab" data-toggle="tab">Nachfuerung</a>
-        </li> -->
+         <li class="nav-item">
+            <a class="nav-link" href="#nachfuehrung_tab" role="tab" data-toggle="tab">Nachfuehrung</a>
+        </li>
     </ul>
 
     <!-- tab panes -->
@@ -28,10 +28,49 @@
                 <app-attribute-edit [attributes]="feature.attributes" [name]="attribute.key"
                     [displayName]="attribute.key">
                 </app-attribute-edit>
-            </div>        
+            </div>
         </div>
 
-        <div role="tabpanel" class="tab-pane fade py-2" id="grundbuch_tab">grundbuch</div>
-        <div role="tabpanel" class="tab-pane fade py-2" id="nachfuerung_tab">nachfuerung</div>
+        <div role="tabpanel" class="tab-pane fade py-2" id="grundbuch_tab">
+            <!-- add grundbuch buttons -->
+            <div class="d-flex felx-row mb-2">
+                <button type="button" class="btn btn-primary" (click)="addRelatedFeatureClick('grundbuch')">add</button>
+            </div>
+            <div *ngFor="let relatedFeature of getRelatedFeatures(feature?.relatedFeatures.grundbuch)">
+                <div *ngIf="relatedFeature.state !== 'deleted'">
+                    <div>---------{{ relatedFeature.attributes.OBJECTID }}--------------</div>
+                    <div *ngFor="let attribute of relatedFeature.attributes | keyvalue let idx=index">
+                        <app-attribute-edit [attributes]="relatedFeature.attributes" [name]="attribute.key"
+                            [displayName]="attribute.key">
+                        </app-attribute-edit>
+                    </div>
+                    <div class="d-flex felx-row mb-2">
+                        <button type="button" class="btn btn-danger"
+                            (click)="deleteRelatedFeatureClick(relatedFeature)">delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div role="tabpanel" class="tab-pane fade py-2" id="nachfuehrung_tab">
+             <!-- add nachführung buttons -->
+             <div class="d-flex felx-row mb-2">
+                <button type="button" class="btn btn-primary" (click)="addRelatedFeatureClick('nachfuehrung')">add</button>
+            </div>
+            <div *ngFor="let relatedFeature of getRelatedFeatures(feature?.relatedFeatures.nachfuehrung)">
+                <div *ngIf="relatedFeature.state !== 'deleted'">
+                    <div>---------{{ relatedFeature.attributes.OBJECTID }}--------------</div>
+                    <div *ngFor="let attribute of relatedFeature.attributes | keyvalue let idx=index">
+                        <app-attribute-edit [attributes]="relatedFeature.attributes" [name]="attribute.key"
+                            [displayName]="attribute.key">
+                        </app-attribute-edit>
+                    </div>
+                    <div class="d-flex felx-row mb-2">
+                        <button type="button" class="btn btn-danger"
+                            (click)="deleteRelatedFeatureClick(relatedFeature)">delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </form>

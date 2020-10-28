@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Config, LayerConfig, LayerType, RelationshipConfig } from '../models/config.model';
+import { Config, LayerConfig, LayerType, RelationshipsConfig } from '../models/config.model';
 
 import { environment } from '../../environments/environment';
 
@@ -36,12 +36,12 @@ export class ConfigService {
      *  get configs
      **/
 
-    public getRelationshipConfigs(featureLayerId: string): RelationshipConfig[] {
+    public getRelationshipsConfigs(featureLayerId: string): RelationshipsConfig {
         const layerConfigs = this.config.layers.filter(c => c.properties.id === featureLayerId);
         if (layerConfigs.length !== 1) {
             throw new Error(`on layer with id "${featureLayerId}" found in configuration`);
         }
-        return layerConfigs[0].relationships ?? [];
+        return layerConfigs[0].relationships ?? {} as RelationshipsConfig;
     }
 
     public getLayerConfigs(): LayerConfig[] {

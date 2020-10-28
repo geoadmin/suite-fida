@@ -9,9 +9,9 @@
     <li class="nav-item">
         <a class="nav-link" href="#grundbuch_tab" role="tab" data-toggle="tab">Grundbuch</a>
     </li>
-    <!-- <li class="nav-item">
-        <a class="nav-link" href="#nachfuerung_tab" role="tab" data-toggle="tab">Nachfuerung</a>
-    </li> -->
+    <li class="nav-item">
+        <a class="nav-link" href="#nachfuehrung_tab" role="tab" data-toggle="tab">Nachfuehrung</a>
+    </li>
 </ul>
 
 <!-- tab panes -->
@@ -39,7 +39,8 @@
     </div>
 
     <div role="tabpanel" class="tab-pane fade py-2" id="grundbuch_tab">
-        <div *ngFor="let relatedFeature of feature?.grundbuchFeatures">
+        <div *ngFor="let relatedFeature of feature?.relatedFeatures.grundbuch">
+            <div>---------{{ relatedFeature.attributes.OBJECTID }}--------------</div>
             <table>
                 <thead>
                     <th><strong>Name</strong></th>
@@ -54,5 +55,21 @@
             </table>
         </div>
     </div>
-    <div role="tabpanel" class="tab-pane fade py-2" id="nachfuerung_tab">nachfuerung</div>
+    <div role="tabpanel" class="tab-pane fade py-2" id="nachfuehrung_tab">
+        <div *ngFor="let relatedFeature of feature?.relatedFeatures.nachfuehrung">
+            <div>---------{{ relatedFeature.attributes.OBJECTID }}--------------</div>
+            <table>
+                <thead>
+                    <th><strong>Name</strong></th>
+                    <th>Wert</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let attribute of relatedFeature.attributes | keyvalue">
+                        <td>{{ attribute.key }}</td>
+                        <td>{{ attribute.value }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
