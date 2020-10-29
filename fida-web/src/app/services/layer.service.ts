@@ -27,7 +27,7 @@ export class LayerService {
       const basemap = this.portal.useVectorBasemaps
         ? this.portal.defaultVectorBasemap
         : this.portal.defaultBasemap;
-
+      console.log('user', this.portal.user);
       return basemap;
     });
   }

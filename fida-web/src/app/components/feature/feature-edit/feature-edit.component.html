@@ -1,10 +1,18 @@
-<form (ngSubmit)="saveClick()" #featureForm="ngForm">
-
+<form #featureForm="ngForm" (ngSubmit)="featureForm.valid && saveClick(featureForm)">
     <!-- buttons -->
     <div class="d-flex felx-row mb-2">
-        <button type="submit" class="btn btn-success">Save</button>
-        <button type="button" class="btn btn-default ml-2" (click)="cancelClick()">Cancel</button>
+        <button type="submit" class="btn btn-success" [disabled]="featureForm.invalid">Save</button>
+        <button type="button" class="btn btn-default ml-2" (click)="cancelClick(featureForm)">Cancel</button>
     </div>
+
+
+    <!-- <input type="text" class="form-control" name="test" required ngModel
+        #input="ngModel">
+    {{ input?.invalid }}
+    <button (click)="debugg(input)">debug</button>
+    <div *ngIf="input.invalid" class="alert alert-danger">
+        <div *ngIf="input.invalid">Name is required.</div>
+    </div> -->
 
     <!-- tab nav -->
     <ul class="nav nav-tabs" role="tablist">
@@ -14,7 +22,7 @@
         <li class="nav-item">
             <a class="nav-link" href="#grundbuch_tab" role="tab" data-toggle="tab">Grundbuch</a>
         </li>
-         <li class="nav-item">
+        <li class="nav-item">
             <a class="nav-link" href="#nachfuehrung_tab" role="tab" data-toggle="tab">Nachfuehrung</a>
         </li>
     </ul>
@@ -25,8 +33,7 @@
         <!--general attributes -->
         <div role="tabpanel" class="tab-pane fade in active show py-2" id="general_tab">
             <div *ngFor="let attribute of feature?.attributes | keyvalue let idx=index">
-                <app-attribute-edit [attributes]="feature.attributes" [name]="attribute.key"
-                    [displayName]="attribute.key">
+                <app-attribute-edit [feature]="feature" [name]="attribute.key" [displayName]="attribute.key">
                 </app-attribute-edit>
             </div>
         </div>
@@ -40,7 +47,7 @@
                 <div *ngIf="relatedFeature.state !== 'deleted'">
                     <div>---------{{ relatedFeature.attributes.OBJECTID }}--------------</div>
                     <div *ngFor="let attribute of relatedFeature.attributes | keyvalue let idx=index">
-                        <app-attribute-edit [attributes]="relatedFeature.attributes" [name]="attribute.key"
+                        <app-attribute-edit [feature]="relatedFeature" [name]="attribute.key"
                             [displayName]="attribute.key">
                         </app-attribute-edit>
                     </div>
@@ -53,15 +60,16 @@
         </div>
 
         <div role="tabpanel" class="tab-pane fade py-2" id="nachfuehrung_tab">
-             <!-- add nachführung buttons -->
-             <div class="d-flex felx-row mb-2">
-                <button type="button" class="btn btn-primary" (click)="addRelatedFeatureClick('nachfuehrung')">add</button>
+            <!-- add nachführung buttons -->
+            <div class="d-flex felx-row mb-2">
+                <button type="button" class="btn btn-primary"
+                    (click)="addRelatedFeatureClick('nachfuehrung')">add</button>
             </div>
             <div *ngFor="let relatedFeature of getRelatedFeatures(feature?.relatedFeatures.nachfuehrung)">
                 <div *ngIf="relatedFeature.state !== 'deleted'">
                     <div>---------{{ relatedFeature.attributes.OBJECTID }}--------------</div>
                     <div *ngFor="let attribute of relatedFeature.attributes | keyvalue let idx=index">
-                        <app-attribute-edit [attributes]="relatedFeature.attributes" [name]="attribute.key"
+                        <app-attribute-edit [feature]="relatedFeature" [name]="attribute.key"
                             [displayName]="attribute.key">
                         </app-attribute-edit>
                     </div>

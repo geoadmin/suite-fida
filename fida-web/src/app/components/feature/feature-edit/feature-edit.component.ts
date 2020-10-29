@@ -19,12 +19,12 @@ export class FeatureEditComponent implements OnInit {
 
   ngOnInit(): void {
    }
-
-  saveClick(): void { 
+  
+  saveClick(form: any): void { 
     this.save.emit(this.feature);
   }
 
-  cancelClick(): void { 
+  cancelClick(form: any): void { 
     this.cancel.emit();
   }
 
@@ -41,5 +41,4 @@ export class FeatureEditComponent implements OnInit {
   getRelatedFeatures(relatedFeatures:FidaFeature[]){
     return relatedFeatures?.filter(f => f.state !== FeatureState.Delete);
   }
-
 }

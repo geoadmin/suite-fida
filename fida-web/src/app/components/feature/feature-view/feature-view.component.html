@@ -27,7 +27,9 @@
             <tbody>
                 <tr *ngFor="let attribute of feature?.attributes | keyvalue">
                     <td>{{ attribute.key }}</td>
-                    <td>{{ attribute.value }}</td>
+                    <td>
+                        <app-attribute-view [feature]="feature" [name]="attribute.key"></app-attribute-view>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -49,7 +51,9 @@
                 <tbody>
                     <tr *ngFor="let attribute of relatedFeature.attributes | keyvalue">
                         <td>{{ attribute.key }}</td>
-                        <td>{{ attribute.value }}</td>
+                        <td>
+                            <app-attribute-view [feature]="relatedFeature" [name]="attribute.key"></app-attribute-view>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -66,7 +70,9 @@
                 <tbody>
                     <tr *ngFor="let attribute of relatedFeature.attributes | keyvalue">
                         <td>{{ attribute.key }}</td>
-                        <td>{{ attribute.value }}</td>
+                        <td>
+                            <app-attribute-view [feature]="relatedFeature" [name]="attribute.key"></app-attribute-view>
+                        </td>
                     </tr>
                 </tbody>
             </table>

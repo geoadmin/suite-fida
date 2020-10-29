@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import "./configs/esri-config";
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 // components
 import { AppComponent } from './app.component';
@@ -24,6 +25,7 @@ import { AttributeEditComponent } from './components/feature/attribute-edit/attr
 import { ConfigService } from './configs/config.service';
 import { FeatureCreateComponent } from './components/feature/feature-create/feature-create.component';
 import { GeometryEditComponent } from './components/feature/geometry-edit/geometry-edit.component';
+import { AttributeViewComponent } from './components/feature/attribute-view/attribute-view.component';
 
 export function initApp(configService: ConfigService) {
   return () => configService.load();
@@ -45,7 +47,8 @@ export function createCompiler(compilerFactory: CompilerFactory) {
     FeatureViewComponent,
     AttributeEditComponent,
     FeatureCreateComponent,
-    GeometryEditComponent
+    GeometryEditComponent,
+    AttributeViewComponent
   ],
   imports: [
     FormsModule,
@@ -53,7 +56,8 @@ export function createCompiler(compilerFactory: CompilerFactory) {
     BrowserAnimationsModule,
     HttpClientModule,
     SimpleNotificationsModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    BsDatepickerModule.forRoot()
   ],
   providers: [
     { provide: COMPILER_OPTIONS, useValue: {}, multi: true },

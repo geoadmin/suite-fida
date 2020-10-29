@@ -16,6 +16,7 @@ import { RelationshipsConfig } from '../models/config.model';
   providedIn: 'root'
 })
 export class FeatureService {
+  private relatedFeatureLayers: FeatureLayer[] = [];
 
   constructor(
     private configService: ConfigService,
@@ -61,7 +62,7 @@ export class FeatureService {
           const relatedFeatures = value as FidaFeature[]
 
           if (relationshipName && relatedFeatures && relatedFeatures.length > 0) {
-            const relatedFeatureLayer = await this.getRelatedFeatureLayer(featureLayer, relationshipName);
+            const relatedFeatureLayer = await this.getRelatedFeatureLayerByName(featureLayer, relationshipName);
             await this.saveRelatedFeatures(relatedFeatureLayer, relatedFeatures);
             console.log(`related features "${relationshipName}" saved.`);
           }
@@ -123,6 +124,16 @@ export class FeatureService {
       const relationship = featureLayer.relationships.find(f => f.name.toLowerCase() === value.toLowerCase())
       if (relationship) {
         const resultFeatures = await this.queryService.relatedFeatures(featureLayer, feature.attributes.OBJECTID, relationship.id);
+        
+        // add related-feature-layer to features
+        if(resultFeatures.length > 0){
+          const relatedFeatureLayer = await this.getRelatedFeatureLayer(featureLayer, relationship);
+          resultFeatures.forEach(relatedFeature => {
+            relatedFeature.layer = relatedFeatureLayer;
+          });
+        }
+
+        // store related features
         (feature.relatedFeatures as any)[key] = resultFeatures;
         console.log(`related features "${value}" loaded. count=${resultFeatures.length}`);
         loadedCallback();
@@ -145,10 +156,10 @@ export class FeatureService {
     const featureLayer = this.getFeatureLayer(feature);
     const relationshipsConfig = this.configService.getRelationshipsConfigs(featureLayer.id);
     const relationshipName = this.getRelationshipName(relationshipsConfig, relatedFeaturesPropertyName)
-    const relationship = this.getRelationship(featureLayer, relationshipName);    
+    const relationship = this.getRelationship(featureLayer, relationshipName);
     const fkField = "FK_FIDA_LFP"; // TODO load aus config
-    const relatedFeatureLayer = await this.getRelatedFeatureLayer(featureLayer, relationshipName);
-    
+    const relatedFeatureLayer = await this.getRelatedFeatureLayer(featureLayer, relationship);
+
     // create related feature              
     const relatedFeature = new FidaFeature();
     relatedFeature.attributes = { ...relatedFeatureLayer.templates[0].prototype.attributes };
@@ -158,7 +169,7 @@ export class FeatureService {
 
     // add related feature to list
     (feature.relatedFeatures as any)[relatedFeaturesPropertyName].push(relatedFeature);
-    
+
     return relatedFeature;
   }
 
@@ -174,17 +185,34 @@ export class FeatureService {
     return featureLayer;
   }
 
-  private async getRelatedFeatureLayer(featureLayer: FeatureLayer, relationshipName: string): Promise<FeatureLayer> {
+  private async getRelatedFeatureLayerByName(featureLayer: FeatureLayer, relationshipName: string): Promise<FeatureLayer> {
     const relationship = this.getRelationship(featureLayer, relationshipName);
+    return this.getRelatedFeatureLayer(featureLayer, relationship);
+  }
+
+  private async getRelatedFeatureLayer(featureLayer: FeatureLayer, relationship: Relationship): Promise<FeatureLayer> {
     const relatedFeatureLayerUrl = featureLayer.url + '/' + relationship.relatedTableId;
-    const relatedFeatureLayer = new FeatureLayer({
-      gdbVersion: featureLayer.gdbVersion,
-      url: relatedFeatureLayerUrl
-    });
+
+    // check of already loaded related feature layer
+    let relatedFeatureLayer = this.relatedFeatureLayers.find(f => f.url === featureLayer.url
+      && f.layerId === relationship.relatedTableId
+      && f.gdbVersion === featureLayer.gdbVersion)
+
+      // otherwise create related feature layer
+    if (relatedFeatureLayer === undefined) {
+      relatedFeatureLayer = new FeatureLayer({
+        gdbVersion: featureLayer.gdbVersion,
+        url: featureLayer.url,
+        layerId: relationship.relatedTableId
+      });
+
+      this.relatedFeatureLayers.push(relatedFeatureLayer)
+    }
 
     await relatedFeatureLayer.load();
     return relatedFeatureLayer;
   }
+
 
   private getRelationship(featureLayer: FeatureLayer, relationshipName: string): Relationship {
     const relationship = featureLayer.relationships.find(f => f.name.toLowerCase() === relationshipName.toLowerCase());
@@ -196,7 +224,7 @@ export class FeatureService {
 
   private getRelationshipName(relationshipsConfig: RelationshipsConfig, relatedFeaturesPropertyName: string): string {
     const name = (relationshipsConfig as any)[relatedFeaturesPropertyName];
-    if(name === undefined){
+    if (name === undefined) {
       throw new Error(`relationshipConfig with property "${relatedFeaturesPropertyName}" not found`)
     }
     return name;

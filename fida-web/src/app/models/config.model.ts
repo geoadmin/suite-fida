@@ -32,4 +32,5 @@ export class LayerConfig {
 export class Config {
     arcGisUrlPlaceholder: string;
     layers: [LayerConfig];
+    layerInfos: any;
 }

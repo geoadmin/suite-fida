@@ -1,18 +1,49 @@
-<div class="row form-group">
-    <!--name-->
-    <div class="col-6">
-        <label for="{{ name }}">{{ displayName }}</label>
-    </div>
-    <!--value-->
-    <div class="col-6">
-        <input type="text" class="form-control" id="{{ name }}" required [(ngModel)]="attributes[name]"
-            #inupt="ngModel">
-    </div>
-</div>
+<fieldset ngModelGroup="{{ feature?.attributes.OBJECTID }}_{{ name }}">
+    <div class="row form-group">
+        <!--name-->
+        <div class="col-6">
+            <label for="{{ name }}">{{ displayName }}</label>
+        </div>
 
-<!--validation-->
-<div class="row alert alert-danger" [hidden]="inupt.valid || inupt.pristine">
-    <div class="row">
-        '{{ displayName }}' is required
+        <!--value-->
+        <div class="col-6" [ngSwitch]="getFieldType()">
+
+            <!--domain value-->
+            <div *ngSwitchCase="'domain'">
+                <select class="w-100 h-100" [(ngModel)]="feature?.attributes[name]" name="{{ name }}">
+                    <option *ngFor="let codedValue of getCodedValues()" [ngValue]="codedValue.code"
+                        [selected]="codedValue.code === feature?.attributes[name]">
+                        {{ codedValue.name }}
+                    </option>
+                </select>
+            </div>
+
+            <!--date value-->
+            <div *ngSwitchCase="'date'">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="{{ name }}" bsDatepicker [bsValue]="feature?.attributes[name]">
+                </div>
+            </div>
+
+            <!--number value-->
+            <div *ngSwitchCase="'number'">
+                <input type="number" class="form-control" name="{{ name }}"
+                    [(ngModel)]="feature?.attributes[name]" #input="ngModel">
+                <!--validation-->
+                <div *ngIf="input.invalid" class="alert alert-danger">
+                    <div *ngIf="input.errors.required">{{ name }} is required.</div>
+                </div>
+            </div>
+
+            <!--default value-->
+            <div *ngSwitchDefault>
+                <input type="text" class="form-control" name="{{ name }}"
+                    [(ngModel)]="feature?.attributes[name]" #input="ngModel">
+                <!--validation-->
+                <div *ngIf="input.invalid" class="alert alert-danger">                    
+                    <div *ngIf="input.invalid">{{ name }} is required.</div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+</fieldset>
