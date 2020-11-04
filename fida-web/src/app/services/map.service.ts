@@ -2,6 +2,7 @@ import { Injectable, ElementRef } from '@angular/core';
 import { WidgetsService } from 'src/app/services/widgets.service';
 import { LayerService } from 'src/app/services/layer.service';
 import { MessageService } from 'src/app/services/message.service';
+import { WidgetNotifyService } from './widget-notify.service';
 
 import Map from 'esri/Map';
 import MapView from 'esri/views/MapView';
@@ -17,6 +18,7 @@ export class MapService {
 
   constructor(
     private widgetsService: WidgetsService,
+    private widgetNotifyService: WidgetNotifyService,
     private layerService: LayerService,
     private messageService: MessageService
   ) { }
@@ -25,15 +27,15 @@ export class MapService {
     try {
       // create esri-map
       const basemap = await this.layerService.getBasemap();
-      const layers = this.layerService.getLayers();
       const map = new Map({
-        basemap: basemap,
-        layers: layers
+        basemap: basemap
       });
 
       // create graphic layer for editing
       this.graphicsLayer = new GraphicsLayer({ listMode: 'hide' });
-      map.layers.add(this.graphicsLayer);
+
+      // add layers to map
+      this.addLayersToMap(map);
 
       // create esri-map-view
       this.view = new MapView({
@@ -48,7 +50,7 @@ export class MapService {
       this.view.ui.add(this.widgetsService.getSearchWidget(this.view), "top-right");
       this.view.ui.add(this.widgetsService.getLayerListWidget(this.view), "top-right");
       this.view.ui.add(this.widgetsService.getFeatureCreateWidget(this.view), "top-right");
-      this.view.ui.add(this.widgetsService.getFeatureCreateWidget(this.view), "top-right");
+      this.view.ui.add(this.widgetsService.getVersionManagerWidget(this.view), "top-right");
 
       await this.view.when().then(() => {
         this.zoomToSwitzerland();
@@ -58,10 +60,22 @@ export class MapService {
       this.view.popup.dockOptions.position = 'top-left'
       this.view.popup.dockEnabled = true;
 
+      // on gdb version changed
+      this.widgetNotifyService.onGdbVersionChangedSubject.subscribe((gdbVersionName: string) => {
+        this.view.map.removeAll();
+        this.addLayersToMap(this.view.map);
+      });
+
     } catch (error) {
       console.error('map initialization failed', error);
       this.messageService.error('map initialization failed', error);
     }
+  }
+
+  private addLayersToMap(map: Map) {
+    const layers = this.layerService.getLayers(true);
+    map.addMany(layers);
+    map.layers.add(this.graphicsLayer);
   }
 
   private zoomToSwitzerland(): void {

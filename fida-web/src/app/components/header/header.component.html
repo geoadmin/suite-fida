@@ -1,10 +1,19 @@
 <div class="header">
   <img class="ch-logo float-left" src="assets/images/logo-CH.svg" />
   <div class="separator float-left"></div>
-  <div class="float-left"><h1>Bundesamt für Landestopografie swisstopo<br/>Fixpunkt Datenservice</h1></div>
-  
-  <a class="float-right" href="#">EN</a>
-  <a class="float-right" href="#">IT</a>
-  <a class="float-right" href="#">FR</a>
-  <a class="float-right active" href="#">DE</a>
+  <div class="float-left">
+    <h1>Bundesamt für Landestopografie swisstopo<br />Fixpunkt Datenservice</h1>
+  </div>
+
+  <div class="float-right">
+    <div>
+      <a class="float-right" href="#">EN</a>
+      <a class="float-right" href="#">IT</a>
+      <a class="float-right" href="#">FR</a>
+      <a class="float-right active" href="#">DE</a>
+    </div>
+    <div class="mt-5">
+      <span>GDB-Version: {{ getVersionName() }}  |  Benutzer: {{ getUserName() }}</span>
+    </div>
+  </div>
 </div>

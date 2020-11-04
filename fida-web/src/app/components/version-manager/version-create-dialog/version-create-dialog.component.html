@@ -1,0 +1,25 @@
+<div>
+    <div class="modal-header">create version</div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-6">
+                Name
+            </div>
+            <div class="col-6">
+                <input type="text" [(ngModel)]="gdbVersion.versionName">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                Description
+            </div>
+            <div class="col-6">
+                <input type="text" [(ngModel)]="gdbVersion.description">
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cancelClick()">cancel</button>
+        <button type="button" class="btn btn-danger ml-2" (click)="createClick()">create</button>
+    </div>
+</div>

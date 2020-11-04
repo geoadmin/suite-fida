@@ -10,25 +10,41 @@ import LayerList from 'esri/widgets/LayerList';
 @Injectable({ providedIn: 'root' })
 export class WidgetsService {
   private featureCreateWidget: Expand;
+  private versionManagerWidget: Expand;
 
   constructor() {
   }
 
   public getFeatureTableWidget() {
-
   }
 
-  public registerFeatureCreateWidgetContent(element: ElementRef): void {
+  public registerFeatureCreateWidgetContent(element: ElementRef): Expand {
     this.featureCreateWidget = new Expand({
       expandIconClass: "esri-icon-edit",
       expandTooltip: "Create Feature",
       expanded: false,
       content: element.nativeElement
     });
+    return this.featureCreateWidget;
+  }
 
-    //this.widgetNotifyService.onShowFeatureSubject.subscribe(feature => {
-    //  this.createWidget.expanded = true;
-    //});
+  public registerVersionManagerWidgetContent(element: ElementRef): Expand {
+    this.versionManagerWidget = new Expand({
+      expandIconClass: "esri-icon-collection",
+      expandTooltip: "Manage Versions",
+      expanded: false,
+      content: element.nativeElement
+    });
+    return this.versionManagerWidget;
+  }
+
+  public getVersionManagerWidget(mapView: MapView): Expand {
+    if(!this.versionManagerWidget){
+      throw new Error('no version-manager-widget registered.');
+    }
+
+    this.versionManagerWidget.view = mapView;
+    return this.versionManagerWidget;
   }
 
   public getFeatureCreateWidget(mapView: MapView): Expand {

@@ -1,2 +1,9 @@
 <div #map>
 </div>
+
+<!-- tools -->
+<div [hidden]="!isInitialized">
+    <app-feature-create></app-feature-create>
+    <app-geometry-edit></app-geometry-edit>
+    <app-version-manager></app-version-manager>
+</div>

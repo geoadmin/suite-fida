@@ -1,6 +1,5 @@
 import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FeatureService } from 'src/app/services/feature.service';
-import Feature from 'esri/Graphic'
 import { WidgetNotifyService } from 'src/app/services/widget-notify.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import Geometry from 'esri/geometry/Geometry';
@@ -57,7 +56,7 @@ export class FeatureContainerComponent implements OnInit, OnDestroy {
     this.widgetNotifyService.onGeometryEditSubject.next(this.feature.geometry);
   }
 
-  showDeleteDialog(template: TemplateRef<any>): void {
+  showDeleteDialogClick(template: TemplateRef<any>): void {
     this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
   }
 

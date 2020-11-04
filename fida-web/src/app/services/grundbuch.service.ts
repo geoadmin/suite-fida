@@ -43,6 +43,7 @@ export class GrundbuchService {
 
   // TODO auslagen
   private async getGrundbuchLayer(): Promise<FeatureLayer> {
+    // TODO gdb-verison berücksichtigen...
     if (!this.grundbuchLayer) {
       const grundbuchLayerConfig = this.configService.getLayerConfig(LayerType.RelatedLayer, 'grundbuchlfp');
       this.grundbuchLayer = new FeatureLayer(grundbuchLayerConfig.properties);

@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Config, LayerConfig, LayerType, RelationshipsConfig } from '../models/config.model';
-
 import { environment } from '../../environments/environment';
 import esriRequest from 'esri/request';
 
@@ -24,6 +23,9 @@ export class ConfigService {
             }
         });
 
+        this.config.varsionManagementServer = this.config.varsionManagementServer
+            .replace(this.config.arcGisUrlPlaceholder, environment.arcGisServer);
+
         // TDOD load arcgis-server-config
         //const arcGisServerLayerInfosUrl = 'https://s7t2530a.adr.admin.ch/arcgis/rest/services/FIDA/FIDA/FeatureServer/layers';
         //this.config.layerInfos = await this.loadArcGisServerConfig(arcGisServerLayerInfosUrl);        
@@ -31,7 +33,7 @@ export class ConfigService {
 
     private loadArcGisServerConfig(url: string): Promise<any> {
         const options: __esri.RequestOptions = {
-            query: { f: 'json' }, 
+            query: { f: 'json' },
             responseType: 'json'
         };
 
@@ -42,8 +44,13 @@ export class ConfigService {
         });
 
     }
+
     public getArcGisPortal(): string {
         return environment.arcGisPortal;
+    }
+
+    public getVersionManagementServer(): string {
+        return this.config.varsionManagementServer;
     }
 
     /**

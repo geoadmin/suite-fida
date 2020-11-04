@@ -31,6 +31,7 @@ export class LayerConfig {
 
 export class Config {
     arcGisUrlPlaceholder: string;
+    varsionManagementServer: string;
     layers: [LayerConfig];
     layerInfos: any;
 }

@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { SettingService } from 'src/app/services/setting.service';
 
 @Component({
   selector: 'app-header',
@@ -8,10 +9,16 @@ import { Component, ViewEncapsulation } from '@angular/core';
 })
 export class HeaderComponent {
   currentLanguage: string;
-  languages: Array<string>;
-  public isMenuCollapsed = true;
+  languages: Array<string>;  
 
-  constructor() {
-   }
+  constructor(private settingService: SettingService) {
+  }
 
+  getUserName(): string {
+    return this.settingService.user?.fullName;
+  }
+
+  getVersionName(): string {
+    return this.settingService.getGdbVersionName();
+  }
 }

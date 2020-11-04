@@ -7,6 +7,7 @@ import Portal from 'esri/portal/Portal';
 import Basemap from 'esri/Basemap'
 import Layer from 'esri/layers/Layer';
 import FeatureLayer from 'esri/layers/FeatureLayer';
+import { SettingService } from './setting.service';
 
 
 @Injectable({ providedIn: 'root' })
@@ -16,10 +17,12 @@ export class LayerService {
 
   constructor(
     private templateService: TemplateService,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private settingService: SettingService
   ) {
     esriConfig.portalUrl = configService.getArcGisPortal();
     this.portal = new Portal();
+    this.setUser();
   }
 
   public async getBasemap(): Promise<Basemap> {
@@ -27,26 +30,14 @@ export class LayerService {
       const basemap = this.portal.useVectorBasemaps
         ? this.portal.defaultVectorBasemap
         : this.portal.defaultBasemap;
-      console.log('user', this.portal.user);
+
       return basemap;
     });
   }
 
-  public getLayers(): Array<Layer> {
-    if (!this.layers) {
-
-      // create layers
-      this.layers = [];
-      const layerConfigs = this.configService.getLayerConfigs();
-      layerConfigs.forEach(layerConfig => {
-        let featureLayer = this.createLayer(layerConfig);
-
-        // add templates to layer
-        // TODO find right template....
-        (featureLayer as FeatureLayer).popupTemplate = this.templateService.getFeatureTemplate();
-
-        this.layers.push(featureLayer);
-      });
+  public getLayers(reload?: boolean): Array<Layer> {
+    if (!this.layers || reload === true) {
+      this.createLayers();
     }
 
     return this.layers;
@@ -57,11 +48,34 @@ export class LayerService {
     return this.getLayers().map(m => m as FeatureLayer);
   }
 
+  private createLayers() {
+    this.layers = [];
+    const layerConfigs = this.configService.getLayerConfigs();
+    layerConfigs.forEach(layerConfig => {
+      let featureLayer = this.createLayer(layerConfig);
+
+      // add templates to layer
+      // TODO find right template....
+      (featureLayer as FeatureLayer).popupTemplate = this.templateService.getFeatureTemplate();
+
+      this.layers.push(featureLayer);
+    });
+  }
+
   private createLayer(layerConfig: LayerConfig): Layer {
     if (layerConfig.type == LayerType.FeatureLayer || layerConfig.type == LayerType.RelatedLayer) {
+      // set the active gdb version
+      layerConfig.properties.gdbVersion = this.settingService.getGdbVersionName();
       return new FeatureLayer(layerConfig.properties);
     } else {
       throw new Error(`LayerType [${layerConfig.type}] is not supported.`)
     }
   }
+
+  private setUser(): void {
+    this.portal.load().then(() => {
+      this.settingService.user = this.portal.user;
+    });
+  }
+
 }

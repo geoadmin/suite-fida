@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MapService } from 'src/app/services/map.service';
 import { WidgetsService } from 'src/app/services/widgets.service';
 import { LayerService } from 'src/app/services/layer.service';
@@ -9,14 +9,14 @@ import FeatureLayer from 'esri/layers/FeatureLayer';
 import Feature from 'esri/Graphic';
 import SketchViewModel from 'esri/widgets/Sketch/SketchViewModel';
 import GraphicsLayer from 'esri/layers/GraphicsLayer';
-import { FeatureState } from 'src/app/models/FidaFeature.model';
+import Expand from 'esri/widgets/Expand';
 
 @Component({
   selector: 'app-feature-create',
   templateUrl: './feature-create.component.html',
   styleUrls: ['./feature-create.component.scss']
 })
-export class FeatureCreateComponent implements OnInit {
+export class FeatureCreateComponent implements OnInit, OnDestroy {
   @ViewChild('featureCreate', { static: true }) private featureCreateElement: ElementRef;
   public editableLayers: FeatureLayer[] = [];
   public selectedLayer: FeatureLayer;
@@ -26,6 +26,8 @@ export class FeatureCreateComponent implements OnInit {
   private mapView: MapView;
   private graphicsLayer: GraphicsLayer;
   private feature: Feature;
+  private expand: Expand;
+  private expandedHandle: any;
 
   constructor(
     private widgetsService: WidgetsService,
@@ -36,22 +38,25 @@ export class FeatureCreateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.widgetsService.registerFeatureCreateWidgetContent(this.featureCreateElement);
-    this.editableLayers = this.layerService.getEditableFeatureLayers();
-
-    // select layer
-    this.editableLayers.forEach(layer => {
-      if (layer.visible === true) {
-        this.selectedLayer = layer;
-      }
+    this.expand = this.widgetsService.registerFeatureCreateWidgetContent(this.featureCreateElement);
+    this.expandedHandle = this.expand.watch("expanded", (newValue) => {      
+      if(newValue){
+        this.initLayers();
+      }      
     });
-    if (!this.selectedLayer) {
-      this.selectedLayer = this.editableLayers.length > 0 ? this.editableLayers[0] : undefined;
-    }
+
+    this.widgetNotifyService.onGdbVersionChangedSubject.subscribe(() => {
+      this.expand.collapse();
+      this.resetLayers();
+    });
 
     this.widgetNotifyService.onFeatureCreatedSubject.subscribe((success: boolean) => {
       this.deactivate();
     });
+  }
+
+  ngOnDestroy(): void {
+    this.expandedHandle.remove();
   }
 
   startClick(): void {
@@ -65,7 +70,7 @@ export class FeatureCreateComponent implements OnInit {
     this.feature.attributes = { ...this.selectedLayer.templates[0].prototype.attributes };
     this.feature.layer = this.selectedLayer; /* wieso kommt dieses property nicht beim popup an? */
     (this.feature as any).sourceLayer = this.selectedLayer; /* sende layer über sourceLayer anstelle layer-property */
-    
+
     // send to edit-template
     this.feature.popupTemplate = this.templateService.getFeatureTemplate(true);
     this.mapView.popup.features = [this.feature];
@@ -77,6 +82,27 @@ export class FeatureCreateComponent implements OnInit {
   cancelClick(): void {
     this.deactivate();
     this.sketchViewModel.cancel();
+  }
+
+  private initLayers(): void {
+    if (this.editableLayers.length === 0) {
+      this.editableLayers = this.layerService.getEditableFeatureLayers();
+
+      // select layer
+      this.editableLayers.forEach(layer => {
+        if (layer.visible === true) {
+          this.selectedLayer = layer;
+        }
+      });
+      if (!this.selectedLayer) {
+        this.selectedLayer = this.editableLayers.length > 0 ? this.editableLayers[0] : undefined;
+      }
+    }
+  }
+
+  private resetLayers(): void {
+    this.editableLayers = [];
+    this.selectedLayer = undefined;
   }
 
   private initSketch(): void {

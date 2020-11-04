@@ -1,0 +1,29 @@
+<div #versionManager class="fida-widget">
+    <div>
+        <table class="table table-sm table-dark">
+            <thead>
+                <th>Name</th>
+                <th>Beschreibung</th>
+                <th>Erstellt</th>
+                <th>Geändert</th>
+                <th></th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let version of versions">
+                    <td>{{ version.versionName }}</td>
+                    <td>{{ version.description }}</td>
+                    <td>{{ getDate(version.creationDate) }}</td>
+                    <td>{{ getDate(version.modifiedDate) }}</td>
+                    <td>
+                        <button class="btn btn-primary" (click)="setActiveVersionClick(version)"
+                            [disabled]="isActiveVersion(version) || isReadonlyVersion(version)">set active</button>
+                        <button class="btn btn-danger" [disabled]="isReadonlyVersion(version)"
+                            (click)="showDeleteDialogClick(version)">delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button class="btn btn-primary" (click)="showCreateDialogClick()">create version</button>
+</div>

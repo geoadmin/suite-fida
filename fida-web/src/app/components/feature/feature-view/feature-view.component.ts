@@ -10,8 +10,9 @@ import { FidaFeature } from 'src/app/models/FidaFeature.model';
 })
 export class FeatureViewComponent implements OnInit {
   @ViewChild('attachemts', { static: true }) attachmentsContainer: ElementRef;
-
   @Input() feature: FidaFeature;
+
+  private attachemts: Attachments;
 
   constructor() { }
 
@@ -23,4 +24,11 @@ export class FeatureViewComponent implements OnInit {
     attachments.viewModel.mode = 'view';
   }
 
+  addAttachment(): void {
+
+  }
+
+  editAttachment(): void {
+    
+  }
 }
