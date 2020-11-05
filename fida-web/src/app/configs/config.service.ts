@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Config, LayerConfig, LayerType, RelationshipsConfig } from '../models/config.model';
+import { Config, LayerConfig, LayerType, RelationshipsConfig, VersionManagementConfig } from '../models/config.model';
 import { environment } from '../../environments/environment';
 import esriRequest from 'esri/request';
 
@@ -23,7 +23,7 @@ export class ConfigService {
             }
         });
 
-        this.config.varsionManagementServer = this.config.varsionManagementServer
+        this.config.versionManagement.serverUrl = this.config.versionManagement.serverUrl
             .replace(this.config.arcGisUrlPlaceholder, environment.arcGisServer);
 
         // TDOD load arcgis-server-config
@@ -49,14 +49,14 @@ export class ConfigService {
         return environment.arcGisPortal;
     }
 
-    public getVersionManagementServer(): string {
-        return this.config.varsionManagementServer;
-    }
-
     /**
      *  get configs
      **/
 
+    public getVersionManagementConfig(): VersionManagementConfig {
+        return this.config.versionManagement;
+    }
+    
     public getRelationshipsConfigs(featureLayerId: string): RelationshipsConfig {
         const layerConfigs = this.config.layers.filter(c => c.properties.id === featureLayerId);
         if (layerConfigs.length !== 1) {

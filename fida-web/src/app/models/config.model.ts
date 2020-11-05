@@ -29,9 +29,14 @@ export class LayerConfig {
     relationships?: RelationshipsConfig;
 }
 
+export class VersionManagementConfig {
+    serverUrl: string;
+    defaultVersion: string;
+}
+
 export class Config {
     arcGisUrlPlaceholder: string;
-    varsionManagementServer: string;
+    versionManagement: VersionManagementConfig;
     layers: [LayerConfig];
     layerInfos: any;
 }

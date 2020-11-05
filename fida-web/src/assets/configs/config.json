@@ -1,6 +1,9 @@
 {
     "arcGisUrlPlaceholder": "[EVIRONMENT_ARCGISURL]",
-    "varsionManagementServer":"[EVIRONMENT_ARCGISURL]/rest/services/FIDA/FIDA/VersionManagementServer",
+    "versionManagement" : {
+        "serverUrl":"[EVIRONMENT_ARCGISURL]/rest/services/FIDA/FIDA/VersionManagementServer",
+        "defaultVersion":"SDE.DEFAULT"
+    },    
     "layers": [
         {
             "type": "QueryLayer",

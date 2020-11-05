@@ -1,29 +1,45 @@
 <div #versionManager class="fida-widget">
-    <div>
+    <div [hidden]="isReconciling">
         <table class="table table-sm table-dark">
             <thead>
                 <th>Name</th>
                 <th>Beschreibung</th>
                 <th>Erstellt</th>
                 <th>Geändert</th>
+                <th>Synchronisiert</th>
                 <th></th>
             </thead>
             <tbody>
                 <tr *ngFor="let version of versions">
-                    <td>{{ version.versionName }}</td>
+                    <td>{{ getFormatedVersionName(version.versionName) }}</td>
                     <td>{{ version.description }}</td>
                     <td>{{ getDate(version.creationDate) }}</td>
                     <td>{{ getDate(version.modifiedDate) }}</td>
-                    <td>
-                        <button class="btn btn-primary" (click)="setActiveVersionClick(version)"
-                            [disabled]="isActiveVersion(version) || isReadonlyVersion(version)">set active</button>
-                        <button class="btn btn-danger" [disabled]="isReadonlyVersion(version)"
-                            (click)="showDeleteDialogClick(version)">delete</button>
+                    <td>{{ getDate(version.commonAncestorDate) }}</td>
+                    <td style='white-space: nowrap'>
+                        <div>
+                            <button class="btn btn-primary" (click)="setActiveVersionClick(version)"
+                                [disabled]="isActiveVersion(version)">set active</button>
+                            <button class="btn btn-default" [disabled]="isReadonlyVersion(version)"
+                                (click)="showReconcilePostDialogClick(version)">reconcile/post</button>
+                            <button class="btn btn-danger" [disabled]="isReadonlyVersion(version)"
+                                title="Version löschen" (click)="showDeleteDialogClick(version)">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash"
+                                    fill="currentColor">
+                                    <use xlink:href="assets/images/bootstrap-icons.svg#trash" />
+                                </svg>
+                            </button>
+
+                        </div>
                     </td>
                 </tr>
             </tbody>
         </table>
+
+        <button class="btn btn-primary" (click)="showCreateDialogClick()">create version</button>
     </div>
 
-    <button class="btn btn-primary" (click)="showCreateDialogClick()">create version</button>
+    <div [hidden]="!isReconciling" style="min-width: 300px;">
+       <app-version-reconcile-dialog (reconcileFinished)="reconcileFinished($event)"></app-version-reconcile-dialog>
+    </div>
 </div>

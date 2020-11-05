@@ -7,6 +7,9 @@ import { VersionManagementService } from 'src/app/services/version-management.se
 import { WidgetsService } from 'src/app/services/widgets.service';
 import { VersionCreateDialogComponent } from './version-create-dialog/version-create-dialog.component';
 import { VersionDeleteDialogComponent } from './version-delete-dialog/version-delete-dialog.component';
+import { FORMAT_UTILS } from '../../utils/utils';
+import { MessageService } from 'src/app/services/message.service';
+import { VersionReconcileDialogComponent } from './version-reconcile-dialog/version-reconcile-dialog.component';
 
 @Component({
   selector: 'app-version-manager',
@@ -15,17 +18,21 @@ import { VersionDeleteDialogComponent } from './version-delete-dialog/version-de
 })
 export class VersionManagerComponent implements OnInit, OnDestroy {
   @ViewChild('versionManager', { static: true }) private versionManagerElement: ElementRef;
+  @ViewChild(VersionReconcileDialogComponent) private versionReconcileDialog: VersionReconcileDialogComponent;
+
   versions: GdbVersion[] = [];
-  createVersion: any;
+  isReconciling: boolean = false;
   private expand: Expand;
   private expandedHandle: any;
   private modalRef: BsModalRef;
+
 
   constructor(
     private widgetsService: WidgetsService,
     private versionManagementService: VersionManagementService,
     private settingService: SettingService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private messageService: MessageService
   ) { }
 
   ngOnInit(): void {
@@ -47,7 +54,7 @@ export class VersionManagerComponent implements OnInit, OnDestroy {
   }
 
   isReadonlyVersion(version: GdbVersion): boolean {
-    return version.versionName === 'SDE.DEFAULT' || version.versionId === 0;
+    return version.versionName === this.versionManagementService.getDefaultVersionName();
   }
 
   setActiveVersionClick(version: GdbVersion): void {
@@ -55,22 +62,45 @@ export class VersionManagerComponent implements OnInit, OnDestroy {
   }
 
   getDate(value: any): string {
+    if (!value || value === null) {
+      return '';
+    }
+
     const date = new Date(value);
-    return `${date.getDay()}.${date.getMonth()}.${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`
+    return FORMAT_UTILS.formatDate(date);
   }
 
-  private async initVersions() {
-    if (this.versions.length === 0) {
+  getFormatedVersionName(versionName: string): string {
+    return FORMAT_UTILS.formatVersionName(versionName);
+  }
+
+  private async initVersions(reload?: boolean): Promise<any> {
+    if (this.versions.length === 0 || reload === true) {
       this.versions = await this.versionManagementService.getVersionInfos();
     }
   }
 
-  /*------------------------------
-    create version  
-   -------------------------------*/
+  /**
+  * reconcile/Post
+  */
+  async showReconcilePostDialogClick(version: GdbVersion): Promise<void> {
+      this.isReconciling = true;
+      this.versionReconcileDialog.reconcile(version);          
+  }
 
+  reconcileFinished(success: boolean):void {
+    this.isReconciling = false;
+    if(success){
+      this.initVersions(true);
+    }
+  }
+
+  /**
+   * create version
+   */
   showCreateDialogClick(): void {
     this.modalRef = this.modalService.show(VersionCreateDialogComponent);
+
     this.modalRef.content.onCreate.subscribe(async (gdbVersion: GdbVersion) => {
       const createdVersion = await this.versionManagementService.createVersion(gdbVersion.versionName, gdbVersion.description);
       this.versions.push(createdVersion);
@@ -78,12 +108,12 @@ export class VersionManagerComponent implements OnInit, OnDestroy {
     })
   }
 
-  /*------------------------------
-    delete version  
-   -------------------------------*/
-
+  /**
+   * delete version
+   */
   showDeleteDialogClick(version: GdbVersion): void {
     this.modalRef = this.modalService.show(VersionDeleteDialogComponent, { class: 'modal-sm', initialState: { gdbVersion: version } });
+
     this.modalRef.content.onDelete.subscribe(async (gdbVersion: GdbVersion) => {
       const success = await this.versionManagementService.deleteVersion(gdbVersion.versionName);
       if (success) {

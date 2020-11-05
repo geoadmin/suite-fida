@@ -29,6 +29,7 @@ import { VersionDeleteDialogComponent } from './components/version-manager/versi
 
 // config
 import { ConfigService } from './configs/config.service';
+import { VersionReconcileDialogComponent } from './components/version-manager/version-reconcile-dialog/version-reconcile-dialog.component';
 
 export function initApp(configService: ConfigService) {
   return () => configService.load();
@@ -54,7 +55,8 @@ export function createCompiler(compilerFactory: CompilerFactory) {
     AttributeViewComponent,
     VersionManagerComponent,
     VersionCreateDialogComponent,
-    VersionDeleteDialogComponent
+    VersionDeleteDialogComponent,
+    VersionReconcileDialogComponent
   ],
   imports: [
     FormsModule,
