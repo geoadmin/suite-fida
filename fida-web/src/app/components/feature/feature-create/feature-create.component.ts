@@ -18,6 +18,8 @@ import Expand from 'esri/widgets/Expand';
 })
 export class FeatureCreateComponent implements OnInit, OnDestroy {
   @ViewChild('featureCreate', { static: true }) private featureCreateElement: ElementRef;
+  //@ViewChild(FeatureContainerComponent) private featureContainerComponent: FeatureContainerComponent;
+
   public editableLayers: FeatureLayer[] = [];
   public selectedLayer: FeatureLayer;
   public activated: boolean = false;
@@ -39,10 +41,12 @@ export class FeatureCreateComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.expand = this.widgetsService.registerFeatureCreateWidgetContent(this.featureCreateElement);
-    this.expandedHandle = this.expand.watch("expanded", (newValue) => {      
-      if(newValue){
+    this.expandedHandle = this.expand.watch("expanded", (newValue) => {
+      if (newValue) {
         this.initLayers();
-      }      
+      } else {
+        this.deactivate();
+      }
     });
 
     this.widgetNotifyService.onGdbVersionChangedSubject.subscribe(() => {
@@ -70,18 +74,25 @@ export class FeatureCreateComponent implements OnInit, OnDestroy {
     this.feature.attributes = { ...this.selectedLayer.templates[0].prototype.attributes };
     this.feature.layer = this.selectedLayer; /* wieso kommt dieses property nicht beim popup an? */
     (this.feature as any).sourceLayer = this.selectedLayer; /* sende layer über sourceLayer anstelle layer-property */
-
+    
     // send to edit-template
     this.feature.popupTemplate = this.templateService.getFeatureTemplate(true);
     this.mapView.popup.features = [this.feature];
     this.mapView.popup.visible = true;
 
+    //(this.feature as FidaFeature).state === FeatureState.Create
+    //this.featureContainerComponent.setFeature(this.feature as FidaFeature);
+   
     this.wating = true;
+  }
+
+  closeClick(): void {
+    this.deactivate();
+    this.expand.collapse();
   }
 
   cancelClick(): void {
     this.deactivate();
-    this.sketchViewModel.cancel();
   }
 
   private initLayers(): void {
@@ -129,10 +140,19 @@ export class FeatureCreateComponent implements OnInit, OnDestroy {
     this.activated = false;
     this.wating = false;
     this.feature = undefined;
-    this.graphicsLayer.removeAll();
 
-    this.mapView.popup.visible = false;
-    this.mapService.enablePopup(true);
+    if(this.sketchViewModel){      
+      this.sketchViewModel.cancel();
+    }
+
+    if (this.graphicsLayer) {
+      this.graphicsLayer.removeAll();
+    }
+
+    if (this.mapView) {
+      this.mapView.popup.visible = false;
+      this.mapService.enablePopup(true);
+    }
   }
 
   private activate(): void {
@@ -144,5 +164,4 @@ export class FeatureCreateComponent implements OnInit, OnDestroy {
     this.mapView.popup.visible = false;
     this.mapService.enablePopup(false);
   }
-
 }

@@ -80,6 +80,10 @@ export class VersionManagerComponent implements OnInit, OnDestroy {
     }
   }
 
+  closeClick(): void{
+    this.expand.collapse();
+  }
+
   /**
   * reconcile/Post
   */

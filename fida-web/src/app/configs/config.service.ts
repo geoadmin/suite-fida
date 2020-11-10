@@ -13,7 +13,7 @@ export class ConfigService {
     }
 
     public async load(): Promise<any> {
-        this.config = await this.httpClient.get('/assets/configs/config.json').toPromise() as Config;
+        this.config = await this.httpClient.get('assets/configs/config.json').toPromise() as Config;
 
         // replace arcgis-url placeholder with environment value
         this.config.layers.forEach(layerConfig => {

@@ -21,6 +21,7 @@ export class FeatureContainerComponent implements OnInit, OnDestroy {
 
   public feature: FidaFeature
   public featureMode: FeatureMode = FeatureMode.View
+  public showSpinner: boolean;
   private modalRef: BsModalRef;
 
   constructor(
@@ -38,6 +39,7 @@ export class FeatureContainerComponent implements OnInit, OnDestroy {
   }
 
   isViewMode(): boolean {
+    //return false;
     return this.featureMode === FeatureMode.View;
   }
 
@@ -47,10 +49,12 @@ export class FeatureContainerComponent implements OnInit, OnDestroy {
 
   editGeometryClick(): void {
     let subscription = this.widgetNotifyService.onGeometryEditCompleteSubject.subscribe(async (geometry: Geometry) => {
+      this.startSpinner();
       subscription.unsubscribe();
       this.feature.geometry = geometry;
       await this.featureService.createGrundbuchFeatures(this.feature);
-      this.featureService.saveFeature(this.feature);
+      await this.featureService.saveFeature(this.feature);
+      this.stopSpinner();
     });
 
     this.widgetNotifyService.onGeometryEditSubject.next(this.feature.geometry);
@@ -72,8 +76,10 @@ export class FeatureContainerComponent implements OnInit, OnDestroy {
     this.modalRef.hide();
   }
 
-  async onSave(feature: FidaFeature): Promise<void> {
-    await this.featureService.saveFeature(feature);
+  async saveClick(): Promise<void> {
+    this.startSpinner();
+    this.changeDetectorRef.detectChanges();
+    await this.featureService.saveFeature(this.feature);
 
     // on edit
     if (this.featureMode === FeatureMode.Edit) {
@@ -84,9 +90,10 @@ export class FeatureContainerComponent implements OnInit, OnDestroy {
     else if (this.featureMode == FeatureMode.Create) {
       this.widgetNotifyService.onFeatureCreatedSubject.next(true);
     }
+    this.stopSpinner();
   }
 
-  onCancel(): void {
+  saveCancelClick(): void {
     if (this.featureMode == FeatureMode.Create) {
       this.widgetNotifyService.onFeatureCreatedSubject.next(false);
     }
@@ -106,6 +113,16 @@ export class FeatureContainerComponent implements OnInit, OnDestroy {
 
   private setFeatureMode(featureMode: FeatureMode): void {
     this.featureMode = featureMode;
+    this.changeDetectorRef.detectChanges();
+  }
+
+  private startSpinner():void{
+    this.showSpinner = true;
+    this.changeDetectorRef.detectChanges();
+  }
+
+  private stopSpinner():void{
+    this.showSpinner = false;
     this.changeDetectorRef.detectChanges();
   }
 }

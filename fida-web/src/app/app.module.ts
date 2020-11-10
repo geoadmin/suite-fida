@@ -20,16 +20,18 @@ import { FeatureContainerComponent } from './components/feature/feature-containe
 import { FeatureEditComponent } from './components/feature/feature-edit/feature-edit.component'
 import { FeatureCreateComponent } from './components/feature/feature-create/feature-create.component';
 import { FeatureViewComponent } from './components/feature/feature-view/feature-view.component';
-import { AttributeEditComponent } from './components/feature/attribute-edit/attribute-edit.component';
-import { AttributeViewComponent } from './components/feature/attribute-view/attribute-view.component';
+import { AttributeEditComponent } from './components/feature/attribute/attribute-edit/attribute-edit.component';
+import { AttributeViewComponent } from './components/feature/attribute/attribute-view/attribute-view.component';
+import { AttributeValueEditComponent } from './components/feature/attribute/attribute-value-edit/attribute-value-edit.component';
 import { GeometryEditComponent } from './components/feature/geometry-edit/geometry-edit.component';
 import { VersionManagerComponent } from './components/version-manager/version-manager.component';
 import { VersionCreateDialogComponent } from './components/version-manager/version-create-dialog/version-create-dialog.component';
 import { VersionDeleteDialogComponent } from './components/version-manager/version-delete-dialog/version-delete-dialog.component';
+import { VersionReconcileDialogComponent } from './components/version-manager/version-reconcile-dialog/version-reconcile-dialog.component';
+import { LfpEditComponent } from './components/feature/feature-edit/lfp-edit/lfp-edit.component';
 
 // config
 import { ConfigService } from './configs/config.service';
-import { VersionReconcileDialogComponent } from './components/version-manager/version-reconcile-dialog/version-reconcile-dialog.component';
 
 export function initApp(configService: ConfigService) {
   return () => configService.load();
@@ -56,7 +58,9 @@ export function createCompiler(compilerFactory: CompilerFactory) {
     VersionManagerComponent,
     VersionCreateDialogComponent,
     VersionDeleteDialogComponent,
-    VersionReconcileDialogComponent
+    VersionReconcileDialogComponent,
+    LfpEditComponent,
+    AttributeValueEditComponent
   ],
   imports: [
     FormsModule,

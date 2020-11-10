@@ -1,18 +1,31 @@
-<div #featureCreate class="fida-widget feature-create d-flex flex-row">
-    <div *ngIf="!activated && !wating">
-        <!--- layer selection -->
-        <select class="flex-fill h-100" [(ngModel)]="selectedLayer" [disabled]="activated">
-            <option *ngFor="let layer of editableLayers" [ngValue]="layer" [selected]="layer === selectedLayer">
-                {{layer.id}}
-            </option>
-        </select>
+<div #featureCreate [hidden]="wating" class="feature-create fida-widget">
 
-        <!--- start button -->
-        <button class="btn btn-primary" (click)="startClick()">start</button>
+    <!-- header -->
+    <div class="fida-widget-header">
+        <label>Create Feature</label>
+        <button class="btn esri-icon-close float-right" (click)="closeClick()"></button>
     </div>
 
-    <div *ngIf="activated && !wating">
-        <button type="button" class="btn btn-success" (click)="createClick()">Create</button>
-        <button type="button" class="btn btn-default ml-2" (click)="cancelClick()">Cancel</button>
+    <!-- body -->
+    <div class="">
+
+        <!--- when inactive -->
+        <div *ngIf="!activated" class="d-flex felx-row">
+            <select class="form-control flex-fill" [(ngModel)]="selectedLayer" [disabled]="activated">
+                <option *ngFor="let layer of editableLayers" [ngValue]="layer" [selected]="layer === selectedLayer">
+                    {{layer.id}}
+                </option>
+            </select>
+
+            <button class="btn btn-primary" (click)="startClick()">Start</button>
+        </div>
+
+        <!-- when active -->
+        <div *ngIf="activated" class="d-flex felx-row">
+            <button type="button" class="btn btn-default flex-fill" (click)="cancelClick()">Cancel</button>
+            <button type="button" class="btn btn-primary flex-fill" (click)="createClick()">Create</button>
+        </div>
+
+        <!-- <app-feature-container></app-feature-container> -->
     </div>
 </div>

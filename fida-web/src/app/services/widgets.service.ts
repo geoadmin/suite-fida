@@ -20,26 +20,28 @@ export class WidgetsService {
 
   public registerFeatureCreateWidgetContent(element: ElementRef): Expand {
     this.featureCreateWidget = new Expand({
-      expandIconClass: "esri-icon-edit",
-      expandTooltip: "Create Feature",
+      expandIconClass: 'esri-icon-edit',
+      expandTooltip: 'Create Feature',
       expanded: false,
       content: element.nativeElement
     });
+    this.synchExpandCollapse(this.featureCreateWidget);
     return this.featureCreateWidget;
   }
 
   public registerVersionManagerWidgetContent(element: ElementRef): Expand {
     this.versionManagerWidget = new Expand({
-      expandIconClass: "esri-icon-collection",
-      expandTooltip: "Manage Versions",
+      expandIconClass: 'esri-icon-collection',
+      expandTooltip: 'Manage Versions',
       expanded: false,
       content: element.nativeElement
     });
+    this.synchExpandCollapse(this.versionManagerWidget);
     return this.versionManagerWidget;
   }
 
   public getVersionManagerWidget(mapView: MapView): Expand {
-    if(!this.versionManagerWidget){
+    if (!this.versionManagerWidget) {
       throw new Error('no version-manager-widget registered.');
     }
 
@@ -48,7 +50,7 @@ export class WidgetsService {
   }
 
   public getFeatureCreateWidget(mapView: MapView): Expand {
-    if(!this.featureCreateWidget){
+    if (!this.featureCreateWidget) {
       throw new Error('no feature-create-widget registered.');
     }
 
@@ -57,44 +59,55 @@ export class WidgetsService {
   }
 
   public getBasemapWidget(mapView: MapView): Expand {
-    var basemapGallery = new BasemapGallery({
+    const basemapGallery = new BasemapGallery({
       view: mapView
     });
-    var expand = new Expand({
+    const expand = new Expand({
+      expandTooltip: 'Basemaps',
       view: mapView,
       content: basemapGallery
     });
+    this.synchExpandCollapse(expand);
     return expand;
   }
 
   public getSearchWidget(mapView: MapView): Expand {
-    var serach = new Search({
+    const serach = new Search({
       view: mapView
     });
-    var expand = new Expand({
-      expandIconClass: "esri-icon-search",
+    const expand = new Expand({
+      expandIconClass: 'esri-icon-search',
+      expandTooltip: 'Search',
       view: mapView,
       content: serach
     });
+    this.synchExpandCollapse(expand);
     return expand;
   }
 
   public getZoomWidget(mapView: MapView): Zoom {
-    var zoom = new Zoom({
+    const zoom = new Zoom({
       view: mapView
-    });
+    });    
     return zoom;
   }
 
   public getLayerListWidget(mapView: MapView): Expand {
-    var layerList = new LayerList({
+    const layerList = new LayerList({      
       view: mapView
     });
-    var expand = new Expand({
+    const expand = new Expand({
+      expandTooltip: 'Layers',
       view: mapView,
       content: layerList
     });
+    this.synchExpandCollapse(expand);
     return expand;
+  }
+
+  private synchExpandCollapse(expand: Expand){
+    expand.collapseIconClass = expand.expandIconClass;
+    expand.collapseTooltip = expand.expandTooltip;
   }
 
 }

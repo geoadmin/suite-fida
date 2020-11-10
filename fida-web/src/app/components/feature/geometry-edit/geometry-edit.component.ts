@@ -35,16 +35,18 @@ export class GeometryEditComponent implements OnInit {
     });
   }
 
-    saveClick(): void {
-      this.widgetNotifyService.onGeometryEditCompleteSubject.next(this.feature.geometry);
-      this.deactivate();
-      this.sketchViewModel.complete();
-    }
+  saveClick(): void {
+    this.widgetNotifyService.onGeometryEditCompleteSubject.next(this.feature.geometry);
+    this.deactivate();
+  }
 
-    cancelClick(): void {
-      this.deactivate();
-      this.sketchViewModel.cancel();
-    }
+  cancelClick(): void {
+    this.deactivate();
+  }
+
+  closeClick(): void {
+    this.deactivate();
+  }
 
   private onGeometryEdit(): void {
     this.initSketch();
@@ -72,11 +74,20 @@ export class GeometryEditComponent implements OnInit {
   private deactivate(): void {
     this.activated = false;
     this.feature = undefined;
-    this.graphicsLayer.removeAll();
 
-    this.mapView.popup.visible = true;
-    this.mapView.ui.remove(this.geometryEditElement.nativeElement);
-    this.mapService.enablePopup(true);
+    if (this.sketchViewModel) {
+      this.sketchViewModel.cancel();
+    }
+
+    if (this.graphicsLayer) {
+      this.graphicsLayer.removeAll();
+    }
+
+    if (this.mapView) {
+      this.mapView.popup.visible = true;
+      this.mapView.ui.remove(this.geometryEditElement.nativeElement);
+      this.mapService.enablePopup(true);
+    }
   }
 
   private activate(): void {

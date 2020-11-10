@@ -1,5 +1,13 @@
-<div #versionManager class="fida-widget">
-    <div [hidden]="isReconciling">
+<div #versionManager class="version-manager fida-widget">
+
+    <!-- header -->
+    <div class="fida-widget-header">
+        <label>Version-Manager</label>
+        <button class="btn esri-icon-close float-right" (click)="closeClick()"></button>
+    </div>
+
+    <!-- body -->
+    <div class="fida-widget-body" [hidden]="isReconciling">
         <table class="table table-sm table-dark">
             <thead>
                 <th>Name</th>
@@ -36,10 +44,13 @@
             </tbody>
         </table>
 
-        <button class="btn btn-primary" (click)="showCreateDialogClick()">create version</button>
+        <!-- default footer -->
+        <div class="fida-widget-footer">
+            <button class="btn btn-primary" (click)="showCreateDialogClick()">create version</button>
+        </div>
     </div>
 
     <div [hidden]="!isReconciling" style="min-width: 300px;">
-       <app-version-reconcile-dialog (reconcileFinished)="reconcileFinished($event)"></app-version-reconcile-dialog>
+        <app-version-reconcile-dialog (reconcileFinished)="reconcileFinished($event)"></app-version-reconcile-dialog>
     </div>
 </div>

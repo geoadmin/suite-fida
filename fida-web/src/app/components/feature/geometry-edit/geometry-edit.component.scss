@@ -1,0 +1,6 @@
+.geometry-edit {
+    position: fixed;
+    top: calc(var(--header-height) + 15px);
+    left: calc(50vw - 150px);
+    width: 300px;
+}

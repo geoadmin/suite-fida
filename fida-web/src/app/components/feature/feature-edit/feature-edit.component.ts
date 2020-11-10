@@ -9,36 +9,26 @@ import { FeatureService } from 'src/app/services/feature.service';
 })
 export class FeatureEditComponent implements OnInit {
   @Input() feature: FidaFeature;
-  @Output() save = new EventEmitter<FidaFeature>();
-  @Output() cancel = new EventEmitter<void>();
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
     private featureService: FeatureService
-    ) { }
+  ) { }
 
   ngOnInit(): void {
-   }
-  
-  saveClick(form: any): void { 
-    this.save.emit(this.feature);
   }
 
-  cancelClick(form: any): void { 
-    this.cancel.emit();
-  }
-
-  async addRelatedFeatureClick(relatedFeaturesPropertyName: string): Promise<void> { 
+  async addRelatedFeatureClick(relatedFeaturesPropertyName: string): Promise<void> {
     await this.featureService.createRelatedFeature(this.feature, relatedFeaturesPropertyName);
     this.changeDetectorRef.detectChanges();
   }
 
-  deleteRelatedFeatureClick(feature: FidaFeature): void { 
+  deleteRelatedFeatureClick(feature: FidaFeature): void {
     feature.state = FeatureState.Delete;
     this.changeDetectorRef.detectChanges();
   }
-  
-  getRelatedFeatures(relatedFeatures:FidaFeature[]){
+
+  getRelatedFeatures(relatedFeatures: FidaFeature[]) {
     return relatedFeatures?.filter(f => f.state !== FeatureState.Delete);
   }
 }

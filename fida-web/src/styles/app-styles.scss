@@ -10,6 +10,7 @@ body {
 
 :root {
   --header-height: 95px;
+  --fida-widget-footer-height: 50px;
 }
 
 :focus {
@@ -23,10 +24,28 @@ body {
   padding: 0;
   margin: 0;
   border-radius: 0;
+  height: inherit;
 }
 
 .form-group {
   margin: 0;
+}
+
+.attribute-label {
+  display: flex;
+  align-items: center;
+}
+// ----------------------------------------------------------------------------------------------------
+// grid styles
+// ----------------------------------------------------------------------------------------------------
+.row {
+  margin-left: -5px;
+}
+
+.col,
+[class*="col-"] {
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 // ----------------------------------------------------------------------------------------------------
@@ -74,6 +93,30 @@ body {
   border: 1px solid var(--light-contrast);
 }
 
+.fida-widget-header {
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  padding: 5px 0 8px 0;
+
+  & label {
+    margin-top: 3px;
+    margin-bottom: 0;
+  }
+}
+
+.fida-widget-body {
+  margin: 0 0 var(--fida-widget-footer-height) 0;
+}
+.fida-widget-footer {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  width: 100%;
+  padding: 12px 12px 12px 12px;
+  border-top: solid 1px rgba(110,110,110,0.3);
+}
+
 // ----------------------------------------------------------------------------------------------------
 // esri-widget styles
 // ----------------------------------------------------------------------------------------------------
@@ -84,6 +127,10 @@ body {
 
 .esri-widget--button:not(.esri-search__submit-button) {
   border: 1px solid var(--dark-contrast);
+
+  &[aria-expanded="true"] {
+    border: 2px solid var(--dark-contrast);
+  }
 }
 
 .esri-expand__panel {
@@ -102,6 +149,45 @@ body {
 .esri-view-width-xlarge .esri-popup__main-container,
 .esri-view-width-large .esri-popup__main-container,
 .esri-view-width-medium .esri-popup__main-container {
-  min-height: 100% !important;
+  max-height: 100% !important;
   min-width: 50% !important;
+}
+
+.esri-popup__header {
+  display: none;
+}
+
+.esri-popup__content {
+  margin: 0 0 var(--fida-widget-footer-height) 0;
+}
+
+.esri-feature__last-edited-info {
+  display: none;
+}
+
+.esri-feature__content-element {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+// ----------------------------------------------------------------------------------------------------
+// spinner styles
+// ----------------------------------------------------------------------------------------------------
+.spinner {
+  position: relative;
+  min-height: 26px;
+}
+
+.spinner::before {
+  content: " ";
+  z-index: 10;
+  display: block;
+  position: absolute;
+  height: 100%;
+  min-height: 32px;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.7) url("../assets/images/spinner-arrow.gif") center center no-repeat;
+  background-size: 32px 32px;
 }

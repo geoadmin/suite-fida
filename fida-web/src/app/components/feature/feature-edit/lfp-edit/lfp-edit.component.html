@@ -1,0 +1,46 @@
+<fieldset ngModelGroup="lfp">
+
+    <div class="row">
+        <div class="col">
+            <h1>LFP</h1>
+        </div>
+    </div>
+
+
+
+
+    <div class="row">
+        <div class="col-2 attribute-label">
+            LFP1 Punktart
+        </div>
+        <div class="col-2">
+            <app-attribute-value-edit [feature]="feature" [name]="'OBJEKTART'"></app-attribute-value-edit>
+        </div>
+        <div class="col-4">
+            <app-attribute-value-edit [feature]="feature" [name]="'PUNKTNAME'"></app-attribute-value-edit>
+        </div>
+        <div class="col-2 attribute-label">
+            Euref/NeotekNr
+        </div>
+        <div class="col-1 pr-0">
+            <app-attribute-value-edit [feature]="feature" [name]="'EUREFNUMMER'"></app-attribute-value-edit>
+        </div>
+        <div class="col-1 pl-0">
+            <app-attribute-value-edit [feature]="feature" [name]="'NEOTEKNUMMER'"></app-attribute-value-edit>
+        </div>
+    </div>
+
+    <!-- <div styel="border: solid black 2px" class="w-100"></div>
+    <div *ngFor="let attribute of feature?.attributes | keyvalue let idx=index">
+        <div class="row form-group">
+            <div class="col-6">
+                <label>{{ attribute.key }}</label>
+            </div>
+
+            <div class="col-6">
+                <app-attribute-value-edit [feature]="feature" [name]="attribute.key">
+                </app-attribute-value-edit>
+            </div>
+        </div>
+    </div> -->
+</fieldset>

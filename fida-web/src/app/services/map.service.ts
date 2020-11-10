@@ -10,6 +10,7 @@ import Extent from 'esri/geometry/Extent';
 import GraphicsLayer from 'esri/layers/GraphicsLayer';
 import FeatureLayer from 'esri/layers/FeatureLayer';
 import EsriError from 'esri/core/Error';
+import ActionButton from 'esri/support/actions/ActionButton';
 
 @Injectable({ providedIn: 'root' })
 export class MapService {
@@ -57,8 +58,7 @@ export class MapService {
       });
 
       // init popup 
-      this.view.popup.dockOptions.position = 'top-left'
-      this.view.popup.dockEnabled = true;
+      this.initPopup();
 
       // on gdb version changed
       this.widgetNotifyService.onGdbVersionChangedSubject.subscribe((gdbVersionName: string) => {
@@ -96,6 +96,26 @@ export class MapService {
 
   public getGraphicsLayer(): GraphicsLayer {
     return this.graphicsLayer;
+  }
+
+  private initPopup(): void {
+    this.view.popup.dockOptions.position = 'top-left'
+    this.view.popup.dockEnabled = true;
+
+    // add close action
+    const closeAction = new ActionButton({
+      title: '',
+      id: 'close-action',
+      className: 'esri-popup__icon esri-icon-close'
+    });
+    this.view.popup.actions.splice(0, 0, closeAction);
+    //this.view.popup.actions.push(closeAction);
+
+    this.view.popup.on('trigger-action', (event: any) => {
+      if (event.action.id === 'close-action') {
+        this.view.popup.close();
+      }
+    });
   }
 
   public enablePopup(enable: boolean): void {

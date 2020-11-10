@@ -45,7 +45,8 @@
         </div>
     </div>
 
-    <div role="tabpanel" class="tab-pane fade py-2" id="grundbuch_tab">
+    <div role="tabpanel" class="tab-pane fade py-2" id="grundbuch_tab"
+        [class.spinner]="!feature?.relatedFeatures.grundbuch">
         <div *ngFor="let relatedFeature of feature?.relatedFeatures.grundbuch">
             <div>---------{{ relatedFeature.attributes.OBJECTID }}--------------</div>
             <table>
@@ -64,7 +65,8 @@
             </table>
         </div>
     </div>
-    <div role="tabpanel" class="tab-pane fade py-2" id="nachfuehrung_tab">
+    <div role="tabpanel" class="tab-pane fade py-2" id="nachfuehrung_tab"
+        [class.spinner]="!feature?.relatedFeatures.grundbuch">
         <div *ngFor="let relatedFeature of feature?.relatedFeatures.nachfuehrung">
             <div>---------{{ relatedFeature.attributes.OBJECTID }}--------------</div>
             <table>

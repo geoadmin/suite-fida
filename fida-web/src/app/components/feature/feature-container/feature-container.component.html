@@ -1,26 +1,38 @@
-<div class="feature-container py-2" [hidden]="!feature">
+<div class="feature-container py-2" [hidden]="!feature" [class.spinner]="showSpinner">
 
-    <!-- buttons -->
-    <div class="d-flex felx-row" *ngIf="isViewMode()">
-        <button type="button" class="btn btn-primary" (click)="editClick()">
-            <span class="esri-icon-edit"></span>edit</button>
-        <button type="button" class="btn btn-primary ml-2" (click)="editGeometryClick()">edit geometry</button>
-        <button type="button" class="btn btn-danger ml-2" (click)="showDeleteDialogClick(template)">delete</button>
+    <!-- header -->
+    <div class="feature-container-header">
+
     </div>
 
-    <!-- view -->
-    <div class="row" *ngIf="isViewMode()">
-        <div class="col mt-2">
-            <!--<div #viewContainer></div>-->
-            <app-feature-view [feature]="feature"></app-feature-view>
+    <!-- body -->
+    <div class="feature-container-body">
+
+        <!-- view -->
+        <app-feature-view *ngIf="isViewMode()" [feature]="feature">
+        </app-feature-view>
+
+        <!-- edit -->
+        <app-feature-edit *ngIf="!isViewMode()" [feature]="feature" (save)="onSave($event)" (cancel)="onCancel()">
+        </app-feature-edit>
+
+    </div>
+
+    <!-- footer -->
+    <div class="fida-widget-footer d-flex felx-row-reverse">
+
+        <!-- view buttons -->
+        <div *ngIf="isViewMode()">
+            <button type="button" class="btn btn-primary" (click)="editClick()">
+                <span class="esri-icon-edit"></span>edit</button>
+            <button type="button" class="btn btn-primary ml-2" (click)="editGeometryClick()">edit geometry</button>
+            <button type="button" class="btn btn-danger ml-2" (click)="showDeleteDialogClick(template)">delete</button>
         </div>
-    </div>
 
-    <!-- edit -->
-    <div class="row" *ngIf="!isViewMode()">
-        <div class="col">
-            <!--<div #editContainer></div>-->
-            <app-feature-edit [feature]="feature" (save)="onSave($event)" (cancel)="onCancel()"></app-feature-edit>
+        <!-- edit buttons -->
+        <div *ngIf="!isViewMode()">
+            <button type="button" class="btn btn-success" (click)="saveClick()">Save</button>
+            <button type="button" class="btn btn-default ml-2" (click)="saveCancelClick()">Cancel</button>
         </div>
     </div>
 </div>
