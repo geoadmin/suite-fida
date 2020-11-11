@@ -54,6 +54,10 @@
                 "id": "HFP",
                 "url": "[EVIRONMENT_ARCGISURL]/rest/services/FIDA/FIDA/FeatureServer/1",
                 "visible": false
+            },
+            "relationships": {
+                "grundbuch": "grundbuchhfp",
+                "nachfuehrung": "Nachfuehrungen"
             }
         },
         {

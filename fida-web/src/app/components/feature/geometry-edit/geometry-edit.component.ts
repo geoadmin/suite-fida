@@ -5,7 +5,8 @@ import MapView from 'esri/views/MapView';
 import Feature from 'esri/Graphic';
 import SketchViewModel from 'esri/widgets/Sketch/SketchViewModel';
 import GraphicsLayer from 'esri/layers/GraphicsLayer';
-import Geometry from 'esri/geometry/Geometry';
+import { FeatureService } from 'src/app/services/feature.service';
+import { FidaFeature } from 'src/app/models/FidaFeature.model';
 
 @Component({
   selector: 'app-geometry-edit',
@@ -16,42 +17,49 @@ export class GeometryEditComponent implements OnInit {
   @ViewChild('geometryEdit', { static: true }) private geometryEditElement: ElementRef;
   public activated: boolean = false;
   public sketchViewModel: SketchViewModel
+  public showSpinner: boolean;
   private mapView: MapView;
   private graphicsLayer: GraphicsLayer;
-  private feature: Feature;
+  private originalFeature: FidaFeature;
+  private drawingFeature: Feature;
 
   constructor(
     private mapService: MapService,
+    private featureService: FeatureService,
     private widgetNotifyService: WidgetNotifyService
   ) { }
 
   ngOnInit(): void {
-    this.widgetNotifyService.onGeometryEditSubject.subscribe((geometry: Geometry) => {
+    this.widgetNotifyService.onGeometryEditSubject.subscribe((feature: FidaFeature) => {
+      this.originalFeature = feature;
       // create a feature rapper with edit-geometry
-      this.feature = new Feature({
-        geometry: geometry,
+      this.drawingFeature = new Feature({
+        geometry: feature.geometry,
       });
       this.onGeometryEdit();
     });
   }
 
-  saveClick(): void {
-    this.widgetNotifyService.onGeometryEditCompleteSubject.next(this.feature.geometry);
+  async saveClick(): Promise<void> {
+    this.originalFeature.geometry = this.drawingFeature.geometry;
+    this.showSpinner = true;
+    await this.featureService.createGrundbuchFeatures(this.originalFeature);
+    await this.featureService.saveFeature(this.originalFeature);
+    this.showSpinner = false;
+    
+    this.widgetNotifyService.onGeometryEditCompleteSubject.next(true);
     this.deactivate();
   }
 
   cancelClick(): void {
-    this.deactivate();
-  }
-
-  closeClick(): void {
+    this.widgetNotifyService.onGeometryEditCompleteSubject.next(false);
     this.deactivate();
   }
 
   private onGeometryEdit(): void {
     this.initSketch();
     this.activate();
-    this.sketchViewModel.update(this.feature, { tool: 'move' });
+    this.sketchViewModel.update(this.drawingFeature, { tool: 'move' });
   }
 
   private initSketch(): void {
@@ -64,7 +72,7 @@ export class GeometryEditComponent implements OnInit {
         if (event.state === "complete") {
           // do not allow stop sketching on map click
           if (this.activated === true) {
-            this.sketchViewModel.update(this.feature, { tool: 'move' });
+            this.sketchViewModel.update(this.drawingFeature, { tool: 'move' });
           }
         }
       });
@@ -73,7 +81,8 @@ export class GeometryEditComponent implements OnInit {
 
   private deactivate(): void {
     this.activated = false;
-    this.feature = undefined;
+    this.originalFeature = undefined;
+    this.drawingFeature = undefined;
 
     if (this.sketchViewModel) {
       this.sketchViewModel.cancel();
@@ -82,21 +91,11 @@ export class GeometryEditComponent implements OnInit {
     if (this.graphicsLayer) {
       this.graphicsLayer.removeAll();
     }
-
-    if (this.mapView) {
-      this.mapView.popup.visible = true;
-      this.mapView.ui.remove(this.geometryEditElement.nativeElement);
-      this.mapService.enablePopup(true);
-    }
   }
 
   private activate(): void {
     this.activated = true;
     this.graphicsLayer.removeAll();
-    this.graphicsLayer.add(this.feature);
-
-    this.mapView.popup.visible = false;
-    this.mapView.ui.add(this.geometryEditElement.nativeElement, "top-right");
-    this.mapService.enablePopup(false);
+    this.graphicsLayer.add(this.drawingFeature);
   }
 }

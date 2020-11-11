@@ -14,12 +14,14 @@ import { FidaFeature } from 'src/app/models/FidaFeature.model';
 export class AttributeValueEditComponent implements OnInit {
   @Input() feature: FidaFeature;
   @Input() name: string;
+  @Input() placeholder: string;
+  @Input() type: string;
+  
   private field: Field;
   
   constructor() { }
 
   ngOnInit(): void {    
-    
     this.field = this.getFeatureLayer().fields.find(f => f.name === this.name);
 
     if(this.field === undefined){
@@ -32,7 +34,7 @@ export class AttributeValueEditComponent implements OnInit {
       if(value && value !== null){
         this.feature.attributes[this.name] = new Date(value);
       }      
-    }
+    }    
   }
 
   ngAfterViewInit(): void{
@@ -46,6 +48,10 @@ export class AttributeValueEditComponent implements OnInit {
   }
 
   getFieldType(): string {
+    if(this.type){
+      return this.type;
+    }    
+    
     if(!this.field){
       return;
     }

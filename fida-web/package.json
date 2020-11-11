@@ -7,7 +7,9 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e", 
+    "copy": "cp -r dist/fida-web \\\\S7T4202A.adr.admin.ch/FIDA$/",
+    "deploy": "ng build --base-href /fida-web/ && npm run copy"
   },
   "private": true,
   "dependencies": {

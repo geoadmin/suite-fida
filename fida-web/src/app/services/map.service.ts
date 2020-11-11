@@ -119,11 +119,19 @@ export class MapService {
   }
 
   public enablePopup(enable: boolean): void {
-    this.view.map.layers.map((layer) => {
-      let featureLayer = layer as FeatureLayer;
-      if (featureLayer) {
-        featureLayer.popupEnabled = enable;
-      }
-    });
+    if (this.view) {
+      this.view.map.layers.map((layer) => {
+        let featureLayer = layer as FeatureLayer;
+        if (featureLayer) {
+          featureLayer.popupEnabled = enable;
+        }
+      });
+    }
+  }
+
+  public setPopupVisibility(visible: boolean): void {
+    if (this.view) {
+      this.view.popup.visible = visible;
+    }
   }
 }

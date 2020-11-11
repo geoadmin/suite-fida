@@ -32,7 +32,11 @@ export class AttributeViewComponent implements OnInit {
 
     if(this.field.domain !== null && this.field.domain.type === 'coded-value'){
       const codedValueDomain = this.field.domain as CodedValueDomain;
-      const codedValue = codedValueDomain.codedValues.find(f => f.code === value);
+      const codedValue = codedValueDomain.codedValues.find(f => f.code === parseInt(value));
+      if(codedValue === undefined){
+        console.error(`No coded-value in domain ${this.field.domain.name} for value ${value} found.`);
+        return value;
+      }
       return codedValue.name;
     }
 

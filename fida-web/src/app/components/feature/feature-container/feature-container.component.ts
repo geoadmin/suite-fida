@@ -4,6 +4,7 @@ import { WidgetNotifyService } from 'src/app/services/widget-notify.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import Geometry from 'esri/geometry/Geometry';
 import { FeatureState, FidaFeature } from 'src/app/models/FidaFeature.model';
+import { MapService } from 'src/app/services/map.service';
 
 export enum FeatureMode {
   View = 'view',
@@ -19,15 +20,14 @@ export enum FeatureMode {
 export class FeatureContainerComponent implements OnInit, OnDestroy {
   @ViewChild('deleteModalRef', { static: true }) deleteModalRef: ElementRef;
 
-  public feature: FidaFeature
-  public featureMode: FeatureMode = FeatureMode.View
-  public showSpinner: boolean;
+  public feature: FidaFeature;
   private modalRef: BsModalRef;
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
     private featureService: FeatureService,
     private widgetNotifyService: WidgetNotifyService,
+    private mapService: MapService,
     private modalService: BsModalService
   ) { }
 
@@ -38,27 +38,53 @@ export class FeatureContainerComponent implements OnInit, OnDestroy {
     console.log('Items destroyed');
   }
 
-  isViewMode(): boolean {
-    //return false;
-    return this.featureMode === FeatureMode.View;
+  public async setFeature(feature: FidaFeature): Promise<void> {
+    try {
+      this.feature = feature;
+      this.featureService.loadRelatedFeatures(this.feature, () => { this.changeDetectorRef.detectChanges() });
+      this.changeDetectorRef.detectChanges();
+    } catch (error) {
+      console.error(error);
+    }
   }
+
+  private enablePopup(enable: boolean): void {
+    this.mapService.setPopupVisibility(enable);
+    this.mapService.enablePopup(enable);
+    this.changeDetectorRef.detectChanges();
+  }
+
+  /**
+   * feature edit
+   */
 
   editClick(): void {
-    this.setFeatureMode(FeatureMode.Edit);
-  }
-
-  editGeometryClick(): void {
-    let subscription = this.widgetNotifyService.onGeometryEditCompleteSubject.subscribe(async (geometry: Geometry) => {
-      this.startSpinner();
+    let subscription = this.widgetNotifyService.onFeatureEditCompleteSubject.subscribe(() => {
+      this.enablePopup(true);
       subscription.unsubscribe();
-      this.feature.geometry = geometry;
-      await this.featureService.createGrundbuchFeatures(this.feature);
-      await this.featureService.saveFeature(this.feature);
-      this.stopSpinner();
     });
 
-    this.widgetNotifyService.onGeometryEditSubject.next(this.feature.geometry);
+    this.widgetNotifyService.onFeatureEditSubject.next(this.feature);
+    this.enablePopup(false);
   }
+
+  /**
+   * geometry edit
+   */
+
+  editGeometryClick(): void {
+    let subscription = this.widgetNotifyService.onGeometryEditCompleteSubject.subscribe(() => {
+      this.enablePopup(true);
+      subscription.unsubscribe();
+    });
+
+    this.widgetNotifyService.onGeometryEditSubject.next(this.feature);
+    this.enablePopup(false);
+  }
+
+  /**
+   * feature delete
+   */
 
   showDeleteDialogClick(template: TemplateRef<any>): void {
     this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
@@ -74,55 +100,5 @@ export class FeatureContainerComponent implements OnInit, OnDestroy {
 
   deleteCancelClick(): void {
     this.modalRef.hide();
-  }
-
-  async saveClick(): Promise<void> {
-    this.startSpinner();
-    this.changeDetectorRef.detectChanges();
-    await this.featureService.saveFeature(this.feature);
-
-    // on edit
-    if (this.featureMode === FeatureMode.Edit) {
-      this.setFeatureMode(FeatureMode.View);
-    }
-
-    // on create
-    else if (this.featureMode == FeatureMode.Create) {
-      this.widgetNotifyService.onFeatureCreatedSubject.next(true);
-    }
-    this.stopSpinner();
-  }
-
-  saveCancelClick(): void {
-    if (this.featureMode == FeatureMode.Create) {
-      this.widgetNotifyService.onFeatureCreatedSubject.next(false);
-    }
-    this.setFeatureMode(FeatureMode.View);
-  }
-
-  public async setFeature(feature: FidaFeature): Promise<void> {
-    try {
-      this.feature = feature;
-      this.featureMode = feature.state === FeatureState.Create ? FeatureMode.Create : FeatureMode.View;
-      this.featureService.loadRelatedFeatures(this.feature, () => { this.changeDetectorRef.detectChanges() });
-      this.changeDetectorRef.detectChanges();
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  private setFeatureMode(featureMode: FeatureMode): void {
-    this.featureMode = featureMode;
-    this.changeDetectorRef.detectChanges();
-  }
-
-  private startSpinner():void{
-    this.showSpinner = true;
-    this.changeDetectorRef.detectChanges();
-  }
-
-  private stopSpinner():void{
-    this.showSpinner = false;
-    this.changeDetectorRef.detectChanges();
   }
 }

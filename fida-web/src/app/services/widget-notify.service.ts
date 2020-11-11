@@ -1,21 +1,25 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import Geometry from 'esri/geometry/Geometry';
+import { FidaFeature } from '../models/FidaFeature.model';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class WidgetNotifyService {
-  public onFeatureCreatedSubject: Subject<boolean>;
-  public onGeometryEditSubject: Subject<Geometry>;
-  public onGeometryEditCompleteSubject: Subject<Geometry>;
+  public onGeometryEditSubject: Subject<FidaFeature>;
+  public onGeometryEditCompleteSubject: Subject<boolean>;
+  public onFeatureEditSubject: Subject<FidaFeature>;
+  public onFeatureEditCompleteSubject: Subject<boolean>;
+  public onFeatureCreateCompleteSubject: Subject<boolean>;
   public onGdbVersionChangedSubject: Subject<string>;
 
   constructor() {
-    this.onFeatureCreatedSubject = new Subject();
+    this.onFeatureCreateCompleteSubject = new Subject();
     this.onGeometryEditSubject = new Subject();
     this.onGeometryEditCompleteSubject = new Subject();
+    this.onFeatureEditSubject = new Subject();
+    this.onFeatureEditCompleteSubject = new Subject();
     this.onGdbVersionChangedSubject = new Subject();
   }
 }

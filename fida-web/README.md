@@ -23,7 +23,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## deploy 
 
-For the simplest deployment, create a production build and copy the output directory to a web server.
+For the simplest deployment, create a production build and copy the build to the web server.
 
-`npm run build -prod --base-href /fida-web`
+`npm run deploy`
 

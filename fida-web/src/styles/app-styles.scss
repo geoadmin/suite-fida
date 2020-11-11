@@ -6,11 +6,13 @@ body {
 body {
   margin: 0;
   font-family: "Frutiger Neue", "Helvetica Neue", sans-serif;
+  font-size: 14px;
 }
 
 :root {
   --header-height: 95px;
   --fida-widget-footer-height: 50px;
+  --fida-widget-header-height: 40px;
 }
 
 :focus {
@@ -24,11 +26,17 @@ body {
   padding: 0;
   margin: 0;
   border-radius: 0;
-  height: inherit;
+  height: 24px;
+  font-size: 14px;
 }
 
 .form-group {
   margin: 0;
+}
+
+textarea.form-control {
+  height: auto;
+  padding: 3px;
 }
 
 .attribute-label {
@@ -40,6 +48,7 @@ body {
 // ----------------------------------------------------------------------------------------------------
 .row {
   margin-left: -5px;
+  margin-right: -5px;
 }
 
 .col,
@@ -94,10 +103,12 @@ body {
 }
 
 .fida-widget-header {
+  height: var(--fida-widget-header-height);
   font-size: 16px;
   font-weight: bold;
   text-align: center;
   padding: 5px 0 8px 0;
+  border-bottom: solid 1px rgba(110, 110, 110, 0.3);
 
   & label {
     margin-top: 3px;
@@ -107,6 +118,8 @@ body {
 
 .fida-widget-body {
   margin: 0 0 var(--fida-widget-footer-height) 0;
+  max-height: calc(100vh - var(--fida-widget-footer-height) - var(--header-height) - var(--fida-widget-header-height) - 40px);
+  overflow: auto;
 }
 .fida-widget-footer {
   position: absolute;

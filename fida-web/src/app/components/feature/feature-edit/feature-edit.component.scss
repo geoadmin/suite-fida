@@ -1,0 +1,7 @@
+.feature-edit {
+    position: fixed;
+    top: calc(var(--header-height) + 15px);
+    left: calc(50vw - 340px);
+    width: 680px;
+    max-height: calc(100vh - var(--header-height) - 30px);
+}

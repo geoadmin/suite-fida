@@ -49,6 +49,10 @@ export class ConfigService {
         return environment.arcGisPortal;
     }
 
+    public getArcGisServer(): string {
+        return environment.arcGisServer;
+    }
+
     /**
      *  get configs
      **/

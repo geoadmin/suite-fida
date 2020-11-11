@@ -1,10 +1,10 @@
-<div #geometryEdit>
+<div #geometryEdit [class.spinner]="showSpinner">
     <div *ngIf="activated" class="geometry-edit fida-widget">
 
         <!-- header -->
         <div class="fida-widget-header">
             <label>Edit Geometry</label>
-            <button class="btn esri-icon-close float-right" (click)="closeClick()"></button>
+            <button class="btn esri-icon-close float-right" (click)="cancelClick()"></button>
         </div>
 
         <!-- body -->

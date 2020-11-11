@@ -2,45 +2,253 @@
 
     <div class="row">
         <div class="col">
-            <h1>LFP</h1>
+
         </div>
     </div>
 
-
-
-
-    <div class="row">
+<!--Punktart / Nr-->
+    <div class="row mt-4">
         <div class="col-2 attribute-label">
             LFP1 Punktart
         </div>
         <div class="col-2">
-            <app-attribute-value-edit [feature]="feature" [name]="'OBJEKTART'"></app-attribute-value-edit>
+            <app-attribute-value-edit [feature]="feature" name="OBJEKTART"></app-attribute-value-edit>
         </div>
         <div class="col-4">
-            <app-attribute-value-edit [feature]="feature" [name]="'PUNKTNAME'"></app-attribute-value-edit>
+            <app-attribute-value-edit [feature]="feature" name="LFPNR"></app-attribute-value-edit>
         </div>
         <div class="col-2 attribute-label">
             Euref/NeotekNr
         </div>
         <div class="col-1 pr-0">
-            <app-attribute-value-edit [feature]="feature" [name]="'EUREFNUMMER'"></app-attribute-value-edit>
+            <app-attribute-value-edit [feature]="feature" name="EUREFNUMMER"></app-attribute-value-edit>
         </div>
         <div class="col-1 pl-0">
-            <app-attribute-value-edit [feature]="feature" [name]="'NEOTEKNUMMER'"></app-attribute-value-edit>
+            <app-attribute-value-edit [feature]="feature" name="NEOTEKNUMMER"></app-attribute-value-edit>
         </div>
     </div>
 
-    <!-- <div styel="border: solid black 2px" class="w-100"></div>
-    <div *ngFor="let attribute of feature?.attributes | keyvalue let idx=index">
-        <div class="row form-group">
-            <div class="col-6">
-                <label>{{ attribute.key }}</label>
-            </div>
+    <!--Staties -->
+    <div class="row mt-2">
+        <div class="col-2">
+            <app-attribute-value-edit [feature]="feature" name="PUNKT_STATUS"></app-attribute-value-edit>
+        </div>
+        <div class="col-2">
+            <app-attribute-value-edit [feature]="feature" name="REALISIERUNG_STATUS"></app-attribute-value-edit>
+        </div>
+    </div>
 
-            <div class="col-6">
-                <app-attribute-value-edit [feature]="feature" [name]="attribute.key">
+    <!--Punnktname / LFPOrdnung -->
+    <div class="row mt-2">
+        <div class="col-2">
+        </div>
+        <div class="col-2 attribute-label">
+            Punktname
+        </div>
+        <div class="col-4">
+            <app-attribute-value-edit [feature]="feature" name="PUNKTNAME" placeholder="Punktname"></app-attribute-value-edit>
+        </div>
+        <div class="col-2 attribute-label">
+            LFPOrdnung
+        </div>
+        <div class="col-2">
+            <app-attribute-value-edit [feature]="feature" name="LFPORDNUNG"></app-attribute-value-edit>
+        </div>
+    </div>
+
+    <!--Koordinaten -->
+    <div class="row mt-2">
+        <div class="col-4">
+            <div class="d-flex felx-row-reverse">
+                <span class="attribute-label">E</span>
+                <app-attribute-value-edit class="flex-fill" [feature]="feature" name="LV95E">
                 </app-attribute-value-edit>
             </div>
         </div>
-    </div> -->
+        <div class="col-4">
+            <div class="d-flex felx-row-reverse">
+                <span class="attribute-label">N</span>
+                <app-attribute-value-edit class="flex-fill" [feature]="feature" name="LV95N">
+                </app-attribute-value-edit>
+            </div>
+        </div>
+        <div class="col-2 attribute-label">
+            LN02
+        </div>
+        <div class="col-2">
+            <app-attribute-value-edit [feature]="feature" name="LN02"></app-attribute-value-edit>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-2 attribute-label">
+            GenLage/Höhe
+        </div>
+        <div class="col-2">
+            <app-attribute-value-edit [feature]="feature" name="GENLAGELV95"></app-attribute-value-edit>
+        </div>
+        <div class="col-2">
+            <app-attribute-value-edit [feature]="feature" name="GENHOEHELN02"></app-attribute-value-edit>
+        </div>
+        <div class="col-2">
+        </div>
+        <div class="col-1 attribute-label">
+            LHN95
+        </div>
+        <div class="col-3">
+            <app-attribute-value-edit [feature]="feature" name="LHN95"></app-attribute-value-edit>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-2 attribute-label">
+            ZuvLage/Höhe
+        </div>
+        <div class="col-2">
+            <app-attribute-value-edit [feature]="feature" name="ZUVLAGELV95"></app-attribute-value-edit>
+        </div>
+        <div class="col-2">
+            <app-attribute-value-edit [feature]="feature" name="ZUVHOEHELN02"></app-attribute-value-edit>
+        </div>
+        <div class="col-2">
+        </div>
+        <div class="col-1 attribute-label">
+            Ellips.
+        </div>
+        <div class="col-3">
+            <app-attribute-value-edit [feature]="feature" name="ELLIPSOIDH"></app-attribute-value-edit>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-8">
+        </div>
+        <div class="col-1 attribute-label">
+            DeltaOk
+        </div>
+        <div class="col-3">
+            <app-attribute-value-edit [feature]="feature" name="DELTAHOEHE_OBERKANTE"></app-attribute-value-edit>
+        </div>
+    </div>
+
+    <!--Kennzeichnung Text -->
+    <div class="row mt-5">
+        <div class="col-4">
+            <div class="row">
+                <div class="col-6 attribute-label">
+                    Kennzeichnung
+                </div>
+                <div class="col-6">
+                    <app-attribute-value-edit [feature]="feature" name="KENNZEICHNUNG"></app-attribute-value-edit>
+                </div>                
+            </div>
+            <div class="row">
+                <div class="col-6 attribute-label">
+                    Schutzart
+                </div>
+                <div class="col-6">
+                    <app-attribute-value-edit [feature]="feature" name="SCHUTZART"></app-attribute-value-edit>
+                </div>                
+            </div>
+            <div class="row">
+                <div class="col-6 attribute-label">
+                    Stabilität
+                </div>
+                <div class="col-6">
+                    <app-attribute-value-edit [feature]="feature" name="STABILITAET"></app-attribute-value-edit>
+                </div>                
+            </div>
+        </div>
+        <div class="col-8">
+            <app-attribute-value-edit [feature]="feature" name="KENNZEICHNUNGTEXT" type="textarea" placeholder="Kennzeichnung Text"></app-attribute-value-edit>
+        </div>
+    </div>
+
+    <!--Rückversicherung Bemerkung -->
+    <div class="row mt-2">
+        <div class="col-4">
+            <div class="row">
+                <div class="col-6 attribute-label">
+                    Anzahlschrauben
+                </div>
+                <div class="col-6">
+                    <app-attribute-value-edit [feature]="feature" name="ANZAHLRINGSCHRAUBEN"></app-attribute-value-edit>
+                </div>                
+            </div>
+            <div class="row">
+                <div class="col-6 attribute-label">
+                    Flanschen
+                </div>
+                <div class="col-6">
+                    <app-attribute-value-edit [feature]="feature" name="FLANSCHEN"></app-attribute-value-edit>
+                </div>                
+            </div>
+            <div class="row">
+                <div class="col-6 attribute-label">
+                    Anz. AnschlPkt
+                </div>
+                <div class="col-6">
+                    <app-attribute-value-edit [feature]="feature" name="ANZAHLANSCLAGPKT"></app-attribute-value-edit>
+                </div>                
+            </div>
+        </div>
+        <div class="col-8">
+            <app-attribute-value-edit [feature]="feature" name="RUECKVERSICHRG_BEMERK" type="textarea" placeholder="Rückversicherung Bemerkung"></app-attribute-value-edit>
+        </div>
+    </div>
+
+     <!--Bemerkung -->
+     <div class="row mt-2">
+        <div class="col-4">          
+        </div>
+        <div class="col-8">
+            <app-attribute-value-edit [feature]="feature" name="BEMERKUNG" type="textarea" placeholder="Bemerkung"></app-attribute-value-edit>
+        </div>
+    </div>
+
+     <!--Rückversicherung Bemerkung -->
+     <div class="row mt-2">
+        <div class="col-4">
+            <div class="row">
+                <div class="col-6 attribute-label">
+                    Erstellung
+                </div>
+                <div class="col-6">
+                    <app-attribute-value-edit [feature]="feature" name="ERSTELLUNGSDATUM"></app-attribute-value-edit>
+                </div>                
+            </div>           
+        </div>
+        <div class="col-8">
+            <app-attribute-value-edit [feature]="feature" name="ERSTELLUNGBEMERKUNG" type="textarea" placeholder="Erstellung Bemerkung"></app-attribute-value-edit>
+        </div>
+    </div>
+
+    <!--Identität -->
+    <div class="row mt-2">
+        <div class="col-4">            
+        </div>
+        <div class="col-8">
+            <app-attribute-value-edit [feature]="feature" name="INDENTITAET" type="textarea" placeholder="Erstellung Bemerkung"></app-attribute-value-edit>
+        </div>
+    </div>
+
+    <!--Zugang -->
+    <div class="row mt-2">
+        <div class="col-4">            
+        </div>
+        <div class="col-8">
+            <app-attribute-value-edit [feature]="feature" name="ZUGANG" type="textarea" placeholder="Zugang"></app-attribute-value-edit>
+        </div>
+    </div>
+
+    <!--Pubktbeschreibung -->
+    <div class="row mt-2 mb-4">
+        <div class="col-4">            
+        </div>
+        <div class="col-8">
+            <app-attribute-value-edit [feature]="feature" name="PUNKTBESCHREIBUNG" type="textarea" placeholder="Pubktbeschreibung"></app-attribute-value-edit>
+        </div>
+    </div>
+   
+
 </fieldset>

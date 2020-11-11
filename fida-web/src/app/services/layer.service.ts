@@ -20,6 +20,10 @@ export class LayerService {
     private configService: ConfigService,
     private settingService: SettingService
   ) {
+    // handle cors
+    esriConfig.request.trustedServers.push(configService.getArcGisServer());
+    esriConfig.request.trustedServers.push(configService.getArcGisPortal());
+
     esriConfig.portalUrl = configService.getArcGisPortal();
     this.portal = new Portal();
     this.setUser();
