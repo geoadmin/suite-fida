@@ -91,4 +91,6 @@ if __name__ == "__main__":
     )
     #show_example(IdentifyFeatures((2583759.0, 1210591.0), 1.0, _layerlist))
     idf = IdentifyFeatures((2588430.3, 1219348.9), 1.0, "ch.kantone.cadastralwebmap-farbe")
-    idf.getjson()
+    idf.getparzinfo()
+    idf2 = IdentifyFeatures((2583759.0, 1210591.0), 5000.0)
+    idf2.getparzinfo()

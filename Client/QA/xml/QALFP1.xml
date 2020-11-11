@@ -12,24 +12,18 @@
         <Element qualityCondition="FIDA_LFP GENHOEHELN02 is mandatory" />
         <Element qualityCondition="FIDA_LFP ZUVLAGELV95 is mandatory" />
         <Element qualityCondition="FIDA_LFP ZUVHOEHELN02 is mandatory" />
-        <Element qualityCondition="FIDA_LFP GESCHWINDIGKEIT_E is mandatory" />
-        <Element qualityCondition="FIDA_LFP GESCHWINDIGKEIT_N is mandatory" />
-        <Element qualityCondition="FIDA_LFP GESCHWINDIGKEIT_UP is mandatory" />
         <Element qualityCondition="FIDA_LFP LK25 is mandatory" />
-        <Element qualityCondition="FIDA_LFP LFPNR_NR is mandatory" />
-        <Element qualityCondition="FIDA_LFP LFPNR_EX is mandatory" />
+        <Element qualityCondition="FIDA_LFP LFPNR is mandatory" />
         <Element qualityCondition="FIDA_LFP HERKUNFT is mandatory" />
         <Element qualityCondition="FIDA_LFP KENNZEICHNUNG is mandatory" />
         <Element qualityCondition="FIDA_LFP BEGEHBAR is mandatory" />
         <Element qualityCondition="FIDA_LFP GNSSSICHTBARKEIT is mandatory" />
         <Element qualityCondition="FIDA_LFP GSMEMPFANG is mandatory" />
-        <Element qualityCondition="FIDA_LFP ERSTELLUNGSDATUM is mandatory" />
         <Element qualityCondition="FIDA_LFP PUNKTNAME is mandatory" />
         <Element qualityCondition="FIDA_LFP PUNKT_STATUS is mandatory" />
         <Element qualityCondition="FIDA_LFP REALISIERUNG_STATUS is mandatory" />
         <Element qualityCondition="FIDA_LFP SCHUTZART is mandatory" />
         <Element qualityCondition="FIDA_LFP STABILITAET is mandatory" />
-        <Element qualityCondition="FIDA_LFP BEGEHUNGSZYKLUS is mandatory" />
         <Element qualityCondition="FIDA_LFP ABSTURZGEFAHR is mandatory" />
 		<Element qualityCondition="FIDA_LFP CheckXYZ" />
 		<Element qualityCondition="FIDA_LFP DomainCheck" />
@@ -39,8 +33,6 @@
 		<Element qualityCondition="FIDA_LFP Punktnummer unique" />
 		<Element qualityCondition="FIDA_LFP REG LK25" />
 		<Element qualityCondition="FIDA_LFP REG LFPNR" />
-		<Element qualityCondition="FIDA_LFP REG LFPNR_NR" />
-		<Element qualityCondition="FIDA_LFP REG LFPNR_EX" />		
 		<Element qualityCondition="FIDA_LFP REG LV95E" />		
 		<Element qualityCondition="FIDA_LFP REG LV95N" />				
 		<Element qualityCondition="FIDA_LFP REG LN02" />
@@ -146,40 +138,16 @@
         <Scalar parameter="constraint" value="ZUVHOEHELN02 IS NOT NULL" />
       </Parameters>
     </QualityCondition>	
-    <QualityCondition name="FIDA_LFP GESCHWINDIGKEIT_E is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
-      <Parameters>
-        <Dataset parameter="table" value="FIDA_LFP" workspace="FIDA" />
-        <Scalar parameter="constraint" value="GESCHWINDIGKEIT_E IS NOT NULL" />
-      </Parameters>
-    </QualityCondition>	
-    <QualityCondition name="FIDA_LFP GESCHWINDIGKEIT_N is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
-      <Parameters>
-        <Dataset parameter="table" value="FIDA_LFP" workspace="FIDA" />
-        <Scalar parameter="constraint" value="GESCHWINDIGKEIT_N IS NOT NULL" />
-      </Parameters>
-    </QualityCondition>	
-    <QualityCondition name="FIDA_LFP GESCHWINDIGKEIT_UP is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
-      <Parameters>
-        <Dataset parameter="table" value="FIDA_LFP" workspace="FIDA" />
-        <Scalar parameter="constraint" value="GESCHWINDIGKEIT_UP IS NOT NULL" />
-      </Parameters>
-    </QualityCondition>	
     <QualityCondition name="FIDA_LFP LK25 is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
       <Parameters>
         <Dataset parameter="table" value="FIDA_LFP" workspace="FIDA" />
         <Scalar parameter="constraint" value="LK25 IS NOT NULL" />
       </Parameters>
     </QualityCondition>	
-    <QualityCondition name="FIDA_LFP LFPNR_NR is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
+    <QualityCondition name="FIDA_LFP LFPNR is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
       <Parameters>
         <Dataset parameter="table" value="FIDA_LFP" workspace="FIDA" />
-        <Scalar parameter="constraint" value="LFPNR_NR IS NOT NULL" />
-      </Parameters>
-    </QualityCondition>	
-    <QualityCondition name="FIDA_LFP LFPNR_EX is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
-      <Parameters>
-        <Dataset parameter="table" value="FIDA_LFP" workspace="FIDA" />
-        <Scalar parameter="constraint" value="LFPNR_EX IS NOT NULL" />
+        <Scalar parameter="constraint" value="LFPNR IS NOT NULL" />
       </Parameters>
     </QualityCondition>	
     <QualityCondition name="FIDA_LFP HERKUNFT is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
@@ -212,12 +180,6 @@
         <Scalar parameter="constraint" value="GSMEMPFANG IS NOT NULL" />
       </Parameters>
     </QualityCondition>	
-    <QualityCondition name="FIDA_LFP ERSTELLUNGSDATUM is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
-      <Parameters>
-        <Dataset parameter="table" value="FIDA_LFP" workspace="FIDA" />
-        <Scalar parameter="constraint" value="ERSTELLUNGSDATUM IS NOT NULL" />
-      </Parameters>
-    </QualityCondition>	
     <QualityCondition name="FIDA_LFP PUNKTNAME is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
       <Parameters>
         <Dataset parameter="table" value="FIDA_LFP" workspace="FIDA" />
@@ -246,12 +208,6 @@
       <Parameters>
         <Dataset parameter="table" value="FIDA_LFP" workspace="FIDA" />
         <Scalar parameter="constraint" value="STABILITAET IS NOT NULL" />
-      </Parameters>
-    </QualityCondition>	
-    <QualityCondition name="FIDA_LFP BEGEHUNGSZYKLUS is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
-      <Parameters>
-        <Dataset parameter="table" value="FIDA_LFP" workspace="FIDA" />
-        <Scalar parameter="constraint" value="BEGEHUNGSZYKLUS IS NOT NULL" />
       </Parameters>
     </QualityCondition>	
     <QualityCondition name="FIDA_LFP ABSTURZGEFAHR is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
@@ -403,7 +359,7 @@
     <QualityCondition name="FIDA_LFP NoNull" testDescriptor="QaRequiredFields(3)" allowErrors="False">
       <Parameters>
         <Dataset parameter="table" value="FIDA_LFP" workspace="FIDA" />
-        <Scalar parameter="requiredFieldNamesString" value= "OBJEKTART,LN02,LV95E,LV95N,GENLAGELV95,GENHOEHELN02,ZUVLAGELV95,ZUVHOEHELN02,GESCHWINDIGKEIT_E,GESCHWINDIGKEIT_N,GESCHWINDIGKEIT_UP,LK25,LFPNR_NR,LFPNR_EX,HERKUNFT,KENNZEICHNUNG,BEGEHBAR,GNSSSICHTBARKEIT,GSMEMPFANG,ERSTELLUNGSDATUM,PUNKTNAME,PUNKT_STATUS,REALISIERUNG_STATUS,SCHUTZART,STABILITAET,BEGEHUNGSZYKLUS,ABSTURZGEFAHR" />
+        <Scalar parameter="requiredFieldNamesString" value= "OBJEKTART,LN02,LV95E,LV95N,GENLAGELV95,GENHOEHELN02,ZUVLAGELV95,ZUVHOEHELN02,LK25,LFPNR,HERKUNFT,KENNZEICHNUNG,BEGEHBAR,GNSSSICHTBARKEIT,GSMEMPFANG,PUNKTNAME,PUNKT_STATUS,REALISIERUNG_STATUS,SCHUTZART,STABILITAET,ABSTURZGEFAHR" />
 		<Scalar parameter="allowEmptyStrings" value= "False" />
 		<Scalar parameter="allowMissingFields" value= "False" />
       </Parameters>
@@ -489,7 +445,7 @@
     <QualityCondition name="FIDA_LFP Punktnummer unique" testDescriptor="QaUnique(0)">
       <Parameters>
         <Dataset parameter="table" value="FIDA_LFP" workspace="FIDA" />
-        <Scalar parameter="unique" value="LK25, LFPNR_NR, LFPNR_EX" />
+        <Scalar parameter="unique" value="LFPNR" />
       </Parameters>
     </QualityCondition>
     <QualityCondition name="FIDA_RUECKVERSICHERUNGLFP GlobalID unique" testDescriptor="QaUnique(0)">
@@ -553,22 +509,6 @@
         <Dataset parameter="table" value="FIDA_LFP" workspace="FIDA" />
 		<Scalar parameter="pattern" value= "1[0-9]{7}" />
 		<Scalar parameter="fieldName" value= "LFPNR" />
-		<Scalar parameter="FieldListType" value= "RelevantFields" />
-      </Parameters>
-    </QualityCondition>	
-    <QualityCondition name="FIDA_LFP REG LFPNR_NR" testDescriptor="QaRegularExpression(0)" allowErrors="False">
-      <Parameters>
-        <Dataset parameter="table" value="FIDA_LFP" workspace="FIDA" />
-		<Scalar parameter="pattern" value= "[0-9]{1,3}" />
-		<Scalar parameter="fieldName" value= "LFPNR_NR" />
-		<Scalar parameter="FieldListType" value= "RelevantFields" />
-      </Parameters>
-    </QualityCondition>
-    <QualityCondition name="FIDA_LFP REG LFPNR_EX" testDescriptor="QaRegularExpression(0)" allowErrors="False">
-      <Parameters>
-        <Dataset parameter="table" value="FIDA_LFP" workspace="FIDA" />
-		<Scalar parameter="pattern" value= "[0-9]{1}" />
-		<Scalar parameter="fieldName" value= "LFPNR_EX" />
 		<Scalar parameter="FieldListType" value= "RelevantFields" />
       </Parameters>
     </QualityCondition>	

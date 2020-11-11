@@ -23,7 +23,7 @@ class IdentifyFeatures:
     Attributes:
         point:    Where to identify, coordinate pair. First value ist east second is
                   north in LV95 (EPSG code 2056). Default is (2600000.000,1200000.000)
-        distance: half length of the square in meter. Default = 1.0
+        distance: half length of the square in meter. Default = 0.0
         layers:   comma separated list of technical layer names like
                   ch.swisstopo.pixelkarte-pk25.metadata
     """
@@ -31,7 +31,7 @@ class IdentifyFeatures:
     def __init__(
         self,
         pt=(2600000.000, 1200000.000),
-        distance=1.0,
+        distance=0.0,
         layers="ch.swisstopo.pixelkarte-pk25.metadata",
     ):
         """ Inits IdentifyFeatures
@@ -98,11 +98,29 @@ class IdentifyFeatures:
         _req = requests.get(
             url=self.__url, proxies=_proxy_dict, params=self.__params, verify=False
         )
+        return _req.status_code, json.loads(_req.content)
+
+    def getparzinfo(self):
+        _envelope = str(self.getpt_east) + "," + str(self.getpt_north) + "," + str(self.getpt_east) + "," + str(self.getpt_north)
+        _params = {}
+        _params["geometryType"] = "esriGeometryEnvelope"
+        _params["geometry"] = _envelope
+        _params["imageDisplay"] = "0,0,0"
+        _params["mapExtent"] = "0,0,0,0"
+        _params["tolerance"] = "0"
+        _params["layers"] = "all:" + "ch.kantone.cadastralwebmap-farbe"
+        _params["returnGeometry"] = "false"
+        _params["sr"] = 2056
+        _proxy = "proxy.admin.ch:8080"
+        _proxy_dict = {"http": _proxy, "https": _proxy}
+        _req = requests.get(
+            url=self.__url, proxies=_proxy_dict, params=_params, verify=False
+        )
         if  _req.status_code == 200:
             _json = json.loads(_req.content)
             for _key, _val in _json.items():
                 for _featureid in _val:
                     print("LayerName: {0}".format(_featureid["layerName"]))
+                    print("egris_egrid: {0}".format(_featureid["attributes"]["egris_egrid"]))
         else:
             return _req.status_code, json.loads(_req.content)
-
