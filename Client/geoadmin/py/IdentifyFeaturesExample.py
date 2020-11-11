@@ -7,7 +7,8 @@
 # -------------------------------------------------------------------------------------------------
 # -- History
 # -------------------------------------------------------------------------------------------------
-
+import sys
+import json
 from IdentifyFeatures import IdentifyFeatures
 
 
@@ -18,7 +19,7 @@ def show_example(identifyfeature):
     :param identifyfeature: class with the request to the identify of api3.geo.admin.ch
     :return: -
     """
-    _status, _results = identifyfeature.getjson
+    _status, _results = identifyfeature.getjson()
     if _status == 200:
         _resultcount = 0
         for _key, _val in _results.items():
@@ -69,14 +70,16 @@ if __name__ == "__main__":
     """
     _version = 0.1
 
-    show_example(IdentifyFeatures())
-    show_example(IdentifyFeatures((2583759.0, 1210591.0)))
-    show_example(IdentifyFeatures((2583759.0, 1210591.0), 5000.0))
-    show_example(
-        IdentifyFeatures(
-            (2583759.0, 1210591.0), 1.0, "ch.kantone.cadastralwebmap-farbe"
-        )
-    )
+    import requests
+
+    #show_example(IdentifyFeatures())
+    #show_example(IdentifyFeatures((2583759.0, 1210591.0)))
+    #show_example(IdentifyFeatures((2583759.0, 1210591.0), 5000.0))
+    #show_example(
+    #    IdentifyFeatures(
+    #        (2583759.0, 1210591.0), 1.0, "ch.kantone.cadastralwebmap-farbe"
+    #    )
+    #)
     _layerlist = (
         "ch.kantone.cadastralwebmap-farbe"
         + ","
@@ -86,4 +89,6 @@ if __name__ == "__main__":
         + ","
         + "ch.swisstopo.swissboundaries3d-kanton-flaeche.fill"
     )
-    show_example(IdentifyFeatures((2583759.0, 1210591.0), 1.0, _layerlist))
+    #show_example(IdentifyFeatures((2583759.0, 1210591.0), 1.0, _layerlist))
+    idf = IdentifyFeatures((2588430.3, 1219348.9), 1.0, "ch.kantone.cadastralwebmap-farbe")
+    idf.getjson()

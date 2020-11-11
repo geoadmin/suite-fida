@@ -92,11 +92,17 @@ class IdentifyFeatures:
     def getenvelope(self):
         return self.__envelope
 
-    @property
     def getjson(self):
         _proxy = "proxy.admin.ch:8080"
         _proxy_dict = {"http": _proxy, "https": _proxy}
         _req = requests.get(
             url=self.__url, proxies=_proxy_dict, params=self.__params, verify=False
         )
-        return _req.status_code, json.loads(_req.content)
+        if  _req.status_code == 200:
+            _json = json.loads(_req.content)
+            for _key, _val in _json.items():
+                for _featureid in _val:
+                    print("LayerName: {0}".format(_featureid["layerName"]))
+        else:
+            return _req.status_code, json.loads(_req.content)
+
