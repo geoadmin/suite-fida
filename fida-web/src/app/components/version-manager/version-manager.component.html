@@ -2,7 +2,7 @@
 
     <!-- header -->
     <div class="fida-widget-header">
-        <label>Version-Manager</label>
+        <label>Version-Manager</label><label [hidden]="!isReconciling">: Reconcile/Post</label>
         <button class="btn esri-icon-close float-right" (click)="closeClick()"></button>
     </div>
 
@@ -27,9 +27,9 @@
                     <td style='white-space: nowrap'>
                         <div>
                             <button class="btn btn-primary" (click)="setActiveVersionClick(version)"
-                                [disabled]="isActiveVersion(version)">set active</button>
-                            <button class="btn btn-default" [disabled]="isReadonlyVersion(version)"
-                                (click)="showReconcilePostDialogClick(version)">reconcile/post</button>
+                                [disabled]="isActiveVersion(version)">Set Active</button>
+                            <button class="btn btn-primary" [disabled]="isReadonlyVersion(version)"
+                                (click)="showReconcilePostDialogClick(version)">Reconcile/Post</button>
                             <button class="btn btn-danger" [disabled]="isReadonlyVersion(version)"
                                 title="Version löschen" (click)="showDeleteDialogClick(version)">
                                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash"
@@ -43,14 +43,15 @@
                 </tr>
             </tbody>
         </table>
-
-        <!-- default footer -->
-        <div class="fida-widget-footer">
-            <button class="btn btn-primary" (click)="showCreateDialogClick()">create version</button>
-        </div>
     </div>
 
-    <div [hidden]="!isReconciling" style="min-width: 300px;">
+    <!-- footer -->
+    <div class="fida-widget-footer" [hidden]="isReconciling">
+        <button class="btn btn-primary float-right" (click)="showCreateDialogClick()">Create Version</button>
+    </div>
+
+    <!-- reconsile -->
+    <div [hidden]="!isReconciling">
         <app-version-reconcile-dialog (reconcileFinished)="reconcileFinished($event)"></app-version-reconcile-dialog>
     </div>
 </div>

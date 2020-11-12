@@ -29,6 +29,7 @@ import { VersionCreateDialogComponent } from './components/version-manager/versi
 import { VersionDeleteDialogComponent } from './components/version-manager/version-delete-dialog/version-delete-dialog.component';
 import { VersionReconcileDialogComponent } from './components/version-manager/version-reconcile-dialog/version-reconcile-dialog.component';
 import { LfpEditComponent } from './components/feature/feature-edit/lfp-edit/lfp-edit.component';
+import { NachfuehrungEditComponent } from './components/feature/feature-edit/nachfuehrung-edit/nachfuehrung-edit.component';
 
 // config
 import { ConfigService } from './configs/config.service';
@@ -60,7 +61,8 @@ export function createCompiler(compilerFactory: CompilerFactory) {
     VersionDeleteDialogComponent,
     VersionReconcileDialogComponent,
     LfpEditComponent,
-    AttributeValueEditComponent
+    AttributeValueEditComponent,
+    NachfuehrungEditComponent
   ],
   imports: [
     FormsModule,

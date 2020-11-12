@@ -10,8 +10,10 @@ import { VersionManagementService } from 'src/app/services/version-management.se
 })
 export class VersionReconcileDialogComponent implements OnInit {
   @Output() reconcileFinished: EventEmitter<boolean> = new EventEmitter();
+  showSpinner: boolean;
   version: GdbVersion;
   differences: any;
+
 
   constructor(
     private versionManagementService: VersionManagementService,
@@ -25,7 +27,9 @@ export class VersionReconcileDialogComponent implements OnInit {
   * reconcile/Post
   */
   async reconcile(version: GdbVersion): Promise<void> {
+    this.showSpinner = true;
     try {
+      this.differences = undefined;
       this.version = version;
       const purgeLockResult = await this.versionManagementService.purgeLock(version);
       this.checkResult(purgeLockResult);
@@ -42,9 +46,10 @@ export class VersionReconcileDialogComponent implements OnInit {
     } catch (error) {
       this.messageService.error('Reconsile/Post failed', error);
     }
+    this.showSpinner = false;
   }
 
-  
+
   private checkResult(result: any): void {
     if (result.success === false) {
       throw result.error;
@@ -52,7 +57,8 @@ export class VersionReconcileDialogComponent implements OnInit {
   }
 
   async cancelReconsilingClick(): Promise<void> {
-    try {
+    this.showSpinner = true;
+      try {
       // stop reading
       const stopReadingResult = await this.versionManagementService.stopReading(this.version);
       this.checkResult(stopReadingResult);
@@ -61,9 +67,11 @@ export class VersionReconcileDialogComponent implements OnInit {
     } catch (error) {
       this.messageService.error('Reconsile/Post failed', error);
     }
+    this.showSpinner = false;
   }
 
   async declineDifferencesClick(): Promise<void> {
+    this.showSpinner = true;
     try {
       // stop reading
       const stopReadingResult = await this.versionManagementService.stopReading(this.version);
@@ -73,9 +81,11 @@ export class VersionReconcileDialogComponent implements OnInit {
     } catch (error) {
       this.messageService.error('Reconsile/Post failed', error);
     }
+    this.showSpinner = false;
   }
 
   async acceptDifferencesClick(): Promise<void> {
+    this.showSpinner = true;
     try {
       // start editing
       const startEditingResult = await this.versionManagementService.startEditing(this.version);
@@ -99,5 +109,6 @@ export class VersionReconcileDialogComponent implements OnInit {
     } catch (error) {
       this.messageService.error('Reconsile/Post failed', error);
     }
+    this.showSpinner = false;
   }
 }

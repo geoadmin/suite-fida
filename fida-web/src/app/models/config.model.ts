@@ -27,6 +27,7 @@ export class LayerConfig {
     type: LayerType;
     properties: any;
     relationships?: RelationshipsConfig;
+    idField?: string;
 }
 
 export class VersionManagementConfig {

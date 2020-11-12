@@ -1,12 +1,12 @@
 <div *ngIf="activated" class="feature-edit fida-widget" [class.spinner]="showSpinner">
     <!-- header -->
     <div class="fida-widget-header">
-        <label>Edit Attributes</label>
+        <label>{{ getHeaderText() }}</label>
         <button class="btn esri-icon-close float-right" (click)="cancelClick()"></button>
     </div>
 
     <!-- body -->
-    <div class="fida-widget-body container">
+    <div class="fida-widget-body">
 
     
         <form #featureForm="ngForm" (ngSubmit)="featureForm.valid">
@@ -31,7 +31,7 @@
                     </ul>
 
                     <!-- tab panes -->
-                    <div class="tab-content">
+                    <div class="tab-content container">
 
                         <!--general attributes -->
                         <div role="tabpanel" class="tab-pane fade in active show py-2" id="general_tab">
@@ -114,8 +114,8 @@
     </div>
 
     <!-- footer -->
-    <div class="fida-widget-footer d-flex felx-row">
-        <button type="button" class="btn btn-primary" (click)="saveClick()">Save</button>
-        <button type="button" class="btn btn-default ml-2" (click)="cancelClick()">Cancel</button>
+    <div class="fida-widget-footer">
+        <button type="button" class="btn btn-primary float-right ml-2" (click)="saveClick()">Save</button>
+        <button type="button" class="btn btn-default float-right" (click)="cancelClick()">Cancel</button>
     </div>
 </div>

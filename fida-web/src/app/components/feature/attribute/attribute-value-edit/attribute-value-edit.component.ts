@@ -25,7 +25,7 @@ export class AttributeValueEditComponent implements OnInit {
     this.field = this.getFeatureLayer().fields.find(f => f.name === this.name);
 
     if(this.field === undefined){
-      throw new Error(`Field ${name} not found in layer ${this.feature.layer.id}`);
+      throw new Error(`Field ${this.name} not found in layer ${this.feature.layer.id}`);
     }
 
     // convert value to date-object

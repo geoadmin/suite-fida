@@ -32,4 +32,10 @@
   a.active {
     background-color: rgb(229, 229, 229);
   }
+
+  .user-info {
+    position: absolute;
+    right: 15px;
+    top: calc(var(--header-height) - 30px);
+  }
 }

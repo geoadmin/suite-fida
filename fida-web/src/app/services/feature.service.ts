@@ -7,7 +7,7 @@ import { MessageService } from './message.service';
 import Feature from 'esri/Graphic';
 import FeatureLayer from 'esri/layers/FeatureLayer';
 import Relationship from 'esri/layers/support/Relationship';
-import { FeatureState, FidaFeature } from '../models/FidaFeature.model';
+import { FeatureState, FidaFeature, RelatedFeatures } from '../models/FidaFeature.model';
 import { GrundbuchService } from './grundbuch.service';
 import { RelationshipsConfig } from '../models/config.model';
 
@@ -63,6 +63,13 @@ export class FeatureService {
 
           if (relationshipName && relatedFeatures && relatedFeatures.length > 0) {
             const relatedFeatureLayer = await this.getRelatedFeatureLayerByName(featureLayer, relationshipName);
+    
+            // update fk 
+            const relationship = this.getRelationship(featureLayer, relationshipName);
+            relatedFeatures.forEach((f)=>{
+               this.updateFk(f, feature, relationship);
+            })
+
             await this.saveRelatedFeatures(relatedFeatureLayer, relatedFeatures);
             console.log(`related features "${relationshipName}" saved.`);
           }
@@ -124,9 +131,9 @@ export class FeatureService {
       const relationship = featureLayer.relationships.find(f => f.name.toLowerCase() === value.toLowerCase())
       if (relationship) {
         const resultFeatures = await this.queryService.relatedFeatures(featureLayer, feature.attributes.OBJECTID, relationship.id);
-        
+
         // add related-feature-layer to features
-        if(resultFeatures.length > 0){
+        if (resultFeatures.length > 0) {
           const relatedFeatureLayer = await this.getRelatedFeatureLayer(featureLayer, relationship);
           resultFeatures.forEach(relatedFeature => {
             relatedFeature.layer = relatedFeatureLayer;
@@ -157,7 +164,6 @@ export class FeatureService {
     const relationshipsConfig = this.configService.getRelationshipsConfigs(featureLayer.id);
     const relationshipName = this.getRelationshipName(relationshipsConfig, relatedFeaturesPropertyName)
     const relationship = this.getRelationship(featureLayer, relationshipName);
-    const fkField = "FK_FIDA_LFP"; // TODO load aus config
     const relatedFeatureLayer = await this.getRelatedFeatureLayer(featureLayer, relationship);
 
     // create related feature              
@@ -165,12 +171,30 @@ export class FeatureService {
     relatedFeature.attributes = { ...relatedFeatureLayer.templates[0].prototype.attributes };
     relatedFeature.layer = relatedFeatureLayer;
     relatedFeature.state = FeatureState.Create;
-    relatedFeature.attributes[fkField] = feature.attributes[relationship.keyField.toUpperCase()];
-
+    this.updateFk(relatedFeature, feature, relationship);
+    
     // add related feature to list
-    (feature.relatedFeatures as any)[relatedFeaturesPropertyName].push(relatedFeature);
+    this.addRelatedFeatureToList(feature, relatedFeaturesPropertyName, relatedFeature);
 
     return relatedFeature;
+  }
+
+  private updateFk(relatedFeature: FidaFeature, feature: FidaFeature, relationship: Relationship) {
+    const fkField = "FK_FIDA_LFP"; // TODO load aus config
+    const fkValue = feature.attributes[relationship.keyField.toUpperCase()];
+    relatedFeature.attributes[fkField] = fkValue;
+  }
+
+  private addRelatedFeatureToList(feature: FidaFeature, relatedName: string, related: FidaFeature): void {
+    if (!feature.relatedFeatures) {
+      feature.relatedFeatures = new RelatedFeatures();
+    }
+    let relatedFeatureList = (feature.relatedFeatures as any)[relatedName];
+    if (!relatedFeatureList) {
+      (feature.relatedFeatures as any)[relatedName] = [];
+      relatedFeatureList = (feature.relatedFeatures as any)[relatedName];
+    }
+    relatedFeatureList.push(related);
   }
 
   private getFeatureLayer(feature: Feature): FeatureLayer {
@@ -198,7 +222,7 @@ export class FeatureService {
       && f.layerId === relationship.relatedTableId
       && f.gdbVersion === featureLayer.gdbVersion)
 
-      // otherwise create related feature layer
+    // otherwise create related feature layer
     if (relatedFeatureLayer === undefined) {
       relatedFeatureLayer = new FeatureLayer({
         gdbVersion: featureLayer.gdbVersion,

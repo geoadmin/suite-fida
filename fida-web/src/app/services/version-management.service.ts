@@ -47,8 +47,8 @@ export class VersionManagementService {
 
   public async differences(version: GdbVersion): Promise<any> {
     const options = {
-      sessionId: version.versionGuid//,
-      //resultType: 'features'
+      sessionId: version.versionGuid,
+      resultType: 'features'
     }
 
     const versionUrl = this.stripBrackets(version.versionGuid);

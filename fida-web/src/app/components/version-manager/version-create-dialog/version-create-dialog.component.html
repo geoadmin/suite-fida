@@ -1,25 +1,36 @@
 <div>
-    <div class="modal-header">create version</div>
-    <div class="modal-body">
-        <div class="row">
-            <div class="col-6">
-                Name
-            </div>
-            <div class="col-6">
-                <input type="text" [(ngModel)]="gdbVersion.versionName">
-            </div>
+    <div class="modal-body p-0">
+
+        <!-- header -->
+        <div class="fida-widget-header">
+            <label>Create Version</label>
+            <button class="btn esri-icon-close float-right" (click)="cancelClick()"></button>
         </div>
-        <div class="row">
-            <div class="col-6">
-                Description
+
+        <!-- body -->
+        <div class="fida-widget-body container py-3">
+            <div class="row form-group">
+                <div class="col-6 attribute-label">
+                    Name
+                </div>
+                <div class="col-6 form-group">
+                    <input type="text" class="form-control" [(ngModel)]="gdbVersion.versionName">
+                </div>
             </div>
-            <div class="col-6">
-                <input type="text" [(ngModel)]="gdbVersion.description">
+            <div class="row">
+                <div class="col-6 attribute-label">
+                    Description
+                </div>
+                <div class="col-6">
+                    <input type="text" class="form-control" [(ngModel)]="gdbVersion.description">
+                </div>
             </div>
         </div>
     </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="cancelClick()">cancel</button>
-        <button type="button" class="btn btn-danger ml-2" (click)="createClick()">create</button>
+
+    <!-- footer -->
+    <div class="fida-widget-footer">
+        <button type="button" class="btn btn-primary float-right ml-2" (click)="createClick()">Create</button>
+        <button type="button" class="btn btn-default float-right" (click)="cancelClick()">Cancel</button>        
     </div>
 </div>

@@ -46,7 +46,8 @@
                 "id": "LSN",
                 "url": "[EVIRONMENT_ARCGISURL]/rest/services/FIDA/FIDA/FeatureServer/2",
                 "visible": false
-            }
+            },
+            "idField": "NUMMER"
         },
         {
             "type": "FeatureLayer",
@@ -56,9 +57,13 @@
                 "visible": false
             },
             "relationships": {
-                "grundbuch": "grundbuchhfp",
-                "nachfuehrung": "Nachfuehrungen"
-            }
+                "grundbuch": "Grundbuchhfp",
+                "nachfuehrung": "Nachfuehrungen",
+                "schweremessung": "Schweremessunghfp",
+                "schaeden": "Schaedenhfp",
+                "auslandppunkt": "Auslandppunkthfp"
+            },
+            "idField": "HFPNR"
         },
         {
             "type": "FeatureLayer",
@@ -68,11 +73,12 @@
                 "visible": true
             },
             "relationships": {
-                "grundbuch": "grundbuchlfp",
+                "grundbuch": "Grundbuchlfp",
                 "nachfuehrung": "Nachfuehrungen",
                 "rueckversicherung": "Rueckversicherunglfp",
                 "kontakt": "Kontakt"
-            }
+            },
+            "idField": "LFPNR"
         },
         {
             "type": "RelatedLayer",

@@ -27,7 +27,7 @@ export class VersionManagerComponent implements OnInit, OnDestroy {
   private modalRef: BsModalRef;
 
 
-  constructor(
+  constructor(  
     private widgetsService: WidgetsService,
     private versionManagementService: VersionManagementService,
     private settingService: SettingService,
