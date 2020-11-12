@@ -9,9 +9,9 @@
 # -------------------------------------------------------------------------------------------------
 
 import json
-
+import re
 import requests
-
+import urllib
 
 class IdentifyFeatures:
     """
@@ -92,6 +92,11 @@ class IdentifyFeatures:
     def getenvelope(self):
         return self.__envelope
 
+    @property
+    def __getproxy(self):
+        _proxy = "proxy.admin.ch:8080"
+        return {"http": _proxy, "https": _proxy}
+
     def getjson(self):
         _proxy = "proxy.admin.ch:8080"
         _proxy_dict = {"http": _proxy, "https": _proxy}
@@ -100,8 +105,74 @@ class IdentifyFeatures:
         )
         return _req.status_code, json.loads(_req.content)
 
-    def getparzinfo(self):
-        _envelope = str(self.getpt_east) + "," + str(self.getpt_north) + "," + str(self.getpt_east) + "," + str(self.getpt_north)
+
+    def __query_bezirk_kanton(self, bfsnummer=0):
+        _params = {}
+        _params["where"] = urllib.parse.quote("BFS_NUMMER={0}".format(bfsnummer))
+        _params["where"] = urllib.parse.quote("BFS_NUMMER={0}".format(bfsnummer))
+        _params["outFields"] = urllib.parse.quote("BEZIRKSNUMMER,KANTONSNUMMER")
+        _params["returnGeometry"] = "false"
+        _params["f"] = "json"
+        _url = "https://s7t2530a.adr.admin.ch/arcgis/rest/services/PRODAS/PolitischeEinteilung/FeatureServer/3/query"
+        _req = requests.get(
+            url=_url, proxies={}, params=_params, verify=False
+        )
+        if _req.status_code == 200:
+            _json = json.loads(_req.content)
+            print(_json)
+        #https: // s7t2530a.adr.admin.ch / arcgis / rest / services / PRODAS / PolitischeEinteilung / FeatureServer / 3 / query?where = BFS_NUMMER + % 3
+        #D + 733 & objectIds = & time = & geometry = & geometryType = esriGeometryEnvelope & inSR = & spatialRel = esriSpatialRelIntersects & distance = & units = esriSRUnit_Foot & relationParam = & outFields = BEZIRKSNUMMER % 2
+        #CKANTONSNUMMER + & returnGeometry = false & maxAllowableOffset = & geometryPrecision = & outSR = & havingClause = & gdbVersion = & historicMoment = & returnDistinctValues = false & returnIdsOnly = false & returnCountOnly = false & returnExtentOnly = false & orderByFields = & groupByFieldsForStatistics = & outStatistics = & returnZ = false & returnM = false & multipatchOption = xyFootprint & resultOffset = & resultRecordCount = & returnTrueCurves = false & returnExceededLimitFeatures = false & quantizationParameters = & returnCentroid = false & sqlFormat = none & resultType = & featureEncoding = esriDefault & datumTransformation = & f = html
+
+
+    def __find_gde_bfsnr(self, gde=""):
+        _params = {}
+        _url = "http://api3.geo.admin.ch/rest/services/api/MapServer/find?layer=ch.swisstopo.swissboundaries3d-gemeinde-flaeche.fill&searchText={0}&searchField=gemname&returnGeometry=false".format(urllib.parse.quote(gde))
+        _req = requests.get(
+            url=_url, proxies=self.__getproxy, params=_params, verify=False
+        )
+        if _req.status_code == 200:
+            _json = json.loads(_req.content)
+            _results = _json["results"]
+            if len(_results) == 1:
+                return True, _results[0]["id"]
+            else:
+                return False, "gemname not found"
+        else:
+            return False, _req.content
+
+
+    def __search_location(self,location):
+        _params = {}
+        _url = "https://api3.geo.admin.ch/rest/services/api/SearchServer?searchText={0}&type=locations".format(location)
+        _req = requests.get(
+            url=_url, proxies=self.__getproxy, params=_params, verify=False
+        )
+        if _req.status_code == 200:
+            _json = json.loads(_req.content)
+            _results = _json["results"]
+            if len(_results) == 1:
+                _clean = re.compile('<.*?>')
+                return True, re.sub(_clean, '', _results[0]["attrs"]["label"].split(" ")[0])
+            else:
+                return False, "egris_egrid not found"
+        else:
+            return False, _req.content
+
+
+    def getparzinfo(self, distance=None):
+        """
+        get info from Parzelle, Gemeinde, Bezirk, Kanton
+        :param distance: overrools the parameter set when initializing the class
+        :return:
+        """
+        _envelope = ""
+        if distance is None:
+            _envelope = str(self.getpt_east - self.getdistance) + "," + str(self.getpt_north - self.getdistance) + "," + str(self.getpt_east +  self.getdistance) + "," + str(self.getpt_north +  self.getdistance)
+        else:
+            _envelope = str(self.getpt_east - distance) + "," + str(
+                self.getpt_north - distance) + "," + str(
+                self.getpt_east + distance) + "," + str(self.getpt_north + distance)
         _params = {}
         _params["geometryType"] = "esriGeometryEnvelope"
         _params["geometry"] = _envelope
@@ -111,16 +182,26 @@ class IdentifyFeatures:
         _params["layers"] = "all:" + "ch.kantone.cadastralwebmap-farbe"
         _params["returnGeometry"] = "false"
         _params["sr"] = 2056
-        _proxy = "proxy.admin.ch:8080"
-        _proxy_dict = {"http": _proxy, "https": _proxy}
         _req = requests.get(
-            url=self.__url, proxies=_proxy_dict, params=_params, verify=False
+            url=self.__url, proxies=self.__getproxy, params=_params, verify=False
         )
-        if  _req.status_code == 200:
+        if _req.status_code == 200:
             _json = json.loads(_req.content)
             for _key, _val in _json.items():
                 for _featureid in _val:
-                    print("LayerName: {0}".format(_featureid["layerName"]))
-                    print("egris_egrid: {0}".format(_featureid["attributes"]["egris_egrid"]))
+                    print(_featureid)
+                    for _attrkey, _attrval in _featureid["attributes"].items():
+                        if _attrkey == "egris_egrid":
+                            #print("egris_egrid: {0}".format(_attrval))
+                            _found, _gde = self.__search_location(_attrval)
+                            if _found:
+                                print(_featureid["attributes"]["number"])
+                                print(_featureid["attributes"]["egris_egrid"])
+                                print(_gde)
+                                _found, _gdeinfo = self.__find_gde_bfsnr(_gde)
+                                if _found:
+                                    print(_gdeinfo)
+                                    self.__query_bezirk_kanton(733)
+
         else:
             return _req.status_code, json.loads(_req.content)
