@@ -89,9 +89,35 @@ if __name__ == "__main__":
         + ","
         + "ch.swisstopo.swissboundaries3d-kanton-flaeche.fill"
     )
-    #show_example(IdentifyFeatures((2583759.0, 1210591.0), 1.0, _layerlist))
-    idf = IdentifyFeatures((2588430.3, 1219348.9), 1.0, "ch.kantone.cadastralwebmap-farbe")
-    idf.getparzinfo(0)
 
+    #mehrere Gemeinden
+    #show_example(IdentifyFeatures((2583759.0, 1210591.0), 1.0, _layerlist))
+
+    #bei uns
+    #idf = IdentifyFeatures((2588430.3, 1219348.9), 1.0, "ch.kantone.cadastralwebmap-farbe")
+    #print(idf.getparzinfo(0))
+    #print(idf.getparzinfo(10))
+
+    #2 Gemeinden
     #idf2 = IdentifyFeatures((2583759.0, 1210591.0), 5000.0)
-    #idf2.getparzinfo()
+    #_parzinfo = idf2.getparzinfo(100.0)
+    #print(str(len(_parzinfo)))
+    #print(_parzinfo)
+
+    #Kanton Uri, keine Bezirke
+    #_idf3 = IdentifyFeatures((2692550.0, 1186425.0))
+    #_parzinfo = _idf3.getparzinfo(1.0)
+    #print(str(len(_parzinfo)))
+    #print(_parzinfo)
+
+    #Keine Daten der AV
+    #_idf4 = IdentifyFeatures((2584910.0, 1164562.5))
+    #_parzinfo = _idf4.getparzinfo(1.0)
+    #print(str(len(_parzinfo)))
+    #print(_parzinfo)
+
+    #Staatswald Galm
+    _idf5 = IdentifyFeatures((2579915.0, 1196222.5))
+    _parzinfo = _idf5.getparzinfo(1.0)
+    print(str(len(_parzinfo)))
+    print(_parzinfo)
