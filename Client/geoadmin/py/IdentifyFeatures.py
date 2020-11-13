@@ -41,6 +41,7 @@ class IdentifyFeatures:
 
         sets the attributes
         """
+        _cfg = self.__get_settings()
         self.__pt = pt
         self.__distance = distance
         self.__layers = layers
@@ -59,9 +60,9 @@ class IdentifyFeatures:
         self.__url_api3_identify = "https://api3.geo.admin.ch/rest/services/api/MapServer/identify"
         self.__url_api3_find = "https://api3.geo.admin.ch/rest/services/api/MapServer/find"
         self.__url_api3_search_server = "https://api3.geo.admin.ch/rest/services/api/SearchServer"
-        self.__url_tlm_hoheitsgebiet = "https://s7t2530a.adr.admin.ch/arcgis/rest/services/PRODAS/PolitischeEinteilung/FeatureServer/3/query?"
-        self.__url_tlm_bezirksgebiet = "https://s7t2530a.adr.admin.ch/arcgis/rest/services/PRODAS/PolitischeEinteilung/FeatureServer/2/query?"
-        self.__url_tlm_kantonsgebiet = "https://s7t2530a.adr.admin.ch/arcgis/rest/services/PRODAS/PolitischeEinteilung/FeatureServer/1/query?"
+        self.__url_tlm_hoheitsgebiet = _cfg["T"]["url_tlm_hoheitsgebiet"]
+        self.__url_tlm_bezirksgebiet = _cfg["T"]["url_tlm_bezirksgebiet"]
+        self.__url_tlm_kantonsgebiet = _cfg["T"]["url_tlm_kantonsgebiet"]
         self.__params = {}
         self.__params["geometryType"] = "esriGeometryEnvelope"
         self.__params["geometry"] = self.__envelope
@@ -104,6 +105,37 @@ class IdentifyFeatures:
     def __getproxy(self):
         _proxy = "proxy.admin.ch:8080"
         return {"http": _proxy, "https": _proxy}
+
+    def __get_settings(self):
+        """ Reads the json file with configuration's for T|I and P
+
+        Args:
+            -
+
+        Returns:
+            dictionary with the settings
+
+        Raises:
+            JSONDecodeError: If the data being deserialized is not a valid JSON document.
+            IOError: if the config json file file is missing
+
+        """
+        _setting_filename = os.path.join(
+            os.path.dirname(sys.argv[0]), "IdentifyFeatures.json"
+        )
+        try:
+            with open(_setting_filename, "r") as _myfile:
+                _data = _myfile.read()
+        except IOError:
+            raise
+
+        # parse file
+        try:
+            return json.loads(_data)
+        except json.JSONDecodeError:
+            raise
+        except Exception:
+            raise
 
     def getjson(self):
         _proxy = "proxy.admin.ch:8080"
