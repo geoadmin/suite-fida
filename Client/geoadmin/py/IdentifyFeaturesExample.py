@@ -7,8 +7,7 @@
 # -------------------------------------------------------------------------------------------------
 # -- History
 # -------------------------------------------------------------------------------------------------
-import sys
-import json
+
 from IdentifyFeatures import IdentifyFeatures
 
 
@@ -75,34 +74,34 @@ if __name__ == "__main__":
         + "ch.swisstopo.swissboundaries3d-kanton-flaeche.fill"
     )
 
-    #mehrere Gemeinden
+    # mehrere Gemeinden
     show_example(IdentifyFeatures((2583759.0, 1210591.0), 1.0, _layerlist))
 
-    #1 Gemeinden
+    # 1 Gemeinden
     idf1 = IdentifyFeatures((2600981.0, 1197447.5))
     _parzinfo = idf1.getparzinfo()
     print(str(len(_parzinfo)))
     print(_parzinfo)
 
-    #2 Gemeinden
+    # 2 Gemeinden
     idf2 = IdentifyFeatures((2583759.0, 1210591.0), 5000.0)
     _parzinfo = idf2.getparzinfo(10.0)
     print(str(len(_parzinfo)))
     print(_parzinfo)
 
-    #Kanton Uri, keine Bezirke
+    # Kanton Uri, keine Bezirke
     _idf3 = IdentifyFeatures((2692550.0, 1186425.0))
     _parzinfo = _idf3.getparzinfo(1.0)
     print(str(len(_parzinfo)))
     print(_parzinfo)
 
-    #Keine Daten der AV
+    # Keine Daten der AV
     _idf4 = IdentifyFeatures((2584910.0, 1164562.5))
     _parzinfo = _idf4.getparzinfo(1.0)
     print(str(len(_parzinfo)))
     print(_parzinfo)
 
-    #Staatswald Galm
+    # Staatswald Galm
     _idf5 = IdentifyFeatures((2579915.0, 1196222.5))
     _parzinfo = _idf5.getparzinfo(1.0)
     print(str(len(_parzinfo)))

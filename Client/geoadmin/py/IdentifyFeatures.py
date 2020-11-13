@@ -9,12 +9,13 @@
 # -------------------------------------------------------------------------------------------------
 
 import json
+import os
 import re
+import sys
+
 import requests
 import requests.packages.urllib3.exceptions as r_ex
-import urllib
-import os
-import sys
+
 
 class IdentifyFeatures:
     """
@@ -61,9 +62,15 @@ class IdentifyFeatures:
             )
         except Exception as e:
             raise e
-        self.__url_api3_identify = "https://api3.geo.admin.ch/rest/services/api/MapServer/identify"
-        self.__url_api3_find = "https://api3.geo.admin.ch/rest/services/api/MapServer/find"
-        self.__url_api3_search_server = "https://api3.geo.admin.ch/rest/services/api/SearchServer"
+        self.__url_api3_identify = (
+            "https://api3.geo.admin.ch/rest/services/api/MapServer/identify"
+        )
+        self.__url_api3_find = (
+            "https://api3.geo.admin.ch/rest/services/api/MapServer/find"
+        )
+        self.__url_api3_search_server = (
+            "https://api3.geo.admin.ch/rest/services/api/SearchServer"
+        )
         try:
             self.__url_tlm_hoheitsgebiet = _cfg["T"]["url_tlm_hoheitsgebiet"]
             self.__url_tlm_bezirksgebiet = _cfg["T"]["url_tlm_bezirksgebiet"]
@@ -152,7 +159,10 @@ class IdentifyFeatures:
         _proxy = "proxy.admin.ch:8080"
         _proxy_dict = {"http": _proxy, "https": _proxy}
         _req = requests.get(
-            url=self.__url_api3_identify, proxies=_proxy_dict, params=self.__params, verify=False
+            url=self.__url_api3_identify,
+            proxies=_proxy_dict,
+            params=self.__params,
+            verify=False,
         )
         return _req.status_code, json.loads(_req.content)
 
@@ -177,11 +187,14 @@ class IdentifyFeatures:
                 verify=False,
             )
         except ConnectionError:
-            raise ConnectionError("Could not get connection to {0} with parameterset {1}".format(url, str(parameter)))
+            raise ConnectionError(
+                "Could not get connection to {0} with parameterset {1}".format(
+                    url, str(parameter)
+                )
+            )
         except Exception:
             raise
         return req.json()
-
 
     def __query_kantons_name(self, kanotnid=0):
         """ Gets the name of the kanton from kantonsgebiet, if there is no kanton, enpty string
@@ -193,9 +206,11 @@ class IdentifyFeatures:
             -
         """
         _params = {}
-        _params.update({"where": "KANTONSNUMMER={0} and KANTON_TEIL < 2".format(kanotnid)})
+        _params.update(
+            {"where": "KANTONSNUMMER={0} and KANTON_TEIL < 2".format(kanotnid)}
+        )
         _params.update({"outFields": "NAME,KANTON_TEIL"})
-        _params.update({"returnGeometry" : "false"})
+        _params.update({"returnGeometry": "false"})
         _params.update({"f": "json"})
         _req = self.__get_jsonfromurl(self.__url_tlm_kantonsgebiet, _params)
         _features = _req["features"]
@@ -215,11 +230,13 @@ class IdentifyFeatures:
         Raises:
             -
         """
-        if bezirkid != None:
+        if bezirkid is not None:
             _params = {}
-            _params.update({"where": "BEZIRKSNUMMER={0} and BEZIRK_TEIL < 2".format(bezirkid)})
+            _params.update(
+                {"where": "BEZIRKSNUMMER={0} and BEZIRK_TEIL < 2".format(bezirkid)}
+            )
             _params.update({"outFields": "NAME,BEZIRK_TEIL"})
-            _params.update({"returnGeometry" : "false"})
+            _params.update({"returnGeometry": "false"})
             _params.update({"f": "json"})
             _req = self.__get_jsonfromurl(self.__url_tlm_bezirksgebiet, _params)
             _features = _req["features"]
@@ -231,7 +248,6 @@ class IdentifyFeatures:
                 raise ValueError("To many districts found")
         else:
             return ""
-
 
     def __query_bezirk_kanton_id(self, bfsnummer=0):
         """ Gets the bezirksnummer, kantonsnummer from the hoheitsgebiet
@@ -245,15 +261,17 @@ class IdentifyFeatures:
         _params = {}
         _params.update({"where": "BFS_NUMMER={0} and GEM_TEIL < 2".format(bfsnummer)})
         _params.update({"outFields": "GEM_TEIL,BEZIRKSNUMMER,KANTONSNUMMER"})
-        _params.update({"returnGeometry" : "false"})
+        _params.update({"returnGeometry": "false"})
         _params.update({"f": "json"})
         _req = self.__get_jsonfromurl(self.__url_tlm_hoheitsgebiet, _params)
         _features = _req["features"]
         if len(_features) == 1:
-            return _features[0]["attributes"]["BEZIRKSNUMMER"], _features[0]["attributes"]["KANTONSNUMMER"]
+            return (
+                _features[0]["attributes"]["BEZIRKSNUMMER"],
+                _features[0]["attributes"]["KANTONSNUMMER"],
+            )
         else:
             raise ValueError("To many municipalities found")
-
 
     def __find_gde_bfsnr(self, gde="", kt=""):
         """ Gets the gemeinde bfsnummer from ch.swisstopo.swissboundaries3d-gemeinde-flaeche.fill
@@ -265,17 +283,22 @@ class IdentifyFeatures:
             -
         """
         _params = {}
-        _params.update({"layer": "ch.swisstopo.swissboundaries3d-gemeinde-flaeche.fill"})
+        _params.update(
+            {"layer": "ch.swisstopo.swissboundaries3d-gemeinde-flaeche.fill"}
+        )
         _params.update({"searchText": "{0}".format(gde)})
         _params.update({"searchField": "gemname"})
         _params.update({"returnGeometry": "false"})
         _req = requests.get(
-            url=self.__url_api3_find, proxies=self.__getproxy, params=_params, verify=False
+            url=self.__url_api3_find,
+            proxies=self.__getproxy,
+            params=_params,
+            verify=False,
         )
         if _req.status_code == 200:
             _json = json.loads(_req.content)
             _results = _json["results"]
-            #print(_results)
+            # print(_results)
             if len(_results) == 0:
                 return False, "gemname not found"
             else:
@@ -286,8 +309,7 @@ class IdentifyFeatures:
         else:
             return False, _req.content
 
-
-    def __search_location(self,location):
+    def __search_location(self, location):
         """ Gets the Gemeindename
         Args:
             egris_egrid
@@ -300,22 +322,28 @@ class IdentifyFeatures:
         _params.update({"searchText": "{0}".format(location)})
         _params.update({"type": "locations"})
         _req = requests.get(
-            url=self.__url_api3_search_server, proxies=self.__getproxy, params=_params, verify=False
+            url=self.__url_api3_search_server,
+            proxies=self.__getproxy,
+            params=_params,
+            verify=False,
         )
         if _req.status_code == 200:
             _json = json.loads(_req.content)
             _results = _json["results"]
             if len(_results) == 1:
-                _clean = re.compile('<.*?>')
-                return True, re.sub(_clean, '', _results[0]["attrs"]["label"].split(" ")[0])
+                _clean = re.compile("<.*?>")
+                return (
+                    True,
+                    re.sub(_clean, "", _results[0]["attrs"]["label"].split(" ")[0]),
+                )
             else:
                 return False, "egris_egrid not found"
         else:
             return False, _req.content
 
-
     def getparzinfo(self, distance=None):
-        """ Gets infos to the parzelle in a array of dictionary (ParzNummer,egris_egrid,Gemeinde,BFSNummer,Bezirk,Kanton)
+        """ Gets infos to the parzelle in a array of dictionary (ParzNummer,egris_egrid,Gemeinde,
+        BFSNummer,Bezirk,Kanton)
         Args:
             optional search distance, overwrites the default distance
         Returns:
@@ -326,17 +354,34 @@ class IdentifyFeatures:
         _parzinfos = []
         _envelope = ""
         if distance is None:
-            _envelope = str(self.getpt_east - self.getdistance) + "," + str(self.getpt_north - self.getdistance) + "," + str(self.getpt_east +  self.getdistance) + "," + str(self.getpt_north +  self.getdistance)
+            _envelope = (
+                str(self.getpt_east - self.getdistance)
+                + ","
+                + str(self.getpt_north - self.getdistance)
+                + ","
+                + str(self.getpt_east + self.getdistance)
+                + ","
+                + str(self.getpt_north + self.getdistance)
+            )
         else:
-            _envelope = str(self.getpt_east - distance) + "," + str(
-                self.getpt_north - distance) + "," + str(
-                self.getpt_east + distance) + "," + str(self.getpt_north + distance)
+            _envelope = (
+                str(self.getpt_east - distance)
+                + ","
+                + str(self.getpt_north - distance)
+                + ","
+                + str(self.getpt_east + distance)
+                + ","
+                + str(self.getpt_north + distance)
+            )
         _parms1 = self.__params
         _parms1["geometry"] = _envelope
         _parms1["layers"] = "all:ch.kantone.cadastralwebmap-farbe"
 
         _req = requests.get(
-            url=self.__url_api3_identify, proxies=self.__getproxy, params=_parms1, verify=False
+            url=self.__url_api3_identify,
+            proxies=self.__getproxy,
+            params=_parms1,
+            verify=False,
         )
         if _req.status_code == 200:
             _json = json.loads(_req.content)
@@ -346,18 +391,36 @@ class IdentifyFeatures:
                         if _attrkey == "egris_egrid":
                             _found, _gde = self.__search_location(_attrval)
                             if _found:
-                                _found, _gdeinfo = self.__find_gde_bfsnr(_gde, _featureid["attributes"]["label"])
+                                _found, _gdeinfo = self.__find_gde_bfsnr(
+                                    _gde, _featureid["attributes"]["label"]
+                                )
                                 if _found:
                                     _parzinfodict = {}
-                                    _beznr, _ktnr = self.__query_bezirk_kanton_id(_gdeinfo)
+                                    _beznr, _ktnr = self.__query_bezirk_kanton_id(
+                                        _gdeinfo
+                                    )
                                     _parzinfodict.update(
-                                        {"ParzNummer": _featureid["attributes"]["number"]})
+                                        {
+                                            "ParzNummer": _featureid["attributes"][
+                                                "number"
+                                            ]
+                                        }
+                                    )
                                     _parzinfodict.update(
-                                        {"egris_egrid": _featureid["attributes"]["egris_egrid"]})
+                                        {
+                                            "egris_egrid": _featureid["attributes"][
+                                                "egris_egrid"
+                                            ]
+                                        }
+                                    )
                                     _parzinfodict.update({"Gemeinde": _gde})
                                     _parzinfodict.update({"BFSNummer": _gdeinfo})
-                                    _parzinfodict.update({"Bezirk": self.__query_bezirk_name(_beznr)})
-                                    _parzinfodict.update({"Kanton": self.__query_kantons_name(_ktnr)})
+                                    _parzinfodict.update(
+                                        {"Bezirk": self.__query_bezirk_name(_beznr)}
+                                    )
+                                    _parzinfodict.update(
+                                        {"Kanton": self.__query_kantons_name(_ktnr)}
+                                    )
                                     _parzinfos.append(_parzinfodict)
         else:
             return _req.status_code, json.loads(_req.content)
