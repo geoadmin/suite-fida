@@ -52,34 +52,19 @@ def show_example(identifyfeature):
 #                                    M A I N
 # ------------------------------------------------------------------------------
 if __name__ == "__main__":
-    """ Entrypoint for the application.
-
-    - set's up the logging
-    - logs some basic infos
-    initialises the parameters and checks the input parameter sys.argv
-
-    Args:
-
-    Returns:
-        exitcode 0: no error
-        exitcode -1: could not init logging
-        exitcode -2. could not init parameter
-        exitcode -3: colud not export file
-
-    Raises:
+    """ Shows the usage of IdentifyFeature class with some examples
     """
     _version = 0.1
 
-    import requests
+    show_example(IdentifyFeatures())
+    show_example(IdentifyFeatures((2583759.0, 1210591.0)))
+    show_example(IdentifyFeatures((2583759.0, 1210591.0), 5000.0))
+    show_example(
+        IdentifyFeatures(
+            (2583759.0, 1210591.0), 1.0, "ch.kantone.cadastralwebmap-farbe"
+        )
+    )
 
-    #show_example(IdentifyFeatures())
-    #show_example(IdentifyFeatures((2583759.0, 1210591.0)))
-    #show_example(IdentifyFeatures((2583759.0, 1210591.0), 5000.0))
-    #show_example(
-    #    IdentifyFeatures(
-    #        (2583759.0, 1210591.0), 1.0, "ch.kantone.cadastralwebmap-farbe"
-    #    )
-    #)
     _layerlist = (
         "ch.kantone.cadastralwebmap-farbe"
         + ","
@@ -91,30 +76,31 @@ if __name__ == "__main__":
     )
 
     #mehrere Gemeinden
-    #show_example(IdentifyFeatures((2583759.0, 1210591.0), 1.0, _layerlist))
+    show_example(IdentifyFeatures((2583759.0, 1210591.0), 1.0, _layerlist))
 
-    #bei uns
-    #idf = IdentifyFeatures((2588430.3, 1219348.9), 1.0, "ch.kantone.cadastralwebmap-farbe")
-    #print(idf.getparzinfo(0))
-    #print(idf.getparzinfo(10))
+    #1 Gemeinden
+    idf1 = IdentifyFeatures((2600981.0, 1197447.5))
+    _parzinfo = idf1.getparzinfo()
+    print(str(len(_parzinfo)))
+    print(_parzinfo)
 
     #2 Gemeinden
-    #idf2 = IdentifyFeatures((2583759.0, 1210591.0), 5000.0)
-    #_parzinfo = idf2.getparzinfo(100.0)
-    #print(str(len(_parzinfo)))
-    #print(_parzinfo)
+    idf2 = IdentifyFeatures((2583759.0, 1210591.0), 5000.0)
+    _parzinfo = idf2.getparzinfo(10.0)
+    print(str(len(_parzinfo)))
+    print(_parzinfo)
 
     #Kanton Uri, keine Bezirke
-    #_idf3 = IdentifyFeatures((2692550.0, 1186425.0))
-    #_parzinfo = _idf3.getparzinfo(1.0)
-    #print(str(len(_parzinfo)))
-    #print(_parzinfo)
+    _idf3 = IdentifyFeatures((2692550.0, 1186425.0))
+    _parzinfo = _idf3.getparzinfo(1.0)
+    print(str(len(_parzinfo)))
+    print(_parzinfo)
 
     #Keine Daten der AV
-    #_idf4 = IdentifyFeatures((2584910.0, 1164562.5))
-    #_parzinfo = _idf4.getparzinfo(1.0)
-    #print(str(len(_parzinfo)))
-    #print(_parzinfo)
+    _idf4 = IdentifyFeatures((2584910.0, 1164562.5))
+    _parzinfo = _idf4.getparzinfo(1.0)
+    print(str(len(_parzinfo)))
+    print(_parzinfo)
 
     #Staatswald Galm
     _idf5 = IdentifyFeatures((2579915.0, 1196222.5))

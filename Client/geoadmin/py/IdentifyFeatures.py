@@ -22,6 +22,10 @@ class IdentifyFeatures:
     Needs a point coordinate and a distance. The distance ist needed to caluculate a square with
     a side length twice the distance an the point in the center. This square is used as a
     intersecting envelope geometry with no buffer
+    Needs a IdentifyFeatures.json. In this file there is a dictionary with 3 [T/I/P]config.
+    Each config has the query rest endpoint to the tlm_hoheitsgebiet, url_tlm_bezirksgebiet,
+    url_tlm_kantonsgebiet. These endpoints belong to ESRI Featureservices based on
+    https://shop.swisstopo.admin.ch/en/products/landscape/boundaries3D
 
     Attributes:
         point:    Where to identify, coordinate pair. First value ist east second is
@@ -60,9 +64,12 @@ class IdentifyFeatures:
         self.__url_api3_identify = "https://api3.geo.admin.ch/rest/services/api/MapServer/identify"
         self.__url_api3_find = "https://api3.geo.admin.ch/rest/services/api/MapServer/find"
         self.__url_api3_search_server = "https://api3.geo.admin.ch/rest/services/api/SearchServer"
-        self.__url_tlm_hoheitsgebiet = _cfg["T"]["url_tlm_hoheitsgebiet"]
-        self.__url_tlm_bezirksgebiet = _cfg["T"]["url_tlm_bezirksgebiet"]
-        self.__url_tlm_kantonsgebiet = _cfg["T"]["url_tlm_kantonsgebiet"]
+        try:
+            self.__url_tlm_hoheitsgebiet = _cfg["T"]["url_tlm_hoheitsgebiet"]
+            self.__url_tlm_bezirksgebiet = _cfg["T"]["url_tlm_bezirksgebiet"]
+            self.__url_tlm_kantonsgebiet = _cfg["T"]["url_tlm_kantonsgebiet"]
+        except Exception as e:
+            raise e
         self.__params = {}
         self.__params["geometryType"] = "esriGeometryEnvelope"
         self.__params["geometry"] = self.__envelope
@@ -108,17 +115,13 @@ class IdentifyFeatures:
 
     def __get_settings(self):
         """ Reads the json file with configuration's for T|I and P
-
         Args:
             -
-
         Returns:
             dictionary with the settings
-
         Raises:
             JSONDecodeError: If the data being deserialized is not a valid JSON document.
             IOError: if the config json file file is missing
-
         """
         _setting_filename = os.path.join(
             os.path.dirname(sys.argv[0]), "IdentifyFeatures.json"
@@ -138,6 +141,14 @@ class IdentifyFeatures:
             raise
 
     def getjson(self):
+        """ gets the json from api3.geo.admin.ch identify
+        Args:
+            -
+        Returns:
+           json from api3.geo.admin.ch identify
+        Raises:
+            JSONDecodeError: If the data being deserialized is not a valid JSON document.
+        """
         _proxy = "proxy.admin.ch:8080"
         _proxy_dict = {"http": _proxy, "https": _proxy}
         _req = requests.get(
@@ -147,14 +158,11 @@ class IdentifyFeatures:
 
     def __get_jsonfromurl(self, url, parameter):
         """ Gets a json from a ArcGISServerURL via a get with parameterlist
-
         Args:
             url: the url to call
             paramter: paramterd ictionary
-
         Returns:
             Json
-
         Raises:
             ConnectionError if there is no connction to the rest end point
         """
@@ -176,6 +184,14 @@ class IdentifyFeatures:
 
 
     def __query_kantons_name(self, kanotnid=0):
+        """ Gets the name of the kanton from kantonsgebiet, if there is no kanton, enpty string
+        Args:
+            kantonsnummer
+        Returns:
+            Kantonsname
+        Raises:
+            -
+        """
         _params = {}
         _params.update({"where": "KANTONSNUMMER={0} and KANTON_TEIL < 2".format(kanotnid)})
         _params.update({"outFields": "NAME,KANTON_TEIL"})
@@ -191,6 +207,14 @@ class IdentifyFeatures:
             raise ValueError("To many districts found")
 
     def __query_bezirk_name(self, bezirkid=0):
+        """ Gets the name of the bezirk from bezirksgebiet if there is no bezirk, enpty string
+        Args:
+            bezirksnummer
+        Returns:
+            Bezirksname
+        Raises:
+            -
+        """
         if bezirkid != None:
             _params = {}
             _params.update({"where": "BEZIRKSNUMMER={0} and BEZIRK_TEIL < 2".format(bezirkid)})
@@ -210,6 +234,14 @@ class IdentifyFeatures:
 
 
     def __query_bezirk_kanton_id(self, bfsnummer=0):
+        """ Gets the bezirksnummer, kantonsnummer from the hoheitsgebiet
+        Args:
+            gemeinde bfsnummer
+        Returns:
+            bezirksnummer, kantonsnummer
+        Raises:
+            -
+        """
         _params = {}
         _params.update({"where": "BFS_NUMMER={0} and GEM_TEIL < 2".format(bfsnummer)})
         _params.update({"outFields": "GEM_TEIL,BEZIRKSNUMMER,KANTONSNUMMER"})
@@ -224,6 +256,14 @@ class IdentifyFeatures:
 
 
     def __find_gde_bfsnr(self, gde="", kt=""):
+        """ Gets the gemeinde bfsnummer from ch.swisstopo.swissboundaries3d-gemeinde-flaeche.fill
+        Args:
+            gemeinde name, kantonskuerzel
+        Returns:
+            true if found, false if not found and gemeinde bfsnummer
+        Raises:
+            -
+        """
         _params = {}
         _params.update({"layer": "ch.swisstopo.swissboundaries3d-gemeinde-flaeche.fill"})
         _params.update({"searchText": "{0}".format(gde)})
@@ -248,6 +288,14 @@ class IdentifyFeatures:
 
 
     def __search_location(self,location):
+        """ Gets the Gemeindename
+        Args:
+            egris_egrid
+        Returns:
+            rue if found, false if not found and gemeindename
+        Raises:
+            -
+        """
         _params = {}
         _params.update({"searchText": "{0}".format(location)})
         _params.update({"type": "locations"})
@@ -267,10 +315,13 @@ class IdentifyFeatures:
 
 
     def getparzinfo(self, distance=None):
-        """
-        get info from Parzelle, Gemeinde, Bezirk, Kanton
-        :param distance: overrools the parameter set when initializing the class
-        :return:
+        """ Gets infos to the parzelle in a array of dictionary (ParzNummer,egris_egrid,Gemeinde,BFSNummer,Bezirk,Kanton)
+        Args:
+            optional search distance, overwrites the default distance
+        Returns:
+            array of dictionary
+        Raises:
+            -
         """
         _parzinfos = []
         _envelope = ""
@@ -291,24 +342,14 @@ class IdentifyFeatures:
             _json = json.loads(_req.content)
             for _key, _val in _json.items():
                 for _featureid in _val:
-                    #print(_featureid)
                     for _attrkey, _attrval in _featureid["attributes"].items():
                         if _attrkey == "egris_egrid":
-                            #print("egris_egrid: {0}".format(_attrval))
                             _found, _gde = self.__search_location(_attrval)
                             if _found:
-                                #print(_featureid["attributes"]["number"])
-                                #print(_featureid["attributes"]["egris_egrid"])
-                                #print(_gde)
-                                #print(_featureid)
                                 _found, _gdeinfo = self.__find_gde_bfsnr(_gde, _featureid["attributes"]["label"])
-                                #print(_found)
                                 if _found:
                                     _parzinfodict = {}
-                                    #print(_gdeinfo)
                                     _beznr, _ktnr = self.__query_bezirk_kanton_id(_gdeinfo)
-                                    #print(self.__query_bezirk_name(_beznr))
-                                    #print(self.__query_kantons_name(_ktnr))
                                     _parzinfodict.update(
                                         {"ParzNummer": _featureid["attributes"]["number"]})
                                     _parzinfodict.update(
@@ -317,9 +358,7 @@ class IdentifyFeatures:
                                     _parzinfodict.update({"BFSNummer": _gdeinfo})
                                     _parzinfodict.update({"Bezirk": self.__query_bezirk_name(_beznr)})
                                     _parzinfodict.update({"Kanton": self.__query_kantons_name(_ktnr)})
-                                    #print(_parzinfodict)
                                     _parzinfos.append(_parzinfodict)
-
         else:
             return _req.status_code, json.loads(_req.content)
         return _parzinfos
