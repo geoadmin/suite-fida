@@ -103,11 +103,13 @@ if __name__ == "__main__":
             if main(_args):
                 arcpy.AddMessage("Parzinfo executed successfully")
             else:
+                arcpy.AddError("could not get ParzInfo")
                 _exitcode = -2
         except Exception as _err:
             arcpy.AddError(_err)
 
     else:
+        arcpy.AddError("could not init parameter")
         _exitcode = -1
 
     sys.exit(_exitcode)
