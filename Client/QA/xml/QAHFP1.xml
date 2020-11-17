@@ -12,13 +12,11 @@
         <Element qualityCondition="FIDA_HFP GENHOEHELN02 is mandatory" />
         <Element qualityCondition="FIDA_HFP ZUVLAGELV95 is mandatory" />
         <Element qualityCondition="FIDA_HFP ZUVHOEHELN02 is mandatory" />
-        <Element qualityCondition="FIDA_HFP GESCHWINDIGKEIT_UP is mandatory" />
         <Element qualityCondition="FIDA_HFP LK25 is mandatory" />
         <Element qualityCondition="FIDA_HFP HFPKANTON is mandatory" />
         <Element qualityCondition="FIDA_HFP HFPNR is mandatory" />
         <Element qualityCondition="FIDA_HFP KENNZEICHNUNG is mandatory" />
         <Element qualityCondition="FIDA_HFP BEGEHBAR is mandatory" />
-        <Element qualityCondition="FIDA_HFP ERSTELLUNGSDATUM is mandatory" />
         <Element qualityCondition="FIDA_HFP PUNKT_STATUS is mandatory" />
         <Element qualityCondition="FIDA_HFP REALISIERUNG_STATUS is mandatory" />
         <Element qualityCondition="FIDA_HFP SCHUTZART is mandatory" />
@@ -153,12 +151,6 @@
         <Scalar parameter="constraint" value="ZUVHOEHELN02 IS NOT NULL" />
       </Parameters>
     </QualityCondition>	
-    <QualityCondition name="FIDA_HFP GESCHWINDIGKEIT_UP is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
-      <Parameters>
-        <Dataset parameter="table" value="FIDA_HFP" workspace="FIDA" />
-        <Scalar parameter="constraint" value="GESCHWINDIGKEIT_UP IS NOT NULL" />
-      </Parameters>
-    </QualityCondition>	
     <QualityCondition name="FIDA_HFP LK25 is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
       <Parameters>
         <Dataset parameter="table" value="FIDA_HFP" workspace="FIDA" />
@@ -187,12 +179,6 @@
       <Parameters>
         <Dataset parameter="table" value="FIDA_HFP" workspace="FIDA" />
         <Scalar parameter="constraint" value="BEGEHBAR IS NOT NULL" />
-      </Parameters>
-    </QualityCondition>	
-    <QualityCondition name="FIDA_HFP ERSTELLUNGSDATUM is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
-      <Parameters>
-        <Dataset parameter="table" value="FIDA_HFP" workspace="FIDA" />
-        <Scalar parameter="constraint" value="ERSTELLUNGSDATUM IS NOT NULL" />
       </Parameters>
     </QualityCondition>	
     <QualityCondition name="FIDA_HFP PUNKT_STATUS is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
@@ -400,7 +386,7 @@
     <QualityCondition name="FIDA_HFP NoNull" testDescriptor="QaRequiredFields(3)" allowErrors="False">
       <Parameters>
         <Dataset parameter="table" value="FIDA_HFP" workspace="FIDA" />
-        <Scalar parameter="requiredFieldNamesString" value= "OBJEKTART,LN02,LV95E,LV95N,GENLAGELV95,GENHOEHELN02,ZUVLAGELV95,ZUVHOEHELN02,GESCHWINDIGKEIT_UP,LK25,HFPKANTON,HFPNR,KENNZEICHNUNG,BEGEHBAR,ERSTELLUNGSDATUM,PUNKT_STATUS,REALISIERUNG_STATUS,SCHUTZART,STABILITAET" />
+        <Scalar parameter="requiredFieldNamesString" value= "OBJEKTART,LN02,LV95E,LV95N,GENLAGELV95,GENHOEHELN02,ZUVLAGELV95,ZUVHOEHELN02,LK25,HFPKANTON,HFPNR,KENNZEICHNUNG,BEGEHBAR,PUNKT_STATUS,REALISIERUNG_STATUS,SCHUTZART,STABILITAET" />
 		<Scalar parameter="allowEmptyStrings" value= "False" />
 		<Scalar parameter="allowMissingFields" value= "False" />
       </Parameters>
