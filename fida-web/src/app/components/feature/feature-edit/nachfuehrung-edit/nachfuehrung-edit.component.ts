@@ -1,23 +1,28 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ControlContainer, NgForm } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { FeatureState, FidaFeature } from 'src/app/models/FidaFeature.model';
 
 @Component({
   selector: 'app-nachfuehrung-edit',
   templateUrl: './nachfuehrung-edit.component.html',
-  styleUrls: ['./nachfuehrung-edit.component.scss'],
-  viewProviders: [ { provide: ControlContainer, useExisting: NgForm } ]
+  styleUrls: ['./nachfuehrung-edit.component.scss']
 })
 export class NachfuehrungEditComponent implements OnInit {
   @Input() feature: FidaFeature;
-  
+  @Input() formGroup: FormGroup;
+  public componentId: string;
+
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {   
+    // create unique id 
+    let id = this.feature.attributes.OBJECTID || new Date().getTime();
+    this.componentId =  `nachfuehrung_${id}`;
 
-  getId(): string {
-    return `nachfuehrung_${this.feature.attributes.OBJECTID}`;
+    // create form controls 
+    for (let key in this.feature.attributes) {
+      this.formGroup.addControl(key, new FormControl());
+   }  
   }
 
   deleteClick():void {

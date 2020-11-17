@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
-import { ControlContainer, NgForm } from '@angular/forms';
+import { } from '@angular/forms';
 import FeatureLayer from 'esri/layers/FeatureLayer';
 import CodedValueDomain from 'esri/layers/support/CodedValueDomain';
 import Field from 'esri/layers/support/Field';
@@ -9,8 +9,7 @@ import { FidaFeature } from 'src/app/models/FidaFeature.model';
 @Component({
   selector: 'app-attribute-edit',
   templateUrl: './attribute-edit.component.html',
-  styleUrls: ['./attribute-edit.component.scss'],
-  viewProviders: [ { provide: ControlContainer, useExisting: NgForm } ]
+  styleUrls: ['./attribute-edit.component.scss']
 })
 export class AttributeEditComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() feature: FidaFeature;

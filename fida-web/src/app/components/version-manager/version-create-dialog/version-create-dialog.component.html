@@ -8,13 +8,13 @@
         </div>
 
         <!-- body -->
-        <div class="fida-widget-body container py-3">
+        <form [formGroup]="form">
             <div class="row form-group">
                 <div class="col-6 attribute-label">
                     Name
                 </div>
                 <div class="col-6 form-group">
-                    <input type="text" class="form-control" [(ngModel)]="gdbVersion.versionName">
+                    <input type="text" class="form-control" formControlName="versionName" [(ngModel)]="gdbVersion.versionName">
                 </div>
             </div>
             <div class="row">
@@ -22,10 +22,10 @@
                     Description
                 </div>
                 <div class="col-6">
-                    <input type="text" class="form-control" [(ngModel)]="gdbVersion.description">
+                    <input type="text" class="form-control" formControlName="description" [(ngModel)]="gdbVersion.description">
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 
     <!-- footer -->

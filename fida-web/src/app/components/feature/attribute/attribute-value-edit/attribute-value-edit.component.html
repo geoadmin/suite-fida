@@ -1,47 +1,45 @@
-<fieldset ngModelGroup="{{ feature?.attributes.OBJECTID }}_{{ name }}">
-    <div class="form-group" [ngSwitch]="getFieldType()">
+<div [formGroup]="formGroup" class="error-text-container">
 
+    <!-- value -->
+    <div [ngSwitch]="getFieldType()">
         <!--domain value-->
         <div *ngSwitchCase="'domain'">
-            <select class="form-control" [(ngModel)]="feature?.attributes[name]" [name]="name" [placeholder]="placeholder" >
+            <select formControlName="value" [(ngModel)]="feature?.attributes[formControlName]" [name]="formControlName"
+                [placeholder]="placeholder" class="form-control">
                 <option *ngFor="let codedValue of getCodedValues()" [ngValue]="codedValue.code"
-                    [selected]="codedValue.code === feature?.attributes[name]">
+                    [selected]="codedValue.code === feature?.attributes[formControlName]">
                     {{ codedValue.name }}
                 </option>
             </select>
         </div>
 
-        <!--date value-->
+        <!-- date value -->
         <div *ngSwitchCase="'date'">
-            <div class="form-group">
-                <input type="text" class="form-control" [name]="name" bsDatepicker
-                    [bsValue]="feature?.attributes[name]">
-            </div>
+            <input type="text" class="form-control" formControlName="value" [name]="formControlName" bsDatepicker
+                [bsValue]="feature?.attributes[formControlName]">
         </div>
 
-        <!--number value-->
+        <!-- number value -->
         <div *ngSwitchCase="'number'">
-            <input type="number" class="form-control" [name]="name" [placeholder]="placeholder" [(ngModel)]="feature?.attributes[name]"
-                #input="ngModel">
-            <!--validation-->
-            <div *ngIf="input.invalid" class="alert alert-danger">
-                <div *ngIf="input.errors.required">{{ name }} is required.</div>
-            </div>
+            <input type="number" class="form-control" formControlName="value" [name]="formControlName"
+                [placeholder]="placeholder" [(ngModel)]="feature?.attributes[formControlName]">
         </div>
 
-         <!--textarea value-->
-         <div *ngSwitchCase="'textarea'">
-            <textarea class="form-control" rows="3" [name]="name" [placeholder]="placeholder" [(ngModel)]="feature?.attributes[name]"></textarea>            
+        <!-- textarea value -->
+        <div *ngSwitchCase="'textarea'">
+            <textarea class="form-control" formControlName="value" rows="3" [name]="formControlName"
+                [placeholder]="placeholder" [(ngModel)]="feature?.attributes[formControlName]"></textarea>
         </div>
 
-        <!--default value-->
+        <!-- default value -->
         <div *ngSwitchDefault>
-            <input type="text" class="form-control" [name]="name" [placeholder]="placeholder" [(ngModel)]="feature?.attributes[name]"
-                #input="ngModel">
-            <!--validation-->
-            <div *ngIf="input.invalid" class="alert alert-danger">
-                <div *ngIf="input.invalid">{{ name }} is required.</div>
-            </div>
+            <input type="text" class="form-control" formControlName="value" [name]="formControlName"
+                [placeholder]="placeholder" [(ngModel)]="feature?.attributes[formControlName]">
         </div>
     </div>
-</fieldset>
+
+    <!-- validation -->
+    <div class="error-text" *ngIf="formGroup.controls.value.errors?.required">
+        Value required!
+    </div>
+</div>

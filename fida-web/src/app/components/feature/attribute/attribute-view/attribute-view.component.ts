@@ -29,7 +29,10 @@ export class AttributeViewComponent implements OnInit {
     if(value === undefined || value === null){
       return '';
     }
-
+    if(this.field === undefined){
+      console.log('field is undefined', this.name);
+      return value;
+    }
     if(this.field.domain !== null && this.field.domain.type === 'coded-value'){
       const codedValueDomain = this.field.domain as CodedValueDomain;
       const codedValue = codedValueDomain.codedValues.find(f => f.code === parseInt(value));

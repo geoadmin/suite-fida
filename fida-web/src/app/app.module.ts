@@ -2,7 +2,7 @@
 import { NgModule, Compiler, COMPILER_OPTIONS, CompilerFactory, APP_INITIALIZER } from '@angular/core';
 import { JitCompilerFactory } from '@angular/platform-browser-dynamic';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -66,6 +66,7 @@ export function createCompiler(compilerFactory: CompilerFactory) {
   ],
   imports: [
     FormsModule,
+    ReactiveFormsModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,

@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ConfigService } from 'src/app/configs/config.service';
 import { FeatureState, FidaFeature } from 'src/app/models/FidaFeature.model';
 import { FeatureService } from 'src/app/services/feature.service';
@@ -13,6 +14,8 @@ export class FeatureEditComponent implements OnInit {
   public activated: boolean = false;
   public feature: FidaFeature;
   public showSpinner: boolean;
+  public form: FormGroup;
+
   private idField: string;
 
   constructor(
@@ -23,6 +26,8 @@ export class FeatureEditComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.form = new FormGroup({dummy: new FormControl()});
+
     this.widgetNotifyService.onFeatureEditSubject.subscribe((feature: FidaFeature) => {
       this.feature = feature;
       this.idField = this.configService.getLayerConfigById(this.feature.layer.id).idField;
@@ -74,6 +79,10 @@ export class FeatureEditComponent implements OnInit {
       this.widgetNotifyService.onFeatureEditCompleteSubject.next(false);
     }
     this.deactivate();
+  }
+
+  validateClick(featureForm: any){
+    featureForm.valid;
   }
 
   private deactivate(): void {
