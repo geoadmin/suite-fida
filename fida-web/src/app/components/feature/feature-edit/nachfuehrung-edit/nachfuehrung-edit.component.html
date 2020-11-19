@@ -1,26 +1,21 @@
-
-<div class="card"  [formGroup]="formGroup">
+<div class="card" [formGroup]="formGroup">
 
     <!-- header -->
-    <div class="card-header mb-0">
-        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" [attr.data-target]="'#' + componentId"
-            aria-expanded="false">{{ getHeaderText() }}</button>
+    <div class="card-header mb-0 collapsed" type="button" data-toggle="collapse" [attr.data-target]="'#' + componentId"
+        aria-expanded="false">{{ getHeaderText() }}
     </div>
 
-    <!--body -->
+    <!-- body -->
     <div [id]="componentId" class="collapse">
         <div class="card-body">
 
             <div class="row">
-                <div class="col-3 attribute-label">
-                    NACHFUEHRUNGSDATUM
-                </div>
+                <div class="col-3 attribute-label">NACHFUEHRUNGSDATUM</div>
                 <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="NACHFUEHRUNGSDATUM"></app-attribute-value-edit>
+                    <app-attribute-value-edit [feature]="feature" formControlName="NACHFUEHRUNGSDATUM">
+                    </app-attribute-value-edit>
                 </div>
-                <div class="col-3 attribute-label">
-                    NACHFUEHRUNGSPERIMETER
-                </div>
+                <div class="col-3 attribute-label">NACHFUEHRUNGSPERIMETER</div>
                 <div class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="NACHFUEHRUNGSPERIMETER">
                     </app-attribute-value-edit>
@@ -28,31 +23,25 @@
             </div>
 
             <div class="row">
-                <div class="col-3 attribute-label">
-                    UNTERHALTART
-                </div>
+                <div class="col-3 attribute-label">UNTERHALTART</div>
                 <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="UNTERHALTART"></app-attribute-value-edit>
+                    <app-attribute-value-edit [feature]="feature" formControlName="UNTERHALTART">
+                    </app-attribute-value-edit>
                 </div>
-                <div class="col-3 attribute-label">
-                    ARBEITSKUERZELTEXT
-                </div>
+                <div class="col-3 attribute-label">ARBEITSKUERZELTEXT</div>
                 <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="ARBEITSKUERZELTEXT"></app-attribute-value-edit>
+                    <app-attribute-value-edit [feature]="feature" formControlName="ARBEITSKUERZELTEXT">
+                    </app-attribute-value-edit>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-3 attribute-label">
-                    ERLEDARBBESCHREIBUNG
-                </div>
+                <div class="col-3 attribute-label">ERLEDARBBESCHREIBUNG</div>
                 <div class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="ERLEDARBBESCHREIBUNG">
                     </app-attribute-value-edit>
                 </div>
-                <div class="col-3 attribute-label">
-                    BESCHAEDIGUNG_PENDENZ
-                </div>
+                <div class="col-3 attribute-label">BESCHAEDIGUNG_PENDENZ</div>
                 <div class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="BESCHAEDIGUNG_PENDENZ">
                     </app-attribute-value-edit>
@@ -60,30 +49,27 @@
             </div>
 
             <div class="row">
-                <div class="col-3 attribute-label">
-                    ERSTERSTELLUNG
-                </div>
+                <div class="col-3 attribute-label">ERSTERSTELLUNG</div>
                 <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="ERSTERSTELLUNG"></app-attribute-value-edit>
+                    <app-attribute-value-edit [feature]="feature" formControlName="ERSTERSTELLUNG">
+                    </app-attribute-value-edit>
                 </div>
-                <div class="col-3 attribute-label">
-                    PROTOKOLLSICHTBAR
-                </div>
+                <div class="col-3 attribute-label">PROTOKOLLSICHTBAR</div>
                 <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="PROTOKOLLSICHTBAR"></app-attribute-value-edit>
+                    <app-attribute-value-edit [feature]="feature" formControlName="PROTOKOLLSICHTBAR">
+                    </app-attribute-value-edit>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-3 attribute-label">
-                    BEMERKUNG
-                </div>
+                <div class="col-3 attribute-label">BEMERKUNG</div>
                 <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="BEMERKUNG"></app-attribute-value-edit>
+                    <app-attribute-value-edit [feature]="feature" formControlName="BEMERKUNG">
+                    </app-attribute-value-edit>
                 </div>
             </div>
 
-
+            <!-- delete button -->
             <div class="row mt-2">
                 <div class="col-12">
                     <button type="button" class="btn btn-danger float-right" (click)="deleteClick()">Delete</button>

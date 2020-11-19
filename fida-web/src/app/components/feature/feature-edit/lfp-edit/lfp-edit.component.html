@@ -23,8 +23,6 @@
     <!--general attributes -->
     <div role="tabpanel" class="tab-pane fade in active show py-2" id="lfp_general_tab">
 
-        <app-attribute-value-edit [feature]="feature" formControlName="OBJECTID"></app-attribute-value-edit>
-
         <!--Punktart / Nr-->
         <div class="row mt-4">
             <div class="col-2 attribute-label">
@@ -39,7 +37,7 @@
             <div class="col-2 attribute-label">
                 Euref/NeotekNr
             </div>
-            <div class="col-1 pr-0">
+            <div class="col-1 pr-0 mr-m1">
                 <app-attribute-value-edit [feature]="feature" formControlName="EUREFNUMMER"></app-attribute-value-edit>
             </div>
             <div class="col-1 pl-0">
@@ -53,7 +51,8 @@
                 <app-attribute-value-edit [feature]="feature" formControlName="PUNKT_STATUS"></app-attribute-value-edit>
             </div>
             <div class="col-2">
-                <app-attribute-value-edit [feature]="feature" formControlName="REALISIERUNG_STATUS"></app-attribute-value-edit>
+                <app-attribute-value-edit [feature]="feature" formControlName="REALISIERUNG_STATUS">
+                </app-attribute-value-edit>
             </div>
         </div>
 
@@ -99,7 +98,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row mt-m1">
             <div class="col-2 attribute-label">
                 GenLage/Höhe
             </div>
@@ -119,7 +118,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row mt-m1">
             <div class="col-2 attribute-label">
                 ZuvLage/Höhe
             </div>
@@ -163,20 +162,22 @@
                         </app-attribute-value-edit>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row mt-m1">
                     <div class="col-6 attribute-label">
                         Schutzart
                     </div>
                     <div class="col-6">
-                        <app-attribute-value-edit [feature]="feature" formControlName="SCHUTZART"></app-attribute-value-edit>
+                        <app-attribute-value-edit [feature]="feature" formControlName="SCHUTZART">
+                        </app-attribute-value-edit>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row mt-m1">
                     <div class="col-6 attribute-label">
                         Stabilität
                     </div>
                     <div class="col-6">
-                        <app-attribute-value-edit [feature]="feature" formControlName="STABILITAET"></app-attribute-value-edit>
+                        <app-attribute-value-edit [feature]="feature" formControlName="STABILITAET">
+                        </app-attribute-value-edit>
                     </div>
                 </div>
             </div>
@@ -198,15 +199,16 @@
                         </app-attribute-value-edit>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row mt-m1">
                     <div class="col-6 attribute-label">
                         Flanschen
                     </div>
                     <div class="col-6">
-                        <app-attribute-value-edit [feature]="feature" formControlName="FLANSCHEN"></app-attribute-value-edit>
+                        <app-attribute-value-edit [feature]="feature" formControlName="FLANSCHEN">
+                        </app-attribute-value-edit>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row mt-m1">
                     <div class="col-6 attribute-label pr-0">
                         Anz. AnschlPkt
                     </div>
@@ -227,7 +229,8 @@
             <div class="col-4">
             </div>
             <div class="col-8">
-                <app-attribute-value-edit [feature]="feature" formControlName="BEMERKUNG" type="textarea" placeholder="Bemerkung">
+                <app-attribute-value-edit [feature]="feature" formControlName="BEMERKUNG" type="textarea"
+                    placeholder="Bemerkung">
                 </app-attribute-value-edit>
             </div>
         </div>
@@ -237,7 +240,8 @@
             <div class="col-4">
             </div>
             <div class="col-8">
-                <app-attribute-value-edit [feature]="feature" formControlName="IDENTITAET" type="textarea" placeholder="Identität">
+                <app-attribute-value-edit [feature]="feature" formControlName="IDENTITAET" type="textarea"
+                    placeholder="Identität">
                 </app-attribute-value-edit>
             </div>
         </div>
@@ -247,7 +251,8 @@
             <div class="col-4">
             </div>
             <div class="col-8">
-                <app-attribute-value-edit [feature]="feature" formControlName="ZUGANG" type="textarea" placeholder="Zugang">
+                <app-attribute-value-edit [feature]="feature" formControlName="ZUGANG" type="textarea"
+                    placeholder="Zugang">
                 </app-attribute-value-edit>
             </div>
         </div>
@@ -274,7 +279,7 @@
                         </app-attribute-value-edit>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row mt-m1">
                     <div class="col-6 attribute-label">
                         Absturzgefahr
                     </div>
@@ -283,18 +288,19 @@
                         </app-attribute-value-edit>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row mt-m1">
                     <div class="col-6 attribute-label">
                         Begehbar
                     </div>
                     <div class="col-6">
-                        <app-attribute-value-edit [feature]="feature" formControlName="BEGEHBAR"></app-attribute-value-edit>
+                        <app-attribute-value-edit [feature]="feature" formControlName="BEGEHBAR">
+                        </app-attribute-value-edit>
                     </div>
                 </div>
             </div>
             <div class="col-8">
-                <app-attribute-value-edit [feature]="feature" formControlName="ABSTURZGEFAHR_ERLAEUTERUNGEN" type="textarea"
-                    placeholder="Erläuterung"></app-attribute-value-edit>
+                <app-attribute-value-edit [feature]="feature" formControlName="ABSTURZGEFAHR_ERLAEUTERUNGEN"
+                    type="textarea" placeholder="Erläuterung"></app-attribute-value-edit>
             </div>
         </div>
 
@@ -309,8 +315,9 @@
             <div class="col-4 attribute-label">
                 GNS Sichtbar/Empfang
             </div>
-            <div class="col-2 pr-0">
-                <app-attribute-value-edit [feature]="feature" formControlName="GNSSSICHTBARKEIT"></app-attribute-value-edit>
+            <div class="col-2 pr-0 mr-m1">
+                <app-attribute-value-edit [feature]="feature" formControlName="GNSSSICHTBARKEIT">
+                </app-attribute-value-edit>
             </div>
             <div class="col-2 pl-0">
                 <app-attribute-value-edit [feature]="feature" formControlName="GSMEMPFANG"></app-attribute-value-edit>
@@ -333,21 +340,25 @@
                 Referenzepoche
             </div>
             <div class="col-3">
-                <app-attribute-value-edit [feature]="feature" formControlName="REFERENZEPOCHE"></app-attribute-value-edit>
+                <app-attribute-value-edit [feature]="feature" formControlName="REFERENZEPOCHE">
+                </app-attribute-value-edit>
             </div>
         </div>
-        <div class="row mb-4">
+        <div class="row mb-4  mt-m1">
             <div class="col-4 attribute-label">
                 Geschwindigkeit E/N/UP
             </div>
             <div class="col-1">
-                <app-attribute-value-edit [feature]="feature" formControlName="GESCHWINDIGKEIT_E"></app-attribute-value-edit>
+                <app-attribute-value-edit [feature]="feature" formControlName="GESCHWINDIGKEIT_E">
+                </app-attribute-value-edit>
             </div>
             <div class="col-1">
-                <app-attribute-value-edit [feature]="feature" formControlName="GESCHWINDIGKEIT_N"></app-attribute-value-edit>
+                <app-attribute-value-edit [feature]="feature" formControlName="GESCHWINDIGKEIT_N">
+                </app-attribute-value-edit>
             </div>
             <div class="col-1">
-                <app-attribute-value-edit [feature]="feature" formControlName="GESCHWINDIGKEIT_UP"></app-attribute-value-edit>
+                <app-attribute-value-edit [feature]="feature" formControlName="GESCHWINDIGKEIT_UP">
+                </app-attribute-value-edit>
             </div>
         </div>
 
@@ -355,13 +366,12 @@
 
     <!--nachführung features -->
     <div role="tabpanel" class="tab-pane fade py-2" id="lfp_nachfuehrung_tab">
-        <div class="row my-2">
+        <div class="row mb-2">
             <div class="col-12">
                 <button type="button" class="btn btn-primary" (click)="addNachfuehrungClick()">Add New
                     Nachfuehrung</button>
             </div>
         </div>
-
         <div *ngFor="let feature of getNachfuehrungFeatures()">
             <div *ngIf="feature.state !== 'deleted'">
                 <app-nachfuehrung-edit [feature]="feature" [formGroup]="formGroup"></app-nachfuehrung-edit>
@@ -371,48 +381,46 @@
 
     <!--grundbuch features -->
     <div role="tabpanel" class="tab-pane fade py-2" id="lfp_grundbuch_tab">
-        <div class="row my-2">
+        <div class="row mb-2">
             <div class="col-12">
-                <button type="button" class="btn btn-primary" (click)="addGrundbuchClick()">Add New
+                <button type="button" class="btn btn-primary mr-2" (click)="addGrundbuchClick()">Add New
                     Grundbuch</button>
+                <button type="button" class="btn btn-danger" (click)="redefineGrundbuchDataClick()" disabled>redefine</button>
             </div>
         </div>
-
         <div *ngFor="let feature of getGrundbuchFeatures()">
             <div *ngIf="feature.state !== 'deleted'">
-                <app-nachfuehrung-edit [feature]="feature" [formGroup]="formGroup"></app-nachfuehrung-edit>
+                <app-grundbuch-edit [feature]="feature" [formGroup]="formGroup"></app-grundbuch-edit>
             </div>
         </div>
     </div>
 
-     <!--rückversicherung features -->
-     <div role="tabpanel" class="tab-pane fade py-2" id="lfp_rueckversicherung_tab">
-        <div class="row my-2">
+    <!--rückversicherung features -->
+    <div role="tabpanel" class="tab-pane fade py-2" id="lfp_rueckversicherung_tab">
+        <div class="row mb-2">
             <div class="col-12">
                 <button type="button" class="btn btn-primary" (click)="addRueckversicherungClick()">Add New
                     Rückversicherung</button>
             </div>
         </div>
-
         <div *ngFor="let feature of getRueckversicherungFeatures()">
             <div *ngIf="feature.state !== 'deleted'">
-                <app-nachfuehrung-edit [feature]="feature" [formGroup]="formGroup"></app-nachfuehrung-edit>
+                <app-rueckversicherung-edit [feature]="feature" [formGroup]="formGroup"></app-rueckversicherung-edit>
             </div>
         </div>
     </div>
 
     <!--kontakt features -->
     <div role="tabpanel" class="tab-pane fade py-2" id="lfp_kontakt_tab">
-        <div class="row my-2">
+        <div class="row mb-2">
             <div class="col-12">
                 <button type="button" class="btn btn-primary" (click)="addKontaktClick()">Add New
                     Kontakt</button>
             </div>
         </div>
-
         <div *ngFor="let feature of getKontaktFeatures()">
             <div *ngIf="feature.state !== 'deleted'">
-                <app-nachfuehrung-edit [feature]="feature" [formGroup]="formGroup"></app-nachfuehrung-edit>
+                <app-kontakt-edit [feature]="feature" [formGroup]="formGroup"></app-kontakt-edit>
             </div>
         </div>
     </div>

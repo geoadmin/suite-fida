@@ -1,0 +1,70 @@
+<div class="card" [formGroup]="formGroup">
+
+    <!-- header -->
+    <div class="card-header mb-0 collapsed" type="button" data-toggle="collapse" [attr.data-target]="'#' + componentId"
+        aria-expanded="false">{{ getHeaderText() }}
+    </div>
+
+    <!-- body -->
+    <div [id]="componentId" class="collapse">
+        <div class="card-body">
+
+            <div class="row">
+                <div class="col-3 attribute-label">ART</div>
+                <div class="col-3">
+                    <app-attribute-value-edit [feature]="feature" formControlName="ART"></app-attribute-value-edit>
+                </div>
+                <div class="col-3 attribute-label">FIRMA</div>
+                <div class="col-3">
+                    <app-attribute-value-edit [feature]="feature" formControlName="FIRMA">
+                    </app-attribute-value-edit>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-3 attribute-label">VORNAME</div>
+                <div class="col-3">
+                    <app-attribute-value-edit [feature]="feature" formControlName="VORNAME"></app-attribute-value-edit>
+                </div>
+                <div class="col-3 attribute-label">NAME</div>
+                <div class="col-3">
+                    <app-attribute-value-edit [feature]="feature" formControlName="NAME"></app-attribute-value-edit>
+                </div>            
+            </div>
+
+            <div class="row">
+                <div class="col-3 attribute-label">ADRESSE</div>
+                <div class="col-3">
+                    <app-attribute-value-edit [feature]="feature" formControlName="ADRESSE">
+                    </app-attribute-value-edit>
+                </div>                
+            </div>
+
+            <div class="row">
+                <div class="col-3 attribute-label">PLZ</div>
+                <div class="col-3">
+                    <app-attribute-value-edit [feature]="feature" formControlName="PLZ"></app-attribute-value-edit>
+                </div>
+                <div class="col-3 attribute-label">ORT</div>
+                <div class="col-3">
+                    <app-attribute-value-edit [feature]="feature" formControlName="ORT"></app-attribute-value-edit>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-3 attribute-label">TELEFON</div>
+                <div class="col-3">
+                    <app-attribute-value-edit [feature]="feature" formControlName="TELEFON">
+                    </app-attribute-value-edit>
+                </div>                
+            </div>
+
+            <!-- delete button -->
+            <div class="row mt-2">
+                <div class="col-12">
+                    <button type="button" class="btn btn-danger float-right" (click)="deleteClick()">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -62,12 +62,12 @@ export class VersionManagerComponent implements OnInit, OnDestroy {
   }
 
   getDate(value: any): string {
-    if (!value || value === null) {
+    if (value == null) {
       return '';
     }
 
     const date = new Date(value);
-    return FORMAT_UTILS.formatDate(date);
+    return FORMAT_UTILS.formatDateTime(date);
   }
 
   getFormatedVersionName(versionName: string): string {
@@ -124,6 +124,11 @@ export class VersionManagerComponent implements OnInit, OnDestroy {
         // remove from list
         const index = this.versions.indexOf(version);
         this.versions.splice(index, 1);
+
+        // when delet version is active -> set to default
+        if(gdbVersion.versionName === this.settingService.getGdbVersionName()){
+          this.settingService.setDefaultVersion();
+        }
       } else {
         throw new Error('version could not be deleted');
       }

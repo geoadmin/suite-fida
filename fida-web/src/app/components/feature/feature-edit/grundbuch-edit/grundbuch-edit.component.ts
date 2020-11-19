@@ -1,14 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { FeatureState, FidaFeature } from 'src/app/models/FidaFeature.model';
-import { FORMAT_UTILS, CONVERT_UTILS } from '../../../../utils/utils';
 
 @Component({
-  selector: 'app-nachfuehrung-edit',
-  templateUrl: './nachfuehrung-edit.component.html',
-  styleUrls: ['./nachfuehrung-edit.component.scss']
+  selector: 'app-grundbuch-edit',
+  templateUrl: './grundbuch-edit.component.html',
+  styleUrls: ['./grundbuch-edit.component.scss']
 })
-export class NachfuehrungEditComponent implements OnInit {
+export class GrundbuchEditComponent implements OnInit {
   @Input() feature: FidaFeature;
   @Input() formGroup: FormGroup;
   public componentId: string;
@@ -16,7 +15,7 @@ export class NachfuehrungEditComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.componentId = `nachfuehrung_${this.feature.attributes.OBJECTID || new Date().getTime()}`;
+    this.componentId = `grundbuch_${this.feature.attributes.OBJECTID || new Date().getTime()}`;
 
     for (let key in this.feature.attributes) {
       this.formGroup.addControl(key, new FormControl());
@@ -28,7 +27,6 @@ export class NachfuehrungEditComponent implements OnInit {
   }
 
   getHeaderText(): string {
-    const date = CONVERT_UTILS.esriToDate(this.feature.attributes.NACHFUEHRUNGSDATUM);
-    return FORMAT_UTILS.formatDate(date, 'yyyy-mm-dd') || '-no date-';
+    return `${this.feature.attributes.GEMEINDE} - ${this.feature.attributes.PARZ}`;
   }
 }

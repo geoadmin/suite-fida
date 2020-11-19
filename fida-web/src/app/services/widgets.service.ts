@@ -6,6 +6,9 @@ import BasemapGallery from 'esri/widgets/BasemapGallery';
 import Search from 'esri/widgets/Search';
 import Zoom from 'esri/widgets/Zoom';
 import LayerList from 'esri/widgets/LayerList';
+import Home from 'esri/widgets/Home';
+import Extent from 'esri/geometry/Extent';
+import Viewpoint from 'esri/Viewpoint';
 
 @Injectable({ providedIn: 'root' })
 export class WidgetsService {
@@ -90,6 +93,17 @@ export class WidgetsService {
       view: mapView
     });    
     return zoom;
+  }
+
+  public getHomeWidget(mapView: MapView, extent: Extent): Home {
+    var viewPoint = new Viewpoint({
+      targetGeometry: extent
+    });
+    const home = new Home({
+      view: mapView,
+      viewpoint: viewPoint
+    });    
+    return home;
   }
 
   public getLayerListWidget(mapView: MapView): Expand {

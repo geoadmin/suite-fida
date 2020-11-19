@@ -43,7 +43,7 @@ export class GeometryEditComponent implements OnInit {
   async saveClick(): Promise<void> {
     this.originalFeature.geometry = this.drawingFeature.geometry;
     this.showSpinner = true;
-    await this.featureService.createGrundbuchFeatures(this.originalFeature);
+    //await this.featureService.createGrundbuchFeatures(this.originalFeature);
     await this.featureService.saveFeature(this.originalFeature);
     this.showSpinner = false;
     

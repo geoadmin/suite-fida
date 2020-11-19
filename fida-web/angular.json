@@ -19,7 +19,8 @@
           "options": {
             "allowedCommonJsDependencies": [
               "esri",
-              "tslib"
+              "tslib",
+              "rxjs-compat"
             ],
             "customWebpackConfig": {
               "path": "./extra-webpack.config.js"

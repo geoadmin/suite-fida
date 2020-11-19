@@ -1,5 +1,11 @@
 <div class="version-reconcile-dialog" [class.spinner]="showSpinner">
 
+     <!-- header -->
+     <div class="fida-widget-header">
+        <label>Version-Manager: Reconcile/Post</label>
+        <button class="btn esri-icon-close float-right" (click)="cancelClick()"></button>
+    </div>
+
     <!-- body -->
     <div class="fida-widget-body">
         <p>{{ differences }}</p>
@@ -11,7 +17,7 @@
             (click)="acceptDifferencesClick()">Accept</button>
         <button type="button" class="btn btn-danger float-right ml-2"
             (click)="declineDifferencesClick()">Decline</button>
-        <button type="button" class="btn btn-default float-right" (click)="cancelReconsilingClick()">Cancel</button>
+        <button type="button" class="btn btn-default float-right" (click)="cancelClick()">Cancel</button>
     </div>
 
 </div>

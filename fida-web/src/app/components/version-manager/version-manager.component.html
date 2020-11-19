@@ -1,53 +1,57 @@
 <div #versionManager class="version-manager fida-widget">
 
-    <!-- header -->
-    <div class="fida-widget-header">
-        <label>Version-Manager</label><label [hidden]="!isReconciling">: Reconcile/Post</label>
-        <button class="btn esri-icon-close float-right" (click)="closeClick()"></button>
-    </div>
+    <!-- versions table -->
+    <div [hidden]="isReconciling">
 
-    <!-- body -->
-    <div class="fida-widget-body" [hidden]="isReconciling">
-        <table class="table table-sm table-dark">
-            <thead>
-                <th>Name</th>
-                <th>Beschreibung</th>
-                <th>Erstellt</th>
-                <th>Geändert</th>
-                <th>Synchronisiert</th>
-                <th></th>
-            </thead>
-            <tbody>
-                <tr *ngFor="let version of versions">
-                    <td>{{ getFormatedVersionName(version.versionName) }}</td>
-                    <td>{{ version.description }}</td>
-                    <td>{{ getDate(version.creationDate) }}</td>
-                    <td>{{ getDate(version.modifiedDate) }}</td>
-                    <td>{{ getDate(version.commonAncestorDate) }}</td>
-                    <td style='white-space: nowrap'>
-                        <div>
-                            <button class="btn btn-primary" (click)="setActiveVersionClick(version)"
-                                [disabled]="isActiveVersion(version)">Set Active</button>
-                            <button class="btn btn-primary" [disabled]="isReadonlyVersion(version)"
-                                (click)="showReconcilePostDialogClick(version)">Reconcile/Post</button>
-                            <button class="btn btn-danger" [disabled]="isReadonlyVersion(version)"
-                                title="Version löschen" (click)="showDeleteDialogClick(version)">
-                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash"
-                                    fill="currentColor">
-                                    <use xlink:href="assets/images/bootstrap-icons.svg#trash" />
-                                </svg>
-                            </button>
+        <!-- header -->
+        <div class="fida-widget-header">
+            <label>Version-Manager</label>
+            <button class="btn esri-icon-close float-right" (click)="closeClick()"></button>
+        </div>
 
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+        <!-- body -->
+        <div class="fida-widget-body">
+            <table class="table table-sm table-dark">
+                <thead>
+                    <th>Name</th>
+                    <th>Beschreibung</th>
+                    <th>Erstellt</th>
+                    <th>Geändert</th>
+                    <th>Synchronisiert</th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let version of versions">
+                        <td>{{ getFormatedVersionName(version.versionName) }}</td>
+                        <td>{{ version.description }}</td>
+                        <td>{{ getDate(version.creationDate) }}</td>
+                        <td>{{ getDate(version.modifiedDate) }}</td>
+                        <td>{{ getDate(version.commonAncestorDate) }}</td>
+                        <td style='white-space: nowrap'>
+                            <div>
+                                <button class="btn btn-primary" (click)="setActiveVersionClick(version)"
+                                    [disabled]="isActiveVersion(version)">Set Active</button>
+                                <button class="btn btn-primary" [disabled]="isReadonlyVersion(version)"
+                                    (click)="showReconcilePostDialogClick(version)">Reconcile/Post</button>
+                                <button class="btn btn-danger" [disabled]="isReadonlyVersion(version)"
+                                    title="Version löschen" (click)="showDeleteDialogClick(version)">
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash"
+                                        fill="currentColor">
+                                        <use xlink:href="assets/images/bootstrap-icons.svg#trash" />
+                                    </svg>
+                                </button>
 
-    <!-- footer -->
-    <div class="fida-widget-footer" [hidden]="isReconciling">
-        <button class="btn btn-primary float-right" (click)="showCreateDialogClick()">Create Version</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- footer -->
+        <div class="fida-widget-footer">
+            <button class="btn btn-primary float-right" (click)="showCreateDialogClick()">Create Version</button>
+        </div>
     </div>
 
     <!-- reconsile -->

@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { ɵangular_packages_platform_browser_animations_animations_f } from '@angular/platform-browser/animations';
 import { ConfigService } from 'src/app/configs/config.service';
 import { FeatureState, FidaFeature } from 'src/app/models/FidaFeature.model';
 import { FeatureService } from 'src/app/services/feature.service';
@@ -17,19 +18,21 @@ export class FeatureEditComponent implements OnInit {
   public form: FormGroup;
 
   private idField: string;
+  private originalAttributes: any;
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
     private featureService: FeatureService,
     private widgetNotifyService: WidgetNotifyService,
-    private configService: ConfigService
+    private configService: ConfigService    
   ) { }
 
   ngOnInit(): void {
-    this.form = new FormGroup({dummy: new FormControl()});
+    this.form = new FormGroup({});
 
     this.widgetNotifyService.onFeatureEditSubject.subscribe((feature: FidaFeature) => {
       this.feature = feature;
+      this.originalAttributes = { ...feature.attributes};
       this.idField = this.configService.getLayerConfigById(this.feature.layer.id).idField;
       this.activate();
     });
@@ -73,6 +76,7 @@ export class FeatureEditComponent implements OnInit {
   }
 
   cancelClick(): void {
+    this.feature.attributes = this.originalAttributes;
     if (this.feature.state === FeatureState.Create) {
       this.widgetNotifyService.onFeatureCreateCompleteSubject.next(false);
     } else {
@@ -87,7 +91,8 @@ export class FeatureEditComponent implements OnInit {
 
   private deactivate(): void {
     this.activated = false;
-    this.feature = undefined;    
+    this.feature = undefined;  
+    this.originalAttributes = undefined;  
   }
 
   private activate(): void {

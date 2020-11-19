@@ -30,6 +30,9 @@ import { VersionDeleteDialogComponent } from './components/version-manager/versi
 import { VersionReconcileDialogComponent } from './components/version-manager/version-reconcile-dialog/version-reconcile-dialog.component';
 import { LfpEditComponent } from './components/feature/feature-edit/lfp-edit/lfp-edit.component';
 import { NachfuehrungEditComponent } from './components/feature/feature-edit/nachfuehrung-edit/nachfuehrung-edit.component';
+import { GrundbuchEditComponent } from './components/feature/feature-edit/grundbuch-edit/grundbuch-edit.component';
+import { RueckversicherungEditComponent } from './components/feature/feature-edit/rueckversicherung-edit/rueckversicherung-edit.component';
+import { KontaktEditComponent } from './components/feature/feature-edit/kontakt-edit/kontakt-edit.component';
 
 // config
 import { ConfigService } from './configs/config.service';
@@ -42,7 +45,6 @@ export function initApp(configService: ConfigService) {
 export function createCompiler(compilerFactory: CompilerFactory) {
   return compilerFactory.createCompiler();
 }
-
 
 @NgModule({
   declarations: [
@@ -62,7 +64,10 @@ export function createCompiler(compilerFactory: CompilerFactory) {
     VersionReconcileDialogComponent,
     LfpEditComponent,
     AttributeValueEditComponent,
-    NachfuehrungEditComponent
+    NachfuehrungEditComponent,
+    GrundbuchEditComponent,
+    RueckversicherungEditComponent,
+    KontaktEditComponent
   ],
   imports: [
     FormsModule,

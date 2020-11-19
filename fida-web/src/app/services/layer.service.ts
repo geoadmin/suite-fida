@@ -2,12 +2,12 @@ import { Injectable, ComponentFactoryResolver, Injector } from '@angular/core';
 import { ConfigService } from '../configs/config.service';
 import { TemplateService } from './template.service';
 import { LayerConfig, LayerType } from '../models/config.model';
+import { SettingService } from './setting.service';
 import esriConfig from 'esri/config';
 import Portal from 'esri/portal/Portal';
 import Basemap from 'esri/Basemap'
 import Layer from 'esri/layers/Layer';
 import FeatureLayer from 'esri/layers/FeatureLayer';
-import { SettingService } from './setting.service';
 
 
 @Injectable({ providedIn: 'root' })

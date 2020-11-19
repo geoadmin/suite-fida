@@ -56,7 +56,7 @@ export class VersionReconcileDialogComponent implements OnInit {
     }
   }
 
-  async cancelReconsilingClick(): Promise<void> {
+  async cancelClick(): Promise<void> {
     this.showSpinner = true;
       try {
       // stop reading

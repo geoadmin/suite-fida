@@ -4,8 +4,8 @@
     <div [ngSwitch]="getFieldType()">
         <!--domain value-->
         <div *ngSwitchCase="'domain'">
-            <select formControlName="value" [(ngModel)]="feature?.attributes[formControlName]" [name]="formControlName"
-                [placeholder]="placeholder" class="form-control">
+            <select formControlName="valueControl" [(ngModel)]="feature?.attributes[formControlName]"
+                [name]="formControlName" [placeholder]="placeholder" class="form-control">
                 <option *ngFor="let codedValue of getCodedValues()" [ngValue]="codedValue.code"
                     [selected]="codedValue.code === feature?.attributes[formControlName]">
                     {{ codedValue.name }}
@@ -15,31 +15,34 @@
 
         <!-- date value -->
         <div *ngSwitchCase="'date'">
-            <input type="text" class="form-control" formControlName="value" [name]="formControlName" bsDatepicker
-                [bsValue]="feature?.attributes[formControlName]">
+            <input type="text" class="form-control" formControlName="valueControl" [name]="formControlName" bsDatepicker
+                [(ngModel)]="date" (change)="onDateChanged($event)" (bsValueChange)="onDateChanged($event)" [bsConfig]="{ adaptivePosition: true }">
         </div>
 
         <!-- number value -->
         <div *ngSwitchCase="'number'">
-            <input type="number" class="form-control" formControlName="value" [name]="formControlName"
+            <input type="number" class="form-control" formControlName="valueControl" [name]="formControlName"
                 [placeholder]="placeholder" [(ngModel)]="feature?.attributes[formControlName]">
         </div>
 
         <!-- textarea value -->
         <div *ngSwitchCase="'textarea'">
-            <textarea class="form-control" formControlName="value" rows="3" [name]="formControlName"
+            <textarea class="form-control" formControlName="valueControl" rows="3" [name]="formControlName"
                 [placeholder]="placeholder" [(ngModel)]="feature?.attributes[formControlName]"></textarea>
         </div>
 
         <!-- default value -->
         <div *ngSwitchDefault>
-            <input type="text" class="form-control" formControlName="value" [name]="formControlName"
+            <input type="text" class="form-control" formControlName="valueControl" [name]="formControlName"
                 [placeholder]="placeholder" [(ngModel)]="feature?.attributes[formControlName]">
         </div>
     </div>
 
     <!-- validation -->
-    <div class="error-text" *ngIf="formGroup.controls.value.errors?.required">
-        Value required!
+    <div class="error-text" *ngIf="formGroup.controls.valueControl.errors?.required" style="width: 130px;">
+        Value is required.
+    </div>
+    <div class="error-text" *ngIf="formGroup.controls.valueControl.errors?.maxlength" style="width: 325px;">
+        Value cannot contain more than {{ field?.length }} characters.
     </div>
 </div>

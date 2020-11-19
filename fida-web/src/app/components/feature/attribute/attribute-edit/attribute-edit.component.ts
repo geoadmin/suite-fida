@@ -26,7 +26,7 @@ export class AttributeEditComponent implements OnInit, AfterViewInit, OnDestroy 
     // convert value to date-object
     if(this.field.type === 'date'){
       const value = this.feature.attributes[this.name];
-      if(value && value !== null){
+      if(value != null){
         this.feature.attributes[this.name] = new Date(value);
       }      
     }
@@ -53,7 +53,7 @@ export class AttributeEditComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   getFieldType(): string {
-    if(this.field.domain !== null && this.field.domain.type === 'coded-value'){
+    if(this.field.domain != null && this.field.domain.type === 'coded-value'){
       return 'domain';
     }
 

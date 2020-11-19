@@ -1,0 +1,58 @@
+
+<div class="card" [formGroup]="formGroup">
+
+    <!-- header -->
+    <div class="card-header mb-0 collapsed" type="button" data-toggle="collapse" [attr.data-target]="'#' + componentId"
+            aria-expanded="false">{{ getHeaderText() }}
+    </div>
+
+    <!-- body -->
+    <div [id]="componentId" class="collapse">
+        <div class="card-body">
+
+            <div class="row">
+                <div class="col-3 attribute-label">LAND</div>
+                <div class="col-3">
+                    <app-attribute-value-edit [feature]="feature" formControlName="LAND"></app-attribute-value-edit>
+                </div>
+                <div class="col-3 attribute-label">KANTON</div>
+                <div class="col-3">
+                    <app-attribute-value-edit [feature]="feature" formControlName="KANTON">
+                    </app-attribute-value-edit>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-3 attribute-label">BEZIRK</div>
+                <div class="col-3">
+                    <app-attribute-value-edit [feature]="feature" formControlName="BEZIRK"></app-attribute-value-edit>
+                </div>
+                <div class="col-3 attribute-label">GEMEINDE</div>
+                <div class="col-3">
+                    <app-attribute-value-edit [feature]="feature" formControlName="GEMEINDE"></app-attribute-value-edit>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-3 attribute-label">PARZ</div>
+                <div class="col-3">
+                    <app-attribute-value-edit [feature]="feature" formControlName="PARZ">
+                    </app-attribute-value-edit>
+                </div>
+                <div class="col-3 attribute-label">ANMERKUNGIMGB</div>
+                <div class="col-3">
+                    <app-attribute-value-edit [feature]="feature" formControlName="ANMERKUNGIMGB">
+                    </app-attribute-value-edit>
+                </div>
+            </div>
+
+            <!-- delete button -->
+            <div class="row mt-2">
+                <div class="col-12">
+                    <button type="button" class="btn btn-danger float-right" (click)="deleteClick()">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

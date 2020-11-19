@@ -10,6 +10,7 @@ import Feature from 'esri/Graphic';
 import EsriError from 'esri/core/Error';
 import esriRequest from 'esri/request';
 import { environment } from '../../environments/environment';
+import Geoprocessor from 'esri/tasks/Geoprocessor';
 
 
 @Injectable({
@@ -22,6 +23,24 @@ export class QueryService {
     private messageService: MessageService,
     private settingService: SettingService
   ) { }
+
+  public geoprocess(url: string, parameters: any): Promise<any> {
+    const geoprocessorParameters: __esri.GeoprocessorProperties = {
+      url: url
+    }
+    const geoprocessor = new Geoprocessor(geoprocessorParameters);
+ 
+    return new Promise((resolve, reject) => {
+      geoprocessor.execute(parameters)
+        .then((result: any) => {
+          resolve(result);
+        })
+        .catch((error: EsriError) => {
+          this.messageService.error('Geoprocess failed.', error);
+          reject(error);
+        });
+    });
+  }
 
   public relatedFeatures(featureLayer: FeatureLayer, objectId: number, relationshipId: number): Promise<Feature[]> {
     const query = new RelationshipQuery();

@@ -1,4 +1,5 @@
 <div *ngIf="activated" class="feature-edit fida-widget" [class.spinner]="showSpinner">
+
     <!-- header -->
     <div class="fida-widget-header">
         <label>{{ getHeaderText() }}</label>
@@ -7,15 +8,13 @@
 
     <!-- body -->
     <div class="fida-widget-body">
-
-    
-        <form [formGroup]="form" (ngSubmit)="featureForm.valid">
+        <form [formGroup]="form" (ngSubmit)="form.valid">
             <div [ngSwitch]="feature?.layer.id">
 
-                 <!-- lfp feature -->
+                <!-- lfp feature -->
                 <app-lfp-edit *ngSwitchCase="'LFP'" [feature]="feature" [formGroup]="form"></app-lfp-edit>
 
-                 <!-- default -->
+                <!-- default -->
                 <div *ngSwitchDefault>
                     <!-- tab nav -->
                     <ul class="nav nav-tabs" role="tablist">
@@ -41,7 +40,8 @@
                                         {{ attribute.key }}
                                     </div>
                                     <div class="col-6">
-                                        <input type="text" class="form-control" name="{{ attribute.key }}" [(ngModel)]="feature?.attributes[attribute.key]">
+                                        <input type="text" class="form-control" name="{{ attribute.key }}"
+                                            [(ngModel)]="feature?.attributes[attribute.key]">
                                     </div>
                                 </div>
                             </div>
@@ -62,7 +62,8 @@
                                                 {{ attribute.key }}
                                             </div>
                                             <div class="col-6">
-                                                <input type="text" class="form-control" name="{{ attribute.key }}" [(ngModel)]="relatedFeature?.attributes[attribute.key]">
+                                                <input type="text" class="form-control" name="{{ attribute.key }}"
+                                                    [(ngModel)]="relatedFeature?.attributes[attribute.key]">
                                             </div>
                                         </div>
                                     </div>
@@ -81,25 +82,26 @@
                                     (click)="addRelatedFeatureClick('nachfuehrung')">add</button>
                             </div>
                             <div
-                            *ngFor="let relatedFeature of getRelatedFeatures(feature?.relatedFeatures.nachfuehrung)">
-                            <div *ngIf="relatedFeature.state !== 'deleted'">
-                                <div>---------{{ relatedFeature.attributes.OBJECTID }}--------------</div>
-                                <div *ngFor="let attribute of relatedFeature.attributes | keyvalue let idx=index">
-                                    <div class="row">
-                                        <div class="col-6 attribute-label">
-                                            {{ attribute.key }}
-                                        </div>
-                                        <div class="col-6">
-                                            <input type="text" class="form-control" name="{{ attribute.key }}" [(ngModel)]="relatedFeature?.attributes[attribute.key]">
+                                *ngFor="let relatedFeature of getRelatedFeatures(feature?.relatedFeatures.nachfuehrung)">
+                                <div *ngIf="relatedFeature.state !== 'deleted'">
+                                    <div>---------{{ relatedFeature.attributes.OBJECTID }}--------------</div>
+                                    <div *ngFor="let attribute of relatedFeature.attributes | keyvalue let idx=index">
+                                        <div class="row">
+                                            <div class="col-6 attribute-label">
+                                                {{ attribute.key }}
+                                            </div>
+                                            <div class="col-6">
+                                                <input type="text" class="form-control" name="{{ attribute.key }}"
+                                                    [(ngModel)]="relatedFeature?.attributes[attribute.key]">
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="d-flex felx-row mb-2">
-                                    <button type="button" class="btn btn-danger"
-                                        (click)="deleteRelatedFeatureClick(relatedFeature)">delete</button>
+                                    <div class="d-flex felx-row mb-2">
+                                        <button type="button" class="btn btn-danger"
+                                            (click)="deleteRelatedFeatureClick(relatedFeature)">delete</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         </div>
                     </div>
 
@@ -107,16 +109,14 @@
                 </div>
 
             </div>
-          
         </form>
-
-
     </div>
 
     <!-- footer -->
     <div class="fida-widget-footer">
-        <button type="button" class="btn btn-primary float-right ml-2" (click)="validateClick(featureForm)">Validate</button>
-        <button type="button" class="btn btn-primary float-right ml-2" (click)="saveClick()">Save</button>
+        <button type="button" class="btn btn-primary float-right ml-2" (click)="saveClick()"
+            [disabled]="form.invalid">Save</button>
         <button type="button" class="btn btn-default float-right" (click)="cancelClick()">Cancel</button>
     </div>
+
 </div>

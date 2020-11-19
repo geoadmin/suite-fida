@@ -11,6 +11,8 @@ import GraphicsLayer from 'esri/layers/GraphicsLayer';
 import FeatureLayer from 'esri/layers/FeatureLayer';
 import EsriError from 'esri/core/Error';
 import ActionButton from 'esri/support/actions/ActionButton';
+import { CookieService } from './cookie.service';
+import { ConfigService } from '../configs/config.service';
 
 @Injectable({ providedIn: 'root' })
 export class MapService {
@@ -21,7 +23,9 @@ export class MapService {
     private widgetsService: WidgetsService,
     private widgetNotifyService: WidgetNotifyService,
     private layerService: LayerService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private cookieService: CookieService,
+    private configService: ConfigService
   ) { }
 
   public async initMap(mapContainer: ElementRef): Promise<void> {
@@ -29,7 +33,7 @@ export class MapService {
       // create esri-map
       const basemap = await this.layerService.getBasemap();
       const map = new Map({
-        basemap: basemap
+        basemap: basemap       
       });
 
       // create graphic layer for editing
@@ -40,7 +44,8 @@ export class MapService {
 
       // create esri-map-view
       this.view = new MapView({
-        map: map
+        map: map,
+        extent: this.initialExtent()
       });
 
       // add widgets to map
@@ -48,14 +53,11 @@ export class MapService {
       this.view.ui.components = ['attribution'];
       this.view.ui.add(this.widgetsService.getBasemapWidget(this.view), "bottom-left");
       this.view.ui.add(this.widgetsService.getZoomWidget(this.view), "top-left");
+      this.view.ui.add(this.widgetsService.getHomeWidget(this.view, this.getDefaultExtent()), "top-left");
       this.view.ui.add(this.widgetsService.getSearchWidget(this.view), "top-right");
       this.view.ui.add(this.widgetsService.getLayerListWidget(this.view), "top-right");
       this.view.ui.add(this.widgetsService.getFeatureCreateWidget(this.view), "top-right");
       this.view.ui.add(this.widgetsService.getVersionManagerWidget(this.view), "top-right");
-
-      await this.view.when().then(() => {
-        this.zoomToSwitzerland();
-      });
 
       // init popup 
       this.initPopup();
@@ -66,28 +68,33 @@ export class MapService {
         this.addLayersToMap(this.view.map);
       });
 
+      // listen to extent change
+      this.view.watch('extent', (newValue: Extent, oldValue: Extent) => {
+        if (newValue !== oldValue) {
+          this.cookieService.extent = newValue;
+        }
+      });
+
     } catch (error) {
       console.error('map initialization failed', error);
       this.messageService.error('map initialization failed', error);
     }
   }
 
+  private initialExtent(): Extent {
+    const extentParams = this.cookieService.extent || this.configService.getDefaultExtentConfig();
+    return new Extent(extentParams);    
+  }
+
+  private getDefaultExtent(): Extent {
+    const extentParams = this.configService.getDefaultExtentConfig();
+    return new Extent(extentParams);
+  }
+
   private addLayersToMap(map: Map) {
     const layers = this.layerService.getLayers(true);
     map.addMany(layers);
     map.layers.add(this.graphicsLayer);
-  }
-
-  private zoomToSwitzerland(): void {
-    this.view.goTo(
-      new Extent({
-        xmax: 2852897,
-        xmin: 2471833,
-        ymax: 1320405,
-        ymin: 1050244,
-        spatialReference: this.view.spatialReference
-      })
-    );
   }
 
   public getMapView(): MapView {
@@ -100,6 +107,12 @@ export class MapService {
 
   private initPopup(): void {
     this.view.popup.dockOptions.position = 'top-left'
+    this.view.popup.dockOptions.buttonEnabled = false;
+    // do not brake
+    this.view.popup.dockOptions.breakpoint = {
+      width: 99999,
+      height: 99999
+    }
     this.view.popup.dockEnabled = true;
 
     // add close action

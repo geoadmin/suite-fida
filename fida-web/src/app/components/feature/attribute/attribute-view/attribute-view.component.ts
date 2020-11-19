@@ -26,14 +26,14 @@ export class AttributeViewComponent implements OnInit {
 
   getFormatedValue(): string {
     const value = this.feature.attributes[this.name];
-    if(value === undefined || value === null){
+    if(value == null){
       return '';
     }
     if(this.field === undefined){
       console.log('field is undefined', this.name);
       return value;
     }
-    if(this.field.domain !== null && this.field.domain.type === 'coded-value'){
+    if(this.field.domain != null && this.field.domain.type === 'coded-value'){
       const codedValueDomain = this.field.domain as CodedValueDomain;
       const codedValue = codedValueDomain.codedValues.find(f => f.code === parseInt(value));
       if(codedValue === undefined){

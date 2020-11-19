@@ -19,6 +19,27 @@ body {
   outline: none;
 }
 
+.mt-m1 {
+  margin-top: -1px;
+}
+
+.mb-m1 {
+  margin-bottom: -1px;
+}
+
+.ml-m1 {
+  margin-left: -1px;
+}
+
+.mr-m1 {
+  margin-right: -1px;
+}
+
+.no-y-container-margin {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
 // ----------------------------------------------------------------------------------------------------
 // form styles
 // ----------------------------------------------------------------------------------------------------
@@ -47,13 +68,13 @@ textarea.form-control {
 // ----------------------------------------------------------------------------------------------------
 // validation styles
 // ----------------------------------------------------------------------------------------------------
-.ng-invalid:not(form) {
+input.ng-invalid {
   border-color: var(--danger);
-  background-color: var(--dark-border-color);
-  outline: 2px solid var(--danger);
+  background-color: var(--light);
+  // outline: 2px solid var(--danger);
 }
 
-.ng-invalid:not(form):focus {
+input.ng-invalid:focus {
   border-color: var(--danger);
   box-shadow: none;
 }
@@ -73,8 +94,7 @@ textarea.form-control {
   z-index: 1;
   width: 120px;
   bottom: 100%;
-  left: 50%;
-  margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
+  right: 0;
   margin-bottom: 5px;
 }
 
@@ -109,16 +129,22 @@ textarea.form-control {
 // card styles
 // ----------------------------------------------------------------------------------------------------
 .card {
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--light);
   border-radius: 0;
 }
 
-.card-header {
-  padding: 0;
-  margin-bottom: 0;
-  background-color: rgba(0, 0, 0, 0.03);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
-}
+// .card-header, .card-header:first-child {
+//   padding: 0;
+//   margin-bottom: 0;
+//   background-color: var(--super-light);
+//   border-bottom: 1px solid var(--dark);  
+
+//   button {
+//     width: 100%;
+//     text-align: left;
+//     color: inherit;
+//   }
+// }
 
 // ----------------------------------------------------------------------------------------------------
 // button styles
@@ -141,7 +167,7 @@ textarea.form-control {
 // navigation styles
 // ----------------------------------------------------------------------------------------------------
 .nav {
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--light);
 }
 
 a[role="tab"] {
@@ -151,7 +177,7 @@ a[role="tab"] {
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
   color: black;
-  background-color: var(--border-color);
+  background-color: var(--light);
   border-radius: 0;
 }
 
@@ -180,7 +206,7 @@ a[role="tab"] {
 // ----------------------------------------------------------------------------------------------------
 .fida-widget {
   background-color: white;
-  border: 1px solid var(--dark-border-color);
+  border: 1px solid var(--normal);
 }
 
 .fida-widget-header {
@@ -189,7 +215,7 @@ a[role="tab"] {
   font-weight: bold;
   text-align: center;
   padding: 5px 0 8px 0;
-  border-bottom: solid 1px var(--border-color);
+  border-bottom: solid 1px var(--light);
 
   & label {
     margin-top: 3px;
@@ -210,7 +236,7 @@ a[role="tab"] {
   right: 0px;
   width: 100%;
   padding: 12px 12px 12px 12px;
-  border-top: solid 1px var(--border-color);
+  border-top: solid 1px var(--light);
 }
 
 // ----------------------------------------------------------------------------------------------------
@@ -218,19 +244,19 @@ a[role="tab"] {
 // ----------------------------------------------------------------------------------------------------
 .esri-widget {
   font-family: "Frutiger Neue", "Helvetica Neue", sans-serif;
-  color: var(--dark-contrast);
+  color: var(--super-dark);
 }
 
 .esri-widget--button:not(.esri-search__submit-button) {
-  border: 1px solid var(--dark-contrast);
+  border: 1px solid var(--super-dark);
 
   &[aria-expanded="true"] {
-    border: 2px solid var(--dark-contrast);
+    border: 2px solid var(--super-dark);
   }
 }
 
 .esri-expand__panel {
-  //border: 1px solid var(--dark-contrast);
+  //border: 1px solid var(--super-dark);
 }
 
 .esri-view {

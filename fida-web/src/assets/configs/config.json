@@ -1,9 +1,19 @@
 {
     "arcGisUrlPlaceholder": "[EVIRONMENT_ARCGISURL]",
-    "versionManagement" : {
-        "serverUrl":"[EVIRONMENT_ARCGISURL]/rest/services/FIDA/FIDA/VersionManagementServer",
-        "defaultVersion":"SDE.DEFAULT"
-    },    
+    "defaultVersion": "SDE.DEFAULT",
+    "defaultExtent": {
+        "xmax": 2852897,
+        "xmin": 2471833,
+        "ymax": 1320405,
+        "ymin": 1050244,
+        "spatialReference": {
+            "wkid": 2056
+        }
+    },
+    "versionManagement": {
+        "serverUrl": "[EVIRONMENT_ARCGISURL]/rest/services/FIDA/FIDA/VersionManagementServer",
+        "defaultVersion": "SDE.DEFAULT"
+    },
     "layers": [
         {
             "type": "QueryLayer",

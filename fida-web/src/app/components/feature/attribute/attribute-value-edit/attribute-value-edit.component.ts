@@ -1,9 +1,10 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
-import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
+import { AbstractControl, ControlValueAccessor, FormControl, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validators } from '@angular/forms';
 import FeatureLayer from 'esri/layers/FeatureLayer';
 import CodedValueDomain from 'esri/layers/support/CodedValueDomain';
 import Field from 'esri/layers/support/Field';
 import { FidaFeature } from 'src/app/models/FidaFeature.model';
+import { CONVERT_UTILS } from '../../../../utils/utils';
 
 @Component({
   selector: 'app-attribute-value-edit',
@@ -12,6 +13,11 @@ import { FidaFeature } from 'src/app/models/FidaFeature.model';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => AttributeValueEditComponent),
+      multi: true
+    },
+    {
+      provide: NG_VALIDATORS,
       useExisting: forwardRef(() => AttributeValueEditComponent),
       multi: true
     }
@@ -26,15 +32,20 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
 
   public formGroup: FormGroup;
   public disabled: boolean;
-  private field: Field;
+  public field: Field;
+  public date: Date;
 
   constructor() { }
 
   ngOnInit(): void {
+    if(!this.placeholder){
+      this.placeholder = '';
+    }
+    
     // create form-control
     const formControl = new FormControl();
     this.formGroup = new FormGroup({
-      value: formControl
+      valueControl: formControl
     });
 
     // get field
@@ -43,18 +54,18 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
       throw new Error(`Field ${this.formControlName} not found in layer ${this.feature.layer.id}`);
     }
 
-    // convert value to date-object
-    if (this.field.type === 'date') {
-      const value = this.feature.attributes[this.formControlName];
-      if (value && value !== null) {
-        this.feature.attributes[this.formControlName] = new Date(value);
-      }
+    // convert value to date-object 
+    if (this.field.type === 'date') {      
+      this.date = CONVERT_UTILS.esriToDate(this.feature.attributes[this.formControlName]);       
     }
 
     // define validation form-control
     const validators: any = [];
     if (this.field.nullable === false) {
-       validators.push(Validators.required);
+      validators.push(Validators.required);
+    }
+    if(this.field.length && this.field.length > 0) {
+      validators.push(Validators.maxLength(this.field.length));
     }
     formControl.setValidators(validators);
 
@@ -64,6 +75,10 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
   }
 
   ngOnDestroy(): void {
+  }
+
+  onDateChanged(): void {
+    this.feature.attributes[this.formControlName] = this.date? this.date.valueOf() : null;
   }
 
   private getFeatureLayer(): FeatureLayer {
@@ -79,7 +94,7 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
       return;
     }
 
-    if (this.field.domain !== null && this.field.domain.type === 'coded-value') {
+    if (this.field.domain != null && this.field.domain.type === 'coded-value') {
       return 'domain';
     }
 
@@ -106,16 +121,31 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
   onTouched: any = () => { }
 
   writeValue(value: any): void {
-    value && this.formGroup.get(this.formControlName).setValue(value);
+    if(value != null){
+      this.formGroup?.controls.valueControl.setValue(value);
+    }
   }
+
   registerOnChange(fn: any): void {
-    this.onChange = fn;
+    this.formGroup.valueChanges.subscribe(fn);
   }
+
   registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
+
   setDisabledState?(isDisabled: boolean): void {
     this.disabled = isDisabled;
   }
 
+  validate(control: AbstractControl): ValidationErrors | null {
+    return this.formGroup.valid ?
+      null :
+      {
+        invalidAttributeValue: {
+          valid: false,
+          message: `attribute-value [${this.formControlName}] is invalid`
+        }
+      };
+  }
 }

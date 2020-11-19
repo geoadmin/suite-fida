@@ -2,7 +2,6 @@ import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, TemplateRe
 import { FeatureService } from 'src/app/services/feature.service';
 import { WidgetNotifyService } from 'src/app/services/widget-notify.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import Geometry from 'esri/geometry/Geometry';
 import { FeatureState, FidaFeature } from 'src/app/models/FidaFeature.model';
 import { MapService } from 'src/app/services/map.service';
 

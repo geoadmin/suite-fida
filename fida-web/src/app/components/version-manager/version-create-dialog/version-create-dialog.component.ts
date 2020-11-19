@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
 import { GdbVersion } from 'src/app/models/GdbVersion.model';
@@ -18,7 +18,7 @@ export class VersionCreateDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      versionName: new FormControl(),
+      versionName: new FormControl('', Validators.required),
       description: new FormControl(),
     });
     this.onCreate = new Subject();

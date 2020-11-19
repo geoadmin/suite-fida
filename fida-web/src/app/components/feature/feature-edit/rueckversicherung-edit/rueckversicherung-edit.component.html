@@ -1,0 +1,53 @@
+<div class="card" [formGroup]="formGroup">
+
+    <!-- header -->
+    <div class="card-header mb-0 collapsed" type="button" data-toggle="collapse" [attr.data-target]="'#' + componentId"
+        aria-expanded="false">{{ getHeaderText() }}
+    </div>
+
+    <!-- body -->
+    <div [id]="componentId" class="collapse">
+        <div class="card-body">
+
+            <div class="row">
+                <div class="col-3 attribute-label">PUNKTBEZEICHNUNG</div>
+                <div class="col-3">
+                    <app-attribute-value-edit [feature]="feature" formControlName="PUNKTBEZEICHNUNG">
+                    </app-attribute-value-edit>
+                </div>
+                <div class="col-3 attribute-label">AZIMUT</div>
+                <div class="col-3">
+                    <app-attribute-value-edit [feature]="feature" formControlName="AZIMUT">
+                    </app-attribute-value-edit>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-3 attribute-label">DELTAHOEHE</div>
+                <div class="col-3">
+                    <app-attribute-value-edit [feature]="feature" formControlName="DELTAHOEHE">
+                    </app-attribute-value-edit>
+                </div>
+                <div class="col-3 attribute-label">DISTANZ</div>
+                <div class="col-3">
+                    <app-attribute-value-edit [feature]="feature" formControlName="DISTANZ"></app-attribute-value-edit>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-3 attribute-label">MATERIALISIERUNG</div>
+                <div class="col-3">
+                    <app-attribute-value-edit [feature]="feature" formControlName="MATERIALISIERUNG">
+                    </app-attribute-value-edit>
+                </div>
+            </div>
+
+            <!-- delete button -->
+            <div class="row mt-2">
+                <div class="col-12">
+                    <button type="button" class="btn btn-danger float-right" (click)="deleteClick()">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -16,10 +16,14 @@ export class LfpEditComponent implements OnInit {
     private featureService: FeatureService
   ) { }
 
-  ngOnInit(): void {  
+  ngOnInit(): void {
     for (let key in this.feature.attributes) {
       this.formGroup.addControl(key, new FormControl());
-   }    
+    }
+  }
+
+  async redefineGrundbuchDataClick() {
+    await this.featureService.redefineGrundbuchFeatures(this.feature);
   }
 
   async addNachfuehrungClick() {
@@ -27,7 +31,13 @@ export class LfpEditComponent implements OnInit {
   }
 
   getNachfuehrungFeatures() {
-    return this.feature?.relatedFeatures?.nachfuehrung?.filter((f: FidaFeature) => f.state !== FeatureState.Delete);
+    let featurelist = this.feature?.relatedFeatures?.nachfuehrung?.filter((f: FidaFeature) => f.state !== FeatureState.Delete);
+    featurelist.sort(function (a, b) {
+      const ad = a.attributes.NACHFUEHRUNGSDATUM || 0;
+      const bd = a.attributes.NACHFUEHRUNGSDATUM || 0;
+      return ad - bd;
+    });
+    return featurelist;
   }
 
   async addGrundbuchClick() {

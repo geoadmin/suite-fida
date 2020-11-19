@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Config, LayerConfig, LayerType, RelationshipsConfig, VersionManagementConfig } from '../models/config.model';
+import { Config, ExtentConfig, LayerConfig, LayerType, RelationshipsConfig, VersionManagementConfig } from '../models/config.model';
 import { environment } from '../../environments/environment';
 import esriRequest from 'esri/request';
 
@@ -51,11 +51,18 @@ export class ConfigService {
 
     public getArcGisServer(): string {
         return environment.arcGisServer;
-    }
+    }    
 
     /**
      *  get configs
      **/
+    public getDefaultVersionName(): string {
+        return this.config.defaultVersion;
+    }
+
+    public getDefaultExtentConfig(): ExtentConfig {
+        return this.config.defaultExtent;
+    }
 
     public getVersionManagementConfig(): VersionManagementConfig {
         return this.config.versionManagement;

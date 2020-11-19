@@ -12,7 +12,7 @@ export enum RelationshipName {
     Kontakt = 'kontakt'
 }
 
-export class RelationshipsConfig_OLD{
+export class RelationshipsConfig_OLD {
     grundbuch: string;
     nachfuehrungen: string;
     rueckversicherung: string;
@@ -35,8 +35,18 @@ export class VersionManagementConfig {
     defaultVersion: string;
 }
 
+export class ExtentConfig {
+    xmax: number;
+    xmin: number;
+    ymax: number;
+    ymin: number;
+    spatialReference: any;
+}
+
 export class Config {
     arcGisUrlPlaceholder: string;
+    defaultVersion: string;
+    defaultExtent: ExtentConfig;
     versionManagement: VersionManagementConfig;
     layers: [LayerConfig];
     layerInfos: any;

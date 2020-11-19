@@ -10,6 +10,8 @@ import Relationship from 'esri/layers/support/Relationship';
 import { FeatureState, FidaFeature, RelatedFeatures } from '../models/FidaFeature.model';
 import { GrundbuchService } from './grundbuch.service';
 import { RelationshipsConfig } from '../models/config.model';
+import { CONVERT_UTILS } from '../utils/utils';
+
 
 
 @Injectable({
@@ -26,7 +28,7 @@ export class FeatureService {
   ) { }
 
   public async saveFeature(feature: FidaFeature): Promise<any> {
-    try {
+    try {      
       // create save properties
       const applyEditProperties: __esri.FeatureLayerApplyEditsEdits = {};
       if (feature.state === FeatureState.Create) {
@@ -51,7 +53,7 @@ export class FeatureService {
       // TODO auslagern
       // update grundbuch features
       if (featureLayer.id === "LFP" && feature.state === FeatureState.Create) {
-        feature.relatedFeatures.grundbuch = await this.createGrundbuchFeatures(feature);
+        await this.redefineGrundbuchFeatures(feature);
       }
 
       // save related features
@@ -63,11 +65,11 @@ export class FeatureService {
 
           if (relationshipName && relatedFeatures && relatedFeatures.length > 0) {
             const relatedFeatureLayer = await this.getRelatedFeatureLayerByName(featureLayer, relationshipName);
-    
+
             // update fk 
             const relationship = this.getRelationship(featureLayer, relationshipName);
-            relatedFeatures.forEach((f)=>{
-               this.updateFk(f, feature, relationship);
+            relatedFeatures.forEach((f) => {
+              this.updateFk(f, feature, relationship);
             })
 
             await this.saveRelatedFeatures(relatedFeatureLayer, relatedFeatures);
@@ -108,8 +110,12 @@ export class FeatureService {
 
 
   private applyEdits(featureLayer: FeatureLayer, applyEditProperties: __esri.FeatureLayerApplyEditsEdits): Promise<any> {
+    const options: __esri.FeatureLayerApplyEditsOptions = {
+      gdbVersion: featureLayer.gdbVersion
+    }
+
     return new Promise((resolve, reject) => {
-      featureLayer.applyEdits(applyEditProperties).then((result: any) => {
+      featureLayer.applyEdits(applyEditProperties, options).then((result: any) => {
         resolve(result);
       }).catch((error: any) => {
         this.messageService.error('Save failed.', error);
@@ -148,15 +154,22 @@ export class FeatureService {
     }));
   }
 
-  public async createGrundbuchFeatures(feature: FidaFeature): Promise<FidaFeature[]> {
-
+  public async redefineGrundbuchFeatures(feature: FidaFeature): Promise<any> {
     // TODO create buffer geometry
     // get grundbuch     
     const grundbuchFeatures = await this.grundbuchService.createFeature(feature.geometry);
+  
+    throw new Error('not jet implemented')
+
+    // flag old grundbuch features as deleted and delete new once
+    this.checkRelatedFeatureList(feature,'grundbuch');    
+    feature.relatedFeatures.grundbuch = feature.relatedFeatures.grundbuch.filter(f => f.attributes.OBJECTID != null);
+    feature.relatedFeatures.grundbuch.map(f => (f as FidaFeature).state = FeatureState.Delete);
+
+    // set new grundbuch features    
     grundbuchFeatures.forEach(grundbuchFeature => {
-      grundbuchFeature.attributes.FK_FIDA_LFP = feature.attributes.GLOBALID;
+      //feature.relatedFeatures.grundbuch.push(grundbuchFeature);
     });
-    return grundbuchFeatures;
   }
 
   public async createRelatedFeature(feature: FidaFeature, relatedFeaturesPropertyName: string): Promise<FidaFeature> {
@@ -172,7 +185,7 @@ export class FeatureService {
     relatedFeature.layer = relatedFeatureLayer;
     relatedFeature.state = FeatureState.Create;
     this.updateFk(relatedFeature, feature, relationship);
-    
+
     // add related feature to list
     this.addRelatedFeatureToList(feature, relatedFeaturesPropertyName, relatedFeature);
 
@@ -186,15 +199,17 @@ export class FeatureService {
   }
 
   private addRelatedFeatureToList(feature: FidaFeature, relatedName: string, related: FidaFeature): void {
+    this.checkRelatedFeatureList(feature, relatedName);
+    (feature.relatedFeatures as any)[relatedName].push(related);
+  }
+
+  private checkRelatedFeatureList(feature: FidaFeature, relatedName: string): void {
     if (!feature.relatedFeatures) {
       feature.relatedFeatures = new RelatedFeatures();
-    }
-    let relatedFeatureList = (feature.relatedFeatures as any)[relatedName];
-    if (!relatedFeatureList) {
+    }       
+    if (!((feature.relatedFeatures as any)[relatedName])) {
       (feature.relatedFeatures as any)[relatedName] = [];
-      relatedFeatureList = (feature.relatedFeatures as any)[relatedName];
     }
-    relatedFeatureList.push(related);
   }
 
   private getFeatureLayer(feature: Feature): FeatureLayer {
