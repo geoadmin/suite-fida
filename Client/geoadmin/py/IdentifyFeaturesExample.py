@@ -6,7 +6,9 @@
 # -- commandline: -
 # -------------------------------------------------------------------------------------------------
 # -- History
+# -- 0.2: flu, 20.11.2020 some issue with json, gets also info if no parz found
 # -------------------------------------------------------------------------------------------------
+import json
 
 from IdentifyFeatures import IdentifyFeatures
 
@@ -53,7 +55,7 @@ def show_example(identifyfeature):
 if __name__ == "__main__":
     """ Shows the usage of IdentifyFeature class with some examples
     """
-    _version = 0.1
+    _version = 0.2
 
     show_example(IdentifyFeatures())
     show_example(IdentifyFeatures((2583759.0, 1210591.0)))
@@ -74,35 +76,35 @@ if __name__ == "__main__":
         + "ch.swisstopo.swissboundaries3d-kanton-flaeche.fill"
     )
 
-    # mehrere Gemeinden
+    print("mehrere Gemeinden")
     show_example(IdentifyFeatures((2583759.0, 1210591.0), 1.0, _layerlist))
 
-    # 1 Gemeinden
+    print("1 Gemeinde")
     idf1 = IdentifyFeatures((2600981.0, 1197447.5))
     _parzinfo = idf1.getparzinfo()
-    print(str(len(_parzinfo)))
+    print("Anzahl Resultate: {0}".format(len(json.loads(_parzinfo))))
     print(_parzinfo)
 
-    # 2 Gemeinden
+    print("2 Gemeinden")
     idf2 = IdentifyFeatures((2583759.0, 1210591.0), 5000.0)
     _parzinfo = idf2.getparzinfo(10.0)
-    print(str(len(_parzinfo)))
+    print("Anzahl Resultate: {0}".format(len(json.loads(_parzinfo))))
     print(_parzinfo)
 
-    # Kanton Uri, keine Bezirke
+    print("Kanton Uri, keine Bezirke")
     _idf3 = IdentifyFeatures((2692550.0, 1186425.0))
     _parzinfo = _idf3.getparzinfo(1.0)
-    print(str(len(_parzinfo)))
+    print("Anzahl Resultate: {0}".format(len(json.loads(_parzinfo))))
     print(_parzinfo)
 
-    # Keine Daten der AV
+    print("Keine Daten der AV")
     _idf4 = IdentifyFeatures((2584910.0, 1164562.5))
     _parzinfo = _idf4.getparzinfo(1.0)
-    print(str(len(_parzinfo)))
+    print("Anzahl Resultate: {0}".format(len(json.loads(_parzinfo))))
     print(_parzinfo)
 
-    # Staatswald Galm
+    print("Staatswald Galm")
     _idf5 = IdentifyFeatures((2579915.0, 1196222.5))
     _parzinfo = _idf5.getparzinfo(1.0)
-    print(str(len(_parzinfo)))
+    print("Anzahl Resultate: {0}".format(len(json.loads(_parzinfo))))
     print(_parzinfo)
