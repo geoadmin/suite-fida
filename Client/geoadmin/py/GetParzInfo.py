@@ -8,8 +8,10 @@
 #                 2600000.0 1200000.0 1.0
 # -------------------------------------------------------------------------------------------------
 # -- History
+# -- 0.2: flu, 20.11.2020 some issue with json, gets also info if no parz found
 # -------------------------------------------------------------------------------------------------
 
+import json
 import sys
 
 import arcpy
@@ -69,8 +71,8 @@ def main(args):
         _idf = IdentifyFeatures((args["e"], args["n"]), args["dist"])
         _parz_info = _idf.getparzinfo()
         # arcpy.AddMessage(_parz_info)
-        arcpy.SetParameter(arcpy.GetArgumentCount() - 2, _idf.getparzinfo())
-        arcpy.AddMessage("{0} parcell(s) found".format(len(_parz_info)))
+        arcpy.SetParameter(arcpy.GetArgumentCount() - 2, _parz_info)
+        arcpy.AddMessage("{0} parcell(s) found".format(len(json.loads(_parz_info))))
         return True
     except Exception as _err:
         arcpy.AddError(_err)
@@ -95,7 +97,7 @@ if __name__ == "__main__":
 
     Raises:
     """
-    _version = 0.1
+    _version = 0.2
     arcpy.SetParameter(arcpy.GetArgumentCount() - 1, _version)
     _exitcode, _args = init(sys.argv)
     if _exitcode == 0:
