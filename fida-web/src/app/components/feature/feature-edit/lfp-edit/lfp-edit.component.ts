@@ -70,6 +70,14 @@ export class LfpEditComponent implements OnInit {
     return this.feature?.relatedFeatures?.kontakt?.filter((f: FidaFeature) => f.state !== FeatureState.Delete);
   }
 
+  async addAnhangClick() {
+    await this.featureService.createRelatedFeature(this.feature, 'anhang');
+  }
+
+  getAnhangFeatures() {
+    return this.feature?.relatedFeatures?.anhang?.filter((f: FidaFeature) => f.state !== FeatureState.Delete);
+  }
+
   lv95Change(): void {
     //this.featureService.updateGeometryFromLV95Attributes(this.feature);
   }

@@ -1,4 +1,5 @@
 import Feature from 'esri/Graphic';
+import AttachmentInfo from 'esri/layers/support/AttachmentInfo';
 
 export enum FeatureState {
     Create = 'create',
@@ -12,11 +13,13 @@ export class RelatedFeatures {
     kontakt?: Feature[];
     nachfuehrung?: Feature[];
     rueckversicherung?: Feature[];
+    anhang?: Feature[];
 }
 
 export class FidaFeature extends Feature {
     state: FeatureState;
     relatedFeatures: RelatedFeatures;
+    attachemtInfos: AttachmentInfo[];
 }
 
 /*export class LfpFeature extends Feature {

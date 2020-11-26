@@ -12,7 +12,8 @@
             <div class="row">
                 <div class="col-3 attribute-label">ART</div>
                 <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="ART"></app-attribute-value-edit>
+                    <app-attribute-value-edit [feature]="feature" formControlName="ART" [required]="true">
+                    </app-attribute-value-edit>
                 </div>
                 <div class="col-3 attribute-label">FIRMA</div>
                 <div class="col-3">
@@ -24,12 +25,14 @@
             <div class="row">
                 <div class="col-3 attribute-label">VORNAME</div>
                 <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="VORNAME"></app-attribute-value-edit>
+                    <app-attribute-value-edit [feature]="feature" formControlName="VORNAME" [required]="true">
+                    </app-attribute-value-edit>
                 </div>
                 <div class="col-3 attribute-label">NAME</div>
                 <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="NAME"></app-attribute-value-edit>
-                </div>            
+                    <app-attribute-value-edit [feature]="feature" formControlName="NAME" [required]="true">
+                    </app-attribute-value-edit>
+                </div>
             </div>
 
             <div class="row">
@@ -37,7 +40,7 @@
                 <div class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="ADRESSE">
                     </app-attribute-value-edit>
-                </div>                
+                </div>
             </div>
 
             <div class="row">
@@ -56,7 +59,7 @@
                 <div class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="TELEFON">
                     </app-attribute-value-edit>
-                </div>                
+                </div>
             </div>
 
             <!-- delete button -->

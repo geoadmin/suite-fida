@@ -8,36 +8,43 @@
     <!-- body -->
     <div [id]="componentId" class="collapse" [class.readonly]="readonly">
         <div class="card-body">
-
+            <div class="row mb-3">
+                <div class="col-12">
+                    <a target="_blank" [href]="attachmentInfo.url">
+                        <img [src]="attachmentInfo.url" class="w-100">
+                    </a>
+                </div>
+            </div>
             <div class="row">
-                <div class="col-3 attribute-label">PUNKTBEZEICHNUNG</div>
+                <div class="col-3 attribute-label">BILD_ART</div>
                 <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="PUNKTBEZEICHNUNG" [required]="true">
+                    <app-attribute-value-edit [feature]="feature" formControlName="BILD_ART" [required]="true">
                     </app-attribute-value-edit>
                 </div>
-                <div class="col-3 attribute-label">AZIMUT</div>
+                <div class="col-3 attribute-label">BILD_STATUS</div>
                 <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="AZIMUT" [required]="true">
+                    <app-attribute-value-edit [feature]="feature" formControlName="BILD_STATUS" [required]="true">
                     </app-attribute-value-edit>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-3 attribute-label">DELTAHOEHE</div>
+                <div class="col-3 attribute-label">BILD_DRUCKBREITE</div>
                 <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="DELTAHOEHE">
+                    <app-attribute-value-edit [feature]="feature" formControlName="BILD_DRUCKBREITE">
                     </app-attribute-value-edit>
                 </div>
-                <div class="col-3 attribute-label">DISTANZ</div>
+                <div class="col-3 attribute-label">BILD_DRUCKHOEHE</div>
                 <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="DISTANZ"></app-attribute-value-edit>
+                    <app-attribute-value-edit [feature]="feature" formControlName="BILD_DRUCKHOEHE">
+                    </app-attribute-value-edit>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-3 attribute-label">MATERIALISIERUNG</div>
+                <div class="col-3 attribute-label">DATUM</div>
                 <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="MATERIALISIERUNG" [required]="true">
+                    <app-attribute-value-edit [feature]="feature" formControlName="DATUM">
                     </app-attribute-value-edit>
                 </div>
             </div>

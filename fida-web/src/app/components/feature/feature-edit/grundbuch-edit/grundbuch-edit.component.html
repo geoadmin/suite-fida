@@ -1,9 +1,8 @@
-
 <div class="card" [formGroup]="formGroup">
 
     <!-- header -->
     <div class="card-header mb-0 collapsed" type="button" data-toggle="collapse" [attr.data-target]="'#' + componentId"
-            aria-expanded="false">{{ getHeaderText() }}
+        aria-expanded="false">{{ getHeaderText() }}
     </div>
 
     <!-- body -->
@@ -13,11 +12,12 @@
             <div class="row">
                 <div class="col-3 attribute-label">LAND</div>
                 <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="LAND"></app-attribute-value-edit>
+                    <app-attribute-value-edit [feature]="feature" formControlName="LAND" [required]="true">
+                    </app-attribute-value-edit>
                 </div>
                 <div class="col-3 attribute-label">KANTON</div>
                 <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="KANTON">
+                    <app-attribute-value-edit [feature]="feature" formControlName="KANTON" [required]="true">
                     </app-attribute-value-edit>
                 </div>
             </div>
@@ -29,7 +29,8 @@
                 </div>
                 <div class="col-3 attribute-label">GEMEINDE</div>
                 <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="GEMEINDE"></app-attribute-value-edit>
+                    <app-attribute-value-edit [feature]="feature" formControlName="GEMEINDE" [required]="true">
+                    </app-attribute-value-edit>
                 </div>
             </div>
 
@@ -55,4 +56,3 @@
         </div>
     </div>
 </div>
-

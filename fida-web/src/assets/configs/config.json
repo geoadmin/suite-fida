@@ -37,11 +37,12 @@
                 "visible": false
             },
             "relationships": {
+                "anhang": "Anhang",
                 "grundbuch": "Grundbuch",
                 "nachfuehrung": "Nachfuehrungen",
                 "schweremessung": "Schweremessung",
                 "schaeden": "Schaeden",
-                "auslandppunkt": "Auslandppunkt"
+                "auslandppunkt": "Auslandppunkt"                
             },
             "idField": "HFPNR"
         },
@@ -53,10 +54,11 @@
                 "visible": true
             },
             "relationships": {
+                "anhang": "Anhang",
                 "grundbuch": "Grundbuch",
                 "nachfuehrung": "Nachfuehrungen",
                 "rueckversicherung": "Rueckversicherung",
-                "kontakt": "Kontakt"
+                "kontakt": "Kontakt"                
             },
             "idField": "LFPNR"
         }

@@ -30,7 +30,7 @@ export class ParcelInfoService {
     const url = this.configService.getGpConfig().getParcelInfoUrl;
     const result = await this.queryService.geoprocess(url, parameters);
 
-    const parcelInfos: ParcelInfo[] = result.results[0].value;    
+    const parcelInfos: ParcelInfo[] = result.results[0].value;
     return parcelInfos;
   }
 

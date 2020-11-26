@@ -29,7 +29,7 @@ export class QueryService {
       url: url
     }
     const geoprocessor = new Geoprocessor(geoprocessorParameters);
- 
+
     return new Promise((resolve, reject) => {
       geoprocessor.execute(parameters)
         .then((result: any) => {
@@ -37,6 +37,23 @@ export class QueryService {
         })
         .catch((error: EsriError) => {
           this.messageService.error('Geoprocess failed.', error);
+          reject(error);
+        });
+    });
+  }
+
+  public attachments(featureLayer: FeatureLayer, objectIds: number[]): Promise<any> {
+    const query = {
+      objectIds: objectIds
+    };
+
+    return new Promise((resolve, reject) => {
+      featureLayer.queryAttachments(query)
+        .then((attachments: any) => {
+          resolve(attachments);
+        })
+        .catch((error: EsriError) => {
+          this.messageService.error('Query failed.', error);
           reject(error);
         });
     });
@@ -135,12 +152,12 @@ export class QueryService {
     // get tokenServicesUrl from server info
     const serverInfoUrl = environment.arcGisServer + '/rest/info/';
     const serverInfoResult = await this.request(serverInfoUrl);
-    
+
     // get token from server
     const parameters = { username: this.settingService.user.username };
     const generateTokenResult = await this.request(serverInfoResult.data.authInfo.tokenServicesUrl, parameters, false, true);
     this.token = generateTokenResult.data.token;
-    
+
     return this.token;
   }
 }

@@ -29,6 +29,7 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
   @Input() formControlName: string; // must be the same as feature-attribute-name
   @Input() placeholder: string;
   @Input() type: string;
+  @Input() required: boolean = false;
 
   public formGroup: FormGroup;
   public disabled: boolean;
@@ -61,7 +62,7 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
 
     // define validation form-control
     const validators: any = [];
-    if (this.field.nullable === false) {
+    if (this.field.nullable === false || this.required === true) {
       validators.push(Validators.required);
     }
     if(this.field.length && this.field.length > 0) {

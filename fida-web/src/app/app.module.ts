@@ -33,10 +33,10 @@ import { NachfuehrungEditComponent } from './components/feature/feature-edit/nac
 import { GrundbuchEditComponent } from './components/feature/feature-edit/grundbuch-edit/grundbuch-edit.component';
 import { RueckversicherungEditComponent } from './components/feature/feature-edit/rueckversicherung-edit/rueckversicherung-edit.component';
 import { KontaktEditComponent } from './components/feature/feature-edit/kontakt-edit/kontakt-edit.component';
+import { AnhangEditComponent } from './components/feature/feature-edit/anhang-edit/anhang-edit.component';
 
 // config
 import { ConfigService } from './configs/config.service';
-import { AttachmentViewComponent } from './components/feature/feature-view/attachment-view/attachment-view.component';
 
 export function initApp(configService: ConfigService) {
   return () => configService.load();
@@ -69,7 +69,7 @@ export function createCompiler(compilerFactory: CompilerFactory) {
     GrundbuchEditComponent,
     RueckversicherungEditComponent,
     KontaktEditComponent,
-    AttachmentViewComponent
+    AnhangEditComponent
   ],
   imports: [
     FormsModule,

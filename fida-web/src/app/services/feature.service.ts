@@ -145,6 +145,11 @@ export class FeatureService {
           resultFeatures.forEach(relatedFeature => {
             relatedFeature.layer = relatedFeatureLayer;
           });
+
+          // add attachment infos
+          if(relatedFeatureLayer.capabilities.operations.supportsQueryAttachments){
+            await this.loadAttachments(resultFeatures as FidaFeature[])
+          }
         }
 
         // store related features
@@ -153,6 +158,16 @@ export class FeatureService {
         loadedCallback();
       }
     }));
+  }
+
+  public async loadAttachments(features: FidaFeature[]): Promise<any> {
+    const featureLayer = this.getFeatureLayer(features[0]);
+    const objectIds = features.map(f => f.attributes.OBJECTID);
+
+    const attachemts = await this.queryService.attachments(featureLayer, objectIds);
+    features.forEach((feature) => {
+      feature.attachemtInfos = attachemts[feature.attributes.OBJECTID];
+    });
   }
 
   public async createRelatedFeature(feature: FidaFeature, relatedFeaturesPropertyName: string): Promise<FidaFeature> {
@@ -198,7 +213,7 @@ export class FeatureService {
       let grundbuchFeature = new FidaFeature();
       grundbuchFeature.attributes = { ...grundbuchLayer.templates[0].prototype.attributes };
       grundbuchFeature.attributes.LAND = 'CH';
-      grundbuchFeature.attributes.KANTON = parcelInfo.Kanton.substring(0,2);
+      grundbuchFeature.attributes.KANTON = parcelInfo.Kanton.substring(0, 2);
       grundbuchFeature.attributes.BEZIRK = parcelInfo.Bezirk;
       grundbuchFeature.attributes.GEMEINDE = parcelInfo.Gemeinde;
       grundbuchFeature.attributes.PARZ = parcelInfo.ParzNummer;
@@ -206,6 +221,10 @@ export class FeatureService {
       grundbuchFeature.layer = grundbuchLayer;
       feature.relatedFeatures.grundbuch.push(grundbuchFeature);
     });
+
+    if (parcelInfos.length === 0) {
+      this.messageService.warning('No Grundbuchdaten found.');
+    }
   }
 
   public updateGeometryFromAttributes(feature: FidaFeature): void {
@@ -218,16 +237,16 @@ export class FeatureService {
   }
 
   public updateAttributesFromGeometry(feature: FidaFeature): void {
-    const point = feature.geometry as Point;  
+    const point = feature.geometry as Point;
     if (point) {
       feature.attributes.LV95E = point.x;
-      feature.attributes.LV95N = point.y;      
+      feature.attributes.LV95N = point.y;
       feature.attributes.LN02 = point.z;
     }
   }
 
   public async updateGeometry(feature: FidaFeature): Promise<void> {
-    const point = feature.geometry as Point;  
+    const point = feature.geometry as Point;
     if (point) {
       const height = await this.heightService.getHeight(point);
       point.z = height;
@@ -235,7 +254,7 @@ export class FeatureService {
   }
 
   public async updateLK25(feature: FidaFeature): Promise<void> {
-    const point = feature.geometry as Point;  
+    const point = feature.geometry as Point;
     if (point) {
       const tileId = await this.lk25Service.getTileId(point);
       feature.attributes.LK25 = tileId;
@@ -244,13 +263,13 @@ export class FeatureService {
 
   public async validateFeature(feature: FidaFeature, orginalAttributes: any): Promise<boolean> {
     // TODO layer id auslagern
-    if(feature.layer.id === "LFP"){
+    if (feature.layer.id === "LFP") {
       // check of valid LK25
-        if(feature.attributes.LV95E !== orginalAttributes.LV95E 
-          || feature.attributes.LV95N !== orginalAttributes.LV95N
-          || feature.attributes.LK25 !== orginalAttributes.LK25){
+      if (feature.attributes.LV95E !== orginalAttributes.LV95E
+        || feature.attributes.LV95N !== orginalAttributes.LV95N
+        || feature.attributes.LK25 !== orginalAttributes.LK25) {
 
-          }
+      }
     }
     const point = feature.geometry as Point;
     const tileId = await this.lk25Service.getTileId(point);
@@ -258,14 +277,14 @@ export class FeatureService {
   }
 
   public getFeatureName(feature: FidaFeature): string {
-    if(!feature){ return; }
+    if (!feature) { return; }
 
     const idField = this.configService.getLayerConfigById(feature.layer.id).idField;
-    let id = feature.attributes[idField];    
-    if(id == null){
+    let id = feature.attributes[idField];
+    if (id == null) {
       return feature.layer.id;
     }
-    return  `${feature.layer.id}-${id}`;   
+    return `${feature.layer.id}-${id}`;
   }
 
   private addRelatedFeatureToList(feature: FidaFeature, relatedName: string, related: FidaFeature): void {

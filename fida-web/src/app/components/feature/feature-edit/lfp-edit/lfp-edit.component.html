@@ -4,6 +4,9 @@
         <a class="nav-link active" href="#lfp_general_tab" role="tab" data-toggle="tab">Allgemein</a>
     </li>
     <li class="nav-item">
+        <a class="nav-link" href="#lfp_anhang_tab" role="tab" data-toggle="tab">Anhang</a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link" href="#lfp_nachfuehrung_tab" role="tab" data-toggle="tab">Nachfuehrung</a>
     </li>
     <li class="nav-item">
@@ -29,29 +32,34 @@
                 LFP1 Punktart
             </div>
             <div class="col-2">
-                <app-attribute-value-edit [feature]="feature" formControlName="OBJEKTART"></app-attribute-value-edit>
+                <app-attribute-value-edit [feature]="feature" formControlName="OBJEKTART" [required]="true">
+                </app-attribute-value-edit>
             </div>
             <div class="col-4">
-                <app-attribute-value-edit [feature]="feature" formControlName="LFPNR"></app-attribute-value-edit>
+                <app-attribute-value-edit [feature]="feature" formControlName="LFPNR" [required]="true">
+                </app-attribute-value-edit>
             </div>
             <div class="col-2 attribute-label">
                 Euref/NeotekNr
             </div>
             <div class="col-1 pr-0 mr-m1">
-                <app-attribute-value-edit [feature]="feature" formControlName="EUREFNUMMER"></app-attribute-value-edit>
+                <app-attribute-value-edit [feature]="feature" formControlName="EUREFNUMMER">
+                </app-attribute-value-edit>
             </div>
             <div class="col-1 pl-0">
-                <app-attribute-value-edit [feature]="feature" formControlName="NEOTEKNUMMER"></app-attribute-value-edit>
+                <app-attribute-value-edit [feature]="feature" formControlName="NEOTEKNUMMER">
+                </app-attribute-value-edit>
             </div>
         </div>
 
         <!--Staties -->
         <div class="row mt-2">
             <div class="col-2">
-                <app-attribute-value-edit [feature]="feature" formControlName="PUNKT_STATUS"></app-attribute-value-edit>
+                <app-attribute-value-edit [feature]="feature" formControlName="PUNKT_STATUS" [required]="true">
+                </app-attribute-value-edit>
             </div>
             <div class="col-2">
-                <app-attribute-value-edit [feature]="feature" formControlName="REALISIERUNG_STATUS">
+                <app-attribute-value-edit [feature]="feature" formControlName="REALISIERUNG_STATUS" [required]="true">
                 </app-attribute-value-edit>
             </div>
         </div>
@@ -64,7 +72,8 @@
                 Punktname
             </div>
             <div class="col-4">
-                <app-attribute-value-edit [feature]="feature" formControlName="PUNKTNAME"></app-attribute-value-edit>
+                <app-attribute-value-edit [feature]="feature" formControlName="PUNKTNAME" [required]="true">
+                </app-attribute-value-edit>
             </div>
             <div class="col-2 attribute-label">
                 LFPOrdnung
@@ -80,7 +89,7 @@
                 <div class="d-flex felx-row-reverse">
                     <span class="attribute-label mr-2">E</span>
                     <app-attribute-value-edit class="flex-fill" [feature]="feature" formControlName="LV95E"
-                        (ngModelChange)="lv95Change()">
+                        [required]="true">
                     </app-attribute-value-edit>
                 </div>
             </div>
@@ -88,7 +97,7 @@
                 <div class="d-flex felx-row-reverse">
                     <span class="attribute-label mr-2">N</span>
                     <app-attribute-value-edit class="flex-fill" [feature]="feature" formControlName="LV95N"
-                        (ngModelChange)="lv95Change()">
+                        [required]="true">
                     </app-attribute-value-edit>
                 </div>
             </div>
@@ -96,7 +105,8 @@
                 LN02
             </div>
             <div class="col-2">
-                <app-attribute-value-edit [feature]="feature" formControlName="LN02"></app-attribute-value-edit>
+                <app-attribute-value-edit [feature]="feature" formControlName="LN02" [required]="true">
+                </app-attribute-value-edit>
             </div>
         </div>
 
@@ -105,10 +115,12 @@
                 GenLage/Höhe
             </div>
             <div class="col-2">
-                <app-attribute-value-edit [feature]="feature" formControlName="GENLAGELV95"></app-attribute-value-edit>
+                <app-attribute-value-edit [feature]="feature" formControlName="GENLAGELV95" [required]="true">
+                </app-attribute-value-edit>
             </div>
             <div class="col-2 pl-4">
-                <app-attribute-value-edit [feature]="feature" formControlName="GENHOEHELN02"></app-attribute-value-edit>
+                <app-attribute-value-edit [feature]="feature" formControlName="GENHOEHELN02" [required]="true">
+                </app-attribute-value-edit>
             </div>
             <div class="col-2">
             </div>
@@ -125,10 +137,12 @@
                 ZuvLage/Höhe
             </div>
             <div class="col-2">
-                <app-attribute-value-edit [feature]="feature" formControlName="ZUVLAGELV95"></app-attribute-value-edit>
+                <app-attribute-value-edit [feature]="feature" formControlName="ZUVLAGELV95" [required]="true">
+                </app-attribute-value-edit>
             </div>
             <div class="col-2  pl-4">
-                <app-attribute-value-edit [feature]="feature" formControlName="ZUVHOEHELN02"></app-attribute-value-edit>
+                <app-attribute-value-edit [feature]="feature" formControlName="ZUVHOEHELN02" [required]="true">
+                </app-attribute-value-edit>
             </div>
             <div class="col-2">
             </div>
@@ -145,7 +159,8 @@
                 LK25
             </div>
             <div class="col-2">
-                <app-attribute-value-edit [feature]="feature" formControlName="LK25"></app-attribute-value-edit>
+                <app-attribute-value-edit [feature]="feature" formControlName="LK25" [required]="true">
+                </app-attribute-value-edit>
             </div>
             <div class="col-4">
             </div>
@@ -166,7 +181,7 @@
                         Kennzeichnung
                     </div>
                     <div class="col-6">
-                        <app-attribute-value-edit [feature]="feature" formControlName="KENNZEICHNUNG">
+                        <app-attribute-value-edit [feature]="feature" formControlName="KENNZEICHNUNG" [required]="true">
                         </app-attribute-value-edit>
                     </div>
                 </div>
@@ -175,7 +190,7 @@
                         Schutzart
                     </div>
                     <div class="col-6">
-                        <app-attribute-value-edit [feature]="feature" formControlName="SCHUTZART">
+                        <app-attribute-value-edit [feature]="feature" formControlName="SCHUTZART" [required]="true">
                         </app-attribute-value-edit>
                     </div>
                 </div>
@@ -184,7 +199,7 @@
                         Stabilität
                     </div>
                     <div class="col-6">
-                        <app-attribute-value-edit [feature]="feature" formControlName="STABILITAET">
+                        <app-attribute-value-edit [feature]="feature" formControlName="STABILITAET" [required]="true">
                         </app-attribute-value-edit>
                     </div>
                 </div>
@@ -292,7 +307,7 @@
                         Absturzgefahr
                     </div>
                     <div class="col-6">
-                        <app-attribute-value-edit [feature]="feature" formControlName="ABSTURZGEFAHR">
+                        <app-attribute-value-edit [feature]="feature" formControlName="ABSTURZGEFAHR" [required]="true">
                         </app-attribute-value-edit>
                     </div>
                 </div>
@@ -301,7 +316,7 @@
                         Begehbar
                     </div>
                     <div class="col-6">
-                        <app-attribute-value-edit [feature]="feature" formControlName="BEGEHBAR">
+                        <app-attribute-value-edit [feature]="feature" formControlName="BEGEHBAR" [required]="true">
                         </app-attribute-value-edit>
                     </div>
                 </div>
@@ -324,11 +339,12 @@
                 GNS Sichtbar/Empfang
             </div>
             <div class="col-2 pr-0 mr-m1">
-                <app-attribute-value-edit [feature]="feature" formControlName="GNSSSICHTBARKEIT">
+                <app-attribute-value-edit [feature]="feature" formControlName="GNSSSICHTBARKEIT" [required]="true">
                 </app-attribute-value-edit>
             </div>
             <div class="col-2 pl-0">
-                <app-attribute-value-edit [feature]="feature" formControlName="GSMEMPFANG"></app-attribute-value-edit>
+                <app-attribute-value-edit [feature]="feature" formControlName="GSMEMPFANG" [required]="true">
+                </app-attribute-value-edit>
             </div>
         </div>
 
@@ -338,7 +354,8 @@
                 Herkunft
             </div>
             <div class="col-2">
-                <app-attribute-value-edit [feature]="feature" formControlName="HERKUNFT"></app-attribute-value-edit>
+                <app-attribute-value-edit [feature]="feature" formControlName="HERKUNFT" [required]="true">
+                </app-attribute-value-edit>
             </div>
         </div>
 
@@ -372,6 +389,22 @@
 
     </div>
 
+      <!--anhang features -->
+      <div role="tabpanel" class="tab-pane fade py-2" id="lfp_anhang_tab">
+        <div class="row mb-2" [hidden]="readonly">
+            <div class="col-12">
+                <button type="button" class="btn btn-primary" (click)="addAnhangClick()">Add New
+                    Anhang</button>
+            </div>
+        </div>
+        <div *ngFor="let feature of getAnhangFeatures()">
+            <div *ngIf="feature.state !== 'deleted'">
+                <app-anhang-edit [feature]="feature" [formGroup]="formGroup" [readonly]="readonly">
+                </app-anhang-edit>
+            </div>
+        </div>
+    </div>
+
     <!--nachführung features -->
     <div role="tabpanel" class="tab-pane fade py-2" id="lfp_nachfuehrung_tab">
         <div class="row mb-2" [hidden]="readonly">
@@ -382,7 +415,8 @@
         </div>
         <div *ngFor="let feature of getNachfuehrungFeatures()">
             <div *ngIf="feature.state !== 'deleted'">
-                <app-nachfuehrung-edit [feature]="feature" [formGroup]="formGroup" [readonly]="readonly"></app-nachfuehrung-edit>
+                <app-nachfuehrung-edit [feature]="feature" [formGroup]="formGroup" [readonly]="readonly">
+                </app-nachfuehrung-edit>
             </div>
         </div>
     </div>
@@ -398,7 +432,8 @@
         </div>
         <div *ngFor="let feature of getGrundbuchFeatures()">
             <div *ngIf="feature.state !== 'deleted'">
-                <app-grundbuch-edit [feature]="feature" [formGroup]="formGroup" [readonly]="readonly"></app-grundbuch-edit>
+                <app-grundbuch-edit [feature]="feature" [formGroup]="formGroup" [readonly]="readonly">
+                </app-grundbuch-edit>
             </div>
         </div>
     </div>
@@ -413,7 +448,8 @@
         </div>
         <div *ngFor="let feature of getRueckversicherungFeatures()">
             <div *ngIf="feature.state !== 'deleted'">
-                <app-rueckversicherung-edit [feature]="feature" [formGroup]="formGroup" [readonly]="readonly"></app-rueckversicherung-edit>
+                <app-rueckversicherung-edit [feature]="feature" [formGroup]="formGroup" [readonly]="readonly">
+                </app-rueckversicherung-edit>
             </div>
         </div>
     </div>
