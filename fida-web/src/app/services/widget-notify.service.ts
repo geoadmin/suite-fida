@@ -2,16 +2,21 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { FidaFeature } from '../models/FidaFeature.model';
 
+export enum CompleteState {
+  Saved = 'saved',
+  Canceld = 'canceld',
+  Closed = 'closed'
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class WidgetNotifyService {
   public onGeometryEditSubject: Subject<FidaFeature>;
-  public onGeometryEditCompleteSubject: Subject<boolean>;
+  public onGeometryEditCompleteSubject: Subject<CompleteState>;
   public onFeatureEditSubject: Subject<FidaFeature>;
-  public onFeatureEditCompleteSubject: Subject<boolean>;
-  public onFeatureCreateCompleteSubject: Subject<boolean>;
+  public onFeatureEditCompleteSubject: Subject<CompleteState>;
+  public onFeatureCreateCompleteSubject: Subject<CompleteState>;
   public onGdbVersionChangedSubject: Subject<string>;
 
   constructor() {

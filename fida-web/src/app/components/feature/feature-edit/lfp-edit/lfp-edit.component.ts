@@ -11,6 +11,8 @@ import { FeatureService } from 'src/app/services/feature.service';
 export class LfpEditComponent implements OnInit {
   @Input() feature: FidaFeature;
   @Input() formGroup: FormGroup;
+  @Input() readonly: boolean = false;
+  public redefining: boolean = false;
 
   constructor(
     private featureService: FeatureService
@@ -23,7 +25,9 @@ export class LfpEditComponent implements OnInit {
   }
 
   async redefineGrundbuchDataClick() {
+    this.redefining = true;
     await this.featureService.redefineGrundbuchFeatures(this.feature);
+    this.redefining = false;
   }
 
   async addNachfuehrungClick() {
@@ -32,11 +36,13 @@ export class LfpEditComponent implements OnInit {
 
   getNachfuehrungFeatures() {
     let featurelist = this.feature?.relatedFeatures?.nachfuehrung?.filter((f: FidaFeature) => f.state !== FeatureState.Delete);
-    featurelist.sort(function (a, b) {
-      const ad = a.attributes.NACHFUEHRUNGSDATUM || 0;
-      const bd = a.attributes.NACHFUEHRUNGSDATUM || 0;
-      return ad - bd;
-    });
+    if (featurelist) {
+      featurelist.sort(function (a, b) {
+        const ad = a.attributes.NACHFUEHRUNGSDATUM || 0;
+        const bd = a.attributes.NACHFUEHRUNGSDATUM || 0;
+        return ad - bd;
+      });
+    }
     return featurelist;
   }
 
@@ -62,5 +68,9 @@ export class LfpEditComponent implements OnInit {
 
   getKontaktFeatures() {
     return this.feature?.relatedFeatures?.kontakt?.filter((f: FidaFeature) => f.state !== FeatureState.Delete);
+  }
+
+  lv95Change(): void {
+    //this.featureService.updateGeometryFromLV95Attributes(this.feature);
   }
 }

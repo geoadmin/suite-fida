@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { from, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { QueryService } from './query.service';
 import { ConfigService } from '../configs/config.service';
 import { MessageService } from './message.service';
@@ -8,9 +6,11 @@ import Feature from 'esri/Graphic';
 import FeatureLayer from 'esri/layers/FeatureLayer';
 import Relationship from 'esri/layers/support/Relationship';
 import { FeatureState, FidaFeature, RelatedFeatures } from '../models/FidaFeature.model';
-import { GrundbuchService } from './grundbuch.service';
+import { ParcelInfoService } from './parcel-info.service';
 import { RelationshipsConfig } from '../models/config.model';
-import { CONVERT_UTILS } from '../utils/utils';
+import Point from 'esri/geometry/Point';
+import { HeightService } from './height.service';
+import { Lk25Service } from './lk25.service';
 
 
 
@@ -24,11 +24,13 @@ export class FeatureService {
     private configService: ConfigService,
     private messageService: MessageService,
     private queryService: QueryService,
-    private grundbuchService: GrundbuchService
+    private parcelInfoService: ParcelInfoService,
+    private heightService: HeightService,
+    private lk25Service: Lk25Service
   ) { }
 
   public async saveFeature(feature: FidaFeature): Promise<any> {
-    try {      
+    try {
       // create save properties
       const applyEditProperties: __esri.FeatureLayerApplyEditsEdits = {};
       if (feature.state === FeatureState.Create) {
@@ -108,7 +110,6 @@ export class FeatureService {
     }
   }
 
-
   private applyEdits(featureLayer: FeatureLayer, applyEditProperties: __esri.FeatureLayerApplyEditsEdits): Promise<any> {
     const options: __esri.FeatureLayerApplyEditsOptions = {
       gdbVersion: featureLayer.gdbVersion
@@ -154,24 +155,6 @@ export class FeatureService {
     }));
   }
 
-  public async redefineGrundbuchFeatures(feature: FidaFeature): Promise<any> {
-    // TODO create buffer geometry
-    // get grundbuch     
-    const grundbuchFeatures = await this.grundbuchService.createFeature(feature.geometry);
-  
-    throw new Error('not jet implemented')
-
-    // flag old grundbuch features as deleted and delete new once
-    this.checkRelatedFeatureList(feature,'grundbuch');    
-    feature.relatedFeatures.grundbuch = feature.relatedFeatures.grundbuch.filter(f => f.attributes.OBJECTID != null);
-    feature.relatedFeatures.grundbuch.map(f => (f as FidaFeature).state = FeatureState.Delete);
-
-    // set new grundbuch features    
-    grundbuchFeatures.forEach(grundbuchFeature => {
-      //feature.relatedFeatures.grundbuch.push(grundbuchFeature);
-    });
-  }
-
   public async createRelatedFeature(feature: FidaFeature, relatedFeaturesPropertyName: string): Promise<FidaFeature> {
     const featureLayer = this.getFeatureLayer(feature);
     const relationshipsConfig = this.configService.getRelationshipsConfigs(featureLayer.id);
@@ -198,6 +181,93 @@ export class FeatureService {
     relatedFeature.attributes[fkField] = fkValue;
   }
 
+  public async redefineGrundbuchFeatures(feature: FidaFeature): Promise<any> {
+    // get grundbuch  
+    const parcelInfos = await this.parcelInfoService.getParcelInfo(feature.geometry);
+
+    // flag old grundbuch features as deleted and delete new once
+    this.checkRelatedFeatureList(feature, 'grundbuch');
+    feature.relatedFeatures.grundbuch = feature.relatedFeatures.grundbuch.filter(f => f.attributes.OBJECTID != null);
+    feature.relatedFeatures.grundbuch.map(f => (f as FidaFeature).state = FeatureState.Delete);
+
+    // set new grundbuch features    
+    const featureLayer = this.getFeatureLayer(feature);
+    const grundbuchLayer = await this.getRelatedFeatureLayerByName(featureLayer, 'grundbuch');
+
+    parcelInfos.forEach((parcelInfo) => {
+      let grundbuchFeature = new FidaFeature();
+      grundbuchFeature.attributes = { ...grundbuchLayer.templates[0].prototype.attributes };
+      grundbuchFeature.attributes.LAND = 'CH';
+      grundbuchFeature.attributes.KANTON = parcelInfo.Kanton.substring(0,2);
+      grundbuchFeature.attributes.BEZIRK = parcelInfo.Bezirk;
+      grundbuchFeature.attributes.GEMEINDE = parcelInfo.Gemeinde;
+      grundbuchFeature.attributes.PARZ = parcelInfo.ParzNummer;
+      grundbuchFeature.state = FeatureState.Create;
+      grundbuchFeature.layer = grundbuchLayer;
+      feature.relatedFeatures.grundbuch.push(grundbuchFeature);
+    });
+  }
+
+  public updateGeometryFromAttributes(feature: FidaFeature): void {
+    const point = (feature.geometry as Point);
+    if (point && feature.attributes.LV95E != null && feature.attributes.LV95N != null) {
+      point.x = feature.attributes.LV95E;
+      point.y = feature.attributes.LV95N;
+      point.z = feature.attributes.LN02;
+    }
+  }
+
+  public updateAttributesFromGeometry(feature: FidaFeature): void {
+    const point = feature.geometry as Point;  
+    if (point) {
+      feature.attributes.LV95E = point.x;
+      feature.attributes.LV95N = point.y;      
+      feature.attributes.LN02 = point.z;
+    }
+  }
+
+  public async updateGeometry(feature: FidaFeature): Promise<void> {
+    const point = feature.geometry as Point;  
+    if (point) {
+      const height = await this.heightService.getHeight(point);
+      point.z = height;
+    }
+  }
+
+  public async updateLK25(feature: FidaFeature): Promise<void> {
+    const point = feature.geometry as Point;  
+    if (point) {
+      const tileId = await this.lk25Service.getTileId(point);
+      feature.attributes.LK25 = tileId;
+    }
+  }
+
+  public async validateFeature(feature: FidaFeature, orginalAttributes: any): Promise<boolean> {
+    // TODO layer id auslagern
+    if(feature.layer.id === "LFP"){
+      // check of valid LK25
+        if(feature.attributes.LV95E !== orginalAttributes.LV95E 
+          || feature.attributes.LV95N !== orginalAttributes.LV95N
+          || feature.attributes.LK25 !== orginalAttributes.LK25){
+
+          }
+    }
+    const point = feature.geometry as Point;
+    const tileId = await this.lk25Service.getTileId(point);
+    return feature.attributes.LK25 === tileId;
+  }
+
+  public getFeatureName(feature: FidaFeature): string {
+    if(!feature){ return; }
+
+    const idField = this.configService.getLayerConfigById(feature.layer.id).idField;
+    let id = feature.attributes[idField];    
+    if(id == null){
+      return feature.layer.id;
+    }
+    return  `${feature.layer.id}-${id}`;   
+  }
+
   private addRelatedFeatureToList(feature: FidaFeature, relatedName: string, related: FidaFeature): void {
     this.checkRelatedFeatureList(feature, relatedName);
     (feature.relatedFeatures as any)[relatedName].push(related);
@@ -206,7 +276,7 @@ export class FeatureService {
   private checkRelatedFeatureList(feature: FidaFeature, relatedName: string): void {
     if (!feature.relatedFeatures) {
       feature.relatedFeatures = new RelatedFeatures();
-    }       
+    }
     if (!((feature.relatedFeatures as any)[relatedName])) {
       (feature.relatedFeatures as any)[relatedName] = [];
     }
@@ -251,7 +321,6 @@ export class FeatureService {
     await relatedFeatureLayer.load();
     return relatedFeatureLayer;
   }
-
 
   private getRelationship(featureLayer: FeatureLayer, relationshipName: string): Relationship {
     const relationship = featureLayer.relationships.find(f => f.name.toLowerCase() === relationshipName.toLowerCase());

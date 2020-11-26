@@ -21,7 +21,7 @@
 <div class="tab-content container" [formGroup]="formGroup">
 
     <!--general attributes -->
-    <div role="tabpanel" class="tab-pane fade in active show py-2" id="lfp_general_tab">
+    <div role="tabpanel" class="tab-pane fade in active show py-2" id="lfp_general_tab" [class.readonly]="readonly">
 
         <!--Punktart / Nr-->
         <div class="row mt-4">
@@ -79,14 +79,16 @@
             <div class="col-4">
                 <div class="d-flex felx-row-reverse">
                     <span class="attribute-label mr-2">E</span>
-                    <app-attribute-value-edit class="flex-fill" [feature]="feature" formControlName="LV95E">
+                    <app-attribute-value-edit class="flex-fill" [feature]="feature" formControlName="LV95E"
+                        (ngModelChange)="lv95Change()">
                     </app-attribute-value-edit>
                 </div>
             </div>
             <div class="col-4">
                 <div class="d-flex felx-row-reverse">
                     <span class="attribute-label mr-2">N</span>
-                    <app-attribute-value-edit class="flex-fill" [feature]="feature" formControlName="LV95N">
+                    <app-attribute-value-edit class="flex-fill" [feature]="feature" formControlName="LV95N"
+                        (ngModelChange)="lv95Change()">
                     </app-attribute-value-edit>
                 </div>
             </div>
@@ -139,7 +141,13 @@
         </div>
 
         <div class="row mt-2">
-            <div class="col-8">
+            <div class="col-2 attribute-label">
+                LK25
+            </div>
+            <div class="col-2">
+                <app-attribute-value-edit [feature]="feature" formControlName="LK25"></app-attribute-value-edit>
+            </div>
+            <div class="col-4">
             </div>
             <div class="col-1 attribute-label">
                 DeltaOk
@@ -366,7 +374,7 @@
 
     <!--nachführung features -->
     <div role="tabpanel" class="tab-pane fade py-2" id="lfp_nachfuehrung_tab">
-        <div class="row mb-2">
+        <div class="row mb-2" [hidden]="readonly">
             <div class="col-12">
                 <button type="button" class="btn btn-primary" (click)="addNachfuehrungClick()">Add New
                     Nachfuehrung</button>
@@ -374,30 +382,30 @@
         </div>
         <div *ngFor="let feature of getNachfuehrungFeatures()">
             <div *ngIf="feature.state !== 'deleted'">
-                <app-nachfuehrung-edit [feature]="feature" [formGroup]="formGroup"></app-nachfuehrung-edit>
+                <app-nachfuehrung-edit [feature]="feature" [formGroup]="formGroup" [readonly]="readonly"></app-nachfuehrung-edit>
             </div>
         </div>
     </div>
 
     <!--grundbuch features -->
-    <div role="tabpanel" class="tab-pane fade py-2" id="lfp_grundbuch_tab">
-        <div class="row mb-2">
+    <div role="tabpanel" class="tab-pane fade py-2" id="lfp_grundbuch_tab" [class.spinner]="redefining">
+        <div class="row mb-2" [hidden]="readonly">
             <div class="col-12">
                 <button type="button" class="btn btn-primary mr-2" (click)="addGrundbuchClick()">Add New
                     Grundbuch</button>
-                <button type="button" class="btn btn-danger" (click)="redefineGrundbuchDataClick()" disabled>redefine</button>
+                <button type="button" class="btn btn-danger" (click)="redefineGrundbuchDataClick()">redefine</button>
             </div>
         </div>
         <div *ngFor="let feature of getGrundbuchFeatures()">
             <div *ngIf="feature.state !== 'deleted'">
-                <app-grundbuch-edit [feature]="feature" [formGroup]="formGroup"></app-grundbuch-edit>
+                <app-grundbuch-edit [feature]="feature" [formGroup]="formGroup" [readonly]="readonly"></app-grundbuch-edit>
             </div>
         </div>
     </div>
 
     <!--rückversicherung features -->
     <div role="tabpanel" class="tab-pane fade py-2" id="lfp_rueckversicherung_tab">
-        <div class="row mb-2">
+        <div class="row mb-2" [hidden]="readonly">
             <div class="col-12">
                 <button type="button" class="btn btn-primary" (click)="addRueckversicherungClick()">Add New
                     Rückversicherung</button>
@@ -405,14 +413,14 @@
         </div>
         <div *ngFor="let feature of getRueckversicherungFeatures()">
             <div *ngIf="feature.state !== 'deleted'">
-                <app-rueckversicherung-edit [feature]="feature" [formGroup]="formGroup"></app-rueckversicherung-edit>
+                <app-rueckversicherung-edit [feature]="feature" [formGroup]="formGroup" [readonly]="readonly"></app-rueckversicherung-edit>
             </div>
         </div>
     </div>
 
     <!--kontakt features -->
     <div role="tabpanel" class="tab-pane fade py-2" id="lfp_kontakt_tab">
-        <div class="row mb-2">
+        <div class="row mb-2" [hidden]="readonly">
             <div class="col-12">
                 <button type="button" class="btn btn-primary" (click)="addKontaktClick()">Add New
                     Kontakt</button>
@@ -420,7 +428,7 @@
         </div>
         <div *ngFor="let feature of getKontaktFeatures()">
             <div *ngIf="feature.state !== 'deleted'">
-                <app-kontakt-edit [feature]="feature" [formGroup]="formGroup"></app-kontakt-edit>
+                <app-kontakt-edit [feature]="feature" [formGroup]="formGroup" [readonly]="readonly"></app-kontakt-edit>
             </div>
         </div>
     </div>

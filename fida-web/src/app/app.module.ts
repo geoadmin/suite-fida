@@ -36,6 +36,7 @@ import { KontaktEditComponent } from './components/feature/feature-edit/kontakt-
 
 // config
 import { ConfigService } from './configs/config.service';
+import { AttachmentViewComponent } from './components/feature/feature-view/attachment-view/attachment-view.component';
 
 export function initApp(configService: ConfigService) {
   return () => configService.load();
@@ -67,7 +68,8 @@ export function createCompiler(compilerFactory: CompilerFactory) {
     NachfuehrungEditComponent,
     GrundbuchEditComponent,
     RueckversicherungEditComponent,
-    KontaktEditComponent
+    KontaktEditComponent,
+    AttachmentViewComponent
   ],
   imports: [
     FormsModule,

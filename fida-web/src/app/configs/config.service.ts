@@ -1,6 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Config, ExtentConfig, LayerConfig, LayerType, RelationshipsConfig, VersionManagementConfig } from '../models/config.model';
+import {
+    Config, ExtentConfig, GpConfig, LayerConfig, LayerType,
+    RelationshipsConfig, VersionManagementConfig
+} from '../models/config.model';
 import { environment } from '../../environments/environment';
 import esriRequest from 'esri/request';
 
@@ -18,13 +21,11 @@ export class ConfigService {
         // replace arcgis-url placeholder with environment value
         this.config.layers.forEach(layerConfig => {
             if (layerConfig.properties.url) {
-                layerConfig.properties.url = layerConfig.properties.url
-                    .replace(this.config.arcGisUrlPlaceholder, environment.arcGisServer);
+                layerConfig.properties.url = layerConfig.properties.url.replace(this.config.arcGisUrlPlaceholder, environment.arcGisServer);
             }
         });
-
-        this.config.versionManagement.serverUrl = this.config.versionManagement.serverUrl
-            .replace(this.config.arcGisUrlPlaceholder, environment.arcGisServer);
+        this.config.versionManagement.serverUrl = this.config.versionManagement.serverUrl.replace(this.config.arcGisUrlPlaceholder, environment.arcGisServer);
+        this.config.gp.getParcelInfoUrl = this.config.gp.getParcelInfoUrl.replace(this.config.arcGisUrlPlaceholder, environment.arcGisServer);
 
         // TDOD load arcgis-server-config
         //const arcGisServerLayerInfosUrl = 'https://s7t2530a.adr.admin.ch/arcgis/rest/services/FIDA/FIDA/FeatureServer/layers';
@@ -51,13 +52,17 @@ export class ConfigService {
 
     public getArcGisServer(): string {
         return environment.arcGisServer;
-    }    
+    }
 
     /**
      *  get configs
      **/
     public getDefaultVersionName(): string {
         return this.config.defaultVersion;
+    }
+
+    public getGpConfig(): GpConfig {
+        return this.config.gp;
     }
 
     public getDefaultExtentConfig(): ExtentConfig {
@@ -67,7 +72,7 @@ export class ConfigService {
     public getVersionManagementConfig(): VersionManagementConfig {
         return this.config.versionManagement;
     }
-    
+
     public getRelationshipsConfigs(featureLayerId: string): RelationshipsConfig {
         const layerConfigs = this.config.layers.filter(c => c.properties.id === featureLayerId);
         if (layerConfigs.length !== 1) {

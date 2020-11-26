@@ -19,6 +19,10 @@ export class MessageService {
       });
   }
 
+  public warning(title: string, body?: string) {
+    this.notificationsService.warn(title, body ? body : null);
+  }
+
   public error(title: string, error?: EsriError) {
     this.notificationsService.error(title, error ? this.formatError(error): undefined)
   }

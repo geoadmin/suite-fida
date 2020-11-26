@@ -43,11 +43,18 @@ export class ExtentConfig {
     spatialReference: any;
 }
 
+export class GpConfig {
+    getParcelInfoUrl: string;
+    getHeightUrl: string;
+    getLK25Url: string;
+}
+
 export class Config {
     arcGisUrlPlaceholder: string;
     defaultVersion: string;
     defaultExtent: ExtentConfig;
     versionManagement: VersionManagementConfig;
+    gp: GpConfig;
     layers: [LayerConfig];
     layerInfos: any;
 }

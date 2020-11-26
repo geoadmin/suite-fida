@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { GrundbuchService } from './grundbuch.service';
+import { ParcelInfoService } from './parcel-info.service';
 
-describe('GrundbuchService', () => {
-  let service: GrundbuchService;
+describe('ParcelInfoService', () => {
+  let service: ParcelInfoService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(GrundbuchService);
+    service = TestBed.inject(ParcelInfoService);
   });
 
   it('should be created', () => {

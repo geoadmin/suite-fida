@@ -1,10 +1,9 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { ɵangular_packages_platform_browser_animations_animations_f } from '@angular/platform-browser/animations';
-import { ConfigService } from 'src/app/configs/config.service';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FeatureState, FidaFeature } from 'src/app/models/FidaFeature.model';
 import { FeatureService } from 'src/app/services/feature.service';
-import { WidgetNotifyService } from 'src/app/services/widget-notify.service';
+import { CompleteState, WidgetNotifyService } from 'src/app/services/widget-notify.service';
 
 @Component({
   selector: 'app-feature-edit',
@@ -12,39 +11,52 @@ import { WidgetNotifyService } from 'src/app/services/widget-notify.service';
   styleUrls: ['./feature-edit.component.scss']
 })
 export class FeatureEditComponent implements OnInit {
+  
   public activated: boolean = false;
   public feature: FidaFeature;
   public showSpinner: boolean;
   public form: FormGroup;
 
-  private idField: string;
+  private modalRef: BsModalRef;
   private originalAttributes: any;
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
     private featureService: FeatureService,
     private widgetNotifyService: WidgetNotifyService,
-    private configService: ConfigService    
+    private modalService: BsModalService
   ) { }
 
   ngOnInit(): void {
     this.form = new FormGroup({});
 
-    this.widgetNotifyService.onFeatureEditSubject.subscribe((feature: FidaFeature) => {
+    this.widgetNotifyService.onFeatureEditSubject.subscribe(async (feature: FidaFeature) => {
       this.feature = feature;
-      this.originalAttributes = { ...feature.attributes};
-      this.idField = this.configService.getLayerConfigById(this.feature.layer.id).idField;
+      this.originalAttributes = { ...feature.attributes };
+
       this.activate();
+
+      // if creating do stuff
+      if (feature.state === FeatureState.Create) {
+        this.showSpinner;
+        await Promise.all([
+          this.featureService.updateGeometry(this.feature),
+          this.featureService.updateLK25(this.feature),
+          this.featureService.redefineGrundbuchFeatures(this.feature)
+        ]);
+        this.featureService.updateAttributesFromGeometry(this.feature);
+        this.showSpinner = false;
+      }
     });
   }
 
-  getHeaderText():string {
-    if(this.feature?.state === FeatureState.Create){
-      return `Create: ${this.feature?.layer.id}`;
+  getHeaderText(): string {
+    const featureName = this.featureService.getFeatureName(this.feature);
+    if (this.feature?.state === FeatureState.Create) {
+      return `Create: ${featureName}`;
     } else {
-      const id = this.feature?.attributes[this.idField];
-      return `Edit: ${this.feature?.layer.id}-${id}`;
-    }    
+      return `Edit: ${featureName}`;
+    }
   }
 
   async addRelatedFeatureClick(relatedFeaturesPropertyName: string): Promise<void> {
@@ -61,38 +73,59 @@ export class FeatureEditComponent implements OnInit {
     return relatedFeatures?.filter(f => f.state !== FeatureState.Delete);
   }
 
-  async saveClick(): Promise<void> {
+  saveClick(saveDialogTemplate: TemplateRef<any>): void {
+    // check of geometry-attribute change
+    if (this.feature.attributes.LV95E !== this.originalAttributes.LV95E
+      || this.feature.attributes.LV95N !== this.originalAttributes.LV95N
+      || this.feature.attributes.LK25 !== this.originalAttributes.LK25) {
+        this.modalRef = this.modalService.show(saveDialogTemplate, { class: 'modal-sm' });
+    } else {
+      this.save();
+    }
+  }
+
+  saveYesClick(): void {    
+    this.modalRef.hide();
+    this.showSpinner = true;
+
+    
+    this.save();  
+  }
+
+  saveNoClick(): void {    
+    // return to edit view 
+    this.modalRef.hide();
+  }
+
+  async save(): Promise<void> {    
     this.showSpinner = true;
     await this.featureService.saveFeature(this.feature);
     this.showSpinner = false;
 
     if (this.feature.state === FeatureState.Create) {
-      this.widgetNotifyService.onFeatureCreateCompleteSubject.next(true);
+      this.widgetNotifyService.onFeatureCreateCompleteSubject.next(CompleteState.Saved);
     } else {
-      this.widgetNotifyService.onFeatureEditCompleteSubject.next(true);
+      this.widgetNotifyService.onFeatureEditCompleteSubject.next(CompleteState.Saved);
     }
 
-    this.deactivate();
+    this.deactivate();    
   }
 
-  cancelClick(): void {
+  cancelClick(close: boolean): void {
     this.feature.attributes = this.originalAttributes;
+    const completeState = close === true ? CompleteState.Closed : CompleteState.Canceld;
     if (this.feature.state === FeatureState.Create) {
-      this.widgetNotifyService.onFeatureCreateCompleteSubject.next(false);
+      this.widgetNotifyService.onFeatureCreateCompleteSubject.next(completeState);
     } else {
-      this.widgetNotifyService.onFeatureEditCompleteSubject.next(false);
+      this.widgetNotifyService.onFeatureEditCompleteSubject.next(completeState);
     }
     this.deactivate();
-  }
-
-  validateClick(featureForm: any){
-    featureForm.valid;
   }
 
   private deactivate(): void {
     this.activated = false;
-    this.feature = undefined;  
-    this.originalAttributes = undefined;  
+    this.feature = undefined;
+    this.originalAttributes = undefined;
   }
 
   private activate(): void {

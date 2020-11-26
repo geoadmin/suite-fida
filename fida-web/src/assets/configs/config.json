@@ -14,42 +14,12 @@
         "serverUrl": "[EVIRONMENT_ARCGISURL]/rest/services/FIDA/FIDA/VersionManagementServer",
         "defaultVersion": "SDE.DEFAULT"
     },
+    "gp":{
+        "getParcelInfoUrl": "[EVIRONMENT_ARCGISURL]/rest/services/FIDA/GetParzInfo/GPServer/GetParzInfo",
+        "getHeightUrl": "http://api3.geo.admin.ch/rest/services/height",
+        "getLK25Url": "http://api3.geo.admin.ch/rest/services/api/MapServer/identify"
+    },
     "layers": [
-        {
-            "type": "QueryLayer",
-            "properties": {
-                "id": "parzelle",
-                "url": "[EVIRONMENT_ARCGISURL]/rest/services/FIDA/NP_BUND_MOGIS/MapServer/0"
-            }
-        },
-        {
-            "type": "QueryLayer",
-            "properties": {
-                "id": "gemeinde",
-                "url": "[EVIRONMENT_ARCGISURL]/rest/services/FIDA/NP_BUND_MOGIS/MapServer/1"
-            }
-        },
-        {
-            "type": "QueryLayer",
-            "properties": {
-                "id": "bezirk",
-                "url": "[EVIRONMENT_ARCGISURL]/rest/services/FIDA/NP_BUND_MOGIS/MapServer/2"
-            }
-        },
-        {
-            "type": "QueryLayer",
-            "properties": {
-                "id": "kanton",
-                "url": "[EVIRONMENT_ARCGISURL]/rest/services/FIDA/NP_BUND_MOGIS/MapServer/3"
-            }
-        },
-        {
-            "type": "QueryLayer",
-            "properties": {
-                "id": "land",
-                "url": "[EVIRONMENT_ARCGISURL]/rest/services/FIDA/NP_BUND_MOGIS/MapServer/4"
-            }
-        },
         {
             "type": "FeatureLayer",
             "properties": {
@@ -67,11 +37,11 @@
                 "visible": false
             },
             "relationships": {
-                "grundbuch": "Grundbuchhfp",
+                "grundbuch": "Grundbuch",
                 "nachfuehrung": "Nachfuehrungen",
-                "schweremessung": "Schweremessunghfp",
-                "schaeden": "Schaedenhfp",
-                "auslandppunkt": "Auslandppunkthfp"
+                "schweremessung": "Schweremessung",
+                "schaeden": "Schaeden",
+                "auslandppunkt": "Auslandppunkt"
             },
             "idField": "HFPNR"
         },
@@ -83,19 +53,12 @@
                 "visible": true
             },
             "relationships": {
-                "grundbuch": "Grundbuchlfp",
+                "grundbuch": "Grundbuch",
                 "nachfuehrung": "Nachfuehrungen",
-                "rueckversicherung": "Rueckversicherunglfp",
+                "rueckversicherung": "Rueckversicherung",
                 "kontakt": "Kontakt"
             },
             "idField": "LFPNR"
-        },
-        {
-            "type": "RelatedLayer",
-            "properties": {
-                "id": "grundbuchlfp",
-                "url": "[EVIRONMENT_ARCGISURL]/rest/services/FIDA/FIDA/FeatureServer/8"
-            }
         }
     ]
 }

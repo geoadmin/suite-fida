@@ -3,7 +3,7 @@
     <!-- header -->
     <div class="fida-widget-header">
         <label>{{ getHeaderText() }}</label>
-        <button class="btn esri-icon-close float-right" (click)="cancelClick()"></button>
+        <button class="btn esri-icon-close float-right" (click)="cancelClick(true)"></button>
     </div>
 
     <!-- body -->
@@ -114,9 +114,18 @@
 
     <!-- footer -->
     <div class="fida-widget-footer">
-        <button type="button" class="btn btn-primary float-right ml-2" (click)="saveClick()"
+        <button type="button" class="btn btn-primary float-right ml-2" (click)="saveClick(saveDialogTemplate)"
             [disabled]="form.invalid">Save</button>
         <button type="button" class="btn btn-default float-right" (click)="cancelClick()">Cancel</button>
     </div>
 
 </div>
+
+<!-- save dialog -->
+<ng-template #saveDialogTemplate>
+    <div class="modal-body text-center">
+        <p>Werte LV95E/LV95N/LN02 wurden verändert. Das hat Auswirkung auf die Geometry. Soll wirklich gespeichert werden?</p>
+        <button type="button" class="btn btn-primary" (click)="saveNoClick()">Nein</button>
+        <button type="button" class="btn btn-danger ml-2" (click)="saveYesClick()">Ja</button>
+    </div>
+</ng-template>

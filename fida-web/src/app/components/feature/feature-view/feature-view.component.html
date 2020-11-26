@@ -1,142 +1,154 @@
-
- <!-- header -->
- <div class="fida-widget-header">
+<!-- header -->
+<div class="fida-widget-header">
     <label>{{ feature?.layer.id }}-{{ feature?.attributes.LFPNR }}</label>
 </div>
 
-<!-- tab nav -->
-<ul class="nav nav-pills nav-fill" role="tablist">
-    <li class="nav-item">
-        <a class="nav-link active" href="#general_tab" role="tab" data-toggle="tab">Allgemein</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#nachfuehrung_tab" role="tab" data-toggle="tab">Nachfuehrung</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#grundbuch_tab" role="tab" data-toggle="tab">Grundbuch</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#rueckversicherung_tab" role="tab" data-toggle="tab">Rückversicherung</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#kontakt_tab" role="tab" data-toggle="tab">Kontakt</a>
-    </li>   
-    <li class="nav-item">
-        <a class="nav-link" href="#attachments_tab" role="tab" data-toggle="tab">Attachments</a>
-    </li>     
-</ul>
+<div [ngSwitch]="feature?.layer.id">
 
-<!-- tab panes -->
-<div class="tab-content">
+    <!-- lfp feature -->
+    <app-lfp-edit *ngSwitchCase="'LFP'" [feature]="feature" [formGroup]="form" [readonly]="true"></app-lfp-edit>
 
-    <!--general attributes -->
-    <div role="tabpanel" class="tab-pane fade in active show py-2" id="general_tab">
-        <table>
-            <thead>
-                <th><strong>Name</strong></th>
-                <th>Wert</th>
-            </thead>
-            <tbody>
-                <tr *ngFor="let attribute of getAttributes(feature?.attributes) | keyvalue">
-                    <td>{{ attribute.key }}</td>
-                    <td>
-                        <app-attribute-view [feature]="feature" [name]="attribute.key"></app-attribute-view>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <!-- default -->
+    <div *ngSwitchDefault>
+        <!-- tab nav -->
+        <ul class="nav nav-pills nav-fill" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" href="#general_tab" role="tab" data-toggle="tab">Allgemein</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#nachfuehrung_tab" role="tab" data-toggle="tab">Nachfuehrung</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#grundbuch_tab" role="tab" data-toggle="tab">Grundbuch</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#rueckversicherung_tab" role="tab" data-toggle="tab">Rückversicherung</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#kontakt_tab" role="tab" data-toggle="tab">Kontakt</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#attachments_tab" role="tab" data-toggle="tab">Attachments</a>
+            </li>
+        </ul>
 
-    <!--attachments -->
-    <div role="tabpanel" class="tab-pane fade py-2" id="attachments_tab">
-        <div #attachemts></div>
-        <!-- buttons -->
-        <div class="d-flex felx-row mb-2">
-            <button type="submit" class="btn btn-primary" (click)="addAttachment()">add</button>
-            <button type="button" class="btn btn-primary ml-2" (click)="editAttachment()">edit</button>
-        </div>
-    </div>
+        <!-- tab panes -->
+        <div class="tab-content">
 
-    <div role="tabpanel" class="tab-pane fade py-2" id="grundbuch_tab"
-        [class.spinner]="!feature?.relatedFeatures.grundbuch">
-        <div *ngFor="let relatedFeature of feature?.relatedFeatures.grundbuch">
-            <div>---------{{ relatedFeature.attributes.OBJECTID }}--------------</div>
-            <table>
-                <thead>
-                    <th><strong>Name</strong></th>
-                    <th>Wert</th>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let attribute of getAttributes(relatedFeature.attributes) | keyvalue">
-                        <td>{{ attribute.key }}</td>
-                        <td>
-                            <app-attribute-view [feature]="relatedFeature" [name]="attribute.key"></app-attribute-view>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div role="tabpanel" class="tab-pane fade py-2" id="nachfuehrung_tab"
-        [class.spinner]="!feature?.relatedFeatures.grundbuch">
-        <div *ngFor="let relatedFeature of feature?.relatedFeatures.nachfuehrung">
-            <div>---------{{ relatedFeature.attributes.OBJECTID }}--------------</div>
-            <table>
-                <thead>
-                    <th><strong>Name</strong></th>
-                    <th>Wert</th>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let attribute of getAttributes(relatedFeature.attributes) | keyvalue">
-                        <td>{{ attribute.key }}</td>
-                        <td>
-                            <app-attribute-view [feature]="relatedFeature" [name]="attribute.key"></app-attribute-view>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+            <!--general attributes -->
+            <div role="tabpanel" class="tab-pane fade in active show py-2" id="general_tab">
+                <table>
+                    <thead>
+                        <th><strong>Name</strong></th>
+                        <th>Wert</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let attribute of getAttributes(feature?.attributes) | keyvalue">
+                            <td>{{ attribute.key }}</td>
+                            <td>
+                                <app-attribute-view [feature]="feature" [name]="attribute.key"></app-attribute-view>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-    <div role="tabpanel" class="tab-pane fade py-2" id="rueckversicherung_tab"
-        [class.spinner]="!feature?.relatedFeatures.rueckversicherung">
-        <div *ngFor="let relatedFeature of feature?.relatedFeatures.rueckversicherung">
-            <div>---------{{ relatedFeature.attributes.OBJECTID }}--------------</div>
-            <table>
-                <thead>
-                    <th><strong>Name</strong></th>
-                    <th>Wert</th>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let attribute of getAttributes(relatedFeature.attributes) | keyvalue">
-                        <td>{{ attribute.key }}</td>
-                        <td>
-                            <app-attribute-view [feature]="relatedFeature" [name]="attribute.key"></app-attribute-view>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+            <!--attachments -->
+            <div role="tabpanel" class="tab-pane fade py-2" id="attachments_tab">
+                <div #attachemts></div>
+                <!-- buttons -->
+                <div class="d-flex felx-row mb-2">
+                    <button type="submit" class="btn btn-primary" (click)="addAttachment()">add</button>
+                    <button type="button" class="btn btn-primary ml-2" (click)="editAttachment()">edit</button>
+                </div>
+            </div>
 
-    <div role="tabpanel" class="tab-pane fade py-2" id="kontakt_tab"
-        [class.spinner]="!feature?.relatedFeatures.kontakt">
-        <div *ngFor="let relatedFeature of feature?.relatedFeatures.kontakt">
-            <div>---------{{ relatedFeature.attributes.OBJECTID }}--------------</div>
-            <table>
-                <thead>
-                    <th><strong>Name</strong></th>
-                    <th>Wert</th>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let attribute of getAttributes(relatedFeature.attributes) | keyvalue">
-                        <td>{{ attribute.key }}</td>
-                        <td>
-                            <app-attribute-view [feature]="relatedFeature" [name]="attribute.key"></app-attribute-view>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div role="tabpanel" class="tab-pane fade py-2" id="grundbuch_tab"
+                [class.spinner]="!feature?.relatedFeatures.grundbuch">
+                <div *ngFor="let relatedFeature of feature?.relatedFeatures.grundbuch">
+                    <div>---------{{ relatedFeature.attributes.OBJECTID }}--------------</div>
+                    <table>
+                        <thead>
+                            <th><strong>Name</strong></th>
+                            <th>Wert</th>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let attribute of getAttributes(relatedFeature.attributes) | keyvalue">
+                                <td>{{ attribute.key }}</td>
+                                <td>
+                                    <app-attribute-view [feature]="relatedFeature" [name]="attribute.key">
+                                    </app-attribute-view>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane fade py-2" id="nachfuehrung_tab"
+                [class.spinner]="!feature?.relatedFeatures.grundbuch">
+                <div *ngFor="let relatedFeature of feature?.relatedFeatures.nachfuehrung">
+                    <div>---------{{ relatedFeature.attributes.OBJECTID }}--------------</div>
+                    <table>
+                        <thead>
+                            <th><strong>Name</strong></th>
+                            <th>Wert</th>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let attribute of getAttributes(relatedFeature.attributes) | keyvalue">
+                                <td>{{ attribute.key }}</td>
+                                <td>
+                                    <app-attribute-view [feature]="relatedFeature" [name]="attribute.key">
+                                    </app-attribute-view>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div role="tabpanel" class="tab-pane fade py-2" id="rueckversicherung_tab"
+                [class.spinner]="!feature?.relatedFeatures.rueckversicherung">
+                <div *ngFor="let relatedFeature of feature?.relatedFeatures.rueckversicherung">
+                    <div>---------{{ relatedFeature.attributes.OBJECTID }}--------------</div>
+                    <table>
+                        <thead>
+                            <th><strong>Name</strong></th>
+                            <th>Wert</th>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let attribute of getAttributes(relatedFeature.attributes) | keyvalue">
+                                <td>{{ attribute.key }}</td>
+                                <td>
+                                    <app-attribute-view [feature]="relatedFeature" [name]="attribute.key">
+                                    </app-attribute-view>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div role="tabpanel" class="tab-pane fade py-2" id="kontakt_tab"
+                [class.spinner]="!feature?.relatedFeatures.kontakt">
+                <div *ngFor="let relatedFeature of feature?.relatedFeatures.kontakt">
+                    <div>---------{{ relatedFeature.attributes.OBJECTID }}--------------</div>
+                    <table>
+                        <thead>
+                            <th><strong>Name</strong></th>
+                            <th>Wert</th>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let attribute of getAttributes(relatedFeature.attributes) | keyvalue">
+                                <td>{{ attribute.key }}</td>
+                                <td>
+                                    <app-attribute-view [feature]="relatedFeature" [name]="attribute.key">
+                                    </app-attribute-view>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>

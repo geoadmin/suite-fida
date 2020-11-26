@@ -7,7 +7,7 @@
     </div>
 
     <!-- body -->
-    <div [id]="componentId" class="collapse">
+    <div [id]="componentId" class="collapse" [class.readonly]="readonly">
         <div class="card-body">
 
             <div class="row">
@@ -47,7 +47,7 @@
             </div>
 
             <!-- delete button -->
-            <div class="row mt-2">
+            <div class="row mt-2" [hidden]="readonly">
                 <div class="col-12">
                     <button type="button" class="btn btn-danger float-right" (click)="deleteClick()">Delete</button>
                 </div>

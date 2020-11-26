@@ -272,7 +272,8 @@ a[role="tab"] {
 .esri-view-width-large .esri-popup__main-container,
 .esri-view-width-medium .esri-popup__main-container {
   max-height: 100% !important;
-  min-width: 50% !important;
+  //min-width: 50% !important;
+  width: 680px;    
 }
 
 .esri-popup__header {
@@ -312,4 +313,23 @@ a[role="tab"] {
   right: 0;
   background: rgba(255, 255, 255, 0.7) url("../assets/images/spinner-arrow.gif") center center no-repeat;
   background-size: 32px 32px;
+}
+
+// ----------------------------------------------------------------------------------------------------
+// readonly styles TEMPORARY
+// ----------------------------------------------------------------------------------------------------
+.readonly {
+  position: relative;
+}
+
+.readonly::before {
+  content: " ";
+  z-index: 10;
+  display: block;
+  position: absolute;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;    
 }

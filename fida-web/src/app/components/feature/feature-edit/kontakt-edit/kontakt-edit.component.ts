@@ -10,12 +10,14 @@ import { FeatureState, FidaFeature } from 'src/app/models/FidaFeature.model';
 export class KontaktEditComponent implements OnInit {
   @Input() feature: FidaFeature;
   @Input() formGroup: FormGroup;
+  @Input() readonly: boolean = false;
   public componentId: string;
 
   constructor() { }
 
   ngOnInit(): void {
     this.componentId = `kontakt_${this.feature.attributes.OBJECTID || new Date().getTime()}`;
+    this.formGroup.addControl(this.componentId, new FormGroup({}));
 
     for (let key in this.feature.attributes) {
       this.formGroup.addControl(key, new FormControl());

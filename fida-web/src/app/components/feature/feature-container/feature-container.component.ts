@@ -1,6 +1,6 @@
-import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { FeatureService } from 'src/app/services/feature.service';
-import { WidgetNotifyService } from 'src/app/services/widget-notify.service';
+import { CompleteState, WidgetNotifyService } from 'src/app/services/widget-notify.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { FeatureState, FidaFeature } from 'src/app/models/FidaFeature.model';
 import { MapService } from 'src/app/services/map.service';
@@ -16,9 +16,7 @@ export enum FeatureMode {
   templateUrl: './feature-container.component.html',
   styleUrls: ['./feature-container.component.scss']
 })
-export class FeatureContainerComponent implements OnInit, OnDestroy {
-  @ViewChild('deleteModalRef', { static: true }) deleteModalRef: ElementRef;
-
+export class FeatureContainerComponent implements OnInit, OnDestroy { 
   public feature: FidaFeature;
   private modalRef: BsModalRef;
 
@@ -58,9 +56,12 @@ export class FeatureContainerComponent implements OnInit, OnDestroy {
    */
 
   editClick(): void {
-    let subscription = this.widgetNotifyService.onFeatureEditCompleteSubject.subscribe(() => {
+    let subscription = this.widgetNotifyService.onFeatureEditCompleteSubject.subscribe((completeState: CompleteState) => {
       this.enablePopup(true);
       subscription.unsubscribe();
+      if (completeState === CompleteState.Closed) {
+        this.mapService.setPopupVisibility(false);
+      }
     });
 
     this.widgetNotifyService.onFeatureEditSubject.next(this.feature);
@@ -85,8 +86,12 @@ export class FeatureContainerComponent implements OnInit, OnDestroy {
    * feature delete
    */
 
-  showDeleteDialogClick(template: TemplateRef<any>): void {
-    this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
+  getFeatureName(): string {
+    return this.featureService.getFeatureName(this.feature);
+  }
+
+  showDeleteDialogClick(deleteDialogTemplate: TemplateRef<any>): void {
+    this.modalRef = this.modalService.show(deleteDialogTemplate, { class: 'modal-sm' });
   }
 
   async deleteClick(): Promise<void> {

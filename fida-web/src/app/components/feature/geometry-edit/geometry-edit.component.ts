@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MapService } from 'src/app/services/map.service';
-import { WidgetNotifyService } from 'src/app/services/widget-notify.service';
+import { CompleteState, WidgetNotifyService } from 'src/app/services/widget-notify.service';
 import MapView from 'esri/views/MapView';
 import Feature from 'esri/Graphic';
 import SketchViewModel from 'esri/widgets/Sketch/SketchViewModel';
@@ -43,16 +43,23 @@ export class GeometryEditComponent implements OnInit {
   async saveClick(): Promise<void> {
     this.originalFeature.geometry = this.drawingFeature.geometry;
     this.showSpinner = true;
-    //await this.featureService.createGrundbuchFeatures(this.originalFeature);
+
+    // TODO make update and redefine parallel
+    await Promise.all([
+      this.featureService.updateGeometry(this.originalFeature),
+      this.featureService.redefineGrundbuchFeatures(this.originalFeature),
+      this.featureService.updateLK25(this.originalFeature)
+    ]);
+    this.featureService.updateAttributesFromGeometry(this.originalFeature);
     await this.featureService.saveFeature(this.originalFeature);
     this.showSpinner = false;
-    
-    this.widgetNotifyService.onGeometryEditCompleteSubject.next(true);
+
+    this.widgetNotifyService.onGeometryEditCompleteSubject.next(CompleteState.Saved);
     this.deactivate();
   }
 
-  cancelClick(): void {
-    this.widgetNotifyService.onGeometryEditCompleteSubject.next(false);
+  cancelClick(close: boolean): void {
+    this.widgetNotifyService.onGeometryEditCompleteSubject.next(close === true ? CompleteState.Closed : CompleteState.Canceld);
     this.deactivate();
   }
 
