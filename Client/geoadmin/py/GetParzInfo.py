@@ -6,9 +6,16 @@
 # -- Author: flu, 16.11.2020
 # -- commandline: east north distance(square around point with length 2 * distance)
 #                 2600000.0 1200000.0 1.0
+#                 2579915.0 1196222.5 1.0 Staatswald Galm
+#                 2676312.480 1180581.130 Titlis
+#                 2676312.480 1113000.000 1.0 nicht in der Schweiz
+#                 2676312.480 1179000.000 1.0 keine AV Daten
+#                 2628515.000 1149497.500 1.0 keine AV Daten, 3 Gemeinden
+#                 2583759.000 1210591.000 5000.0 2 Gemeinden
 # -------------------------------------------------------------------------------------------------
 # -- History
 # -- 0.2: flu, 20.11.2020 some issue with json, gets also info if no parz found
+# -- 0.3: flu, 27.11.2020 refactoring IdentifyFeatures
 # -------------------------------------------------------------------------------------------------
 
 import json
@@ -69,7 +76,7 @@ def main(args):
     """
     try:
         _idf = IdentifyFeatures((args["e"], args["n"]), args["dist"])
-        _parz_info = _idf.getparzinfo()
+        _parz_info = _idf.getparzinfo(0.0)
         # arcpy.AddMessage(_parz_info)
         arcpy.SetParameter(arcpy.GetArgumentCount() - 2, _parz_info)
         arcpy.AddMessage("{0} parcell(s) found".format(len(json.loads(_parz_info))))
@@ -97,7 +104,7 @@ if __name__ == "__main__":
 
     Raises:
     """
-    _version = 0.2
+    _version = 0.3
     arcpy.SetParameter(arcpy.GetArgumentCount() - 1, _version)
     _exitcode, _args = init(sys.argv)
     if _exitcode == 0:
