@@ -121,6 +121,25 @@ class IdentifyFeatures:
         _proxy = "proxy.admin.ch:8080"
         return {"http": _proxy, "https": _proxy}
 
+    def api3identify(self):
+        """ gets the json from api3.geo.admin.ch identify
+        Args:
+            -
+        Returns:
+           json from api3.geo.admin.ch identify
+        Raises:
+            JSONDecodeError: If the data being deserialized is not a valid JSON document.
+        """
+        #_proxy = "proxy.admin.ch:8080"
+        #_proxy_dict = {"http": _proxy, "https": _proxy}
+        _req = requests.get(
+            url=self.__url_api3_identify,
+            proxies=self.__getproxy,
+            params=self.__params,
+            verify=False,
+        )
+        return _req.status_code, json.loads(_req.content)
+
     def __get_settings(self):
         """ Reads the json file with configuration's for T|I and P
         Args:
@@ -147,25 +166,6 @@ class IdentifyFeatures:
             raise
         except Exception:
             raise
-
-    def getjson(self):
-        """ gets the json from api3.geo.admin.ch identify
-        Args:
-            -
-        Returns:
-           json from api3.geo.admin.ch identify
-        Raises:
-            JSONDecodeError: If the data being deserialized is not a valid JSON document.
-        """
-        _proxy = "proxy.admin.ch:8080"
-        _proxy_dict = {"http": _proxy, "https": _proxy}
-        _req = requests.get(
-            url=self.__url_api3_identify,
-            proxies=_proxy_dict,
-            params=self.__params,
-            verify=False,
-        )
-        return _req.status_code, json.loads(_req.content)
 
     def __get_jsonfromurl(self, url, parameter):
         """ Gets a json from a ArcGISServerURL via a get with parameterlist
@@ -197,31 +197,6 @@ class IdentifyFeatures:
             raise
         return req.json()
 
-    def __query_kantons_name(self, kanotnid=0):
-        """ Gets the name of the kanton from kantonsgebiet, if there is no kanton, enpty string
-        Args:
-            kantonsnummer
-        Returns:
-            Kantonsname
-        Raises:
-            -
-        """
-        _params = {}
-        _params.update(
-            {"where": "KANTONSNUMMER={0} and KANTON_TEIL < 2".format(kanotnid)}
-        )
-        _params.update({"outFields": "NAME,KANTON_TEIL"})
-        _params.update({"returnGeometry": "false"})
-        _params.update({"f": "json"})
-        _req = self.__get_jsonfromurl(self.__url_tlm_kantonsgebiet, _params)
-        _features = _req["features"]
-        if len(_features) == 0:
-            return ""
-        elif len(_features) == 1:
-            return _features[0]["attributes"]["NAME"]
-        else:
-            raise ValueError("To many districts found")
-
     def __query_bezirk_name(self, bezirkid=0):
         """ Gets the name of the bezirk from bezirksgebiet if there is no bezirk, enpty string
         Args:
@@ -250,18 +225,18 @@ class IdentifyFeatures:
         else:
             return ""
 
-    def __query_bezirk_kanton_id(self, bfsnummer=0):
-        """ Gets the bezirksnummer, kantonsnummer from the hoheitsgebiet
+    def __query_hoheitsgebiet(self, bfsnummer=0):
+        """ Gets the bezirksnummer, kantonsnummer and ICC county code from the hoheitsgebiet
         Args:
             gemeinde bfsnummer
         Returns:
-            bezirksnummer, kantonsnummer
+            bezirksnummer, kantonsnummer, ICC county code
         Raises:
             -
         """
         _params = {}
         _params.update({"where": "BFS_NUMMER={0} and GEM_TEIL < 2".format(bfsnummer)})
-        _params.update({"outFields": "GEM_TEIL,BEZIRKSNUMMER,KANTONSNUMMER"})
+        _params.update({"outFields": "GEM_TEIL,BEZIRKSNUMMER,KANTONSNUMMER,ICC"})
         _params.update({"returnGeometry": "false"})
         _params.update({"f": "json"})
         _req = self.__get_jsonfromurl(self.__url_tlm_hoheitsgebiet, _params)
@@ -270,6 +245,7 @@ class IdentifyFeatures:
             return (
                 _features[0]["attributes"]["BEZIRKSNUMMER"],
                 _features[0]["attributes"]["KANTONSNUMMER"],
+                _features[0]["attributes"]["ICC"],
             )
         else:
             raise ValueError("To many municipalities found")
@@ -310,12 +286,12 @@ class IdentifyFeatures:
         else:
             return False, _req.content
 
-    def __search_location(self, location):
+    def __search_gde(self, location, kt):
         """ Gets the Gemeindename
         Args:
             egris_egrid
         Returns:
-            rue if found, false if not found and gemeindename
+            True if found, false if not found and gemeindename
         Raises:
             -
         """
@@ -333,77 +309,44 @@ class IdentifyFeatures:
             _results = _json["results"]
             if len(_results) == 1:
                 _clean = re.compile("<.*?>")
-                return (
-                    True,
-                    re.sub(_clean, "", _results[0]["attrs"]["label"].split(" ")[0]),
-                )
+                #return (
+                #    True,
+                #    re.sub(_clean, "", _results[0]["attrs"]["label"].split(" ")[0]),
+                #)
+                _sa = _results[0]["attrs"]["label"].split(" ")
+                if len(_sa) == 6:
+                    return True, re.sub(_clean, "", _sa[0])
+                elif len(_sa) == 7:
+                    return True, re.sub(_clean, "", "{0} {1}".format(_sa[0],_sa[1]))
+                else:
+                    False, "could not decode label"
             else:
                 return False, "egris_egrid not found"
         else:
             return False, _req.content
 
-    def _getparzinfo_parz(self, val):
-        """ Gets infos to the coord in a array of dictionary (ParzNummer,egris_egrid,Gemeinde,
-        BFSNummer,Bezirk,Kanton) if there is a parzelle
+    def __identify(self, envelope, layer):
+        """ calls api3 identify with one layer
         Args:
-            -
+            envelope, search box
+            layer, technical layername from map.geo.admin.ch
         Returns:
-            array of dictionary
+            statuscode, 200 if ok
+            json result
         Raises:
             -
         """
-        _parzinfos = []
-        for _featureid in val:
-            for _attrkey, _attrval in _featureid["attributes"].items():
-                if _attrkey == "egris_egrid":
-                    _found, _gde = self.__search_location(_attrval)
-                    if _found:
-                        _found, _gdeinfo = self.__find_gde_bfsnr(
-                            _gde, _featureid["attributes"]["label"]
-                        )
-                        if _found:
-                            _parzinfodict = {}
-                            _beznr, _ktnr = self.__query_bezirk_kanton_id(_gdeinfo)
-                            _parzinfodict.update(
-                                {"ParzNummer": _featureid["attributes"]["number"]}
-                            )
-                            _parzinfodict.update(
-                                {"egris_egrid": _featureid["attributes"]["egris_egrid"]}
-                            )
-                            _parzinfodict.update({"Gemeinde": _gde})
-                            _parzinfodict.update({"BFSNummer": _gdeinfo})
-                            _parzinfodict.update(
-                                {"Bezirk": self.__query_bezirk_name(_beznr)}
-                            )
-                            _parzinfodict.update(
-                                {"Kanton": self.__query_kantons_name(_ktnr)}
-                            )
-                            _parzinfos.append(_parzinfodict)
-        return _parzinfos
+        _parms1 = self.__params
+        _parms1["geometry"] = envelope
+        _parms1["layers"] = "all:{0}".format(layer)
 
-    def _getparzinfo_noparz(self, val):
-        """ Gets infos to the coord in a array of dictionary (ParzNummer,egris_egrid,Gemeinde,
-        BFSNummer,Bezirk,Kanton) if there is no parzelle
-        Args:
-            -
-        Returns:
-            array of dictionary
-        Raises:
-            -
-        """
-        _parzinfos = []
-        for _featureid in val:
-            _parzinfodict = {}
-            _gdeinfo = _featureid["id"]
-            _parzinfodict.update({"ParzNummer": ""})
-            _parzinfodict.update({"egris_egrid": ""})
-            _beznr, _ktnr = self.__query_bezirk_kanton_id(_gdeinfo)
-            _parzinfodict.update({"Gemeinde": str(_featureid["attributes"]["gemname"])})
-            _parzinfodict.update({"BFSNummer": _gdeinfo})
-            _parzinfodict.update({"Bezirk": self.__query_bezirk_name(_beznr)})
-            _parzinfodict.update({"Kanton": self.__query_kantons_name(_ktnr)})
-            _parzinfos.append(_parzinfodict)
-        return _parzinfos
+        _req = requests.get(
+            url=self.__url_api3_identify,
+            proxies=self.__getproxy,
+            params=_parms1,
+            verify=False,
+        )
+        return _req.status_code, json.loads(_req.content)
 
     def getparzinfo(self, distance=None):
         """ Gets infos to the parzelle in a array of dictionary (ParzNummer,egris_egrid,Gemeinde,
@@ -418,15 +361,7 @@ class IdentifyFeatures:
         _parzinfos = []
         _envelope = ""
         if distance is None:
-            _envelope = (
-                str(self.getpt_east - self.getdistance)
-                + ","
-                + str(self.getpt_north - self.getdistance)
-                + ","
-                + str(self.getpt_east + self.getdistance)
-                + ","
-                + str(self.getpt_north + self.getdistance)
-            )
+            _envelope = self.__envelope
         else:
             _envelope = (
                 str(self.getpt_east - distance)
@@ -437,37 +372,57 @@ class IdentifyFeatures:
                 + ","
                 + str(self.getpt_north + distance)
             )
-        _parms1 = self.__params
-        _parms1["geometry"] = _envelope
-        _parms1["layers"] = "all:ch.kantone.cadastralwebmap-farbe"
-
-        _req = requests.get(
-            url=self.__url_api3_identify,
-            proxies=self.__getproxy,
-            params=_parms1,
-            verify=False,
-        )
-        if _req.status_code == 200:
-            _json = json.loads(_req.content)
-            for _key, _val in _json.items():
-                if len(_val) > 0:
-                    _parzinfos = self._getparzinfo_parz(_val)
-                else:
-                    _parms1[
-                        "layers"
-                    ] = "all:ch.swisstopo.swissboundaries3d-gemeinde-flaeche.fill"
-                    _req = requests.get(
-                        url=self.__url_api3_identify,
-                        proxies=self.__getproxy,
-                        params=_parms1,
-                        verify=False,
-                    )
-                    if _req.status_code == 200:
-                        _json = json.loads(_req.content)
-                        for _key, _val in _json.items():
-                            _parzinfos = self._getparzinfo_noparz(_val)
-                    else:
-                        return _req.status_code, json.dumps(_req.content)
-        else:
-            return _req.status_code, json.dumps(_req.content)
+        #serch parcels
+        _status_parz, _parzarr = self.__identify(_envelope, "ch.kantone.cadastralwebmap-farbe")
+        for _parz in _parzarr["results"]:
+            _egris_egrid = _parz["attributes"]["egris_egrid"]
+            _parcelnumber = _parz["attributes"]["number"]
+            _kt = _parz["attributes"]["label"]
+            _ok, _gdename = self.__search_gde(_egris_egrid, _kt)
+            if _ok:
+                _parzdict = {}
+                _parzdict.update({"egris_egrid": _egris_egrid})
+                _parzdict.update({"ParzNummer": _parcelnumber})
+                _parzdict.update({"Kanton": _kt})
+                _parzdict.update({"Gemeinde": _gdename})
+                _parzdict.update({"BFSNummer": ""})
+                _parzinfos.append(_parzdict)
+        #search municipality
+        _stauts_gde, _gdearr = self.__identify(_envelope,"ch.swisstopo.swissboundaries3d-gemeinde-flaeche.fill")
+        for _gde in _gdearr["results"]:
+            _gdename = _gde["attributes"]["gemname"]
+            _kt = _gde["attributes"]["kanton"]
+            _bfsnr = _gde["id"]
+            _found = False
+            # add municipality if no parcel found
+            for _idx in range(len(_parzinfos)):
+                if _parzinfos[_idx]["Kanton"] == _kt and _parzinfos[_idx]["Gemeinde"] == _gdename:
+                    _parzinfos[_idx].update({"BFSNummer": _bfsnr})
+                    _found = True
+            if not _found:
+                _parzdict = {}
+                _parzdict.update({"egris_egrid": ""})
+                _parzdict.update({"ParzNummer": ""})
+                _parzdict.update({"Kanton": _kt})
+                _parzdict.update({"Gemeinde": _gdename})
+                _parzdict.update({"BFSNummer": _bfsnr})
+                _parzinfos.append(_parzdict)
+            if len(_parzinfos) == 0:
+                _parzdict = {}
+                _parzdict.update({"egris_egrid": ""})
+                _parzdict.update({"ParzNummer": ""})
+                _parzdict.update({"Kanton": _kt})
+                _parzdict.update({"Gemeinde": _gdename})
+                _parzdict.update({"BFSNummer": _bfsnr})
+                _parzinfos.append(_parzdict)
+        #append bezirk and country
+        for _idx in range(len(_parzinfos)):
+            if _parzinfos[_idx]["BFSNummer"] == "":
+                _parzinfos[_idx]["BFSNummer"] = self.__find_gde_bfsnr(_parzinfos[_idx]["Gemeinde"], _parzinfos[_idx]["Kanton"])[1]
+            _beznr, _ktnr, _icc = self.__query_hoheitsgebiet(_parzinfos[_idx]["BFSNummer"])
+            if _beznr is None:
+                _parzinfos[_idx].update({"Bezirk": ""})
+            else:
+                _parzinfos[_idx].update({"Bezirk": self.__query_bezirk_name(_beznr)})
+            _parzinfos[_idx].update({"Land": _icc})
         return json.dumps(_parzinfos)

@@ -20,7 +20,7 @@ def show_example(identifyfeature):
     :param identifyfeature: class with the request to the identify of api3.geo.admin.ch
     :return: -
     """
-    _status, _results = identifyfeature.getjson()
+    _status, _results = identifyfeature.api3identify()
     if _status == 200:
         _resultcount = 0
         for _key, _val in _results.items():
@@ -106,5 +106,11 @@ if __name__ == "__main__":
     print("Staatswald Galm")
     _idf5 = IdentifyFeatures((2579915.0, 1196222.5))
     _parzinfo = _idf5.getparzinfo(1.0)
+    print("Anzahl Resultate: {0}".format(len(json.loads(_parzinfo))))
+    print(_parzinfo)
+
+    print("Titlis")
+    _idf6 = IdentifyFeatures((2676312.480, 1180581.130))
+    _parzinfo = _idf6.getparzinfo()
     print("Anzahl Resultate: {0}".format(len(json.loads(_parzinfo))))
     print(_parzinfo)
