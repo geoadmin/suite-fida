@@ -130,8 +130,8 @@ class IdentifyFeatures:
         Raises:
             JSONDecodeError: If the data being deserialized is not a valid JSON document.
         """
-        #_proxy = "proxy.admin.ch:8080"
-        #_proxy_dict = {"http": _proxy, "https": _proxy}
+        # _proxy = "proxy.admin.ch:8080"
+        # _proxy_dict = {"http": _proxy, "https": _proxy}
         _req = requests.get(
             url=self.__url_api3_identify,
             proxies=self.__getproxy,
@@ -309,15 +309,15 @@ class IdentifyFeatures:
             _results = _json["results"]
             if len(_results) == 1:
                 _clean = re.compile("<.*?>")
-                #return (
+                # return (
                 #    True,
                 #    re.sub(_clean, "", _results[0]["attrs"]["label"].split(" ")[0]),
-                #)
+                # )
                 _sa = _results[0]["attrs"]["label"].split(" ")
                 if len(_sa) == 6:
                     return True, re.sub(_clean, "", _sa[0])
                 elif len(_sa) == 7:
-                    return True, re.sub(_clean, "", "{0} {1}".format(_sa[0],_sa[1]))
+                    return True, re.sub(_clean, "", "{0} {1}".format(_sa[0], _sa[1]))
                 else:
                     False, "could not decode label"
             else:
@@ -372,8 +372,10 @@ class IdentifyFeatures:
                 + ","
                 + str(self.getpt_north + distance)
             )
-        #serch parcels
-        _status_parz, _parzarr = self.__identify(_envelope, "ch.kantone.cadastralwebmap-farbe")
+        # serch parcels
+        _status_parz, _parzarr = self.__identify(
+            _envelope, "ch.kantone.cadastralwebmap-farbe"
+        )
         for _parz in _parzarr["results"]:
             _egris_egrid = _parz["attributes"]["egris_egrid"]
             _parcelnumber = _parz["attributes"]["number"]
@@ -387,8 +389,10 @@ class IdentifyFeatures:
                 _parzdict.update({"Gemeinde": _gdename})
                 _parzdict.update({"BFSNummer": ""})
                 _parzinfos.append(_parzdict)
-        #search municipality
-        _stauts_gde, _gdearr = self.__identify(_envelope,"ch.swisstopo.swissboundaries3d-gemeinde-flaeche.fill")
+        # search municipality
+        _stauts_gde, _gdearr = self.__identify(
+            _envelope, "ch.swisstopo.swissboundaries3d-gemeinde-flaeche.fill"
+        )
         for _gde in _gdearr["results"]:
             _gdename = _gde["attributes"]["gemname"]
             _kt = _gde["attributes"]["kanton"]
@@ -396,7 +400,10 @@ class IdentifyFeatures:
             _found = False
             # add municipality if no parcel found
             for _idx in range(len(_parzinfos)):
-                if _parzinfos[_idx]["Kanton"] == _kt and _parzinfos[_idx]["Gemeinde"] == _gdename:
+                if (
+                    _parzinfos[_idx]["Kanton"] == _kt
+                    and _parzinfos[_idx]["Gemeinde"] == _gdename
+                ):
                     _parzinfos[_idx].update({"BFSNummer": _bfsnr})
                     _found = True
             if not _found:
@@ -415,11 +422,15 @@ class IdentifyFeatures:
                 _parzdict.update({"Gemeinde": _gdename})
                 _parzdict.update({"BFSNummer": _bfsnr})
                 _parzinfos.append(_parzdict)
-        #append bezirk and country
+        # append bezirk and country
         for _idx in range(len(_parzinfos)):
             if _parzinfos[_idx]["BFSNummer"] == "":
-                _parzinfos[_idx]["BFSNummer"] = self.__find_gde_bfsnr(_parzinfos[_idx]["Gemeinde"], _parzinfos[_idx]["Kanton"])[1]
-            _beznr, _ktnr, _icc = self.__query_hoheitsgebiet(_parzinfos[_idx]["BFSNummer"])
+                _parzinfos[_idx]["BFSNummer"] = self.__find_gde_bfsnr(
+                    _parzinfos[_idx]["Gemeinde"], _parzinfos[_idx]["Kanton"]
+                )[1]
+            _beznr, _ktnr, _icc = self.__query_hoheitsgebiet(
+                _parzinfos[_idx]["BFSNummer"]
+            )
             if _beznr is None:
                 _parzinfos[_idx].update({"Bezirk": ""})
             else:

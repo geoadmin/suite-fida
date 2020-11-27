@@ -77,7 +77,7 @@ def main(args):
     try:
         _idf = IdentifyFeatures((args["e"], args["n"]), args["dist"])
         _parz_info = _idf.getparzinfo(0.0)
-        #arcpy.AddMessage(_parz_info)
+        # arcpy.AddMessage(_parz_info)
         arcpy.SetParameter(arcpy.GetArgumentCount() - 2, _parz_info)
         arcpy.AddMessage("{0} parcell(s) found".format(len(json.loads(_parz_info))))
         return True
