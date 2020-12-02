@@ -19,7 +19,8 @@ export class RelatedFeatures {
 export class FidaFeature extends Feature {
     state: FeatureState;
     relatedFeatures: RelatedFeatures;
-    attachemtInfos: AttachmentInfo[];
+    attachmentInfos: AttachmentInfo[];
+    attachmentUpload: any;
 }
 
 /*export class LfpFeature extends Feature {

@@ -18,6 +18,8 @@ export class WidgetNotifyService {
   public onFeatureEditCompleteSubject: Subject<CompleteState>;
   public onFeatureCreateCompleteSubject: Subject<CompleteState>;
   public onGdbVersionChangedSubject: Subject<string>;
+  public setMapPopupVisibilitySubject: Subject<boolean>;
+  public enableMapPopupSubject:Subject<boolean>;
 
   constructor() {
     this.onFeatureCreateCompleteSubject = new Subject();
@@ -26,5 +28,7 @@ export class WidgetNotifyService {
     this.onFeatureEditSubject = new Subject();
     this.onFeatureEditCompleteSubject = new Subject();
     this.onGdbVersionChangedSubject = new Subject();
+    this.setMapPopupVisibilitySubject = new Subject();
+    this.enableMapPopupSubject = new Subject();
   }
 }

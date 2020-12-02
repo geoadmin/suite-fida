@@ -15,7 +15,6 @@ export class AnhangEditComponent implements OnInit {
   @Input() formGroup: FormGroup;
   @Input() readonly: boolean = false;
   public componentId: string;
-  public attachmentInfo: AttachmentInfo;
   
   constructor() { }
 
@@ -26,31 +25,33 @@ export class AnhangEditComponent implements OnInit {
     for (let key in this.feature.attributes) {
       this.formGroup.addControl(key, new FormControl());
     }
-
-    this. attachmentInfo = this.feature.attachemtInfos[0];
-    // const attachments = new Attachments({
-    //   container: this.attachmentsContainer.nativeElement,
-    //   graphic: this.feature
-    // });
-    // attachments.viewModel.mode = this.readonly ? 'view': 'add';
-    // attachments.displayType = 'list';
   }
 
   deleteClick(): void {
     this.feature.state = FeatureState.Delete;
   }
 
+  getAttachmentInfos(): AttachmentInfo[]{
+    return this.feature.attachmentInfos ?? [];
+  }
+
   getHeaderText(): string {
     //TODO dynamisch
-    let bildart = 'weitere';
+    let bildart = '-';
     if(this.feature.attributes.BILD_ART === 1){
       bildart = 'Foto';
     } else if(this.feature.attributes.BILD_ART === 0){
       bildart = 'Skizze';
+    } else if(this.feature.attributes.BILD_ART === 2){
+      bildart = 'weitere';
     }
 
-    const attachmentName = this.feature.attachemtInfos[0].name;
+    const attachmentName = this.getAttachmentInfos().map(m => m.name).join(',');
 
     return `${bildart} - ${attachmentName}`;
+  }
+
+  handleFileInput(files: FileList){
+    this.feature.attachmentUpload = files.item(0);    
   }
 }

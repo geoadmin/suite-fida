@@ -8,13 +8,22 @@
     <!-- body -->
     <div [id]="componentId" class="collapse" [class.readonly]="readonly">
         <div class="card-body">
-            <div class="row mb-3">
+
+            <!-- attachment -->
+            <div *ngFor="let attachmentInfo of getAttachmentInfos()" class="row mb-3">
                 <div class="col-12">
                     <a target="_blank" [href]="attachmentInfo.url">
                         <img [src]="attachmentInfo.url" class="w-100">
                     </a>
                 </div>
             </div>
+            <div class="row" *ngIf="getAttachmentInfos().length === 0">
+                <div class="col-12">
+                    <input type="file" (change)="handleFileInput($event.target.files)">
+                </div>
+            </div>
+
+            <!-- attributes -->
             <div class="row">
                 <div class="col-3 attribute-label">BILD_ART</div>
                 <div class="col-3">
@@ -42,9 +51,9 @@
             </div>
 
             <div class="row">
-                <div class="col-3 attribute-label">DATUM</div>
+                <div class="col-3 attribute-label">BILD_DATUM</div>
                 <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="DATUM">
+                    <app-attribute-value-edit [feature]="feature" formControlName="BILD_DATUM">
                     </app-attribute-value-edit>
                 </div>
             </div>

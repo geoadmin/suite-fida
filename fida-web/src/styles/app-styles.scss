@@ -68,7 +68,7 @@ textarea.form-control {
 // ----------------------------------------------------------------------------------------------------
 // validation styles
 // ----------------------------------------------------------------------------------------------------
-input.ng-invalid {
+input.ng-invalid, select.ng-invalid {
   border-color: var(--danger);
   background-color: var(--light);
   // outline: 2px solid var(--danger);

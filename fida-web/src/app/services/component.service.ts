@@ -1,5 +1,5 @@
 import { Injectable, ComponentFactoryResolver, Injector, Compiler, ComponentFactory, Component, ModuleWithComponentFactories, NgModule, ElementRef, ComponentRef } from '@angular/core';
-import { FeatureContainerComponent, FeatureMode } from '../components/feature/feature-container/feature-container.component'
+import { FeatureContainerComponent } from '../components/feature/feature-container/feature-container.component'
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';

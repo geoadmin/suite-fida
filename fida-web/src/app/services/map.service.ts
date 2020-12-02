@@ -26,7 +26,15 @@ export class MapService {
     private messageService: MessageService,
     private cookieService: CookieService,
     private configService: ConfigService
-  ) { }
+  ) { 
+    // present this events for cirtular dependency eliminations
+    this.widgetNotifyService.setMapPopupVisibilitySubject.subscribe((visible: boolean) => {
+      this.setPopupVisibility(visible);
+    });
+    this.widgetNotifyService.enableMapPopupSubject.subscribe((enable: boolean) => {
+      this.enablePopup(enable);
+    });
+  }
 
   public async initMap(mapContainer: ElementRef): Promise<void> {
     try {

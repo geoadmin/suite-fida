@@ -3,7 +3,6 @@ import { FeatureService } from 'src/app/services/feature.service';
 import { CompleteState, WidgetNotifyService } from 'src/app/services/widget-notify.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { FeatureState, FidaFeature } from 'src/app/models/FidaFeature.model';
-import { MapService } from 'src/app/services/map.service';
 
 export enum FeatureMode {
   View = 'view',
@@ -24,7 +23,6 @@ export class FeatureContainerComponent implements OnInit, OnDestroy {
     private changeDetectorRef: ChangeDetectorRef,
     private featureService: FeatureService,
     private widgetNotifyService: WidgetNotifyService,
-    private mapService: MapService,
     private modalService: BsModalService
   ) { }
 
@@ -35,19 +33,23 @@ export class FeatureContainerComponent implements OnInit, OnDestroy {
     console.log('Items destroyed');
   }
 
-  public async setFeature(feature: FidaFeature): Promise<void> {
+  public  setFeature(feature: FidaFeature): void {
     try {
       this.feature = feature;
-      this.featureService.loadRelatedFeatures(this.feature, () => { this.changeDetectorRef.detectChanges() });
-      this.changeDetectorRef.detectChanges();
+      this.loadRelatedFeatures();
     } catch (error) {
       console.error(error);
     }
   }
 
   private enablePopup(enable: boolean): void {
-    this.mapService.setPopupVisibility(enable);
-    this.mapService.enablePopup(enable);
+    this.widgetNotifyService.setMapPopupVisibilitySubject.next(enable);
+    this.widgetNotifyService.enableMapPopupSubject.next(enable);
+    this.changeDetectorRef.detectChanges();
+  }
+
+  private async loadRelatedFeatures(): Promise<void>{
+    this.featureService.loadRelatedFeatures(this.feature, () => { this.changeDetectorRef.detectChanges() });
     this.changeDetectorRef.detectChanges();
   }
 
@@ -60,8 +62,10 @@ export class FeatureContainerComponent implements OnInit, OnDestroy {
       this.enablePopup(true);
       subscription.unsubscribe();
       if (completeState === CompleteState.Closed) {
-        this.mapService.setPopupVisibility(false);
-      }
+        this.widgetNotifyService.setMapPopupVisibilitySubject.next(false);
+      } else {
+        this.loadRelatedFeatures();
+      }      
     });
 
     this.widgetNotifyService.onFeatureEditSubject.next(this.feature);

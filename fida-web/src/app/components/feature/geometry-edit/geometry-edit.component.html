@@ -11,9 +11,18 @@
         <div class="">
             <div *ngIf="activated" class="d-flex flex-row">
                 <button type="button" class="btn btn-default flex-fill" (click)="cancelClick()">Cancel</button>
-                <button type="button" class="btn btn-primary flex-fill" (click)="saveClick()">Save</button>
+                <button type="button" class="btn btn-primary flex-fill" (click)="saveClick(saveDialogTemplate)">Save</button>
             </div>
         </div>
 
     </div>
 </div>
+
+<!-- save dialog -->
+<ng-template #saveDialogTemplate>
+    <div class="modal-body text-center" [class.spinner]="showSpinner">
+        <p>Das Speichern hat Auswirkung auf die Werte LV95E/LV95N/LN02. Soll wirklich gespeichert werden?</p>
+        <button type="button" class="btn btn-primary" (click)="saveNoClick()">Nein</button>
+        <button type="button" class="btn btn-danger ml-2" (click)="saveYesClick()">Ja</button>
+    </div>
+</ng-template>

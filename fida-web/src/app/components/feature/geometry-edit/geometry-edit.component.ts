@@ -1,6 +1,7 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MapService } from 'src/app/services/map.service';
 import { CompleteState, WidgetNotifyService } from 'src/app/services/widget-notify.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import MapView from 'esri/views/MapView';
 import Feature from 'esri/Graphic';
 import SketchViewModel from 'esri/widgets/Sketch/SketchViewModel';
@@ -22,11 +23,13 @@ export class GeometryEditComponent implements OnInit {
   private graphicsLayer: GraphicsLayer;
   private originalFeature: FidaFeature;
   private drawingFeature: Feature;
+  private modalRef: BsModalRef;
 
   constructor(
     private mapService: MapService,
     private featureService: FeatureService,
-    private widgetNotifyService: WidgetNotifyService
+    private widgetNotifyService: WidgetNotifyService,
+    private modalService: BsModalService
   ) { }
 
   ngOnInit(): void {
@@ -40,11 +43,26 @@ export class GeometryEditComponent implements OnInit {
     });
   }
 
-  async saveClick(): Promise<void> {
+  async saveClick(saveDialogTemplate: TemplateRef<any>): Promise<void> {
+    this.modalRef = this.modalService.show(saveDialogTemplate, { class: 'modal-sm' });
+    
+  }
+
+  async saveYesClick(): Promise<void> {
+    this.showSpinner = true;    
+    await this.save();
+    this.modalRef.hide();
+  }
+
+  saveNoClick(): void {
+    this.cancelClick(false);
+    this.modalRef.hide();
+  }
+
+  async save(): Promise<void> {
     this.originalFeature.geometry = this.drawingFeature.geometry;
     this.showSpinner = true;
 
-    // TODO make update and redefine parallel
     await Promise.all([
       this.featureService.updateGeometry(this.originalFeature),
       this.featureService.redefineGrundbuchFeatures(this.originalFeature),

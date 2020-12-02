@@ -45,19 +45,6 @@ export class FeatureService {
       const featureLayer = this.getFeatureLayer(feature);
       const applyEditsResult = await this.applyEdits(featureLayer, applyEditProperties);
 
-      // update objectid and globalid
-      const addFeatureResults: __esri.FeatureEditResult[] = applyEditsResult.addFeatureResults;
-      if (addFeatureResults && addFeatureResults.length === 1) {
-        feature.attributes.OBJECTID = addFeatureResults[0].objectId;
-        feature.attributes.GLOBALID = addFeatureResults[0].globalId;
-      }
-
-      // TODO auslagern
-      // update grundbuch features
-      if (featureLayer.id === "LFP" && feature.state === FeatureState.Create) {
-        await this.redefineGrundbuchFeatures(feature);
-      }
-
       // save related features
       if (feature.state !== FeatureState.Delete) {
         const relationshipsConfig = this.configService.getRelationshipsConfigs(featureLayer.id);
@@ -83,6 +70,9 @@ export class FeatureService {
       const successMessage = feature.state === FeatureState.Delete
         ? 'Successfully deleted' : 'Successfully saved'
       this.messageService.success(successMessage);
+
+      // reset state
+      feature.state = undefined;
     } catch (error) {
       this.messageService.error(error);
     }
@@ -105,9 +95,33 @@ export class FeatureService {
       // save related features     
       await this.applyEdits(relatedFeatureLayer, applyEditProperties);
 
+      // add attachments
+      if (relatedFeatureLayer.capabilities.operations.supportsQueryAttachments) {
+        this.addAttachment(relatedFeatureLayer, relatedFeatures);
+      }
+
+      // reset state
+      relatedFeatures.map(f => f.state = undefined);
     } catch (error) {
       this.messageService.error(error);
     }
+  }
+
+  private async addAttachment(featureLayer: FeatureLayer, features: FidaFeature[]): Promise<boolean> {
+    let attachmentAdded = false;
+    features.forEach(async (feature: FidaFeature) => {
+      if (feature.attachmentUpload != null) {
+
+        const form = new FormData();
+        form.set('attachment', feature.attachmentUpload);
+        form.append('f', 'json');
+        await featureLayer.addAttachment(feature, form);
+
+        feature.attachmentUpload = undefined;
+        attachmentAdded = true;
+      }
+    });
+    return attachmentAdded;
   }
 
   private applyEdits(featureLayer: FeatureLayer, applyEditProperties: __esri.FeatureLayerApplyEditsEdits): Promise<any> {
@@ -117,6 +131,17 @@ export class FeatureService {
 
     return new Promise((resolve, reject) => {
       featureLayer.applyEdits(applyEditProperties, options).then((result: any) => {
+
+        // update objectid and globalid
+        const features = applyEditProperties.addFeatures as Feature[];
+        const addFeatureResults: __esri.FeatureEditResult[] = result.addFeatureResults;
+        if (features) {
+          for (let i = 0; i < features.length; i++) {
+            features[i].attributes.OBJECTID = addFeatureResults[0].objectId;
+            features[i].attributes.GLOBALID = addFeatureResults[0].globalId;
+          }
+        }
+
         resolve(result);
       }).catch((error: any) => {
         this.messageService.error('Save failed.', error);
@@ -146,9 +171,9 @@ export class FeatureService {
             relatedFeature.layer = relatedFeatureLayer;
           });
 
-          // add attachment infos
-          if(relatedFeatureLayer.capabilities.operations.supportsQueryAttachments){
-            await this.loadAttachments(resultFeatures as FidaFeature[])
+          // load attachment infos
+          if (relatedFeatureLayer.capabilities.operations.supportsQueryAttachments) {
+            await this.loadAttachments(relatedFeatureLayer, resultFeatures as FidaFeature[]);
           }
         }
 
@@ -160,13 +185,12 @@ export class FeatureService {
     }));
   }
 
-  public async loadAttachments(features: FidaFeature[]): Promise<any> {
-    const featureLayer = this.getFeatureLayer(features[0]);
+  public async loadAttachments(featureLayer: FeatureLayer, features: FidaFeature[]): Promise<any> {
     const objectIds = features.map(f => f.attributes.OBJECTID);
 
     const attachemts = await this.queryService.attachments(featureLayer, objectIds);
     features.forEach((feature) => {
-      feature.attachemtInfos = attachemts[feature.attributes.OBJECTID];
+      feature.attachmentInfos = attachemts[feature.attributes.OBJECTID];
     });
   }
 
@@ -261,19 +285,13 @@ export class FeatureService {
     }
   }
 
-  public async validateFeature(feature: FidaFeature, orginalAttributes: any): Promise<boolean> {
-    // TODO layer id auslagern
-    if (feature.layer.id === "LFP") {
-      // check of valid LK25
-      if (feature.attributes.LV95E !== orginalAttributes.LV95E
-        || feature.attributes.LV95N !== orginalAttributes.LV95N
-        || feature.attributes.LK25 !== orginalAttributes.LK25) {
-
-      }
-    }
+  public async checkLK25(feature: FidaFeature): Promise<boolean> {
     const point = feature.geometry as Point;
-    const tileId = await this.lk25Service.getTileId(point);
-    return feature.attributes.LK25 === tileId;
+    if (point) {
+      const tileId = await this.lk25Service.getTileId(point);
+      return feature.attributes.LK25 === tileId;
+    }
+    return false;
   }
 
   public getFeatureName(feature: FidaFeature): string {

@@ -11,7 +11,7 @@ import { CompleteState, WidgetNotifyService } from 'src/app/services/widget-noti
   styleUrls: ['./feature-edit.component.scss']
 })
 export class FeatureEditComponent implements OnInit {
-  
+
   public activated: boolean = false;
   public feature: FidaFeature;
   public showSpinner: boolean;
@@ -73,44 +73,6 @@ export class FeatureEditComponent implements OnInit {
     return relatedFeatures?.filter(f => f.state !== FeatureState.Delete);
   }
 
-  saveClick(saveDialogTemplate: TemplateRef<any>): void {
-    // check of geometry-attribute change
-    if (this.feature.attributes.LV95E !== this.originalAttributes.LV95E
-      || this.feature.attributes.LV95N !== this.originalAttributes.LV95N
-      || this.feature.attributes.LK25 !== this.originalAttributes.LK25) {
-        this.modalRef = this.modalService.show(saveDialogTemplate, { class: 'modal-sm' });
-    } else {
-      this.save();
-    }
-  }
-
-  saveYesClick(): void {    
-    this.modalRef.hide();
-    this.showSpinner = true;
-
-    
-    this.save();  
-  }
-
-  saveNoClick(): void {    
-    // return to edit view 
-    this.modalRef.hide();
-  }
-
-  async save(): Promise<void> {    
-    this.showSpinner = true;
-    await this.featureService.saveFeature(this.feature);
-    this.showSpinner = false;
-
-    if (this.feature.state === FeatureState.Create) {
-      this.widgetNotifyService.onFeatureCreateCompleteSubject.next(CompleteState.Saved);
-    } else {
-      this.widgetNotifyService.onFeatureEditCompleteSubject.next(CompleteState.Saved);
-    }
-
-    this.deactivate();    
-  }
-
   cancelClick(close: boolean): void {
     this.feature.attributes = this.originalAttributes;
     const completeState = close === true ? CompleteState.Closed : CompleteState.Canceld;
@@ -130,5 +92,61 @@ export class FeatureEditComponent implements OnInit {
 
   private activate(): void {
     this.activated = true;
+  }
+
+  /**
+  *  SAVE METHODS
+  */
+
+  async saveClick(saveDialogTemplate: TemplateRef<any>): Promise<void> {    
+    if (this.feature.state != FeatureState.Create) {
+
+      // check of geometry-attribute change
+      if (this.feature.attributes.LV95E !== this.originalAttributes.LV95E
+        || this.feature.attributes.LV95N !== this.originalAttributes.LV95N
+        || this.feature.attributes.LK25 !== this.originalAttributes.LK25) {
+        this.modalRef = this.modalService.show(saveDialogTemplate, { class: 'modal-sm' });
+        return;
+      }
+
+      // check LK25
+      if (this.feature.attributes.LK25 !== this.originalAttributes.LK25) {
+        const isOk = await this.featureService.checkLK25(this.feature);
+        if(!isOk){
+          // todo: wie reagieren?
+          return;
+        } 
+        // TODO: update punktnummer....
+      }
+    }
+
+    this.save();
+  }
+
+  saveYesClick(): void {
+    this.modalRef.hide();
+    this.showSpinner = true;
+    this.save();
+  }
+
+  saveNoClick(): void {
+    // return to edit view 
+    this.modalRef.hide();
+  }
+
+  async save(): Promise<void> {
+    this.showSpinner = true;
+    this.featureService.updateGeometryFromAttributes(this.feature);
+    await this.featureService.saveFeature(this.feature);
+    this.showSpinner = false;
+    this.changeDetectorRef.detectChanges();
+
+    if (this.feature.state === FeatureState.Create) {
+      this.widgetNotifyService.onFeatureCreateCompleteSubject.next(CompleteState.Saved);
+    } else {
+      this.widgetNotifyService.onFeatureEditCompleteSubject.next(CompleteState.Saved);
+    }
+
+    this.deactivate();
   }
 }

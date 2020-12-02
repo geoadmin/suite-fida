@@ -12,7 +12,7 @@ export class VersionManagementService {
 
   constructor(
     private configService: ConfigService,
-    private queryService: QueryService,
+    private queryService: QueryService
   ) {
     this.versionManagmentConfig = this.configService.getVersionManagementConfig();
   }
