@@ -1,8 +1,7 @@
-import { Component, ComponentRef, Injectable } from '@angular/core';
-import { FeatureContainerComponent, FeatureMode } from '../components/feature/feature-container/feature-container.component'
+import { ComponentRef, Injectable } from '@angular/core';
+import { FeatureViewComponent } from '../components/feature/feature-view/feature-view.component'
 import { ComponentService } from './component.service';
 import PopupTemplate from 'esri/PopupTemplate';
-import Feature from 'esri/Graphic';
 import CustomContent from 'esri/popup/content/CustomContent';
 import { FeatureState, FidaFeature } from '../models/FidaFeature.model';
 
@@ -14,15 +13,15 @@ export class TemplateService {
 
   public getFeatureTemplate(createMode?: boolean): PopupTemplate {
     let self = this;
-    let componentRef: ComponentRef<FeatureContainerComponent>;
+    let componentRef: ComponentRef<FeatureViewComponent>;
     return new PopupTemplate({
       title: 'Feature {OBJECTID}',
       content: (result: any) => {
-        const featureContainerContent = new CustomContent({
+        const featureViewContent = new CustomContent({
           creator: () => {
             const feature: FidaFeature = result.graphic;
             feature.state = createMode === true ? FeatureState.Create : undefined;
-            componentRef = self.componentService.createFeatureContainerComponent(feature);
+            componentRef = self.componentService.createFeatureViewComponent(feature);
             return componentRef.location.nativeElement;
           },
           destroyer: () => {
@@ -30,7 +29,7 @@ export class TemplateService {
           }
         });
 
-        return [featureContainerContent];
+        return [featureViewContent];
       },
       outFields: ['*']
     });

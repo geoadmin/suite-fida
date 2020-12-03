@@ -1,13 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { FeatureState, FidaFeature } from 'src/app/models/FidaFeature.model';
+import { FeatureState, FidaFeature } from 'src/app/models/FidaFeature.model'; 
+import { FORMAT_UTILS, CONVERT_UTILS } from '../../../../utils/utils';
 
 @Component({
-  selector: 'app-grundbuch-edit',
-  templateUrl: './grundbuch-edit.component.html',
-  styleUrls: ['./grundbuch-edit.component.scss']
+  selector: 'app-schaeden-edit',
+  templateUrl: './schaeden-edit.component.html',
+  styleUrls: ['./schaeden-edit.component.scss']
 })
-export class GrundbuchEditComponent implements OnInit {
+export class SchaedenEditComponent implements OnInit {
   @Input() feature: FidaFeature;
   @Input() formGroup: FormGroup;
   @Input() readonly: boolean = false;
@@ -16,7 +17,7 @@ export class GrundbuchEditComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.componentId = `grundbuch_${this.feature.attributes.OBJECTID || new Date().getTime()}`;
+    this.componentId = `schweremessung_${this.feature.attributes.OBJECTID || new Date().getTime()}`;
     this.formGroup.addControl(this.componentId, new FormGroup({}));
 
     for (let key in this.feature.attributes) {
@@ -29,7 +30,7 @@ export class GrundbuchEditComponent implements OnInit {
   }
 
   getHeaderText(): string {
-    return `${this.feature.attributes.GEMEINDE} - ${this.feature.attributes.PARZ}`;
+    const date = CONVERT_UTILS.esriToDate(this.feature.attributes.DATUM);
+    return FORMAT_UTILS.formatDate(date, 'yyyy-mm-dd') || '-no date-';
   }
-  
 }

@@ -25,7 +25,6 @@ import { CONVERT_UTILS } from '../../../../utils/utils';
 })
 export class AttributeValueEditComponent implements OnInit, ControlValueAccessor {
   @Input() feature: FidaFeature;
-  //@Input() name: string;
   @Input() formControlName: string; // must be the same as feature-attribute-name
   @Input() placeholder: string;
   @Input() type: string;
@@ -52,7 +51,8 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
     // get field
     this.field = this.getFeatureLayer().fields.find(f => f.name === this.formControlName);
     if (this.field === undefined) {
-      throw new Error(`Field ${this.formControlName} not found in layer ${this.feature.layer.id}`);
+      console.error(`Field ${this.formControlName} not found in layer ${this.feature.layer.title} (${this.feature.layer.id})`);
+      return;
     }
 
     // convert value to date-object 

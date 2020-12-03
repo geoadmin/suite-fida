@@ -9,11 +9,14 @@ export enum FeatureState {
 }
 
 export class RelatedFeatures {
-    grundbuch?: Feature[];
-    kontakt?: Feature[];
-    nachfuehrung?: Feature[];
-    rueckversicherung?: Feature[];
-    anhang?: Feature[];
+    grundbuch?: FidaFeature[];
+    kontakt?: FidaFeature[];
+    nachfuehrung?: FidaFeature[];
+    rueckversicherung?: FidaFeature[];
+    anhang?: FidaFeature[];
+    auslandpunkt?: FidaFeature[];
+    schaeden?: FidaFeature[];
+    schweremessung?: FidaFeature[];
 }
 
 export class FidaFeature extends Feature {

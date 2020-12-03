@@ -1,22 +1,28 @@
 <!-- navigation -->
 <ul class="nav nav-pills nav-fill" role="tablist">
     <li class="nav-item">
-        <a class="nav-link active" href="#lfp_general_tab" role="tab" data-toggle="tab">Allgemein</a>
+        <a class="nav-link active" href="#hfp_general_tab" role="tab" data-toggle="tab">Allgemein</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#lfp_anhang_tab" role="tab" data-toggle="tab">Anhang</a>
+        <a class="nav-link" href="#hfp_anhang_tab" role="tab" data-toggle="tab">Anhang</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#lfp_nachfuehrung_tab" role="tab" data-toggle="tab">Nachfuehrung</a>
+        <a class="nav-link" href="#hfp_nachfuehrung_tab" role="tab" data-toggle="tab">Nachfuehrung</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#lfp_grundbuch_tab" role="tab" data-toggle="tab">Grundbuch</a>
+        <a class="nav-link" href="#hfp_grundbuch_tab" role="tab" data-toggle="tab">Grundbuch</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#lfp_rueckversicherung_tab" role="tab" data-toggle="tab">Rückversicherung</a>
+        <a class="nav-link" href="#hfp_auslandpunkt_tab" role="tab" data-toggle="tab">Auslandpunkt</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#lfp_kontakt_tab" role="tab" data-toggle="tab">Kontakt</a>
+        <a class="nav-link" href="#hfp_schweremessung_tab" role="tab" data-toggle="tab">Schweremessung</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#hfp_schaeden_tab" role="tab" data-toggle="tab">Schäden</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#hfp_kontakt_tab" role="tab" data-toggle="tab">Kontakt</a>
     </li>
 </ul>
 
@@ -24,32 +30,22 @@
 <div class="tab-content container" [formGroup]="formGroup">
 
     <!--general attributes -->
-    <div role="tabpanel" class="tab-pane fade in active show py-2" id="lfp_general_tab" [class.readonly]="readonly">
+    <div role="tabpanel" class="tab-pane fade in active show py-2" id="hfp_general_tab" [class.readonly]="readonly">
 
         <!--Punktart / Nr-->
         <div class="row mt-4">
             <div class="col-2 attribute-label">
-                LFP1 Punktart
+                HFP Punktart
             </div>
             <div class="col-2">
                 <app-attribute-value-edit [feature]="feature" formControlName="OBJEKTART" [required]="true">
                 </app-attribute-value-edit>
             </div>
             <div class="col-4">
-                <app-attribute-value-edit [feature]="feature" formControlName="LFPNR" [required]="true">
+                <app-attribute-value-edit [feature]="feature" formControlName="HFPNR" [required]="true">
                 </app-attribute-value-edit>
             </div>
-            <div class="col-2 attribute-label">
-                Euref/NeotekNr
-            </div>
-            <div class="col-1 pr-0 mr-m1">
-                <app-attribute-value-edit [feature]="feature" formControlName="EUREFNUMMER">
-                </app-attribute-value-edit>
-            </div>
-            <div class="col-1 pl-0">
-                <app-attribute-value-edit [feature]="feature" formControlName="NEOTEKNUMMER">
-                </app-attribute-value-edit>
-            </div>
+            
         </div>
 
         <!--Staties -->
@@ -64,22 +60,16 @@
             </div>
         </div>
 
-        <!--Punnktname / LFPOrdnung -->
+        <!--INDENTITAET -->
         <div class="row mt-2">
             <div class="col-2">
             </div>
             <div class="col-2 attribute-label">
-                Punktname
+                IDENTITAET
             </div>
             <div class="col-4">
-                <app-attribute-value-edit [feature]="feature" formControlName="PUNKTNAME" [required]="true">
+                <app-attribute-value-edit [feature]="feature" formControlName="IDENTITAET">
                 </app-attribute-value-edit>
-            </div>
-            <div class="col-2 attribute-label">
-                LFPOrdnung
-            </div>
-            <div class="col-2">
-                <app-attribute-value-edit [feature]="feature" formControlName="LFPORDNUNG"></app-attribute-value-edit>
             </div>
         </div>
 
@@ -163,14 +153,7 @@
                 </app-attribute-value-edit>
             </div>
             <div class="col-4">
-            </div>
-            <div class="col-1 attribute-label">
-                DeltaOk
-            </div>
-            <div class="col-3">
-                <app-attribute-value-edit [feature]="feature" formControlName="DELTAHOEHE_OBERKANTE">
-                </app-attribute-value-edit>
-            </div>
+            </div>           
         </div>
 
         <!--Kennzeichnung Text -->
@@ -207,43 +190,6 @@
             <div class="col-8">
                 <app-attribute-value-edit [feature]="feature" formControlName="KENNZEICHNUNGTEXT" type="textarea"
                     placeholder="Kennzeichnung Text"></app-attribute-value-edit>
-            </div>
-        </div>
-
-        <!--Rückversicherung Bemerkung -->
-        <div class="row mt-2">
-            <div class="col-4">
-                <div class="row">
-                    <div class="col-6 attribute-label">
-                        Anzahlschrauben
-                    </div>
-                    <div class="col-6">
-                        <app-attribute-value-edit [feature]="feature" formControlName="ANZAHLRINGSCHRAUBEN">
-                        </app-attribute-value-edit>
-                    </div>
-                </div>
-                <div class="row mt-m1">
-                    <div class="col-6 attribute-label">
-                        Flanschen
-                    </div>
-                    <div class="col-6">
-                        <app-attribute-value-edit [feature]="feature" formControlName="FLANSCHEN">
-                        </app-attribute-value-edit>
-                    </div>
-                </div>
-                <div class="row mt-m1">
-                    <div class="col-6 attribute-label pr-0">
-                        Anz. AnschlPkt
-                    </div>
-                    <div class="col-6">
-                        <app-attribute-value-edit [feature]="feature" formControlName="ANZAHLANSCLAGPKT">
-                        </app-attribute-value-edit>
-                    </div>
-                </div>
-            </div>
-            <div class="col-8">
-                <app-attribute-value-edit [feature]="feature" formControlName="RUECKVERSICHRG_BEMERK" type="textarea"
-                    placeholder="Rückversicherung Bemerkung"></app-attribute-value-edit>
             </div>
         </div>
 
@@ -310,27 +256,10 @@
             </div>
         </div>
 
-        <!--Erläuterung -->
+        <!--Begehbar -->
         <div class="row mt-2">
             <div class="col-4">
-                <div class="row">
-                    <div class="col-6 attribute-label">
-                        Begehungszyklus
-                    </div>
-                    <div class="col-6">
-                        <app-attribute-value-edit [feature]="feature" formControlName="BEGEHUNGSZYKLUS">
-                        </app-attribute-value-edit>
-                    </div>
-                </div>
-                <div class="row mt-m1">
-                    <div class="col-6 attribute-label">
-                        Absturzgefahr
-                    </div>
-                    <div class="col-6">
-                        <app-attribute-value-edit [feature]="feature" formControlName="ABSTURZGEFAHR" [required]="true">
-                        </app-attribute-value-edit>
-                    </div>
-                </div>
+               
                 <div class="row mt-m1">
                     <div class="col-6 attribute-label">
                         Begehbar
@@ -340,43 +269,7 @@
                         </app-attribute-value-edit>
                     </div>
                 </div>
-            </div>
-            <div class="col-8">
-                <app-attribute-value-edit [feature]="feature" formControlName="ABSTURZGEFAHR_ERLAEUTERUNGEN"
-                    type="textarea" placeholder="Erläuterung"></app-attribute-value-edit>
-            </div>
-        </div>
-
-        <!--TSP-->
-        <div class="row mt-2">
-            <div class="col-2 attribute-label">
-                TSP
-            </div>
-            <div class="col-2">
-                <app-attribute-value-edit [feature]="feature" formControlName="TSP"></app-attribute-value-edit>
-            </div>
-            <div class="col-4 attribute-label">
-                GNS Sichtbar/Empfang
-            </div>
-            <div class="col-2 pr-0 mr-m1">
-                <app-attribute-value-edit [feature]="feature" formControlName="GNSSSICHTBARKEIT" [required]="true">
-                </app-attribute-value-edit>
-            </div>
-            <div class="col-2 pl-0">
-                <app-attribute-value-edit [feature]="feature" formControlName="GSMEMPFANG" [required]="true">
-                </app-attribute-value-edit>
-            </div>
-        </div>
-
-        <!--Herkunft-->
-        <div class="row mt-4">
-            <div class="col-2 attribute-label">
-                Herkunft
-            </div>
-            <div class="col-2">
-                <app-attribute-value-edit [feature]="feature" formControlName="HERKUNFT" [required]="true">
-                </app-attribute-value-edit>
-            </div>
+            </div>            
         </div>
 
         <!--Referenzepoche-->
@@ -391,26 +284,54 @@
         </div>
         <div class="row mb-4  mt-m1">
             <div class="col-4 attribute-label">
-                Geschwindigkeit E/N/UP
-            </div>
-            <div class="col-1">
-                <app-attribute-value-edit [feature]="feature" formControlName="GESCHWINDIGKEIT_E">
-                </app-attribute-value-edit>
-            </div>
-            <div class="col-1">
-                <app-attribute-value-edit [feature]="feature" formControlName="GESCHWINDIGKEIT_N">
-                </app-attribute-value-edit>
-            </div>
+                Geschwindigkeit UP
+            </div>            
             <div class="col-1">
                 <app-attribute-value-edit [feature]="feature" formControlName="GESCHWINDIGKEIT_UP">
                 </app-attribute-value-edit>
             </div>
         </div>
 
+         <!-- HFPKANTON / ORTBEZEICHNUNG -->
+         <div class="row">
+            <div class="col-3 attribute-label">
+                HFPKANTON
+            </div>
+            <div class="col-3">
+                <app-attribute-value-edit [feature]="feature" formControlName="HFPKANTON" [required]="true">
+                </app-attribute-value-edit>
+            </div>
+            <div class="col-3 attribute-label">
+                ORTBEZEICHNUNG
+            </div>
+            <div class="col-3">
+                <app-attribute-value-edit [feature]="feature" formControlName="ORTBEZEICHNUNG">
+                </app-attribute-value-edit>
+            </div>            
+        </div>
+
+        <!-- INSCHRIFT / BEMERKUNG_BAUSTEIN -->
+        <div class="row">
+            <div class="col-3 attribute-label">
+                INSCHRIFT
+            </div>
+            <div class="col-3">
+                <app-attribute-value-edit [feature]="feature" formControlName="INSCHRIFT">
+                </app-attribute-value-edit>
+            </div>
+            <div class="col-3 attribute-label">
+                BEMERKUNG_BAUSTEIN
+            </div>
+            <div class="col-3">
+                <app-attribute-value-edit [feature]="feature" formControlName="BEMERKUNG_BAUSTEIN">
+                </app-attribute-value-edit>
+            </div>            
+        </div>
+
     </div>
 
       <!--anhang features -->
-      <div role="tabpanel" class="tab-pane fade py-2" id="lfp_anhang_tab">
+      <div role="tabpanel" class="tab-pane fade py-2" id="hfp_anhang_tab">
         <div class="row mb-2" [hidden]="readonly">
             <div class="col-12">
                 <button type="button" class="btn btn-primary" (click)="addAnhangClick()">Add New
@@ -426,7 +347,7 @@
     </div>
 
     <!--nachführung features -->
-    <div role="tabpanel" class="tab-pane fade py-2" id="lfp_nachfuehrung_tab">
+    <div role="tabpanel" class="tab-pane fade py-2" id="hfp_nachfuehrung_tab">
         <div class="row mb-2" [hidden]="readonly">
             <div class="col-12">
                 <button type="button" class="btn btn-primary" (click)="addNachfuehrungClick()">Add New
@@ -442,7 +363,7 @@
     </div>
 
     <!--grundbuch features -->
-    <div role="tabpanel" class="tab-pane fade py-2" id="lfp_grundbuch_tab" [class.spinner]="redefining">
+    <div role="tabpanel" class="tab-pane fade py-2" id="hfp_grundbuch_tab" [class.spinner]="redefining">
         <div class="row mb-2" [hidden]="readonly">
             <div class="col-12">
                 <button type="button" class="btn btn-primary mr-2" (click)="addGrundbuchClick()">Add New
@@ -458,24 +379,53 @@
         </div>
     </div>
 
-    <!--rückversicherung features -->
-    <div role="tabpanel" class="tab-pane fade py-2" id="lfp_rueckversicherung_tab">
+    <!--auslandpunkt features -->
+    <div role="tabpanel" class="tab-pane fade py-2" id="hfp_auslandpunkt_tab">
         <div class="row mb-2" [hidden]="readonly">
             <div class="col-12">
-                <button type="button" class="btn btn-primary" (click)="addRueckversicherungClick()">Add New
-                    Rückversicherung</button>
+                <button type="button" class="btn btn-primary" (click)="addAuslandpunktClick()">Add New
+                    Auslandpunkt</button>
             </div>
         </div>
-        <div *ngFor="let feature of getRueckversicherungFeatures()">
+        <div *ngFor="let feature of getAuslandpunktFeatures()">
             <div *ngIf="feature.state !== 'deleted'">
-                <app-rueckversicherung-edit [feature]="feature" [formGroup]="formGroup" [readonly]="readonly">
-                </app-rueckversicherung-edit>
+                <app-auslandpunkt-edit [feature]="feature" [formGroup]="formGroup" [readonly]="readonly"></app-auslandpunkt-edit>
+            </div>
+        </div>
+    </div>
+
+    <!--schweremessung features -->
+    <div role="tabpanel" class="tab-pane fade py-2" id="hfp_schweremessung_tab">
+        <div class="row mb-2" [hidden]="readonly">
+            <div class="col-12">
+                <button type="button" class="btn btn-primary" (click)="addSchweremessungClick()">Add New
+                    Schweremessung</button>
+            </div>
+        </div>
+        <div *ngFor="let feature of getSchweremessungFeatures()">
+            <div *ngIf="feature.state !== 'deleted'">
+                <app-schweremessung-edit [feature]="feature" [formGroup]="formGroup" [readonly]="readonly"></app-schweremessung-edit>
+            </div>
+        </div>
+    </div>
+
+    <!--schaeden features -->
+    <div role="tabpanel" class="tab-pane fade py-2" id="hfp_schaeden_tab">
+        <div class="row mb-2" [hidden]="readonly">
+            <div class="col-12">
+                <button type="button" class="btn btn-primary" (click)="addSchaedenClick()">Add New
+                    Schäden</button>
+            </div>
+        </div>
+        <div *ngFor="let feature of getSchaedenFeatures()">
+            <div *ngIf="feature.state !== 'deleted'">
+                <app-schaeden-edit [feature]="feature" [formGroup]="formGroup" [readonly]="readonly"></app-schaeden-edit>
             </div>
         </div>
     </div>
 
     <!--kontakt features -->
-    <div role="tabpanel" class="tab-pane fade py-2" id="lfp_kontakt_tab">
+    <div role="tabpanel" class="tab-pane fade py-2" id="hfp_kontakt_tab">
         <div class="row mb-2" [hidden]="readonly">
             <div class="col-12">
                 <button type="button" class="btn btn-primary" (click)="addKontaktClick()">Add New

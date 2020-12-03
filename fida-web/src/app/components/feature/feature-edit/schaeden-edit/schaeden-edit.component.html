@@ -1,0 +1,59 @@
+<div class="card" [formGroup]="formGroup">
+
+    <!-- header -->
+    <div class="card-header mb-0 collapsed" type="button" data-toggle="collapse" [attr.data-target]="'#' + componentId"
+        aria-expanded="false">{{ getHeaderText() }}
+    </div>
+
+    <!-- body -->
+    <div [id]="componentId" class="collapse" [class.readonly]="readonly">
+        <div class="card-body">
+
+            <div class="row">
+                <div class="col-3 attribute-label">DATUM</div>
+                <div class="col-3">
+                    <app-attribute-value-edit [feature]="feature" formControlName="DATUM" [required]="true">
+                    </app-attribute-value-edit>
+                </div>
+                <div class="col-3 attribute-label">UEBERMITTLER</div>
+                <div class="col-3">
+                    <app-attribute-value-edit [feature]="feature" formControlName="UEBERMITTLER" [required]="true">
+                    </app-attribute-value-edit>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-3 attribute-label">STATUS</div>
+                <div class="col-3">
+                    <app-attribute-value-edit [feature]="feature" formControlName="STATUS" [required]="true">
+                    </app-attribute-value-edit>
+                </div>
+                <div class="col-3 attribute-label">MELDUNG</div>
+                <div class="col-3">
+                    <app-attribute-value-edit [feature]="feature" formControlName="MELDUNG" [required]="true">
+                    </app-attribute-value-edit>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-3 attribute-label">ORT</div>
+                <div class="col-3">
+                    <app-attribute-value-edit [feature]="feature" formControlName="ORT">
+                    </app-attribute-value-edit>
+                </div>
+                <div class="col-3 attribute-label">MASSNAHME_BEMERKUNG</div>
+                <div class="col-3">
+                    <app-attribute-value-edit [feature]="feature" formControlName="MASSNAHME_BEMERKUNG">
+                    </app-attribute-value-edit>
+                </div>
+            </div>
+
+            <!-- delete button -->
+            <div class="row mt-2" [hidden]="readonly">
+                <div class="col-12">
+                    <button type="button" class="btn btn-danger float-right" (click)="deleteClick()">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

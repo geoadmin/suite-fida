@@ -104,19 +104,9 @@ export class FeatureEditComponent implements OnInit {
       // check of geometry-attribute change
       if (this.feature.attributes.LV95E !== this.originalAttributes.LV95E
         || this.feature.attributes.LV95N !== this.originalAttributes.LV95N
-        || this.feature.attributes.LK25 !== this.originalAttributes.LK25) {
+        || this.feature.attributes.LN02 !== this.originalAttributes.LN02) {
         this.modalRef = this.modalService.show(saveDialogTemplate, { class: 'modal-sm' });
         return;
-      }
-
-      // check LK25
-      if (this.feature.attributes.LK25 !== this.originalAttributes.LK25) {
-        const isOk = await this.featureService.checkLK25(this.feature);
-        if(!isOk){
-          // todo: wie reagieren?
-          return;
-        } 
-        // TODO: update punktnummer....
       }
     }
 
@@ -135,13 +125,14 @@ export class FeatureEditComponent implements OnInit {
   }
 
   async save(): Promise<void> {
+    const featureState = this.feature.state;
     this.showSpinner = true;
     this.featureService.updateGeometryFromAttributes(this.feature);
     await this.featureService.saveFeature(this.feature);
     this.showSpinner = false;
     this.changeDetectorRef.detectChanges();
 
-    if (this.feature.state === FeatureState.Create) {
+    if (featureState === FeatureState.Create) {
       this.widgetNotifyService.onFeatureCreateCompleteSubject.next(CompleteState.Saved);
     } else {
       this.widgetNotifyService.onFeatureEditCompleteSubject.next(CompleteState.Saved);

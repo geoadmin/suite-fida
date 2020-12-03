@@ -4,11 +4,11 @@ import { FeatureState, FidaFeature } from 'src/app/models/FidaFeature.model';
 import { FeatureService } from 'src/app/services/feature.service';
 
 @Component({
-  selector: 'app-lfp-edit',
-  templateUrl: './lfp-edit.component.html',
-  styleUrls: ['./lfp-edit.component.scss']
+  selector: 'app-hfp-edit',
+  templateUrl: './hfp-edit.component.html',
+  styleUrls: ['./hfp-edit.component.scss']
 })
-export class LfpEditComponent implements OnInit {
+export class HfpEditComponent implements OnInit {
   @Input() feature: FidaFeature;
   @Input() formGroup: FormGroup;
   @Input() readonly: boolean = false;
@@ -24,17 +24,17 @@ export class LfpEditComponent implements OnInit {
     }
   }
 
-  async redefineGrundbuchDataClick(): Promise<any> {
+  async redefineGrundbuchDataClick() {
     this.redefining = true;
     await this.featureService.redefineGrundbuchFeatures(this.feature);
     this.redefining = false;
   }
 
-  async addNachfuehrungClick(): Promise<any> {
+  async addNachfuehrungClick() {
     await this.featureService.createRelatedFeature(this.feature, 'nachfuehrung');
   }
 
-  getNachfuehrungFeatures(): FidaFeature[] {
+  getNachfuehrungFeatures() {
     let featurelist = this.feature?.relatedFeatures?.nachfuehrung?.filter((f: FidaFeature) => f.state !== FeatureState.Delete);
     if (featurelist) {
       featurelist.sort(function (a, b) {
@@ -54,12 +54,28 @@ export class LfpEditComponent implements OnInit {
     return this.feature?.relatedFeatures?.grundbuch?.filter((f: FidaFeature) => f.state !== FeatureState.Delete);
   }
 
-  async addRueckversicherungClick(): Promise<any> {
-    await this.featureService.createRelatedFeature(this.feature, 'rueckversicherung');
+  async addSchaedenClick(): Promise<any> {
+    await this.featureService.createRelatedFeature(this.feature, 'schaeden');
   }
 
-  getRueckversicherungFeatures(): FidaFeature[] {
-    return this.feature?.relatedFeatures?.rueckversicherung?.filter((f: FidaFeature) => f.state !== FeatureState.Delete);
+  getSchaedenFeatures(): FidaFeature[] {
+    return this.feature?.relatedFeatures?.schaeden?.filter((f: FidaFeature) => f.state !== FeatureState.Delete);
+  }
+
+  async addAuslandpunktClick(): Promise<any> {
+    await this.featureService.createRelatedFeature(this.feature, 'auslandpunkt');
+  }
+
+  getAuslandpunktFeatures(): FidaFeature[] {
+    return this.feature?.relatedFeatures?.auslandpunkt?.filter((f: FidaFeature) => f.state !== FeatureState.Delete);
+  }
+
+  async addSchweremessungClick(): Promise<any> {
+    await this.featureService.createRelatedFeature(this.feature, 'schweremessung');
+  }
+
+  getSchweremessungFeatures(): FidaFeature[] {
+    return this.feature?.relatedFeatures?.schweremessung?.filter((f: FidaFeature) => f.state !== FeatureState.Delete);
   }
 
   async addKontaktClick(): Promise<any> {

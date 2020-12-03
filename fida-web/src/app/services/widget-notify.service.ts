@@ -17,6 +17,7 @@ export class WidgetNotifyService {
   public onFeatureEditSubject: Subject<FidaFeature>;
   public onFeatureEditCompleteSubject: Subject<CompleteState>;
   public onFeatureCreateCompleteSubject: Subject<CompleteState>;
+  public onFeatureDeleteSubject: Subject<FidaFeature>;
   public onGdbVersionChangedSubject: Subject<string>;
   public setMapPopupVisibilitySubject: Subject<boolean>;
   public enableMapPopupSubject:Subject<boolean>;
@@ -27,6 +28,7 @@ export class WidgetNotifyService {
     this.onGeometryEditCompleteSubject = new Subject();
     this.onFeatureEditSubject = new Subject();
     this.onFeatureEditCompleteSubject = new Subject();
+    this.onFeatureDeleteSubject = new Subject();
     this.onGdbVersionChangedSubject = new Subject();
     this.setMapPopupVisibilitySubject = new Subject();
     this.enableMapPopupSubject = new Subject();

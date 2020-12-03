@@ -2,7 +2,8 @@
 
     <!-- value -->
     <div [ngSwitch]="getFieldType()">
-        <!--domain value-->
+        
+        <!-- domain value -->
         <div *ngSwitchCase="'domain'">
             <select formControlName="valueControl" [(ngModel)]="feature?.attributes[formControlName]"
                 [name]="formControlName" [placeholder]="placeholder" class="form-control">
@@ -16,7 +17,8 @@
         <!-- date value -->
         <div *ngSwitchCase="'date'">
             <input type="text" class="form-control" formControlName="valueControl" [name]="formControlName" bsDatepicker
-                [(ngModel)]="date" (change)="onDateChanged($event)" (bsValueChange)="onDateChanged($event)" [bsConfig]="{ adaptivePosition: true }">
+                [(ngModel)]="date" (change)="onDateChanged($event)" (bsValueChange)="onDateChanged($event)"
+                [bsConfig]="{ adaptivePosition: true }">
         </div>
 
         <!-- number value -->

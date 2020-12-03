@@ -1,5 +1,5 @@
 import { Injectable, ComponentFactoryResolver, Injector, Compiler, ComponentFactory, Component, ModuleWithComponentFactories, NgModule, ElementRef, ComponentRef } from '@angular/core';
-import { FeatureContainerComponent } from '../components/feature/feature-container/feature-container.component'
+import { FeatureViewComponent } from '../components/feature/feature-view/feature-view.component'
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
@@ -25,9 +25,9 @@ export class ComponentService {
       .subscribe(data => this.featureEditTemplate = data);
   }
 
-  public createFeatureContainerComponent(feature: FidaFeature): ComponentRef<FeatureContainerComponent> {
+  public createFeatureViewComponent(feature: FidaFeature): ComponentRef<FeatureViewComponent> {
     // create  component
-    const factory = this.componentFactoryResolver.resolveComponentFactory(FeatureContainerComponent);
+    const factory = this.componentFactoryResolver.resolveComponentFactory(FeatureViewComponent);
     const component = factory.create(this.injector);
     // set feature and trigger change
     component.instance.setFeature(feature);

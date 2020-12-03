@@ -13,6 +13,7 @@ import EsriError from 'esri/core/Error';
 import ActionButton from 'esri/support/actions/ActionButton';
 import { CookieService } from './cookie.service';
 import { ConfigService } from '../configs/config.service';
+import { FidaFeature } from '../models/FidaFeature.model';
 
 @Injectable({ providedIn: 'root' })
 export class MapService {
@@ -27,6 +28,10 @@ export class MapService {
     private cookieService: CookieService,
     private configService: ConfigService
   ) { 
+    this.widgetNotifyService.onFeatureDeleteSubject.subscribe((feature: FidaFeature) => {
+      this.removeFeatureFromPopup(feature);
+    });
+
     // present this events for cirtular dependency eliminations
     this.widgetNotifyService.setMapPopupVisibilitySubject.subscribe((visible: boolean) => {
       this.setPopupVisibility(visible);
@@ -113,6 +118,10 @@ export class MapService {
     return this.graphicsLayer;
   }
 
+  /**
+   * POPUP
+   */
+
   private initPopup(): void {
     this.view.popup.dockOptions.position = 'top-left'
     this.view.popup.dockOptions.buttonEnabled = false;
@@ -154,5 +163,15 @@ export class MapService {
     if (this.view) {
       this.view.popup.visible = visible;
     }
+  }
+
+  private removeFeatureFromPopup(feature: FidaFeature):void {
+    const features = this.view.popup.features.filter(f => f.attributes.GLOBALID !== feature.attributes.GLOBALID);
+    this.view.popup.clear();
+    if(features.length === 0){
+      this.view.popup.close();
+    } else {
+      this.view.popup.features = features;
+    }    
   }
 }

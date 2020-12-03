@@ -16,7 +16,6 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { MapComponent } from './components/map/map.component';
-import { FeatureContainerComponent } from './components/feature/feature-container/feature-container.component';
 import { FeatureEditComponent } from './components/feature/feature-edit/feature-edit.component'
 import { FeatureCreateComponent } from './components/feature/feature-create/feature-create.component';
 import { FeatureViewComponent } from './components/feature/feature-view/feature-view.component';
@@ -37,6 +36,12 @@ import { AnhangEditComponent } from './components/feature/feature-edit/anhang-ed
 
 // config
 import { ConfigService } from './configs/config.service';
+import { DefaultViewComponent } from './components/feature/feature-view/default-view/default-view.component';
+import { HfpEditComponent } from './components/feature/feature-edit/hfp-edit/hfp-edit.component';
+import { AuslandpunktEditComponent } from './components/feature/feature-edit/auslandpunkt-edit/auslandpunkt-edit.component';
+import { SchweremessungEditComponent } from './components/feature/feature-edit/schweremessung-edit/schweremessung-edit.component';
+import { SchaedenEditComponent } from './components/feature/feature-edit/schaeden-edit/schaeden-edit.component';
+import { LsnEditComponent } from './components/feature/feature-edit/lsn-edit/lsn-edit.component';
 
 export function initApp(configService: ConfigService) {
   return () => configService.load();
@@ -52,7 +57,6 @@ export function createCompiler(compilerFactory: CompilerFactory) {
     AppComponent,
     HeaderComponent,
     MapComponent,
-    FeatureContainerComponent,
     FeatureEditComponent,
     FeatureViewComponent,
     AttributeEditComponent,
@@ -69,7 +73,13 @@ export function createCompiler(compilerFactory: CompilerFactory) {
     GrundbuchEditComponent,
     RueckversicherungEditComponent,
     KontaktEditComponent,
-    AnhangEditComponent
+    AnhangEditComponent,
+    DefaultViewComponent,
+    HfpEditComponent,
+    AuslandpunktEditComponent,
+    SchweremessungEditComponent,
+    SchaedenEditComponent,
+    LsnEditComponent
   ],
   imports: [
     FormsModule,
@@ -89,7 +99,7 @@ export function createCompiler(compilerFactory: CompilerFactory) {
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    FeatureContainerComponent
+    FeatureViewComponent
   ]
 })
 export class AppModule { }

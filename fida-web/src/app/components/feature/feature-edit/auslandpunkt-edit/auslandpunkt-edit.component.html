@@ -1,0 +1,54 @@
+<div class="card" [formGroup]="formGroup">
+
+    <!-- header -->
+    <div class="card-header mb-0 collapsed" type="button" data-toggle="collapse" [attr.data-target]="'#' + componentId"
+        aria-expanded="false">{{ getHeaderText() }}
+    </div>
+
+    <!-- body -->
+    <div [id]="componentId" class="collapse" [class.readonly]="readonly">
+        <div class="card-body">
+
+            <div class="row">
+                <div class="col-3 attribute-label">PUNKTNAME</div>
+                <div class="col-3">
+                    <app-attribute-value-edit [feature]="feature" formControlName="PUNKTNAME" [required]="true">
+                    </app-attribute-value-edit>
+                </div>
+                <div class="col-3 attribute-label">HOEHE</div>
+                <div class="col-3">
+                    <app-attribute-value-edit [feature]="feature" formControlName="HOEHE" [required]="true">
+                    </app-attribute-value-edit>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-3 attribute-label">HOEHENBEZUGSRAHMEN</div>
+                <div class="col-3">
+                    <app-attribute-value-edit [feature]="feature" formControlName="HOEHENBEZUGSRAHMEN" [required]="true">
+                    </app-attribute-value-edit>
+                </div>
+                <div class="col-3 attribute-label">DELTAHOEHE</div>
+                <div class="col-3">
+                    <app-attribute-value-edit [feature]="feature" formControlName="DELTAHOEHE" [required]="true">
+                    </app-attribute-value-edit>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-3 attribute-label">DATUM_HERKUNFT</div>
+                <div class="col-3">
+                    <app-attribute-value-edit [feature]="feature" formControlName="DATUM_HERKUNFT">
+                    </app-attribute-value-edit>
+                </div>
+            </div>
+
+            <!-- delete button -->
+            <div class="row mt-2" [hidden]="readonly">
+                <div class="col-12">
+                    <button type="button" class="btn btn-danger float-right" (click)="deleteClick()">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

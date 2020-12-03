@@ -35,13 +35,21 @@
             </div>
 
             <div class="row">
-                <div class="col-3 attribute-label">PARZ</div>
-                <div class="col-3">
+                <div *ngIf="feature.attributes.ORTBEZEICHNUNG !== undefined" class="col-3 attribute-label">
+                    ORTBEZEICHNUNG</div>
+                <div *ngIf="feature.attributes.ORTBEZEICHNUNG !== undefined" class="col-3">
+                    <app-attribute-value-edit [feature]="feature" formControlName="ORTBEZEICHNUNG">
+                    </app-attribute-value-edit>
+                </div>
+
+                <div *ngIf="feature.attributes.PARZ !== undefined" class="col-3 attribute-label">PARZ</div>
+                <div *ngIf="feature.attributes.PARZ !== undefined" class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="PARZ">
                     </app-attribute-value-edit>
                 </div>
-                <div class="col-3 attribute-label">ANMERKUNGIMGB</div>
-                <div class="col-3">
+                <div *ngIf="feature.attributes.ANMERKUNGIMGB !== undefined" class="col-3 attribute-label">ANMERKUNGIMGB
+                </div>
+                <div *ngIf="feature.attributes.ANMERKUNGIMGB !== undefined" class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="ANMERKUNGIMGB">
                     </app-attribute-value-edit>
                 </div>

@@ -215,12 +215,18 @@ export class FeatureService {
   }
 
   private updateFk(relatedFeature: FidaFeature, feature: FidaFeature, relationship: Relationship) {
-    const fkField = "FK_FIDA_LFP"; // TODO load aus config
+    const fkField =  this.configService.getLayerConfigById(feature.layer.id).fkField;
     const fkValue = feature.attributes[relationship.keyField.toUpperCase()];
     relatedFeature.attributes[fkField] = fkValue;
   }
 
   public async redefineGrundbuchFeatures(feature: FidaFeature): Promise<any> {
+    // check of grundbuch relationship
+    const featureLayer = this.getFeatureLayer(feature);
+    if(this.hasRelationship(featureLayer, 'grundbuch') == false){
+      return;
+    }
+
     // get grundbuch  
     const parcelInfos = await this.parcelInfoService.getParcelInfo(feature.geometry);
 
@@ -230,9 +236,7 @@ export class FeatureService {
     feature.relatedFeatures.grundbuch.map(f => (f as FidaFeature).state = FeatureState.Delete);
 
     // set new grundbuch features    
-    const featureLayer = this.getFeatureLayer(feature);
     const grundbuchLayer = await this.getRelatedFeatureLayerByName(featureLayer, 'grundbuch');
-
     parcelInfos.forEach((parcelInfo) => {
       let grundbuchFeature = new FidaFeature();
       grundbuchFeature.attributes = { ...grundbuchLayer.templates[0].prototype.attributes };
@@ -283,15 +287,6 @@ export class FeatureService {
       const tileId = await this.lk25Service.getTileId(point);
       feature.attributes.LK25 = tileId;
     }
-  }
-
-  public async checkLK25(feature: FidaFeature): Promise<boolean> {
-    const point = feature.geometry as Point;
-    if (point) {
-      const tileId = await this.lk25Service.getTileId(point);
-      return feature.attributes.LK25 === tileId;
-    }
-    return false;
   }
 
   public getFeatureName(feature: FidaFeature): string {
@@ -359,10 +354,15 @@ export class FeatureService {
     return relatedFeatureLayer;
   }
 
+  private hasRelationship(featureLayer: FeatureLayer, relationshipName: string): boolean {
+    const relationship = featureLayer.relationships.find(f => f.name.toLowerCase() === relationshipName.toLowerCase());
+    return relationship !== undefined;
+  }
+
   private getRelationship(featureLayer: FeatureLayer, relationshipName: string): Relationship {
     const relationship = featureLayer.relationships.find(f => f.name.toLowerCase() === relationshipName.toLowerCase());
     if (!relationship) {
-      throw new Error(`relationship wiht name "${relationshipName}" not found`);
+      throw new Error(`no relationship with name "${relationshipName}" for layer ${featureLayer.title} found`);
     }
     return relationship;
   }

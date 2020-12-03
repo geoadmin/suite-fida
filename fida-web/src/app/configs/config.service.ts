@@ -27,9 +27,9 @@ export class ConfigService {
         this.config.versionManagement.serverUrl = this.config.versionManagement.serverUrl.replace(this.config.arcGisUrlPlaceholder, environment.arcGisServer);
         this.config.gp.getParcelInfoUrl = this.config.gp.getParcelInfoUrl.replace(this.config.arcGisUrlPlaceholder, environment.arcGisServer);
 
-        // TDOD load arcgis-server-config
-        //const arcGisServerLayerInfosUrl = 'https://s7t2530a.adr.admin.ch/arcgis/rest/services/FIDA/FIDA/FeatureServer/layers';
-        //this.config.layerInfos = await this.loadArcGisServerConfig(arcGisServerLayerInfosUrl);        
+        // load arcgis-server-config
+        //const layerInfosUrl = this.config.gp.getParcelInfoUrl.replace(this.config.layerInfosUrl, environment.arcGisServer);;
+        //this.config.layerInfos = await this.loadArcGisServerConfig(layerInfosUrl);        
     }
 
     private loadArcGisServerConfig(url: string): Promise<any> {

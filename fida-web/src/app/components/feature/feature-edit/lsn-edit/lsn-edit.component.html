@@ -1,0 +1,133 @@
+<div class="container" [formGroup]="formGroup" [class.readonly]="readonly">
+
+    <!--Punktart / Nr-->
+    <div class="row mt-4">
+        <div class="col-2 attribute-label">
+            Punktart
+        </div>
+        <div class="col-4">
+            <app-attribute-value-edit [feature]="feature" formControlName="OBJEKTART" [required]="true">
+            </app-attribute-value-edit>
+        </div>        
+        <div class="col-2 attribute-label">
+            Nummer
+        </div>
+        <div class="col-4 mr-m1">
+            <app-attribute-value-edit [feature]="feature" formControlName="NUMMER" [required]="true">
+            </app-attribute-value-edit>
+        </div>
+    </div>
+
+    <!--Status -->
+    <div class="row mt-2">
+        <div class="col-2 attribute-label">
+            Status
+        </div>
+        <div class="col-2">
+            <app-attribute-value-edit [feature]="feature" formControlName="PUNKT_STATUS" [required]="true">
+            </app-attribute-value-edit>
+        </div>        
+    </div>
+
+    <!--Name / Ordnung -->
+    <div class="row mt-2">
+        <div class="col-2">
+        </div>
+        <div class="col-2 attribute-label">
+            Name
+        </div>
+        <div class="col-4">
+            <app-attribute-value-edit [feature]="feature" formControlName="NAME" [required]="true">
+            </app-attribute-value-edit>
+        </div>
+        <div class="col-2 attribute-label">
+            Ordnung
+        </div>
+        <div class="col-2">
+            <app-attribute-value-edit [feature]="feature" formControlName="ORDNUNG" [required]="true"></app-attribute-value-edit>
+        </div>
+    </div>
+
+    <!--Koordinaten -->
+    <div class="row mt-2">
+        <div class="col-4">
+            <div class="d-flex felx-row-reverse">
+                <span class="attribute-label mr-2">E</span>
+                <app-attribute-value-edit class="flex-fill" [feature]="feature" formControlName="LV95E"
+                    [required]="true">
+                </app-attribute-value-edit>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="d-flex felx-row-reverse">
+                <span class="attribute-label mr-2">N</span>
+                <app-attribute-value-edit class="flex-fill" [feature]="feature" formControlName="LV95N"
+                    [required]="true">
+                </app-attribute-value-edit>
+            </div>
+        </div>
+        <div class="col-2 attribute-label">
+            LN02
+        </div>
+        <div class="col-2">
+            <app-attribute-value-edit [feature]="feature" formControlName="LN02" [required]="true">
+            </app-attribute-value-edit>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-3 attribute-label">SCHWEREWERT</div>
+        <div class="col-3">
+            <app-attribute-value-edit [feature]="feature" formControlName="SCHWEREWERT" [required]="true"></app-attribute-value-edit>
+        </div>
+        <div class="col-3 attribute-label">STANDARDABWEICHUNG</div>
+        <div class="col-3">
+            <app-attribute-value-edit [feature]="feature" formControlName="STANDARDABWEICHUNG">
+            </app-attribute-value-edit>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-3 attribute-label">GRADIENT_GEMESSEN</div>
+        <div class="col-3">
+            <app-attribute-value-edit [feature]="feature" formControlName="GRADIENT_GEMESSEN"></app-attribute-value-edit>
+        </div>
+        <div class="col-3 attribute-label">GRADIENT_INTERPOLIERT</div>
+        <div class="col-3">
+            <app-attribute-value-edit [feature]="feature" formControlName="GRADIENT_INTERPOLIERT" [required]="true">
+            </app-attribute-value-edit>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-3 attribute-label">STDABW_GRADGEM</div>
+        <div class="col-3">
+            <app-attribute-value-edit [feature]="feature" formControlName="STDABW_GRADGEM"></app-attribute-value-edit>
+        </div>
+        <div class="col-3 attribute-label">VERTIKAL_OFFSET</div>
+        <div class="col-3">
+            <app-attribute-value-edit [feature]="feature" formControlName="VERTIKAL_OFFSET" [required]="true">
+            </app-attribute-value-edit>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-3 attribute-label">PUNKT_GUELTIG</div>
+        <div class="col-3">
+            <app-attribute-value-edit [feature]="feature" formControlName="PUNKT_GUELTIG" [required]="true"></app-attribute-value-edit>
+        </div>
+        <div class="col-3 attribute-label">MESSDATUM</div>
+        <div class="col-3">
+            <app-attribute-value-edit [feature]="feature" formControlName="MESSDATUM" [required]="true">
+            </app-attribute-value-edit>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-3 attribute-label">BEMERKUNGEN_STANDORT</div>
+        <div class="col-3">
+            <app-attribute-value-edit [feature]="feature" formControlName="BEMERKUNGEN_STANDORT"></app-attribute-value-edit>
+        </div>        
+    </div>
+
+</div>

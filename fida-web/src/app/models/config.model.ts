@@ -27,7 +27,8 @@ export class LayerConfig {
     type: LayerType;
     properties: any;
     relationships?: RelationshipsConfig;
-    idField?: string;
+    idField: string;
+    fkField: string;
 }
 
 export class VersionManagementConfig {
@@ -51,7 +52,8 @@ export class GpConfig {
 
 export class Config {
     arcGisUrlPlaceholder: string;
-    defaultVersion: string;
+    layerInfosUrl: string;
+    defaultVersion: string;    
     defaultExtent: ExtentConfig;
     versionManagement: VersionManagementConfig;
     gp: GpConfig;
