@@ -4,7 +4,7 @@ import FeatureLayer from 'esri/layers/FeatureLayer';
 import CodedValueDomain from 'esri/layers/support/CodedValueDomain';
 import Field from 'esri/layers/support/Field';
 import { FidaFeature } from 'src/app/models/FidaFeature.model';
-import { CONVERT_UTILS } from '../../../../utils/utils';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-attribute-value-edit',
@@ -57,7 +57,7 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
 
     // convert value to date-object 
     if (this.field.type === 'date') {      
-      this.date = CONVERT_UTILS.esriToDate(this.feature.attributes[this.formControlName]);       
+      this.date = UtilService.esriToDate(this.feature.attributes[this.formControlName]);       
     }
 
     // define validation form-control

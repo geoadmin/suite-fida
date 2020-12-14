@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { FeatureState, FidaFeature } from 'src/app/models/FidaFeature.model';
+import { FeatureState, FidaFeature, RelationshipName } from 'src/app/models/FidaFeature.model';
 import { FeatureService } from 'src/app/services/feature.service';
 
 @Component({
@@ -31,7 +31,7 @@ export class LfpEditComponent implements OnInit {
   }
 
   async addNachfuehrungClick(): Promise<any> {
-    await this.featureService.createRelatedFeature(this.feature, 'nachfuehrung');
+    await this.featureService.createRelatedFeature(this.feature, RelationshipName.Nachfuehrung);
   }
 
   getNachfuehrungFeatures(): FidaFeature[] {
@@ -47,7 +47,7 @@ export class LfpEditComponent implements OnInit {
   }
 
   async addGrundbuchClick(): Promise<any> {
-    await this.featureService.createRelatedFeature(this.feature, 'grundbuch');
+    await this.featureService.createRelatedFeature(this.feature, RelationshipName.Grundbuch);
   }
 
   getGrundbuchFeatures(): FidaFeature[] {
@@ -55,23 +55,15 @@ export class LfpEditComponent implements OnInit {
   }
 
   async addRueckversicherungClick(): Promise<any> {
-    await this.featureService.createRelatedFeature(this.feature, 'rueckversicherung');
+    await this.featureService.createRelatedFeature(this.feature, RelationshipName.Rueckversicherung);
   }
 
   getRueckversicherungFeatures(): FidaFeature[] {
     return this.feature?.relatedFeatures?.rueckversicherung?.filter((f: FidaFeature) => f.state !== FeatureState.Delete);
   }
 
-  async addKontaktClick(): Promise<any> {
-    await this.featureService.createRelatedFeature(this.feature, 'kontakt');
-  }
-
-  getKontaktFeatures(): FidaFeature[] {
-    return this.feature?.relatedFeatures?.kontakt?.filter((f: FidaFeature) => f.state !== FeatureState.Delete);
-  }
-
   async addAnhangClick(): Promise<any> {
-    await this.featureService.createRelatedFeature(this.feature, 'anhang');
+    await this.featureService.createRelatedFeature(this.feature, RelationshipName.Anhang);
   }
 
   getAnhangFeatures(): FidaFeature[] {

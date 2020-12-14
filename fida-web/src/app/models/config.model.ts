@@ -5,30 +5,17 @@ export enum LayerType {
     RelatedLayer = 'RelatedLayer'
 }
 
-export enum RelationshipName {
-    Grundbuch = 'grundbuch',
-    Nachfuehrung = 'nachfuehrungen',
-    Rueckversicherung = 'rueckversicherung',
-    Kontakt = 'kontakt'
-}
-
-export class RelationshipsConfig_OLD {
-    grundbuch: string;
-    nachfuehrungen: string;
-    rueckversicherung: string;
-    kontakt: string;
-}
-
 export class RelationshipsConfig {
     [key: string]: string
 }
 
 export class LayerConfig {
     type: LayerType;
-    properties: any;
-    relationships?: RelationshipsConfig;
+    name: string;
     idField: string;
     fkField: string;
+    properties: any;
+    relationships?: RelationshipsConfig;    
 }
 
 export class VersionManagementConfig {
@@ -52,7 +39,7 @@ export class GpConfig {
 
 export class Config {
     arcGisUrlPlaceholder: string;
-    layerInfosUrl: string;
+    layerBaseUrl: string;
     defaultVersion: string;    
     defaultExtent: ExtentConfig;
     versionManagement: VersionManagementConfig;

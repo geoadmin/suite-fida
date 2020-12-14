@@ -11,6 +11,7 @@ import EsriError from 'esri/core/Error';
 import esriRequest from 'esri/request';
 import { environment } from '../../environments/environment';
 import Geoprocessor from 'esri/tasks/Geoprocessor';
+import { FidaFeature } from '../models/FidaFeature.model';
 
 
 @Injectable({
@@ -86,8 +87,28 @@ export class QueryService {
     const queryTask = new QueryTask();
     queryTask.url = layerUrl;
 
-    return this.execute(queryTask, query).then((result: any) => {
-      return result.features;
+    return new Promise((resolve, reject) => {
+      queryTask.execute(query)
+        .then((result: any) => resolve(result.features))
+        .catch((error: EsriError) => {
+          this.messageService.error('Query failed.', error);
+          reject(error);
+        });
+    });    
+  }
+
+  public where(featureLayer: FeatureLayer, where: string): Promise<FidaFeature[]> {
+    const query = new Query();
+    query.where = where;
+    query.outFields = ['*'];
+        
+    return new Promise((resolve, reject) => {
+      featureLayer.queryFeatures(query)
+      .then((result: any) => resolve(this.convertToFidaFeature(result.features)))
+      .catch((error: EsriError) => {
+        this.messageService.error('Query failed.', error);
+        reject(error);
+      });
     });
   }
 
@@ -119,25 +140,15 @@ export class QueryService {
     });
   }
 
-  private buildQuery(requiredGeometry: boolean, whereQuery?: string, outFields?: string[], orderByFields?: string[]): Query {
+  private buildQuery(returnGeometry: boolean, where?: string, outFields?: string[], orderByFields?: string[]): Query {
     const query = new Query();
-    query.returnGeometry = requiredGeometry;
+    query.returnGeometry = returnGeometry;
     (outFields) ? query.outFields = outFields : query.outFields = ['*'];
-    (whereQuery) ? query.where = whereQuery : query.where = null;
+    (where) ? query.where = where : query.where = null;
     (orderByFields) ? query.orderByFields = orderByFields : query.orderByFields = null;
     return query;
   }
 
-  private execute(queryTask: QueryTask, query: Query): Promise<any> {
-    return new Promise((resolve, reject) => {
-      queryTask.execute(query)
-        .then((result: any) => resolve(result))
-        .catch((error: EsriError) => {
-          this.messageService.error('Query failed.', error);
-          reject(error);
-        });
-    });
-  }
 
   private async getToken(): Promise<string> {
     if (this.token) {
@@ -159,5 +170,9 @@ export class QueryService {
     this.token = generateTokenResult.data.token;
 
     return this.token;
+  }
+
+  private convertToFidaFeature(features: any) : FidaFeature[]{
+    return features.map((m:any) => m as FidaFeature);
   }
 }

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { FeatureState, FidaFeature } from 'src/app/models/FidaFeature.model';
+import { FeatureState, FidaFeature, RelationshipName } from 'src/app/models/FidaFeature.model';
 import { FeatureService } from 'src/app/services/feature.service';
 
 @Component({
@@ -31,7 +31,7 @@ export class HfpEditComponent implements OnInit {
   }
 
   async addNachfuehrungClick() {
-    await this.featureService.createRelatedFeature(this.feature, 'nachfuehrung');
+    await this.featureService.createRelatedFeature(this.feature, RelationshipName.Nachfuehrung);
   }
 
   getNachfuehrungFeatures() {
@@ -47,7 +47,7 @@ export class HfpEditComponent implements OnInit {
   }
 
   async addGrundbuchClick(): Promise<any> {
-    await this.featureService.createRelatedFeature(this.feature, 'grundbuch');
+    await this.featureService.createRelatedFeature(this.feature, RelationshipName.Grundbuch);
   }
 
   getGrundbuchFeatures(): FidaFeature[] {
@@ -55,7 +55,7 @@ export class HfpEditComponent implements OnInit {
   }
 
   async addSchaedenClick(): Promise<any> {
-    await this.featureService.createRelatedFeature(this.feature, 'schaeden');
+    await this.featureService.createRelatedFeature(this.feature, RelationshipName.Schaeden);
   }
 
   getSchaedenFeatures(): FidaFeature[] {
@@ -63,7 +63,7 @@ export class HfpEditComponent implements OnInit {
   }
 
   async addAuslandpunktClick(): Promise<any> {
-    await this.featureService.createRelatedFeature(this.feature, 'auslandpunkt');
+    await this.featureService.createRelatedFeature(this.feature, RelationshipName.Auslandpunkt);
   }
 
   getAuslandpunktFeatures(): FidaFeature[] {
@@ -71,7 +71,7 @@ export class HfpEditComponent implements OnInit {
   }
 
   async addSchweremessungClick(): Promise<any> {
-    await this.featureService.createRelatedFeature(this.feature, 'schweremessung');
+    await this.featureService.createRelatedFeature(this.feature, RelationshipName.Schweremessung);
   }
 
   getSchweremessungFeatures(): FidaFeature[] {
@@ -79,7 +79,7 @@ export class HfpEditComponent implements OnInit {
   }
 
   async addKontaktClick(): Promise<any> {
-    await this.featureService.createRelatedFeature(this.feature, 'kontakt');
+    await this.featureService.createRelatedFeature(this.feature, RelationshipName.Kontakt);
   }
 
   getKontaktFeatures(): FidaFeature[] {
@@ -87,7 +87,7 @@ export class HfpEditComponent implements OnInit {
   }
 
   async addAnhangClick(): Promise<any> {
-    await this.featureService.createRelatedFeature(this.feature, 'anhang');
+    await this.featureService.createRelatedFeature(this.feature, RelationshipName.Anhang);
   }
 
   getAnhangFeatures(): FidaFeature[] {

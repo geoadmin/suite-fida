@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { SettingService } from 'src/app/services/setting.service';
-import { FORMAT_UTILS } from 'src/app/utils/utils';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-header',
@@ -20,6 +20,6 @@ export class HeaderComponent {
   }
 
   getVersionName(): string {
-    return FORMAT_UTILS.formatVersionName(this.settingService.getGdbVersionName());
+    return UtilService.formatVersionName(this.settingService.getGdbVersionName());
   }
 }

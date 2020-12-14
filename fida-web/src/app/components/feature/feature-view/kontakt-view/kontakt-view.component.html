@@ -1,0 +1,46 @@
+<div class="card">
+
+    <!-- header -->
+    <div class="card-header mb-0" type="button" data-toggle="collapse" [attr.data-target]="'#' + componentId"
+        aria-expanded="false">
+        {{ getHeaderText() }}
+        <span class="font-italic" *ngIf="feature.state == 'create' || feature.state == 'edit'">(noch nicht
+            gespeichert)</span>
+    </div>
+
+    <!-- body -->
+    <div [id]="componentId" class="">
+        <div class="card-body">
+
+            <div class="row">
+                <div class="col-12 attribute-label">{{ feature.attributes.ART }}</div>
+            </div>
+            <div class="row">
+                <div class="col-12 attribute-label">{{ feature.attributes.FIRMA }}</div>
+            </div>
+            <div class="row">
+                <div class="col-12 attribute-label">{{ getNameLine() }}</div>
+            </div>
+            <div class="row">
+                <div class="col-12 attribute-label">{{ feature.attributes.ADRESSE }}</div>
+            </div>
+            <div class="row">
+                <div class="col-12 attribute-label">{{ getLocationLine() }}</div>
+            </div>
+            <div class="row">
+                <div class="col-12 attribute-label">{{ feature.attributes.TELEFON }}</div>
+            </div>
+            <div class="row">
+                <div class="col-12 attribute-label">{{ feature.attributes.EMAIL }}</div>
+            </div>
+
+            <!-- delete button -->
+            <div class="row mt-2" [hidden]="readonly">
+                <div class="col-12">
+                    <button type="button" class="btn btn-primary float-right ml-2" (click)="editClick()">Edit</button>
+                    <button type="button" class="btn btn-danger float-right" (click)="deleteClick()">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

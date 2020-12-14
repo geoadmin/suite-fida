@@ -1,6 +1,6 @@
 {
     "arcGisUrlPlaceholder": "[EVIRONMENT_ARCGISURL]",
-    "layerInfosUrl": "[EVIRONMENT_ARCGISURL]/rest/services/FIDA/FIDA/FeatureServer/layers",
+    "layerBaseUrl": "[EVIRONMENT_ARCGISURL]/rest/services/FIDA/FIDA/FeatureServer",
     "defaultVersion": "SDE.DEFAULT",
     "defaultExtent": {
         "xmax": 2852897,
@@ -15,24 +15,28 @@
         "serverUrl": "[EVIRONMENT_ARCGISURL]/rest/services/FIDA/FIDA/VersionManagementServer",
         "defaultVersion": "SDE.DEFAULT"
     },
-    "gp":{
+    "gp": {
         "getParcelInfoUrl": "[EVIRONMENT_ARCGISURL]/rest/services/FIDA/GetParzInfo/GPServer/GetParzInfo",
-        "getHeightUrl": "http://api3.geo.admin.ch/rest/services/height",
-        "getLK25Url": "http://api3.geo.admin.ch/rest/services/api/MapServer/identify"
+        "getHeightUrl": "https://api3.geo.admin.ch/rest/services/height",
+        "getLK25Url": "https://api3.geo.admin.ch/rest/services/api/MapServer/identify"
     },
     "layers": [
         {
             "type": "FeatureLayer",
+            "name": "FIDA_LSN",
+            "idField": "NUMMER",
+            "fkField": "",
             "properties": {
                 "id": "LSN",
                 "url": "[EVIRONMENT_ARCGISURL]/rest/services/FIDA/FIDA/FeatureServer/2",
                 "visible": false
-            },
-            "idField": "NUMMER",
-            "fkField": ""
+            }
         },
         {
             "type": "FeatureLayer",
+            "name": "FIDA_HFP",
+            "idField": "HFPNR",
+            "fkField": "FK_FIDA_HFP",
             "properties": {
                 "id": "HFP",
                 "url": "[EVIRONMENT_ARCGISURL]/rest/services/FIDA/FIDA/FeatureServer/1",
@@ -42,12 +46,11 @@
                 "anhang": "Anhang",
                 "grundbuch": "Grundbuch",
                 "nachfuehrung": "Nachfuehrungen",
+                "kontakt": "Kontakt",
                 "schweremessung": "Schweremessung",
                 "schaeden": "Schaeden",
-                "auslandpunkt": "Auslandppunkt"                
-            },
-            "idField": "HFPNR",
-            "fkField": "FK_FIDA_HFP"
+                "auslandpunkt": "Auslandppunkt"
+            }
         },
         {
             "type": "FeatureLayer",
@@ -63,9 +66,9 @@
                 "anhang": "Anhang",
                 "grundbuch": "Grundbuch",
                 "nachfuehrung": "Nachfuehrungen",
-                "rueckversicherung": "Rueckversicherung",
-                "kontakt": "Kontakt"                
-            }            
+                "kontakt": "Kontakt",
+                "rueckversicherung": "Rueckversicherung"
+            }
         }
     ]
 }

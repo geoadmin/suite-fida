@@ -11,9 +11,11 @@ import "./configs/esri-config";
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
 // components
 import { AppComponent } from './app.component';
+import { ConfigService } from './configs/config.service';
 import { HeaderComponent } from './components/header/header.component';
 import { MapComponent } from './components/map/map.component';
 import { FeatureEditComponent } from './components/feature/feature-edit/feature-edit.component'
@@ -31,18 +33,18 @@ import { LfpEditComponent } from './components/feature/feature-edit/lfp-edit/lfp
 import { NachfuehrungEditComponent } from './components/feature/feature-edit/nachfuehrung-edit/nachfuehrung-edit.component';
 import { GrundbuchEditComponent } from './components/feature/feature-edit/grundbuch-edit/grundbuch-edit.component';
 import { RueckversicherungEditComponent } from './components/feature/feature-edit/rueckversicherung-edit/rueckversicherung-edit.component';
-import { KontaktEditComponent } from './components/feature/feature-edit/kontakt-edit/kontakt-edit.component';
 import { AnhangEditComponent } from './components/feature/feature-edit/anhang-edit/anhang-edit.component';
-
-// config
-import { ConfigService } from './configs/config.service';
 import { DefaultViewComponent } from './components/feature/feature-view/default-view/default-view.component';
 import { HfpEditComponent } from './components/feature/feature-edit/hfp-edit/hfp-edit.component';
 import { AuslandpunktEditComponent } from './components/feature/feature-edit/auslandpunkt-edit/auslandpunkt-edit.component';
 import { SchweremessungEditComponent } from './components/feature/feature-edit/schweremessung-edit/schweremessung-edit.component';
 import { SchaedenEditComponent } from './components/feature/feature-edit/schaeden-edit/schaeden-edit.component';
 import { LsnEditComponent } from './components/feature/feature-edit/lsn-edit/lsn-edit.component';
+import { KontaktEditDialogComponent } from './components/feature/kontakt-manager/kontakt-edit-dialog/kontakt-edit-dialog.component';
+import { KontaktManagerComponent } from './components/feature/kontakt-manager/kontakt-manager.component';
+import { KontaktViewComponent } from './components/feature/feature-view/kontakt-view/kontakt-view.component';
 
+// config
 export function initApp(configService: ConfigService) {
   return () => configService.load();
 }
@@ -72,14 +74,16 @@ export function createCompiler(compilerFactory: CompilerFactory) {
     NachfuehrungEditComponent,
     GrundbuchEditComponent,
     RueckversicherungEditComponent,
-    KontaktEditComponent,
     AnhangEditComponent,
     DefaultViewComponent,
     HfpEditComponent,
     AuslandpunktEditComponent,
     SchweremessungEditComponent,
     SchaedenEditComponent,
-    LsnEditComponent
+    LsnEditComponent,
+    KontaktEditDialogComponent,
+    KontaktManagerComponent,
+    KontaktViewComponent
   ],
   imports: [
     FormsModule,
@@ -89,7 +93,8 @@ export function createCompiler(compilerFactory: CompilerFactory) {
     HttpClientModule,
     SimpleNotificationsModule.forRoot(),
     ModalModule.forRoot(),
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    TypeaheadModule.forRoot()
   ],
   providers: [
     { provide: COMPILER_OPTIONS, useValue: {}, multi: true },

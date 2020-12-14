@@ -4,8 +4,8 @@ import { ConfigService } from '../configs/config.service';
 import { MessageService } from './message.service';
 import Feature from 'esri/Graphic';
 import FeatureLayer from 'esri/layers/FeatureLayer';
-import Relationship from 'esri/layers/support/Relationship';
-import { FeatureState, FidaFeature, RelatedFeatures } from '../models/FidaFeature.model';
+import EsriRelationship from 'esri/layers/support/Relationship';
+import { FeatureState, FidaFeature, LayerId, RelatedFeatures, RelationshipName } from '../models/FidaFeature.model';
 import { ParcelInfoService } from './parcel-info.service';
 import { RelationshipsConfig } from '../models/config.model';
 import Point from 'esri/geometry/Point';
@@ -49,17 +49,22 @@ export class FeatureService {
       if (feature.state !== FeatureState.Delete) {
         const relationshipsConfig = this.configService.getRelationshipsConfigs(featureLayer.id);
         await Promise.all(Object.entries(feature.relatedFeatures).map(async ([key, value]) => {
-          const relationshipName = relationshipsConfig[key];
+          const relationshipName: RelationshipName = (<any>RelationshipName)[relationshipsConfig[key]];
           const relatedFeatures = value as FidaFeature[]
 
           if (relationshipName && relatedFeatures && relatedFeatures.length > 0) {
             const relatedFeatureLayer = await this.getRelatedFeatureLayerByName(featureLayer, relationshipName);
 
             // update fk 
-            const relationship = this.getRelationship(featureLayer, relationshipName);
+            const esriRelationship = this.getEsriRelationship(featureLayer, relationshipName);
             relatedFeatures.forEach((f) => {
-              this.updateFk(f, feature, relationship);
+              this.updateFk(f, feature, esriRelationship);
             })
+
+            // correct deleted kontakt features
+            if (relationshipName === RelationshipName.Kontakt) {
+              this.correctDeletedKontaktFeatures(feature, relatedFeatures);
+            }
 
             await this.saveRelatedFeatures(relatedFeatureLayer, relatedFeatures);
             console.log(`related features "${relationshipName}" saved.`);
@@ -105,6 +110,23 @@ export class FeatureService {
     } catch (error) {
       this.messageService.error(error);
     }
+  }
+
+  private correctDeletedKontaktFeatures(feature: FidaFeature, relatedFeatures: FidaFeature[]) {
+    // just delete kontakt-feature if no other relations are present
+    const fkField = this.configService.getLayerConfigById(feature.layer.id).fkField;
+    const lfpFkField = this.configService.getLayerConfigById(LayerId.LFP).fkField;
+    const hfpFkField = this.configService.getLayerConfigById(LayerId.HFP).fkField;
+
+    const deletedFeatures = relatedFeatures.filter(f => f.state === FeatureState.Delete);
+    deletedFeatures.forEach(deletedFeature => {
+      deletedFeature.attributes[fkField] = null;      
+      if (deletedFeature.attributes[lfpFkField] === null && deletedFeature.attributes[hfpFkField] === null) {
+        deletedFeature.state = FeatureState.Delete; 
+      } else {
+        deletedFeature.state = FeatureState.Edit; 
+      }
+    });
   }
 
   private async addAttachment(featureLayer: FeatureLayer, features: FidaFeature[]): Promise<boolean> {
@@ -194,36 +216,36 @@ export class FeatureService {
     });
   }
 
-  public async createRelatedFeature(feature: FidaFeature, relatedFeaturesPropertyName: string): Promise<FidaFeature> {
+  public async createRelatedFeature(feature: FidaFeature, relationshipName: RelationshipName, addToFeature: boolean = true): Promise<FidaFeature> {
     const featureLayer = this.getFeatureLayer(feature);
-    const relationshipsConfig = this.configService.getRelationshipsConfigs(featureLayer.id);
-    const relationshipName = this.getRelationshipName(relationshipsConfig, relatedFeaturesPropertyName)
-    const relationship = this.getRelationship(featureLayer, relationshipName);
-    const relatedFeatureLayer = await this.getRelatedFeatureLayer(featureLayer, relationship);
+    const esriRelationship = this.getEsriRelationship(featureLayer, relationshipName);
+    const relatedFeatureLayer = await this.getRelatedFeatureLayer(featureLayer, esriRelationship);
 
     // create related feature              
     const relatedFeature = new FidaFeature();
     relatedFeature.attributes = { ...relatedFeatureLayer.templates[0].prototype.attributes };
     relatedFeature.layer = relatedFeatureLayer;
     relatedFeature.state = FeatureState.Create;
-    this.updateFk(relatedFeature, feature, relationship);
+    this.updateFk(relatedFeature, feature, esriRelationship);
 
     // add related feature to list
-    this.addRelatedFeatureToList(feature, relatedFeaturesPropertyName, relatedFeature);
+    if (addToFeature === true) {
+      this.addRelatedFeatureToList(feature, relationshipName, relatedFeature);
+    }
 
     return relatedFeature;
   }
 
-  private updateFk(relatedFeature: FidaFeature, feature: FidaFeature, relationship: Relationship) {
-    const fkField =  this.configService.getLayerConfigById(feature.layer.id).fkField;
-    const fkValue = feature.attributes[relationship.keyField.toUpperCase()];
+  private updateFk(relatedFeature: FidaFeature, feature: FidaFeature, esriRelationship: EsriRelationship) {
+    const fkField = this.configService.getLayerConfigById(feature.layer.id).fkField;
+    const fkValue = feature.attributes[esriRelationship.keyField.toUpperCase()];
     relatedFeature.attributes[fkField] = fkValue;
   }
 
   public async redefineGrundbuchFeatures(feature: FidaFeature): Promise<any> {
     // check of grundbuch relationship
     const featureLayer = this.getFeatureLayer(feature);
-    if(this.hasRelationship(featureLayer, 'grundbuch') == false){
+    if (this.hasRelationship(featureLayer, RelationshipName.Grundbuch) == false) {
       return;
     }
 
@@ -231,12 +253,12 @@ export class FeatureService {
     const parcelInfos = await this.parcelInfoService.getParcelInfo(feature.geometry);
 
     // flag old grundbuch features as deleted and delete new once
-    this.checkRelatedFeatureList(feature, 'grundbuch');
+    this.checkRelatedFeatureList(feature, RelationshipName.Grundbuch);
     feature.relatedFeatures.grundbuch = feature.relatedFeatures.grundbuch.filter(f => f.attributes.OBJECTID != null);
     feature.relatedFeatures.grundbuch.map(f => (f as FidaFeature).state = FeatureState.Delete);
 
     // set new grundbuch features    
-    const grundbuchLayer = await this.getRelatedFeatureLayerByName(featureLayer, 'grundbuch');
+    const grundbuchLayer = await this.getRelatedFeatureLayerByName(featureLayer, RelationshipName.Grundbuch);
     parcelInfos.forEach((parcelInfo) => {
       let grundbuchFeature = new FidaFeature();
       grundbuchFeature.attributes = { ...grundbuchLayer.templates[0].prototype.attributes };
@@ -300,12 +322,13 @@ export class FeatureService {
     return `${feature.layer.id}-${id}`;
   }
 
-  private addRelatedFeatureToList(feature: FidaFeature, relatedName: string, related: FidaFeature): void {
-    this.checkRelatedFeatureList(feature, relatedName);
-    (feature.relatedFeatures as any)[relatedName].push(related);
+  public addRelatedFeatureToList(feature: FidaFeature, relationshipName: RelationshipName, related: FidaFeature): void {
+    this.checkRelatedFeatureList(feature, relationshipName);
+    (feature.relatedFeatures as any)[relationshipName.toLocaleLowerCase()].push(related);
   }
 
-  private checkRelatedFeatureList(feature: FidaFeature, relatedName: string): void {
+  private checkRelatedFeatureList(feature: FidaFeature, relationshipName: RelationshipName): void {
+    const relatedName: string = relationshipName.toLocaleLowerCase();
     if (!feature.relatedFeatures) {
       feature.relatedFeatures = new RelatedFeatures();
     }
@@ -314,7 +337,7 @@ export class FeatureService {
     }
   }
 
-  private getFeatureLayer(feature: Feature): FeatureLayer {
+  public getFeatureLayer(feature: Feature): FeatureLayer {
     let featureLayer = feature.layer as FeatureLayer;
     if (!featureLayer) {
       // try sourceLayer
@@ -326,17 +349,17 @@ export class FeatureService {
     return featureLayer;
   }
 
-  private async getRelatedFeatureLayerByName(featureLayer: FeatureLayer, relationshipName: string): Promise<FeatureLayer> {
-    const relationship = this.getRelationship(featureLayer, relationshipName);
-    return this.getRelatedFeatureLayer(featureLayer, relationship);
+  public async getRelatedFeatureLayerByName(featureLayer: FeatureLayer, relationshipName: RelationshipName): Promise<FeatureLayer> {
+    const esriRelationship = this.getEsriRelationship(featureLayer, relationshipName);
+    return this.getRelatedFeatureLayer(featureLayer, esriRelationship);
   }
 
-  private async getRelatedFeatureLayer(featureLayer: FeatureLayer, relationship: Relationship): Promise<FeatureLayer> {
-    const relatedFeatureLayerUrl = featureLayer.url + '/' + relationship.relatedTableId;
+  private async getRelatedFeatureLayer(featureLayer: FeatureLayer, esriRelationship: EsriRelationship): Promise<FeatureLayer> {
+    const relatedFeatureLayerUrl = featureLayer.url + '/' + esriRelationship.relatedTableId;
 
     // check of already loaded related feature layer
     let relatedFeatureLayer = this.relatedFeatureLayers.find(f => f.url === featureLayer.url
-      && f.layerId === relationship.relatedTableId
+      && f.layerId === esriRelationship.relatedTableId
       && f.gdbVersion === featureLayer.gdbVersion)
 
     // otherwise create related feature layer
@@ -344,7 +367,7 @@ export class FeatureService {
       relatedFeatureLayer = new FeatureLayer({
         gdbVersion: featureLayer.gdbVersion,
         url: featureLayer.url,
-        layerId: relationship.relatedTableId
+        layerId: esriRelationship.relatedTableId
       });
 
       this.relatedFeatureLayers.push(relatedFeatureLayer)
@@ -354,23 +377,29 @@ export class FeatureService {
     return relatedFeatureLayer;
   }
 
-  private hasRelationship(featureLayer: FeatureLayer, relationshipName: string): boolean {
-    const relationship = featureLayer.relationships.find(f => f.name.toLowerCase() === relationshipName.toLowerCase());
+  private hasRelationship(featureLayer: FeatureLayer, relationshipName: RelationshipName): boolean {
+    // find esri-relationship-name (stored in config)
+    const relationshipsConfig = this.configService.getRelationshipsConfigs(featureLayer.id);
+    const esriRelationshipName = this.getEsriRelationshipName(relationshipsConfig, relationshipName)
+    const relationship = featureLayer.relationships.find(f => f.name.toLowerCase() === esriRelationshipName.toLowerCase());
     return relationship !== undefined;
   }
 
-  private getRelationship(featureLayer: FeatureLayer, relationshipName: string): Relationship {
-    const relationship = featureLayer.relationships.find(f => f.name.toLowerCase() === relationshipName.toLowerCase());
-    if (!relationship) {
+  private getEsriRelationship(featureLayer: FeatureLayer, relationshipName: RelationshipName): EsriRelationship {
+    // find esri-relationship-name (stored in config)
+    const relationshipsConfig = this.configService.getRelationshipsConfigs(featureLayer.id);
+    const esriRelationshipName = this.getEsriRelationshipName(relationshipsConfig, relationshipName)
+    const esriRelationship = featureLayer.relationships.find(f => f.name.toLowerCase() === esriRelationshipName.toLowerCase());
+    if (!esriRelationship) {
       throw new Error(`no relationship with name "${relationshipName}" for layer ${featureLayer.title} found`);
     }
-    return relationship;
+    return esriRelationship;
   }
 
-  private getRelationshipName(relationshipsConfig: RelationshipsConfig, relatedFeaturesPropertyName: string): string {
-    const name = (relationshipsConfig as any)[relatedFeaturesPropertyName];
+  private getEsriRelationshipName(relationshipsConfig: RelationshipsConfig, relationshipName: RelationshipName): string {
+    const name = (relationshipsConfig as any)[relationshipName.toString()];
     if (name === undefined) {
-      throw new Error(`relationshipConfig with property "${relatedFeaturesPropertyName}" not found`)
+      throw new Error(`relationshipConfig with property "${relationshipName}" not found`)
     }
     return name;
   }

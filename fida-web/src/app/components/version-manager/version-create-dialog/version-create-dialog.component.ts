@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
 import { GdbVersion } from 'src/app/models/GdbVersion.model';
 
@@ -13,8 +12,9 @@ export class VersionCreateDialogComponent implements OnInit {
   public form: FormGroup;
   public gdbVersion: GdbVersion;
   public onCreate: Subject<GdbVersion>;
+  public onCancel: Subject<void>;
 
-  constructor(public modalRef: BsModalRef) { }
+  constructor() { }
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -22,6 +22,7 @@ export class VersionCreateDialogComponent implements OnInit {
       description: new FormControl(),
     });
     this.onCreate = new Subject();
+    this.onCancel = new Subject();
     this.gdbVersion = new GdbVersion();
   }
 
@@ -30,6 +31,6 @@ export class VersionCreateDialogComponent implements OnInit {
   }
 
   cancelClick(): void {
-    this.modalRef.hide();
+    this.onCancel.next();
   }
 }

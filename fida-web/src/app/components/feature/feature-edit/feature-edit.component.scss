@@ -3,5 +3,5 @@
     top: calc(var(--header-height) + 15px);
     left: 15px;
     width: 680px;
-    max-height: calc(100vh - var(--header-height) - 30px); 
+    height: calc(100vh - var(--header-height) - 30px); 
 }

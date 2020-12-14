@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { FeatureState, FidaFeature } from 'src/app/models/FidaFeature.model';
+import { FeatureState, FidaFeature, RelationshipName } from 'src/app/models/FidaFeature.model';
 import { FeatureService } from 'src/app/services/feature.service';
 import { CompleteState, WidgetNotifyService } from 'src/app/services/widget-notify.service';
 
@@ -57,11 +57,6 @@ export class FeatureEditComponent implements OnInit {
     } else {
       return `Edit: ${featureName}`;
     }
-  }
-
-  async addRelatedFeatureClick(relatedFeaturesPropertyName: string): Promise<void> {
-    await this.featureService.createRelatedFeature(this.feature, relatedFeaturesPropertyName);
-    this.changeDetectorRef.detectChanges();
   }
 
   deleteRelatedFeatureClick(feature: FidaFeature): void {

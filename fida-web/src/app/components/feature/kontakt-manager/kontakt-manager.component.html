@@ -1,0 +1,25 @@
+<div class="row mb-2" [hidden]="readonly">
+    <div class="col-9 input-group">
+
+        <input [(ngModel)]="searchText" [typeahead]="searchList" [typeaheadAsync]="true" typeaheadOptionField="name"
+            [typeaheadWaitMs]="100" [typeaheadMinLength]="3"
+            (typeaheadLoading)="typeaheadService.onSearchLoading($event)"
+            (typeaheadNoResults)="typeaheadService.onSearchNoResults($event)"
+            (typeaheadOnSelect)="typeaheadService.onSearchSelect($event)" placeholder="Kontakt suchen ..."
+            class="form-control h-100">
+        <div class="input-group-append">
+            <button type="button" class="btn btn-primary float-left pl-2" (click)="addKontaktClick()"
+                [disabled]="!typeaheadService.selectedSearchItem">Kontakt
+                hinzufügen</button>
+        </div>
+    </div>
+    <div class="col-3">
+        <button type="button" class="btn btn-primary float-right " (click)="createKontaktClick()">New
+            Kontakt</button>
+    </div>
+</div>
+<div *ngFor="let feature of getKontaktFeatures()">
+    <div *ngIf="feature.state !== 'deleted'">
+        <app-kontakt-view [feature]="feature" [readonly]="readonly"></app-kontakt-view>
+    </div>
+</div>

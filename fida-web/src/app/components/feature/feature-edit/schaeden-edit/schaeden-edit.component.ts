@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { FeatureState, FidaFeature } from 'src/app/models/FidaFeature.model'; 
-import { FORMAT_UTILS, CONVERT_UTILS } from '../../../../utils/utils';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-schaeden-edit',
@@ -30,7 +30,7 @@ export class SchaedenEditComponent implements OnInit {
   }
 
   getHeaderText(): string {
-    const date = CONVERT_UTILS.esriToDate(this.feature.attributes.DATUM);
-    return FORMAT_UTILS.formatDate(date, 'yyyy-mm-dd') || '-no date-';
+    const date = UtilService.esriToDate(this.feature.attributes.DATUM);
+    return UtilService.formatDate(date, 'yyyy-mm-dd') || '-no date-';
   }
 }

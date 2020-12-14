@@ -1,14 +1,13 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import Expand from 'esri/widgets/Expand';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalService } from 'ngx-bootstrap/modal';
 import { GdbVersion } from 'src/app/models/GdbVersion.model';
 import { SettingService } from 'src/app/services/setting.service';
 import { VersionManagementService } from 'src/app/services/version-management.service';
 import { WidgetsService } from 'src/app/services/widgets.service';
 import { VersionCreateDialogComponent } from './version-create-dialog/version-create-dialog.component';
 import { VersionDeleteDialogComponent } from './version-delete-dialog/version-delete-dialog.component';
-import { FORMAT_UTILS } from '../../utils/utils';
-import { MessageService } from 'src/app/services/message.service';
+import { UtilService } from 'src/app/services/util.service';
 import { VersionReconcileDialogComponent } from './version-reconcile-dialog/version-reconcile-dialog.component';
 
 @Component({
@@ -24,15 +23,12 @@ export class VersionManagerComponent implements OnInit, OnDestroy {
   isReconciling: boolean = false;
   private expand: Expand;
   private expandedHandle: any;
-  private modalRef: BsModalRef;
-
 
   constructor(  
     private widgetsService: WidgetsService,
     private versionManagementService: VersionManagementService,
     private settingService: SettingService,
-    private modalService: BsModalService,
-    private messageService: MessageService
+    private modalService: BsModalService
   ) { }
 
   ngOnInit(): void {
@@ -67,11 +63,11 @@ export class VersionManagerComponent implements OnInit, OnDestroy {
     }
 
     const date = new Date(value);
-    return FORMAT_UTILS.formatDateTime(date);
+    return UtilService.formatDateTime(date);
   }
 
   getFormatedVersionName(versionName: string): string {
-    return FORMAT_UTILS.formatVersionName(versionName);
+    return UtilService.formatVersionName(versionName);
   }
 
   private async initVersions(reload?: boolean): Promise<any> {
@@ -103,22 +99,26 @@ export class VersionManagerComponent implements OnInit, OnDestroy {
    * create version
    */
   showCreateDialogClick(): void {
-    this.modalRef = this.modalService.show(VersionCreateDialogComponent);
+    const modalRef = this.modalService.show(VersionCreateDialogComponent);
 
-    this.modalRef.content.onCreate.subscribe(async (gdbVersion: GdbVersion) => {
+    modalRef.content.onCreate.subscribe(async (gdbVersion: GdbVersion) => {
       const createdVersion = await this.versionManagementService.createVersion(gdbVersion.versionName, gdbVersion.description);
       this.versions.push(createdVersion);
-      this.modalRef.hide();
-    })
+      modalRef.hide();
+    });
+
+    modalRef.content.onCancel.subscribe(() => {
+      modalRef.hide();
+    });
   }
 
   /**
    * delete version
    */
   showDeleteDialogClick(version: GdbVersion): void {
-    this.modalRef = this.modalService.show(VersionDeleteDialogComponent, { class: 'modal-sm', initialState: { gdbVersion: version } });
+    const modalRef = this.modalService.show(VersionDeleteDialogComponent, { class: 'modal-sm', initialState: { gdbVersion: version } });
 
-    this.modalRef.content.onDelete.subscribe(async (gdbVersion: GdbVersion) => {
+    modalRef.content.onDelete.subscribe(async (gdbVersion: GdbVersion) => {
       const success = await this.versionManagementService.deleteVersion(gdbVersion.versionName);
       if (success) {
         // remove from list
@@ -132,7 +132,7 @@ export class VersionManagerComponent implements OnInit, OnDestroy {
       } else {
         throw new Error('version could not be deleted');
       }
-      this.modalRef.hide();
-    })
+      modalRef.hide();
+    });
   }
 }

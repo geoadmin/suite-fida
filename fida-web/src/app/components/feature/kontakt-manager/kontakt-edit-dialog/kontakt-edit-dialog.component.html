@@ -1,14 +1,15 @@
-<div class="card" [formGroup]="formGroup">
+<div class="modal-body px-0 pt-0">
 
     <!-- header -->
-    <div class="card-header mb-0 collapsed" type="button" data-toggle="collapse" [attr.data-target]="'#' + componentId"
-        aria-expanded="false">{{ getHeaderText() }}
+    <div class="fida-widget-header">
+        <label>Kontakt-Editor</label>
+        <button class="btn esri-icon-close float-right" (click)="cancelClick()"></button>
     </div>
 
     <!-- body -->
-    <div [id]="componentId" class="collapse" [class.readonly]="readonly">
-        <div class="card-body">
-
+    <div class="fida-widget-body container pt-3 pb-1">
+        <form [formGroup]="form" novalidate>
+            
             <div class="row">
                 <div class="col-3 attribute-label">ART</div>
                 <div class="col-3">
@@ -67,12 +68,12 @@
                 </div>
             </div>
 
-            <!-- delete button -->
-            <div class="row mt-2" [hidden]="readonly">
-                <div class="col-12">
-                    <button type="button" class="btn btn-danger float-right" (click)="deleteClick()">Delete</button>
-                </div>
-            </div>
-        </div>
+        </form>
+    </div>
+
+    <!-- footer -->
+    <div class="fida-widget-footer">
+        <button type="button" class="btn btn-primary float-right ml-2" (click)="saveClick()">Änderung übernehmen</button>
+        <button type="button" class="btn btn-default float-right" (click)="cancelClick()">Cancel</button>
     </div>
 </div>

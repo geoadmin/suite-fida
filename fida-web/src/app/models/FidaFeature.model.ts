@@ -8,6 +8,23 @@ export enum FeatureState {
     EditGeometry = 'edit-geometry'
 }
 
+export enum RelationshipName {
+    Grundbuch = 'grundbuch',
+    Kontakt = 'kontakt',
+    Nachfuehrung = 'nachfuehrung',
+    Rueckversicherung = 'rueckversicherung',
+    Anhang = 'anhang',
+    Auslandpunkt = 'auslandpunkt',
+    Schaeden = 'schaeden',
+    Schweremessung = 'schweremessung'   
+}
+
+export enum LayerId {
+    LFP = 'LFP',
+    HFP = 'HFP',
+    LSN = 'LSN'
+}
+
 export class RelatedFeatures {
     grundbuch?: FidaFeature[];
     kontakt?: FidaFeature[];
@@ -26,6 +43,3 @@ export class FidaFeature extends Feature {
     attachmentUpload: any;
 }
 
-/*export class LfpFeature extends Feature {
-    grundbuchFeatures?: Feature[];
-}*/

@@ -1,12 +1,12 @@
 <div class="card" [formGroup]="formGroup">
 
     <!-- header -->
-    <div class="card-header mb-0 collapsed" type="button" data-toggle="collapse" [attr.data-target]="'#' + componentId"
+    <div class="card-header mb-0" type="button" data-toggle="collapse" [attr.data-target]="'#' + componentId"
         aria-expanded="false">{{ getHeaderText() }}
     </div>
 
     <!-- body -->
-    <div [id]="componentId" class="collapse" [class.readonly]="readonly">
+    <div [id]="componentId" class="" [class.readonly]="readonly">
         <div class="card-body">
 
             <div class="row">
