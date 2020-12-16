@@ -30,8 +30,8 @@ export class HeaderComponent {
     this.translateService.use(language);
   }
 
-  getLanguageShort(languageId: string): string {
-    return languageId?.toUpperCase().substring(0, languageId.indexOf('-'));
+  getLanguageName(languageId: string): string {
+    return languageId?.toUpperCase();
   }
 
   getUserName(): string {

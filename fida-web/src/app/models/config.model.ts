@@ -42,6 +42,8 @@ export class Config {
     layerBaseUrl: string;
     defaultVersion: string;
     defaultExtent: ExtentConfig;
+    translateTableName: string;
+    languages: string[];
     versionManagement: VersionManagementConfig;
     gp: GpConfig;
     layers: [LayerConfig];

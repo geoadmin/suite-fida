@@ -18,7 +18,7 @@ export class SettingService {
     this.gdbVersionName = this.cookieService.gdbVersionName || this.configSevice.getDefaultVersionName();
   }
 
-  public setGdbVersionName(gdbVersionName: string) {
+  public setGdbVersionName(gdbVersionName: string): void {
     this.gdbVersionName = gdbVersionName;
     this.cookieService.gdbVersionName = this.gdbVersionName;
     this.widgetNotifyService.onGdbVersionChangedSubject.next(this.gdbVersionName);

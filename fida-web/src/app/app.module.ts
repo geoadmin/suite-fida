@@ -10,7 +10,6 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import './configs/esri-config';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
@@ -46,7 +45,6 @@ import { KontaktEditDialogComponent } from './components/feature/kontakt-manager
 import { KontaktManagerComponent } from './components/feature/kontakt-manager/kontakt-manager.component';
 import { KontaktViewComponent } from './components/feature/feature-view/kontakt-view/kontakt-view.component';
 import { FidaTranslateLoader } from './helpers/FidaTranslateLoader';
-import { QueryService } from './services/query.service';
 
 // config
 export function initApp(configService: ConfigService): any {
@@ -102,8 +100,8 @@ export function createCompiler(compilerFactory: CompilerFactory): Compiler {
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: (http: HttpClient) => new FidaTranslateLoader(http),
-        deps: [HttpClient]
+        useFactory: (http: HttpClient, configService: ConfigService) => new FidaTranslateLoader(http, configService),
+        deps: [HttpClient, ConfigService]
       }
     })
   ],

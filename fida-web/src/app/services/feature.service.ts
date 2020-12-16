@@ -346,7 +346,7 @@ export class FeatureService {
   }
 
   private checkRelatedFeatureList(feature: FidaFeature, relationshipName: RelationshipName): void {
-    const relatedName: string =  relationshipName.toLocaleLowerCase();
+    const relatedName: string = relationshipName.toLocaleLowerCase();
     if (!feature.relatedFeatures) {
       feature.relatedFeatures = new RelatedFeatures();
     }
@@ -420,5 +420,44 @@ export class FeatureService {
       throw new Error(`relationshipConfig with property "${relationshipName}" not found`);
     }
     return name;
+  }
+
+  private async addTEST_TranslationToDb(): Promise<void> {
+    const translationFeatureLayer = new FeatureLayer({
+      url: 'https://s7t2530a.adr.admin.ch/arcgis/rest/services/FIDA/FIDA/FeatureServer',
+      layerId: 17
+    });
+    await translationFeatureLayer.load();
+
+    // clear table
+    const where = '1=1';
+    const outFields = ['OBJECTID'];
+    const deleteFeatures = await this.queryService.where(translationFeatureLayer, where, outFields);
+    if (deleteFeatures.length > 0) {
+      const deleteProperties: __esri.FeatureLayerApplyEditsEdits = {};
+      deleteProperties.deleteFeatures = deleteFeatures;
+      await this.applyEdits(translationFeatureLayer, deleteProperties);
+      console.log(`table uebersetzung cleaned`);
+    }
+
+    const feature1 = new Feature();
+    feature1.attributes = { ...translationFeatureLayer.templates[0].prototype.attributes };
+    feature1.layer = translationFeatureLayer;
+    feature1.attributes.OBJEKTART = 1; // 0 = domain, 1 = row-name
+    feature1.attributes.GRUPPENAME = 'FIDA_LFP';
+    feature1.attributes.KEY = 'PUNKTNAME';
+    feature1.attributes.VALDICT = '{"de":"Punktname","fr":"FR:Punktname"}';
+
+    const feature2 = new Feature();
+    feature2.attributes = { ...translationFeatureLayer.templates[0].prototype.attributes };
+    feature2.layer = translationFeatureLayer;
+    feature2.attributes.OBJEKTART = 0; // 0 = domain, 1 = row-name
+    feature2.attributes.GRUPPENAME = 'FIDA_PUNKTSTATE_CD';
+    feature2.attributes.KEY = '0';
+    feature2.attributes.VALDICT = '{"de":"Aktiv","fr":"FR:Aktiv"}';
+
+    const addProperties: __esri.FeatureLayerApplyEditsEdits = {};
+    addProperties.addFeatures = [feature1, feature2];
+    await this.applyEdits(translationFeatureLayer, addProperties);
   }
 }

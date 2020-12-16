@@ -11,35 +11,35 @@ import { FeatureService } from 'src/app/services/feature.service';
 export class HfpEditComponent implements OnInit {
   @Input() feature: FidaFeature;
   @Input() formGroup: FormGroup;
-  @Input() readonly: boolean = false;
-  public redefining: boolean = false;
+  @Input() readonly = false;
+  public redefining = false;
 
   constructor(
     private featureService: FeatureService
   ) { }
 
   ngOnInit(): void {
-    for (let key in this.feature.attributes) {
+    for (const key of Object.keys(this.feature.attributes)) {
       this.formGroup.addControl(key, new FormControl());
     }
   }
 
-  async redefineGrundbuchDataClick() {
+  async redefineGrundbuchDataClick(): Promise<void> {
     this.redefining = true;
     await this.featureService.redefineGrundbuchFeatures(this.feature);
     this.redefining = false;
   }
 
-  async addNachfuehrungClick() {
-    await this.featureService.createRelatedFeature(this.feature, RelationshipName.Nachfuehrung);
+  async addNachfuehrungClick(): Promise<void> {
+    await this.featureService.createRelatedFeature(this.feature, RelationshipName.nachfuehrung);
   }
 
-  getNachfuehrungFeatures() {
-    let featurelist = this.feature?.relatedFeatures?.nachfuehrung?.filter((f: FidaFeature) => f.state !== FeatureState.Delete);
+  getNachfuehrungFeatures(): FidaFeature[] {
+    const featurelist = this.feature?.relatedFeatures?.nachfuehrung?.filter((f: FidaFeature) => f.state !== FeatureState.Delete);
     if (featurelist) {
-      featurelist.sort(function (a, b) {
+      featurelist.sort((a, b) => {
         const ad = a.attributes.NACHFUEHRUNGSDATUM || 0;
-        const bd = a.attributes.NACHFUEHRUNGSDATUM || 0;
+        const bd = b.attributes.NACHFUEHRUNGSDATUM || 0;
         return ad - bd;
       });
     }
@@ -47,7 +47,7 @@ export class HfpEditComponent implements OnInit {
   }
 
   async addGrundbuchClick(): Promise<any> {
-    await this.featureService.createRelatedFeature(this.feature, RelationshipName.Grundbuch);
+    await this.featureService.createRelatedFeature(this.feature, RelationshipName.grundbuch);
   }
 
   getGrundbuchFeatures(): FidaFeature[] {
@@ -55,7 +55,7 @@ export class HfpEditComponent implements OnInit {
   }
 
   async addSchaedenClick(): Promise<any> {
-    await this.featureService.createRelatedFeature(this.feature, RelationshipName.Schaeden);
+    await this.featureService.createRelatedFeature(this.feature, RelationshipName.schaeden);
   }
 
   getSchaedenFeatures(): FidaFeature[] {
@@ -63,7 +63,7 @@ export class HfpEditComponent implements OnInit {
   }
 
   async addAuslandpunktClick(): Promise<any> {
-    await this.featureService.createRelatedFeature(this.feature, RelationshipName.Auslandpunkt);
+    await this.featureService.createRelatedFeature(this.feature, RelationshipName.auslandpunkt);
   }
 
   getAuslandpunktFeatures(): FidaFeature[] {
@@ -71,7 +71,7 @@ export class HfpEditComponent implements OnInit {
   }
 
   async addSchweremessungClick(): Promise<any> {
-    await this.featureService.createRelatedFeature(this.feature, RelationshipName.Schweremessung);
+    await this.featureService.createRelatedFeature(this.feature, RelationshipName.schweremessung);
   }
 
   getSchweremessungFeatures(): FidaFeature[] {
@@ -79,7 +79,7 @@ export class HfpEditComponent implements OnInit {
   }
 
   async addKontaktClick(): Promise<any> {
-    await this.featureService.createRelatedFeature(this.feature, RelationshipName.Kontakt);
+    await this.featureService.createRelatedFeature(this.feature, RelationshipName.kontakt);
   }
 
   getKontaktFeatures(): FidaFeature[] {
@@ -87,7 +87,7 @@ export class HfpEditComponent implements OnInit {
   }
 
   async addAnhangClick(): Promise<any> {
-    await this.featureService.createRelatedFeature(this.feature, RelationshipName.Anhang);
+    await this.featureService.createRelatedFeature(this.feature, RelationshipName.anhang);
   }
 
   getAnhangFeatures(): FidaFeature[] {

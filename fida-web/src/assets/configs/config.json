@@ -2,6 +2,8 @@
     "arcGisUrlPlaceholder": "[EVIRONMENT_ARCGISURL]",
     "layerBaseUrl": "[EVIRONMENT_ARCGISURL]/rest/services/FIDA/FIDA/FeatureServer",
     "defaultVersion": "SDE.DEFAULT",
+    "translateTableName": "FIDA_UEBERSETZUNG",
+    "languages": ["de", "fr", "it"],
     "defaultExtent": {
         "xmax": 2852897,
         "xmin": 2471833,

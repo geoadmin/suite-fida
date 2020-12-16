@@ -39,7 +39,15 @@ export class ConfigService {
     private findLayerId(layerName: string): number {
         const layerInfo = this.config.layerInfos.layers.find((f: any) => f.name === layerName);
         if (!layerInfo) {
-            throw new Error(`on layer with name "${layerName}" found in configuration`);
+            throw new Error(`on layer with name "${layerName}" found in esri-configuration`);
+        }
+        return layerInfo.id;
+    }
+
+    private findTableId(tableName: string): number {
+        const layerInfo = this.config.layerInfos.tables.find((f: any) => f.name === tableName);
+        if (!layerInfo) {
+            throw new Error(`on table with name "${tableName}" found in esri-configuration`);
         }
         return layerInfo.id;
     }
@@ -76,6 +84,15 @@ export class ConfigService {
 
     public getDefaultVersionName(): string {
         return this.config.defaultVersion;
+    }
+
+    public getTranslateTableUrl(): string {
+        const tableId = this.findTableId(this.config.translateTableName);
+        return `${this.config.layerBaseUrl}/${tableId}`;
+    }
+
+    public getLanguages(): string[] {
+        return this.config.languages;
     }
 
     public getGpConfig(): GpConfig {
