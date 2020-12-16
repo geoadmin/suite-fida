@@ -13,38 +13,38 @@ export class AttributeViewComponent implements OnInit {
   @Input() feature: FidaFeature;
   @Input() name: string;
   private field: Field;
-  
+
   constructor() { }
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
     this.field = this.getFeatureLayer().fields.find(f => f.name === this.name);
   }
 
-  private getFeatureLayer(): FeatureLayer{
+  private getFeatureLayer(): FeatureLayer {
     return this.feature?.layer as FeatureLayer;
   }
 
   getFormatedValue(): string {
     const value = this.feature.attributes[this.name];
-    if(value == null){
+    if (value == null) {
       return '';
     }
-    if(this.field === undefined){
+    if (this.field === undefined) {
       console.log('field is undefined', this.name);
       return value;
     }
-    if(this.field.domain != null && this.field.domain.type === 'coded-value'){
+    if (this.field.domain != null && this.field.domain.type === 'coded-value') {
       const codedValueDomain = this.field.domain as CodedValueDomain;
-      const codedValue = codedValueDomain.codedValues.find(f => f.code === parseInt(value));
-      if(codedValue === undefined){
+      const codedValue = codedValueDomain.codedValues.find(f => f.code === parseInt(value, 10));
+      if (codedValue === undefined) {
         console.error(`No coded-value in domain ${this.field.domain.name} for value ${value} found.`);
         return value;
       }
       return codedValue.name;
     }
 
-    if(this.field.type === 'date'){
-      const date = new Date(this.feature.attributes[this.name]); 
+    if (this.field.type === 'date') {
+      const date = new Date(this.feature.attributes[this.name]);
       return date.toDateString();
     }
 

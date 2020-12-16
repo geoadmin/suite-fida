@@ -4,7 +4,7 @@ import { SettingService } from './setting.service';
 import Geometry from 'esri/geometry/Geometry';
 import Query from 'esri/tasks/support/Query';
 import QueryTask from 'esri/tasks/QueryTask';
-import RelationshipQuery from 'esri/tasks/support/RelationshipQuery'
+import RelationshipQuery from 'esri/tasks/support/RelationshipQuery';
 import FeatureLayer from 'esri/layers/FeatureLayer';
 import Feature from 'esri/Graphic';
 import EsriError from 'esri/core/Error';
@@ -27,8 +27,8 @@ export class QueryService {
 
   public geoprocess(url: string, parameters: any): Promise<any> {
     const geoprocessorParameters: __esri.GeoprocessorProperties = {
-      url: url
-    }
+      url
+    };
     const geoprocessor = new Geoprocessor(geoprocessorParameters);
 
     return new Promise((resolve, reject) => {
@@ -45,7 +45,7 @@ export class QueryService {
 
   public attachments(featureLayer: FeatureLayer, objectIds: number[]): Promise<any> {
     const query = {
-      objectIds: objectIds
+      objectIds
     };
 
     return new Promise((resolve, reject) => {
@@ -64,7 +64,7 @@ export class QueryService {
     const query = new RelationshipQuery();
     query.objectIds = [objectId];
     query.relationshipId = relationshipId;
-    query.outFields = ["*"];
+    query.outFields = ['*'];
 
     return new Promise((resolve, reject) => {
       featureLayer.queryRelatedFeatures(query)
@@ -94,21 +94,38 @@ export class QueryService {
           this.messageService.error('Query failed.', error);
           reject(error);
         });
-    });    
+    });
   }
 
-  public where(featureLayer: FeatureLayer, where: string): Promise<FidaFeature[]> {
+  public where(featureLayer: FeatureLayer, where: string, outFields?: string[]): Promise<FidaFeature[]> {
     const query = new Query();
     query.where = where;
-    query.outFields = ['*'];
-        
+    query.outFields = outFields ?? ['*'];
+
     return new Promise((resolve, reject) => {
       featureLayer.queryFeatures(query)
-      .then((result: any) => resolve(this.convertToFidaFeature(result.features)))
-      .catch((error: EsriError) => {
-        this.messageService.error('Query failed.', error);
-        reject(error);
-      });
+        .then((result: any) => resolve(this.convertToFidaFeature(result.features)))
+        .catch((error: EsriError) => {
+          this.messageService.error('Query failed.', error);
+          reject(error);
+        });
+    });
+  }
+
+  public url(url: string): Promise<FidaFeature[]> {
+    const query = new Query();
+    query.outFields = ['*'];
+
+    const queryTask = new QueryTask();
+    queryTask.url = url;
+
+    return new Promise((resolve, reject) => {
+      queryTask.execute(query)
+        .then((result: any) => resolve(this.convertToFidaFeature(result.features)))
+        .catch((error: EsriError) => {
+          this.messageService.error('Query failed.', error);
+          reject(error);
+        });
     });
   }
 
@@ -122,7 +139,7 @@ export class QueryService {
     }
 
     const options: __esri.RequestOptions = {
-      query: query,
+      query,
       responseType: 'json'
     };
 
@@ -172,7 +189,7 @@ export class QueryService {
     return this.token;
   }
 
-  private convertToFidaFeature(features: any) : FidaFeature[]{
-    return features.map((m:any) => m as FidaFeature);
+  private convertToFidaFeature(features: any): FidaFeature[] {
+    return features.map((m: any) => m as FidaFeature);
   }
 }

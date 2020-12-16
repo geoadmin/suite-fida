@@ -1,5 +1,8 @@
-import { Injectable, ComponentFactoryResolver, Injector, Compiler, ComponentFactory, Component, ModuleWithComponentFactories, NgModule, ElementRef, ComponentRef } from '@angular/core';
-import { FeatureViewComponent } from '../components/feature/feature-view/feature-view.component'
+import {
+  Injectable, ComponentFactoryResolver, Injector, Compiler, ComponentFactory,
+  Component, ModuleWithComponentFactories, NgModule, ComponentRef
+} from '@angular/core';
+import { FeatureViewComponent } from '../components/feature/feature-view/feature-view.component';
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
@@ -35,11 +38,11 @@ export class ComponentService {
     return component;
   }
   private createFeatureComponent(feature: Feature): any {
-    let metadata = {
+    const metadata = {
       selector: 'runtime-component',
       template: this.featureViewTemplate
     };
-    let factory = this.createComponentFactorySync(this.compiler, metadata, null);
+    const factory = this.createComponentFactorySync(this.compiler, metadata, null);
     const component = factory.create(this.injector);
 
     // set feature and trigger change
@@ -51,7 +54,7 @@ export class ComponentService {
   }
 
   private createComponentFactorySync(compiler: Compiler, metadata: Component, componentClass: any): ComponentFactory<any> {
-    const cmpClass = componentClass || class RuntimeComponent { name: string = 'fida' };
+    const cmpClass = componentClass || class RuntimeComponent { name = 'fida'; };
     const decoratedCmp = Component(metadata)(cmpClass);
 
     const moduleClass = class RuntimeComponentModule { };

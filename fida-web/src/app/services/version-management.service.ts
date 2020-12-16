@@ -25,10 +25,10 @@ export class VersionManagementService {
 
   public async createVersion(versionName: string, description?: string): Promise<GdbVersion> {
     const options = {
-      versionName: versionName,
-      description: description,
+      versionName,
+      description,
       accessPermission: 'public'
-    }
+    };
 
     const url = `${this.versionManagmentConfig.serverUrl}/create/`;
     const result = await this.queryService.request(url, options, true);
@@ -36,9 +36,7 @@ export class VersionManagementService {
   }
 
   public async deleteVersion(versionName: string): Promise<boolean> {
-    const options = {
-      versionName: versionName
-    }
+    const options = { versionName };
 
     const url = `${this.versionManagmentConfig.serverUrl}/delete/`;
     const result = await this.queryService.request(url, options, true);
@@ -49,7 +47,7 @@ export class VersionManagementService {
     const options = {
       sessionId: version.versionGuid,
       resultType: 'features'
-    }
+    };
 
     const versionUrl = this.stripBrackets(version.versionGuid);
     const url = `${this.versionManagmentConfig.serverUrl}/versions/${versionUrl}/differences`;
@@ -62,7 +60,7 @@ export class VersionManagementService {
       sessionId: version.versionGuid,
       abortIfConflicts: false,
       withPost: true
-    }
+    };
 
     const versionUrl = this.stripBrackets(version.versionGuid);
     const url = `${this.versionManagmentConfig.serverUrl}/versions/${versionUrl}/reconcile`;
@@ -73,7 +71,7 @@ export class VersionManagementService {
   public async startReading(version: GdbVersion): Promise<any> {
     const options = {
       sessionId: version.versionGuid
-    }
+    };
 
     const versionUrl = this.stripBrackets(version.versionGuid);
     const url = `${this.versionManagmentConfig.serverUrl}/versions/${versionUrl}/startReading/`;
@@ -85,7 +83,7 @@ export class VersionManagementService {
     const options = {
       sessionId: version.versionGuid,
       saveEdits: true
-    }
+    };
 
     const versionUrl = this.stripBrackets(version.versionGuid);
     const url = `${this.versionManagmentConfig.serverUrl}/versions/${versionUrl}/stopReading/`;
@@ -96,7 +94,7 @@ export class VersionManagementService {
   public async startEditing(version: GdbVersion): Promise<any> {
     const options = {
       sessionId: version.versionGuid
-    }
+    };
 
     const versionUrl = this.stripBrackets(version.versionGuid);
     const url = `${this.versionManagmentConfig.serverUrl}/versions/${versionUrl}/startEditing/`;
@@ -108,7 +106,7 @@ export class VersionManagementService {
     const options = {
       sessionId: version.versionGuid,
       saveEdits: true
-    }
+    };
 
     const versionUrl = this.stripBrackets(version.versionGuid);
     const url = `${this.versionManagmentConfig.serverUrl}/versions/${versionUrl}/stopEditing/`;
@@ -119,7 +117,7 @@ export class VersionManagementService {
   public async purgeLock(version: GdbVersion): Promise<any> {
     const options = {
       versionName: version.versionName
-    }
+    };
 
     const versionUrl = this.stripBrackets(version.versionGuid);
     const url = `${this.versionManagmentConfig.serverUrl}/purgeLock/`;
@@ -131,7 +129,7 @@ export class VersionManagementService {
     return this.versionManagmentConfig.defaultVersion;
   }
 
-  private stripBrackets(value: string){
-    return value.replace('{','').replace('}','');
+  private stripBrackets(value: string): string {
+    return value.replace('{', '').replace('}', '');
   }
 }

@@ -2,19 +2,17 @@
   <img class="ch-logo float-left" src="assets/images/logo-CH.svg" />
   <div class="separator float-left"></div>
   <div class="float-left">
-    <h1>Bundesamt für Landestopografie swisstopo<br />Fixpunkt Datenservice</h1>
+    <h1>{{ 'BFL' | translate }}<br />{{ 'fida' | translate }}</h1>
   </div>
 
   <div>
-    <div class="float-right font-italic font-weight-light">deployed: 10.12.2020</div>
-    <div class="d-none">
-      <a class="float-right" href="#">EN</a>
-      <a class="float-right" href="#">IT</a>
-      <a class="float-right" href="#">FR</a>
-      <a class="float-right active" href="#">DE</a>
-    </div>
+    <a *ngFor="let language of getLanguages()" class="float-right" [class.active]="isCurrentLanguage(language)" href="#"
+      (click)="setCurrentLanguage(language)">{{ getLanguageShort(language) }}</a>
   </div>
+
+  <div class="deployed font-italic font-weight-light">deployed: 10.12.2020</div>
+
   <div class="user-info">
-    GDB-Version: {{ getVersionName() }}  |  Benutzer: {{ getUserName() }}
+    GDB-Version: {{ getVersionName() }} | {{ 'user' | translate }}: {{ getUserName() }}
   </div>
 </div>

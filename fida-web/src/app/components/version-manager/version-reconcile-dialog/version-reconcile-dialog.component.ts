@@ -24,8 +24,8 @@ export class VersionReconcileDialogComponent implements OnInit {
   }
 
   /**
-  * reconcile/Post
-  */
+   * reconcile/Post
+   */
   async reconcile(version: GdbVersion): Promise<void> {
     this.showSpinner = true;
     try {
@@ -58,7 +58,7 @@ export class VersionReconcileDialogComponent implements OnInit {
 
   async cancelClick(): Promise<void> {
     this.showSpinner = true;
-      try {
+    try {
       // stop reading
       const stopReadingResult = await this.versionManagementService.stopReading(this.version);
       this.checkResult(stopReadingResult);

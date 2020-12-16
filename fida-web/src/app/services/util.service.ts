@@ -9,7 +9,7 @@ export class UtilService {
   constructor() { }
 
   /**
-   * FORMAT METHODS   
+   * FORMAT METHODS
    */
 
   public static formatVersionName(versionName: string): string {
@@ -32,7 +32,7 @@ export class UtilService {
       return;
     }
     const dd = String(date.getDate()).padStart(2, '0');
-    const mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+    const mm = String(date.getMonth() + 1).padStart(2, '0'); // January is 0!
     const yyyy = date.getFullYear();
 
     switch (format) {
@@ -44,7 +44,7 @@ export class UtilService {
   }
 
   /**
-   * CONVERT METHODS   
+   * CONVERT METHODS
    */
 
   public static esriToDate(date: any): Date {
@@ -64,8 +64,8 @@ export class UtilService {
     return date;
   }
 
-   /**
-   * TO LINE METHODS   
+  /**
+   * TO LINE METHODS
    */
 
   public static getVornameNameToLine(feature: FidaFeature): string {
@@ -83,7 +83,7 @@ export class UtilService {
   }
 
 
-  public static kontaktToLine(feature: FidaFeature): string {        
+  public static kontaktToLine(feature: FidaFeature): string {
     const list: string[] = [];
     this.addToList(list, feature.attributes.ART);
     this.addToList(list, feature.attributes.FIRMA);
@@ -96,8 +96,8 @@ export class UtilService {
     return list.join(', ');
   }
 
-  public static addToList(list: string[], value: any) {
-    if (value != null && value.trim() != '') {
+  public static addToList(list: string[], value: any): void {
+    if (value != null && value.trim() !== '') {
       list.push(value);
     }
   }

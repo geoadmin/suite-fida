@@ -27,9 +27,9 @@ export class Lk25Service {
     params = params.append('tolerance', '0');
     params = params.append('sr', '2056');
     params = params.append('layers', 'all:ch.swisstopo.pixelkarte-pk25.metadata');
-    params = params.append('returnGeometry', 'false');    
+    params = params.append('returnGeometry', 'false');
 
-    return await this.httpClient.get(url, { params: params })
+    return await this.httpClient.get(url, { params })
       .toPromise()
       .then((response: any) => {
         if (response.results.length > 1) {

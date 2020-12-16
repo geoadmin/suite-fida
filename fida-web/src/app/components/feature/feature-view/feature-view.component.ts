@@ -51,13 +51,13 @@ export class FeatureViewComponent implements OnInit, OnDestroy {
     this.changeDetectorRef.detectChanges();
   }
 
-  private async loadRelatedFeatures(): Promise<void>{
-    await this.featureService.loadRelatedFeatures(this.feature, () => { this.changeDetectorRef.detectChanges() });
+  private async loadRelatedFeatures(): Promise<void> {
+    await this.featureService.loadRelatedFeatures(this.feature, () => { this.changeDetectorRef.detectChanges(); });
     this.changeDetectorRef.detectChanges();
   }
 
   getHeaderText(): string {
-    return this.featureService.getFeatureName(this.feature);    
+    return this.featureService.getFeatureName(this.feature);
   }
 
   /**
@@ -65,14 +65,14 @@ export class FeatureViewComponent implements OnInit, OnDestroy {
    */
 
   editClick(): void {
-    let subscription = this.widgetNotifyService.onFeatureEditCompleteSubject.subscribe((completeState: CompleteState) => {
+    const subscription = this.widgetNotifyService.onFeatureEditCompleteSubject.subscribe((completeState: CompleteState) => {
       this.enablePopup(true);
       subscription.unsubscribe();
       if (completeState === CompleteState.Closed) {
         this.widgetNotifyService.setMapPopupVisibilitySubject.next(false);
       } else {
         this.loadRelatedFeatures();
-      }      
+      }
     });
 
     this.widgetNotifyService.onFeatureEditSubject.next(this.feature);
@@ -84,7 +84,7 @@ export class FeatureViewComponent implements OnInit, OnDestroy {
    */
 
   editGeometryClick(): void {
-    let subscription = this.widgetNotifyService.onGeometryEditCompleteSubject.subscribe(() => {
+    const subscription = this.widgetNotifyService.onGeometryEditCompleteSubject.subscribe(() => {
       this.enablePopup(true);
       subscription.unsubscribe();
     });

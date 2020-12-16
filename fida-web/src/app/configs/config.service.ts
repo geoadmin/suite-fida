@@ -6,7 +6,6 @@ import {
 } from '../models/config.model';
 import { environment } from '../../environments/environment';
 import esriRequest from 'esri/request';
-import { RelationshipName } from '../models/FidaFeature.model';
 
 
 @Injectable({ providedIn: 'root' })
@@ -16,26 +15,29 @@ export class ConfigService {
     constructor(private httpClient: HttpClient) {
     }
 
-    public async load(): Promise<any> {        
+    public async load(): Promise<any> {
         this.config = await this.httpClient.get('assets/configs/config.json').toPromise() as Config;
 
-        // update arcgis-server-placeholders    
-        this.config.layerBaseUrl = this.config.layerBaseUrl.replace(this.config.arcGisUrlPlaceholder, environment.arcGisServer);
-        this.config.versionManagement.serverUrl = this.config.versionManagement.serverUrl.replace(this.config.arcGisUrlPlaceholder, environment.arcGisServer);
-        this.config.gp.getParcelInfoUrl = this.config.gp.getParcelInfoUrl.replace(this.config.arcGisUrlPlaceholder, environment.arcGisServer);
+        // update arcgis-server-placeholders
+        this.config.layerBaseUrl = this.config.layerBaseUrl
+            .replace(this.config.arcGisUrlPlaceholder, environment.arcGisServer);
+        this.config.versionManagement.serverUrl = this.config.versionManagement.serverUrl
+            .replace(this.config.arcGisUrlPlaceholder, environment.arcGisServer);
+        this.config.gp.getParcelInfoUrl = this.config.gp.getParcelInfoUrl
+            .replace(this.config.arcGisUrlPlaceholder, environment.arcGisServer);
 
         // load arcgis-server-config
-        this.config.layerInfos = await this.loadArcGisServerConfig(this.config.layerBaseUrl + '/layers');     
+        this.config.layerInfos = await this.loadArcGisServerConfig(this.config.layerBaseUrl + '/layers');
 
         // set url to layers
         this.config.layers.forEach(layerConfig => {
             const layerId = this.findLayerId(layerConfig.name);
-            layerConfig.properties.url = `${this.config.layerBaseUrl}/${layerId}`            
-        });        
+            layerConfig.properties.url = `${this.config.layerBaseUrl}/${layerId}`;
+        });
     }
 
-    private findLayerId(layerName: string): Number {
-        const layerInfo = this.config.layerInfos.layers.find((f:any) => f.name === layerName);
+    private findLayerId(layerName: string): number {
+        const layerInfo = this.config.layerInfos.layers.find((f: any) => f.name === layerName);
         if (!layerInfo) {
             throw new Error(`on layer with name "${layerName}" found in configuration`);
         }
@@ -62,16 +64,16 @@ export class ConfigService {
 
     public getArcGisServer(): string {
         return environment.arcGisServer;
-    }    
+    }
 
     /**
      *  get configs
-     **/
+     */
 
     public getLayerBaseUrl(): string {
         return this.config.layerBaseUrl;
     }
-    
+
     public getDefaultVersionName(): string {
         return this.config.defaultVersion;
     }

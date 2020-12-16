@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
-import {CookieService as NgxCookieService} from 'ngx-cookie-service';
+import { CookieService as NgxCookieService } from 'ngx-cookie-service';
 import Extent from 'esri/geometry/Extent';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CookieService {
-  private mapExtentCookieName = 'MAP_EXTENT';  
+  private mapExtentCookieName = 'MAP_EXTENT';
   private gdbVersionCookieName = 'GDB_VERSION';
+  private languageCookieName = 'LANG';
 
 
-  constructor(private ngxCookieService: NgxCookieService) {}
+  constructor(private ngxCookieService: NgxCookieService) { }
 
   public get extent(): Extent {
     return this.getCookie(this.mapExtentCookieName);
@@ -28,6 +29,14 @@ export class CookieService {
     this.setCookie(this.gdbVersionCookieName, gdbVersionName);
   }
 
+  public get language(): string {
+    return this.getCookie(this.languageCookieName);
+  }
+
+  public set language(language: string) {
+    this.setCookie(this.languageCookieName, language);
+  }
+
   private getCookie(name: string): any {
     if (this.ngxCookieService.check(name)) {
       return JSON.parse(this.ngxCookieService.get(name));
@@ -35,7 +44,7 @@ export class CookieService {
     return undefined;
   }
 
-  private setCookie(name: string, valueJson: any) {
+  private setCookie(name: string, valueJson: any): void {
     const valueString = JSON.stringify(valueJson);
     this.ngxCookieService.set(name, valueString, this.expires);
   }

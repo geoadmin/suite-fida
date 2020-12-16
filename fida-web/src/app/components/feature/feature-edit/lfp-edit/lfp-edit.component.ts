@@ -11,15 +11,15 @@ import { FeatureService } from 'src/app/services/feature.service';
 export class LfpEditComponent implements OnInit {
   @Input() feature: FidaFeature;
   @Input() formGroup: FormGroup;
-  @Input() readonly: boolean = false;
-  public redefining: boolean = false;
+  @Input() readonly = false;
+  public redefining = false;
 
   constructor(
     private featureService: FeatureService
   ) { }
 
   ngOnInit(): void {
-    for (let key in this.feature.attributes) {
+    for (const key of Object.keys(this.feature.attributes)) {
       this.formGroup.addControl(key, new FormControl());
     }
   }
@@ -31,15 +31,15 @@ export class LfpEditComponent implements OnInit {
   }
 
   async addNachfuehrungClick(): Promise<any> {
-    await this.featureService.createRelatedFeature(this.feature, RelationshipName.Nachfuehrung);
+    await this.featureService.createRelatedFeature(this.feature, RelationshipName.nachfuehrung);
   }
 
   getNachfuehrungFeatures(): FidaFeature[] {
-    let featurelist = this.feature?.relatedFeatures?.nachfuehrung?.filter((f: FidaFeature) => f.state !== FeatureState.Delete);
+    const featurelist = this.feature?.relatedFeatures?.nachfuehrung?.filter((f: FidaFeature) => f.state !== FeatureState.Delete);
     if (featurelist) {
-      featurelist.sort(function (a, b) {
+      featurelist.sort((a: FidaFeature, b: FidaFeature) => {
         const ad = a.attributes.NACHFUEHRUNGSDATUM || 0;
-        const bd = a.attributes.NACHFUEHRUNGSDATUM || 0;
+        const bd = b.attributes.NACHFUEHRUNGSDATUM || 0;
         return ad - bd;
       });
     }
@@ -47,7 +47,7 @@ export class LfpEditComponent implements OnInit {
   }
 
   async addGrundbuchClick(): Promise<any> {
-    await this.featureService.createRelatedFeature(this.feature, RelationshipName.Grundbuch);
+    await this.featureService.createRelatedFeature(this.feature, RelationshipName.grundbuch);
   }
 
   getGrundbuchFeatures(): FidaFeature[] {
@@ -55,7 +55,7 @@ export class LfpEditComponent implements OnInit {
   }
 
   async addRueckversicherungClick(): Promise<any> {
-    await this.featureService.createRelatedFeature(this.feature, RelationshipName.Rueckversicherung);
+    await this.featureService.createRelatedFeature(this.feature, RelationshipName.rueckversicherung);
   }
 
   getRueckversicherungFeatures(): FidaFeature[] {
@@ -63,7 +63,7 @@ export class LfpEditComponent implements OnInit {
   }
 
   async addAnhangClick(): Promise<any> {
-    await this.featureService.createRelatedFeature(this.feature, RelationshipName.Anhang);
+    await this.featureService.createRelatedFeature(this.feature, RelationshipName.anhang);
   }
 
   getAnhangFeatures(): FidaFeature[] {

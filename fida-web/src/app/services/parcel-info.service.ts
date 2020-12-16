@@ -9,16 +9,16 @@ import { QueryService } from './query.service';
   providedIn: 'root'
 })
 export class ParcelInfoService {
-  
+
   constructor(
     private configService: ConfigService,
     private queryService: QueryService
   ) { }
 
   public async getParcelInfo(geometry: Geometry): Promise<ParcelInfo[]> {
-    
+
     const point = (geometry as Point);
-    if(!point){
+    if (!point) {
       throw new Error('invalid geometry');
     }
     const parameters = {

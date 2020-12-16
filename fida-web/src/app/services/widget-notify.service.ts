@@ -20,7 +20,7 @@ export class WidgetNotifyService {
   public onFeatureDeleteSubject: Subject<FidaFeature>;
   public onGdbVersionChangedSubject: Subject<string>;
   public setMapPopupVisibilitySubject: Subject<boolean>;
-  public enableMapPopupSubject:Subject<boolean>;
+  public enableMapPopupSubject: Subject<boolean>;
 
   constructor() {
     this.onFeatureCreateCompleteSubject = new Subject();

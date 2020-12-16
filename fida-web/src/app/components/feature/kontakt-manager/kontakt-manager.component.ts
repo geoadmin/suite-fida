@@ -18,11 +18,11 @@ import { ConfigService } from 'src/app/configs/config.service';
 export class KontaktManagerComponent implements OnInit {
   @Input() feature: FidaFeature;
   @Input() formGroup: FormGroup;
-  @Input() readonly: boolean = false;
+  @Input() readonly = false;
 
   public searchList: Observable<FidaFeatureSearch[]>;
   public searchText: string;
-  
+
   constructor(
     private featureService: FeatureService,
     public typeaheadService: TypeaheadService,
@@ -30,32 +30,32 @@ export class KontaktManagerComponent implements OnInit {
     private modalService: BsModalService
   ) { }
 
-  async ngOnInit(): Promise<void> {    
+  async ngOnInit(): Promise<void> {
     const featureLayer = this.featureService.getFeatureLayer(this.feature);
     const fkField = this.configService.getLayerConfigById(featureLayer.id).fkField;
-    
-    const kontanktFeatureLayer = await this.featureService.getRelatedFeatureLayerByName(featureLayer, RelationshipName.Kontakt);
 
-     // define search list
-     this.searchList = new Observable((observer: any) => {
+    const kontanktFeatureLayer = await this.featureService.getRelatedFeatureLayerByName(featureLayer, RelationshipName.kontakt);
+
+    // define search list
+    this.searchList = new Observable((observer: any) => {
       observer.next(this.searchText);
     }).pipe(mergeMap((searchText: string) => {
-      return this.typeaheadService.queryKontaktFeatures(kontanktFeatureLayer, searchText, fkField);     
+      return this.typeaheadService.queryKontaktFeatures(kontanktFeatureLayer, searchText, fkField);
     }));
   }
 
   async addKontaktClick(): Promise<any> {
     const kontaktFeature = this.typeaheadService.selectedSearchItem.feature;
     kontaktFeature.state = FeatureState.Edit;
-    this.featureService.addRelatedFeatureToList(this.feature, RelationshipName.Kontakt, kontaktFeature);     
+    this.featureService.addRelatedFeatureToList(this.feature, RelationshipName.kontakt, kontaktFeature);
   }
 
   async createKontaktClick(): Promise<any> {
-    const kontaktFeautre = await this.featureService.createRelatedFeature(this.feature, RelationshipName.Kontakt, false);
+    const kontaktFeautre = await this.featureService.createRelatedFeature(this.feature, RelationshipName.kontakt, false);
     const modalRef = this.modalService.show(KontaktEditDialogComponent, { initialState: { feature: kontaktFeautre } });
 
     modalRef.content.onSave.subscribe(async (createdFeature: FidaFeature) => {
-      this.featureService.addRelatedFeatureToList(this.feature, RelationshipName.Kontakt, createdFeature);
+      this.featureService.addRelatedFeatureToList(this.feature, RelationshipName.kontakt, createdFeature);
       modalRef.hide();
     });
 

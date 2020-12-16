@@ -20,11 +20,11 @@ export class VersionManagerComponent implements OnInit, OnDestroy {
   @ViewChild(VersionReconcileDialogComponent) private versionReconcileDialog: VersionReconcileDialogComponent;
 
   versions: GdbVersion[] = [];
-  isReconciling: boolean = false;
+  isReconciling = false;
   private expand: Expand;
   private expandedHandle: any;
 
-  constructor(  
+  constructor(
     private widgetsService: WidgetsService,
     private versionManagementService: VersionManagementService,
     private settingService: SettingService,
@@ -34,7 +34,7 @@ export class VersionManagerComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.expand = this.widgetsService.registerVersionManagerWidgetContent(this.versionManagerElement);
 
-    this.expandedHandle = this.expand.watch("expanded", (newValue) => {
+    this.expandedHandle = this.expand.watch('expanded', (newValue) => {
       if (newValue) {
         this.initVersions();
       }
@@ -76,21 +76,21 @@ export class VersionManagerComponent implements OnInit, OnDestroy {
     }
   }
 
-  closeClick(): void{
+  closeClick(): void {
     this.expand.collapse();
   }
 
   /**
-  * reconcile/Post
-  */
+   * reconcile/Post
+   */
   async showReconcilePostDialogClick(version: GdbVersion): Promise<void> {
-      this.isReconciling = true;
-      this.versionReconcileDialog.reconcile(version);          
+    this.isReconciling = true;
+    this.versionReconcileDialog.reconcile(version);
   }
 
-  reconcileFinished(success: boolean):void {
+  reconcileFinished(success: boolean): void {
     this.isReconciling = false;
-    if(success){
+    if (success) {
       this.initVersions(true);
     }
   }
@@ -126,7 +126,7 @@ export class VersionManagerComponent implements OnInit, OnDestroy {
         this.versions.splice(index, 1);
 
         // when delet version is active -> set to default
-        if(gdbVersion.versionName === this.settingService.getGdbVersionName()){
+        if (gdbVersion.versionName === this.settingService.getGdbVersionName()) {
           this.settingService.setDefaultVersion();
         }
       } else {

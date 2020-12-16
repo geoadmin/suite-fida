@@ -18,9 +18,6 @@ export class WidgetsService {
   constructor() {
   }
 
-  public getFeatureTableWidget() {
-  }
-
   public registerFeatureCreateWidgetContent(element: ElementRef): Expand {
     this.featureCreateWidget = new Expand({
       expandIconClass: 'esri-icon-edit',
@@ -91,23 +88,23 @@ export class WidgetsService {
   public getZoomWidget(mapView: MapView): Zoom {
     const zoom = new Zoom({
       view: mapView
-    });    
+    });
     return zoom;
   }
 
   public getHomeWidget(mapView: MapView, extent: Extent): Home {
-    var viewPoint = new Viewpoint({
+    const viewPoint = new Viewpoint({
       targetGeometry: extent
     });
     const home = new Home({
       view: mapView,
       viewpoint: viewPoint
-    });    
+    });
     return home;
   }
 
   public getLayerListWidget(mapView: MapView): Expand {
-    const layerList = new LayerList({      
+    const layerList = new LayerList({
       view: mapView
     });
     const expand = new Expand({
@@ -119,7 +116,7 @@ export class WidgetsService {
     return expand;
   }
 
-  private synchExpandCollapse(expand: Expand){
+  private synchExpandCollapse(expand: Expand): void {
     expand.collapseIconClass = expand.expandIconClass;
     expand.collapseTooltip = expand.expandTooltip;
   }

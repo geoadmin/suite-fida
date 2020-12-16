@@ -5,7 +5,7 @@ import { LayerConfig, LayerType } from '../models/config.model';
 import { SettingService } from './setting.service';
 import esriConfig from 'esri/config';
 import Portal from 'esri/portal/Portal';
-import Basemap from 'esri/Basemap'
+import Basemap from 'esri/Basemap';
 import Layer from 'esri/layers/Layer';
 import FeatureLayer from 'esri/layers/FeatureLayer';
 
@@ -52,11 +52,11 @@ export class LayerService {
     return this.getLayers().map(m => m as FeatureLayer);
   }
 
-  private createLayers() {
+  private createLayers(): void {
     this.layers = [];
     const layerConfigs = this.configService.getLayerConfigs();
     layerConfigs.forEach(layerConfig => {
-      let featureLayer = this.createLayer(layerConfig);
+      const featureLayer = this.createLayer(layerConfig);
 
       // add templates to layer
       // TODO find right template....
@@ -67,12 +67,12 @@ export class LayerService {
   }
 
   private createLayer(layerConfig: LayerConfig): Layer {
-    if (layerConfig.type == LayerType.FeatureLayer || layerConfig.type == LayerType.RelatedLayer) {
+    if (layerConfig.type === LayerType.FeatureLayer || layerConfig.type === LayerType.RelatedLayer) {
       // set the active gdb version
       layerConfig.properties.gdbVersion = this.settingService.getGdbVersionName();
       return new FeatureLayer(layerConfig.properties);
     } else {
-      throw new Error(`LayerType [${layerConfig.type}] is not supported.`)
+      throw new Error(`LayerType [${layerConfig.type}] is not supported.`);
     }
   }
 

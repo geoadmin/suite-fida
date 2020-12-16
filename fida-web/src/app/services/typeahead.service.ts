@@ -15,11 +15,11 @@ export class TypeaheadService {
   public searchLoading: boolean;
   public searchNoResults: boolean;
   public selectedSearchItem: FidaFeatureSearch;
-  
+
   constructor(private queryService: QueryService) {
   }
 
-  public async queryKontaktFeatures(featureLayer: FeatureLayer, searchText: string, fkField: string): Promise<FidaFeatureSearch[]> {   
+  public async queryKontaktFeatures(featureLayer: FeatureLayer, searchText: string, fkField: string): Promise<FidaFeatureSearch[]> {
 
     const search = searchText.toLocaleLowerCase();
     let searchWhere = `LOWER(ART) like '%${search}%'`;
@@ -36,13 +36,13 @@ export class TypeaheadService {
     const where = `(${fkWhere}) AND (${searchWhere})`;
 
     return this.queryService.where(featureLayer, where).then(features => {
-      return features.map( feature =>{
+      return features.map(feature => {
         return {
-          feature: feature,
+          feature,
           name: UtilService.kontaktToLine(feature)
-        }
-      })
-    });   
+        };
+      });
+    });
   }
 
   public onSearchLoading(e: boolean): void {

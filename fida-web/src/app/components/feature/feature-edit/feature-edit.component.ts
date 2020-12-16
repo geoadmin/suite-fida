@@ -12,7 +12,7 @@ import { CompleteState, WidgetNotifyService } from 'src/app/services/widget-noti
 })
 export class FeatureEditComponent implements OnInit {
 
-  public activated: boolean = false;
+  public activated = false;
   public feature: FidaFeature;
   public showSpinner: boolean;
   public form: FormGroup;
@@ -38,7 +38,7 @@ export class FeatureEditComponent implements OnInit {
 
       // if creating do stuff
       if (feature.state === FeatureState.Create) {
-        this.showSpinner;
+        this.showSpinner = true;
         await Promise.all([
           this.featureService.updateGeometry(this.feature),
           this.featureService.updateLK25(this.feature),
@@ -64,7 +64,7 @@ export class FeatureEditComponent implements OnInit {
     this.changeDetectorRef.detectChanges();
   }
 
-  getRelatedFeatures(relatedFeatures: FidaFeature[]) {
+  getRelatedFeatures(relatedFeatures: FidaFeature[]): FidaFeature[] {
     return relatedFeatures?.filter(f => f.state !== FeatureState.Delete);
   }
 
@@ -90,11 +90,11 @@ export class FeatureEditComponent implements OnInit {
   }
 
   /**
-  *  SAVE METHODS
-  */
+   *  SAVE METHODS
+   */
 
-  async saveClick(saveDialogTemplate: TemplateRef<any>): Promise<void> {    
-    if (this.feature.state != FeatureState.Create) {
+  async saveClick(saveDialogTemplate: TemplateRef<any>): Promise<void> {
+    if (this.feature.state !== FeatureState.Create) {
 
       // check of geometry-attribute change
       if (this.feature.attributes.LV95E !== this.originalAttributes.LV95E
@@ -115,7 +115,7 @@ export class FeatureEditComponent implements OnInit {
   }
 
   saveNoClick(): void {
-    // return to edit view 
+    // return to edit view
     this.modalRef.hide();
   }
 

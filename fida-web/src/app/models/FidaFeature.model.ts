@@ -8,15 +8,16 @@ export enum FeatureState {
     EditGeometry = 'edit-geometry'
 }
 
+// key must be tha same as the value
 export enum RelationshipName {
-    Grundbuch = 'grundbuch',
-    Kontakt = 'kontakt',
-    Nachfuehrung = 'nachfuehrung',
-    Rueckversicherung = 'rueckversicherung',
-    Anhang = 'anhang',
-    Auslandpunkt = 'auslandpunkt',
-    Schaeden = 'schaeden',
-    Schweremessung = 'schweremessung'   
+    grundbuch = 'grundbuch',
+    kontakt = 'kontakt',
+    nachfuehrung = 'nachfuehrung',
+    rueckversicherung = 'rueckversicherung',
+    anhang = 'anhang',
+    auslandpunkt = 'auslandpunkt',
+    schaeden = 'schaeden',
+    schweremessung = 'schweremessung'
 }
 
 export enum LayerId {

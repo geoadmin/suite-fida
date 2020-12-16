@@ -187,10 +187,6 @@
                     </div>
                 </div>
             </div>
-            <div class="col-8">
-                <app-attribute-value-edit [feature]="feature" formControlName="KENNZEICHNUNGTEXT" type="textarea"
-                    placeholder="Kennzeichnung Text"></app-attribute-value-edit>
-            </div>
         </div>
 
         <!--Bemerkung -->
@@ -328,6 +324,36 @@
             </div>            
         </div>
 
+         <!-- VERANKERUNG / ENVNUMMER-->
+         <div class="row">
+            <div class="col-3 attribute-label">
+                VERANKERUNG
+            </div>
+            <div class="col-3">
+                <app-attribute-value-edit [feature]="feature" formControlName="VERANKERUNG">
+                </app-attribute-value-edit>
+            </div>
+            <div class="col-3 attribute-label">
+                ENVNUMMER
+            </div>
+            <div class="col-3">
+                <app-attribute-value-edit [feature]="feature" formControlName="ENVNUMMER">
+                </app-attribute-value-edit>
+            </div>                     
+        </div>
+
+        <!-- SEKTOR -->
+        <div class="row">
+            <div class="col-3 attribute-label">
+                SEKTOR
+            </div>
+            <div class="col-3">
+                <app-attribute-value-edit [feature]="feature" formControlName="SEKTOR">
+                </app-attribute-value-edit>
+            </div>                         
+        </div>
+
+        
     </div>
 
       <!--anhang features -->

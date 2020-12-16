@@ -4,11 +4,13 @@ import { JitCompilerFactory } from '@angular/platform-browser-dynamic';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 // vendors
-import "./configs/esri-config";
+import './configs/esri-config';
 import { SimpleNotificationsModule } from 'angular2-notifications';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
@@ -18,7 +20,7 @@ import { AppComponent } from './app.component';
 import { ConfigService } from './configs/config.service';
 import { HeaderComponent } from './components/header/header.component';
 import { MapComponent } from './components/map/map.component';
-import { FeatureEditComponent } from './components/feature/feature-edit/feature-edit.component'
+import { FeatureEditComponent } from './components/feature/feature-edit/feature-edit.component';
 import { FeatureCreateComponent } from './components/feature/feature-create/feature-create.component';
 import { FeatureViewComponent } from './components/feature/feature-view/feature-view.component';
 import { AttributeEditComponent } from './components/feature/attribute/attribute-edit/attribute-edit.component';
@@ -43,14 +45,16 @@ import { LsnEditComponent } from './components/feature/feature-edit/lsn-edit/lsn
 import { KontaktEditDialogComponent } from './components/feature/kontakt-manager/kontakt-edit-dialog/kontakt-edit-dialog.component';
 import { KontaktManagerComponent } from './components/feature/kontakt-manager/kontakt-manager.component';
 import { KontaktViewComponent } from './components/feature/feature-view/kontakt-view/kontakt-view.component';
+import { FidaTranslateLoader } from './helpers/FidaTranslateLoader';
+import { QueryService } from './services/query.service';
 
 // config
-export function initApp(configService: ConfigService) {
+export function initApp(configService: ConfigService): any {
   return () => configService.load();
 }
 
 // functions
-export function createCompiler(compilerFactory: CompilerFactory) {
+export function createCompiler(compilerFactory: CompilerFactory): Compiler {
   return compilerFactory.createCompiler();
 }
 
@@ -94,7 +98,14 @@ export function createCompiler(compilerFactory: CompilerFactory) {
     SimpleNotificationsModule.forRoot(),
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),
-    TypeaheadModule.forRoot()
+    TypeaheadModule.forRoot(),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (http: HttpClient) => new FidaTranslateLoader(http),
+        deps: [HttpClient]
+      }
+    })
   ],
   providers: [
     { provide: COMPILER_OPTIONS, useValue: {}, multi: true },

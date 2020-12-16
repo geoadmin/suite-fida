@@ -27,7 +27,7 @@ export class MapService {
     private messageService: MessageService,
     private cookieService: CookieService,
     private configService: ConfigService
-  ) { 
+  ) {
     this.widgetNotifyService.onFeatureDeleteSubject.subscribe((feature: FidaFeature) => {
       this.removeFeatureFromPopup(feature);
     });
@@ -46,7 +46,7 @@ export class MapService {
       // create esri-map
       const basemap = await this.layerService.getBasemap();
       const map = new Map({
-        basemap: basemap       
+        basemap
       });
 
       // create graphic layer for editing
@@ -57,22 +57,22 @@ export class MapService {
 
       // create esri-map-view
       this.view = new MapView({
-        map: map,
+        map,
         extent: this.initialExtent()
       });
 
       // add widgets to map
       this.view.container = mapContainer.nativeElement;
       this.view.ui.components = ['attribution'];
-      this.view.ui.add(this.widgetsService.getBasemapWidget(this.view), "bottom-left");
-      this.view.ui.add(this.widgetsService.getZoomWidget(this.view), "top-left");
-      this.view.ui.add(this.widgetsService.getHomeWidget(this.view, this.getDefaultExtent()), "top-left");
-      this.view.ui.add(this.widgetsService.getSearchWidget(this.view), "top-right");
-      this.view.ui.add(this.widgetsService.getLayerListWidget(this.view), "top-right");
-      this.view.ui.add(this.widgetsService.getFeatureCreateWidget(this.view), "top-right");
-      this.view.ui.add(this.widgetsService.getVersionManagerWidget(this.view), "top-right");
+      this.view.ui.add(this.widgetsService.getBasemapWidget(this.view), 'bottom-left');
+      this.view.ui.add(this.widgetsService.getZoomWidget(this.view), 'top-left');
+      this.view.ui.add(this.widgetsService.getHomeWidget(this.view, this.getDefaultExtent()), 'top-left');
+      this.view.ui.add(this.widgetsService.getSearchWidget(this.view), 'top-right');
+      this.view.ui.add(this.widgetsService.getLayerListWidget(this.view), 'top-right');
+      this.view.ui.add(this.widgetsService.getFeatureCreateWidget(this.view), 'top-right');
+      this.view.ui.add(this.widgetsService.getVersionManagerWidget(this.view), 'top-right');
 
-      // init popup 
+      // init popup
       this.initPopup();
 
       // on gdb version changed
@@ -96,7 +96,7 @@ export class MapService {
 
   private initialExtent(): Extent {
     const extentParams = this.cookieService.extent || this.configService.getDefaultExtentConfig();
-    return new Extent(extentParams);    
+    return new Extent(extentParams);
   }
 
   private getDefaultExtent(): Extent {
@@ -104,7 +104,7 @@ export class MapService {
     return new Extent(extentParams);
   }
 
-  private addLayersToMap(map: Map) {
+  private addLayersToMap(map: Map): void {
     const layers = this.layerService.getLayers(true);
     map.addMany(layers);
     map.layers.add(this.graphicsLayer);
@@ -123,13 +123,13 @@ export class MapService {
    */
 
   private initPopup(): void {
-    this.view.popup.dockOptions.position = 'top-left'
+    this.view.popup.dockOptions.position = 'top-left';
     this.view.popup.dockOptions.buttonEnabled = false;
     // do not brake
     this.view.popup.dockOptions.breakpoint = {
       width: 99999,
       height: 99999
-    }
+    };
     this.view.popup.dockEnabled = true;
 
     // add close action
@@ -139,7 +139,7 @@ export class MapService {
       className: 'esri-popup__icon esri-icon-close'
     });
     this.view.popup.actions.splice(0, 0, closeAction);
-    //this.view.popup.actions.push(closeAction);
+    // this.view.popup.actions.push(closeAction);
 
     this.view.popup.on('trigger-action', (event: any) => {
       if (event.action.id === 'close-action') {
@@ -151,7 +151,7 @@ export class MapService {
   public enablePopup(enable: boolean): void {
     if (this.view) {
       this.view.map.layers.map((layer) => {
-        let featureLayer = layer as FeatureLayer;
+        const featureLayer = layer as FeatureLayer;
         if (featureLayer) {
           featureLayer.popupEnabled = enable;
         }
@@ -165,13 +165,13 @@ export class MapService {
     }
   }
 
-  private removeFeatureFromPopup(feature: FidaFeature):void {
+  private removeFeatureFromPopup(feature: FidaFeature): void {
     const features = this.view.popup.features.filter(f => f.attributes.GLOBALID !== feature.attributes.GLOBALID);
     this.view.popup.clear();
-    if(features.length === 0){
+    if (features.length === 0) {
       this.view.popup.close();
     } else {
       this.view.popup.features = features;
-    }    
+    }
   }
 }

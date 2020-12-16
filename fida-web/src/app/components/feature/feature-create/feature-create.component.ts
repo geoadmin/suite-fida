@@ -18,12 +18,12 @@ import { FeatureState, FidaFeature } from 'src/app/models/FidaFeature.model';
 })
 export class FeatureCreateComponent implements OnInit, OnDestroy {
   @ViewChild('featureCreate', { static: true }) private featureCreateElement: ElementRef;
-  
+
   public editableLayers: FeatureLayer[] = [];
   public selectedLayer: FeatureLayer;
-  public activated: boolean = false;
-  public wating: boolean = false;
-  public sketchViewModel: SketchViewModel
+  public activated = false;
+  public wating = false;
+  public sketchViewModel: SketchViewModel;
   private mapView: MapView;
   private graphicsLayer: GraphicsLayer;
   private feature: Feature;
@@ -39,7 +39,7 @@ export class FeatureCreateComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.expand = this.widgetsService.registerFeatureCreateWidgetContent(this.featureCreateElement);
-    this.expandedHandle = this.expand.watch("expanded", (newValue) => {
+    this.expandedHandle = this.expand.watch('expanded', (newValue) => {
       if (newValue) {
         this.initLayers();
       } else {
@@ -77,7 +77,7 @@ export class FeatureCreateComponent implements OnInit, OnDestroy {
     fidaFieature.relatedFeatures = {};
     fidaFieature.state = FeatureState.Create;
     this.widgetNotifyService.onFeatureEditSubject.next(fidaFieature);
-   
+
     this.wating = true;
   }
 
@@ -115,10 +115,10 @@ export class FeatureCreateComponent implements OnInit, OnDestroy {
     if (!this.sketchViewModel) {
       this.mapView = this.mapService.getMapView();
       this.graphicsLayer = this.mapService.getGraphicsLayer();
-      this.sketchViewModel = new SketchViewModel({ view: this.mapView, layer: this.graphicsLayer })
+      this.sketchViewModel = new SketchViewModel({ view: this.mapView, layer: this.graphicsLayer });
 
       this.sketchViewModel.on(['create', 'update'] as any, (event: any) => {
-        if (event.state === "complete") {
+        if (event.state === 'complete') {
           // do not allow stop sketching on map click
           if (this.activated === true) {
             if (event.graphic) {
@@ -136,7 +136,7 @@ export class FeatureCreateComponent implements OnInit, OnDestroy {
     this.wating = false;
     this.feature = undefined;
 
-    if(this.sketchViewModel){      
+    if (this.sketchViewModel) {
       this.sketchViewModel.cancel();
     }
 

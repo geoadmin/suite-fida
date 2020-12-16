@@ -16,8 +16,8 @@ import { FidaFeature } from 'src/app/models/FidaFeature.model';
 })
 export class GeometryEditComponent implements OnInit {
   @ViewChild('geometryEdit', { static: true }) private geometryEditElement: ElementRef;
-  public activated: boolean = false;
-  public sketchViewModel: SketchViewModel
+  public activated = false;
+  public sketchViewModel: SketchViewModel;
   public showSpinner: boolean;
   private mapView: MapView;
   private graphicsLayer: GraphicsLayer;
@@ -45,11 +45,11 @@ export class GeometryEditComponent implements OnInit {
 
   async saveClick(saveDialogTemplate: TemplateRef<any>): Promise<void> {
     this.modalRef = this.modalService.show(saveDialogTemplate, { class: 'modal-sm' });
-    
+
   }
 
   async saveYesClick(): Promise<void> {
-    this.showSpinner = true;    
+    this.showSpinner = true;
     await this.save();
     this.modalRef.hide();
   }
@@ -91,10 +91,10 @@ export class GeometryEditComponent implements OnInit {
     if (!this.sketchViewModel) {
       this.mapView = this.mapService.getMapView();
       this.graphicsLayer = this.mapService.getGraphicsLayer();
-      this.sketchViewModel = new SketchViewModel({ view: this.mapView, layer: this.graphicsLayer })
+      this.sketchViewModel = new SketchViewModel({ view: this.mapView, layer: this.graphicsLayer });
 
       this.sketchViewModel.on('update', (event) => {
-        if (event.state === "complete") {
+        if (event.state === 'complete') {
           // do not allow stop sketching on map click
           if (this.activated === true) {
             this.sketchViewModel.update(this.drawingFeature, { tool: 'move' });

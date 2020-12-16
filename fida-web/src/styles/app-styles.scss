@@ -225,11 +225,12 @@ a[role="tab"] {
 
 .fida-widget-body {
   margin: 0 0 var(--fida-widget-footer-height) 0;
-  height: calc(
+  max-height: calc(
     100vh - var(--fida-widget-footer-height) - var(--header-height) - var(--fida-widget-header-height) - 40px
   );
   overflow: auto;
 }
+
 .fida-widget-footer {
   position: absolute;
   bottom: 0px;
@@ -253,10 +254,6 @@ a[role="tab"] {
   &[aria-expanded="true"] {
     border: 2px solid var(--super-dark);
   }
-}
-
-.esri-expand__panel {
-  //border: 1px solid var(--super-dark);
 }
 
 .esri-view {

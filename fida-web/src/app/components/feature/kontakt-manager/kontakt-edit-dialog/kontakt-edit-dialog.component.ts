@@ -13,7 +13,7 @@ export class KontaktEditDialogComponent implements OnInit {
   public form: FormGroup;
   public onSave: Subject<FidaFeature>;
   public onCancel: Subject<void>;
-  
+
   constructor() { }
 
   ngOnInit(): void {
@@ -21,7 +21,7 @@ export class KontaktEditDialogComponent implements OnInit {
     this.onCancel = new Subject();
 
     this.form = new FormGroup({});
-    for (let key in this.feature.attributes) {
+    for (const key of Object.keys(this.feature.attributes)) {
       this.form.addControl(key, new FormControl());
     }
   }

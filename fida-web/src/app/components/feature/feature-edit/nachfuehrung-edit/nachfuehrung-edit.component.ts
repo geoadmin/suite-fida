@@ -11,7 +11,7 @@ import { UtilService } from 'src/app/services/util.service';
 export class NachfuehrungEditComponent implements OnInit {
   @Input() feature: FidaFeature;
   @Input() formGroup: FormGroup;
-  @Input() readonly: boolean = false;
+  @Input() readonly = false;
   public componentId: string;
 
   constructor() { }
@@ -20,7 +20,7 @@ export class NachfuehrungEditComponent implements OnInit {
     this.componentId = `nachfuehrung_${this.feature.attributes.OBJECTID || new Date().getTime()}`;
     this.formGroup.addControl(this.componentId, new FormGroup({}));
 
-    for (let key in this.feature.attributes) {
+    for (const key of Object.keys(this.feature.attributes)) {
       this.formGroup.addControl(key, new FormControl());
     }
   }

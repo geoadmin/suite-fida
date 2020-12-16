@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { SettingService } from 'src/app/services/setting.service';
 import { UtilService } from 'src/app/services/util.service';
 
@@ -9,10 +10,28 @@ import { UtilService } from 'src/app/services/util.service';
   encapsulation: ViewEncapsulation.None
 })
 export class HeaderComponent {
-  currentLanguage: string;
-  languages: Array<string>;  
 
-  constructor(private settingService: SettingService) {
+  constructor(
+    private settingService: SettingService,
+    public translateService: TranslateService
+  ) {
+  }
+
+  getLanguages(): string[] {
+    return this.translateService.getLangs().slice().reverse();
+  }
+
+  isCurrentLanguage(language: string): boolean {
+    return this.translateService.currentLang === language;
+  }
+
+  setCurrentLanguage(language: string): void {
+    this.translateService.setDefaultLang(language);
+    this.translateService.use(language);
+  }
+
+  getLanguageShort(languageId: string): string {
+    return languageId?.toUpperCase().substring(0, languageId.indexOf('-'));
   }
 
   getUserName(): string {

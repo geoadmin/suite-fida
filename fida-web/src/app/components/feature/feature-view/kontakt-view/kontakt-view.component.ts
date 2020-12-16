@@ -11,10 +11,10 @@ import { UtilService } from 'src/app/services/util.service';
 })
 export class KontaktViewComponent implements OnInit {
   @Input() feature: FidaFeature;
-  @Input() readonly: boolean = false;
+  @Input() readonly = false;
 
   public componentId: string;
-  
+
   constructor(
     private modalService: BsModalService
   ) { }
@@ -43,14 +43,14 @@ export class KontaktViewComponent implements OnInit {
   }
 
   getNameLine(): string {
-    return  UtilService.getVornameNameToLine(this.feature);
+    return UtilService.getVornameNameToLine(this.feature);
   }
 
   getLocationLine(): string {
     return UtilService.getPlzOrtToLine(this.feature);
   }
 
-  getHeaderText(): string {    
+  getHeaderText(): string {
     const list: string[] = [];
     UtilService.addToList(list, this.feature.attributes.FIRMA);
     UtilService.addToList(list, UtilService.getVornameNameToLine(this.feature));

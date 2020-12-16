@@ -38,4 +38,11 @@
     right: 15px;
     top: calc(var(--header-height) - 30px);
   }
+
+  .deployed {
+    position: absolute;
+    left: 267px;
+    font-size: 12px;
+    top: calc(var(--header-height) - 30px);
+  }
 }

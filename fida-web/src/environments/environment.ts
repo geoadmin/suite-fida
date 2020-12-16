@@ -8,7 +8,6 @@ export const environment: EnvironmentInterface = {
   production: false,
   arcGisServer: 'https://s7t2530a.adr.admin.ch/arcgis/',
   arcGisPortal: 'https://s7t4530a.adr.admin.ch/arcgis/'
-  //arcGisPortal: 'https://jsapi.maps.arcgis.com',
 };
 
 /*
@@ -19,3 +18,4 @@ export const environment: EnvironmentInterface = {
  * on performance if an error is thrown.
  */
 import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+

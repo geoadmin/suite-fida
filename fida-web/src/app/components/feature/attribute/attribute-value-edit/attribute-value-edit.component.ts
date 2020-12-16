@@ -1,5 +1,8 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
-import { AbstractControl, ControlValueAccessor, FormControl, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validators } from '@angular/forms';
+import {
+  AbstractControl, ControlValueAccessor, FormControl, FormGroup,
+  NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validators
+} from '@angular/forms';
 import FeatureLayer from 'esri/layers/FeatureLayer';
 import CodedValueDomain from 'esri/layers/support/CodedValueDomain';
 import Field from 'esri/layers/support/Field';
@@ -28,7 +31,7 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
   @Input() formControlName: string; // must be the same as feature-attribute-name
   @Input() placeholder: string;
   @Input() type: string;
-  @Input() required: boolean = false;
+  @Input() required = false;
 
   public formGroup: FormGroup;
   public disabled: boolean;
@@ -38,10 +41,10 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
   constructor() { }
 
   ngOnInit(): void {
-    if(!this.placeholder){
+    if (!this.placeholder) {
       this.placeholder = '';
     }
-    
+
     // create form-control
     const formControl = new FormControl();
     this.formGroup = new FormGroup({
@@ -55,9 +58,9 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
       return;
     }
 
-    // convert value to date-object 
-    if (this.field.type === 'date') {      
-      this.date = UtilService.esriToDate(this.feature.attributes[this.formControlName]);       
+    // convert value to date-object
+    if (this.field.type === 'date') {
+      this.date = UtilService.esriToDate(this.feature.attributes[this.formControlName]);
     }
 
     // define validation form-control
@@ -65,21 +68,15 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
     if (this.field.nullable === false || this.required === true) {
       validators.push(Validators.required);
     }
-    if(this.field.length && this.field.length > 0) {
+    if (this.field.length && this.field.length > 0) {
       validators.push(Validators.maxLength(this.field.length));
     }
     formControl.setValidators(validators);
 
   }
 
-  ngAfterViewInit(): void {
-  }
-
-  ngOnDestroy(): void {
-  }
-
   onDateChanged(): void {
-    this.feature.attributes[this.formControlName] = this.date? this.date.valueOf() : null;
+    this.feature.attributes[this.formControlName] = this.date ? this.date.valueOf() : null;
   }
 
   private getFeatureLayer(): FeatureLayer {
@@ -103,7 +100,7 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
       || this.field.type === 'integer'
       || this.field.type === 'single'
       || this.field.type === 'double') {
-      return 'number'
+      return 'number';
     }
 
     return this.field.type;
@@ -115,14 +112,14 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
   }
 
   /**
-  * ControlValueAccessor
-  */
+   * ControlValueAccessor
+   */
 
-  onChange: any = () => { }
-  onTouched: any = () => { }
+  onChange: any = () => { };
+  onTouched: any = () => { };
 
   writeValue(value: any): void {
-    if(value != null){
+    if (value != null) {
       this.formGroup?.controls.valueControl.setValue(value);
     }
   }

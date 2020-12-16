@@ -10,7 +10,7 @@ import { FeatureState, FidaFeature } from 'src/app/models/FidaFeature.model';
 export class AuslandpunktEditComponent implements OnInit {
   @Input() feature: FidaFeature;
   @Input() formGroup: FormGroup;
-  @Input() readonly: boolean = false;
+  @Input() readonly = false;
   public componentId: string;
 
   constructor() { }
@@ -19,7 +19,7 @@ export class AuslandpunktEditComponent implements OnInit {
     this.componentId = `auslandpunkt_${this.feature.attributes.OBJECTID || new Date().getTime()}`;
     this.formGroup.addControl(this.componentId, new FormGroup({}));
 
-    for (let key in this.feature.attributes) {
+    for (const key of Object.keys(this.feature.attributes)) {
       this.formGroup.addControl(key, new FormControl());
     }
   }

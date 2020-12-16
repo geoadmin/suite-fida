@@ -13,16 +13,16 @@ export class AnhangEditComponent implements OnInit {
   @ViewChild('attachemts', { static: true }) attachmentsContainer: ElementRef;
   @Input() feature: FidaFeature;
   @Input() formGroup: FormGroup;
-  @Input() readonly: boolean = false;
+  @Input() readonly = false;
   public componentId: string;
-  
+
   constructor() { }
 
   ngOnInit(): void {
     this.componentId = `anhang_${this.feature.attributes.OBJECTID || new Date().getTime()}`;
     this.formGroup.addControl(this.componentId, new FormGroup({}));
 
-    for (let key in this.feature.attributes) {
+    for (const key of Object.keys(this.feature.attributes)) {
       this.formGroup.addControl(key, new FormControl());
     }
   }
@@ -31,18 +31,18 @@ export class AnhangEditComponent implements OnInit {
     this.feature.state = FeatureState.Delete;
   }
 
-  getAttachmentInfos(): AttachmentInfo[]{
+  getAttachmentInfos(): AttachmentInfo[] {
     return this.feature.attachmentInfos ?? [];
   }
 
   getHeaderText(): string {
-    //TODO dynamisch
+    // TODO dynamisch
     let bildart = '-';
-    if(this.feature.attributes.BILD_ART === 1){
+    if (this.feature.attributes.BILD_ART === 1) {
       bildart = 'Foto';
-    } else if(this.feature.attributes.BILD_ART === 0){
+    } else if (this.feature.attributes.BILD_ART === 0) {
       bildart = 'Skizze';
-    } else if(this.feature.attributes.BILD_ART === 2){
+    } else if (this.feature.attributes.BILD_ART === 2) {
       bildart = 'weitere';
     }
 
@@ -51,7 +51,7 @@ export class AnhangEditComponent implements OnInit {
     return `${bildart} - ${attachmentName}`;
   }
 
-  handleFileInput(files: FileList){
-    this.feature.attachmentUpload = files.item(0);    
+  handleFileInput(files: FileList): void {
+    this.feature.attachmentUpload = files.item(0);
   }
 }

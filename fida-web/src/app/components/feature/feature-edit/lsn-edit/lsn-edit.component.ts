@@ -11,12 +11,12 @@ import { FeatureService } from 'src/app/services/feature.service';
 export class LsnEditComponent implements OnInit {
   @Input() feature: FidaFeature;
   @Input() formGroup: FormGroup;
-  @Input() readonly: boolean = false;
+  @Input() readonly = false;
 
   constructor() { }
 
   ngOnInit(): void {
-    for (let key in this.feature.attributes) {
+    for (const key of Object.keys(this.feature.attributes)) {
       this.formGroup.addControl(key, new FormControl());
     }
   }
