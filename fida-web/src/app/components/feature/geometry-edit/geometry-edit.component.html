@@ -3,15 +3,15 @@
 
         <!-- header -->
         <div class="fida-widget-header">
-            <label>Edit Geometry</label>
+            <label>{{ 'app.geometry_edit.title' | translate }}</label>
             <button class="btn esri-icon-close float-right" (click)="cancelClick(true)"></button>
         </div>
 
         <!-- body -->
         <div class="">
             <div *ngIf="activated" class="d-flex flex-row">
-                <button type="button" class="btn btn-default flex-fill" (click)="cancelClick()">Cancel</button>
-                <button type="button" class="btn btn-primary flex-fill" (click)="saveClick(saveDialogTemplate)">Save</button>
+                <button type="button" class="btn btn-default flex-fill" (click)="cancelClick()">{{ 'app.global.cancel' | translate }}</button>
+                <button type="button" class="btn btn-primary flex-fill" (click)="saveClick(saveDialogTemplate)">{{ 'app.global.save' | translate }}</button>
             </div>
         </div>
 
@@ -21,8 +21,8 @@
 <!-- save dialog -->
 <ng-template #saveDialogTemplate>
     <div class="modal-body text-center" [class.spinner]="showSpinner">
-        <p>Das Speichern hat Auswirkung auf die Werte LV95E/LV95N/LN02. Soll wirklich gespeichert werden?</p>
-        <button type="button" class="btn btn-primary" (click)="saveNoClick()">Nein</button>
-        <button type="button" class="btn btn-danger ml-2" (click)="saveYesClick()">Ja</button>
+        <p>{{ 'app.geometry_edit.save_dialog_text' | translate }}</p>
+        <button type="button" class="btn btn-primary" (click)="saveNoClick()">{{ 'app.global.no' | translate }}</button>
+        <button type="button" class="btn btn-danger ml-2" (click)="saveYesClick()">{{ 'app.global.yes' | translate }}</button>
     </div>
 </ng-template>

@@ -2,7 +2,7 @@
 
     <!-- header -->
     <div class="fida-widget-header">
-        <label>Create Version</label>
+        <label>{{ 'app.version_create.title' | translate }}</label>
         <button class="btn esri-icon-close float-right" (click)="cancelClick()"></button>
     </div>
 
@@ -13,22 +13,18 @@
             <!-- name -->
             <div class="row form-group error-text-container">
                 <div class="col-6 attribute-label">
-                    Name
+                    {{ 'app.version.name' | translate }}
                 </div>
                 <div class="col-6 form-group">
                     <input type="text" class="form-control" formControlName="versionName"
                         [(ngModel)]="gdbVersion.versionName">
                 </div>
-                <!-- validation -->
-                <!-- <div class="error-text" *ngIf="form.controls.versionName.errors?.required" style="width: 130px;">
-                    Value is required.
-                </div> -->
             </div>
 
             <!-- description -->
             <div class="row mt-2">
                 <div class="col-6 attribute-label">
-                    Description
+                    {{ 'app.version.description' | translate }}
                 </div>
                 <div class="col-6">
                     <input type="text" class="form-control" formControlName="description"
@@ -40,7 +36,7 @@
 
     <!-- footer -->
     <div class="fida-widget-footer">
-        <button type="button" class="btn btn-primary float-right ml-2" (click)="createClick()" [disabled]="form.invalid">Create</button>
-        <button type="button" class="btn btn-default float-right" (click)="cancelClick()">Cancel</button>
+        <button type="button" class="btn btn-primary float-right ml-2" (click)="createClick()" [disabled]="form.invalid">{{ 'app.global.create' | translate }}</button>
+        <button type="button" class="btn btn-default float-right" (click)="cancelClick()">{{ 'app.global.cancel' | translate }}</button>
     </div>
 </div>

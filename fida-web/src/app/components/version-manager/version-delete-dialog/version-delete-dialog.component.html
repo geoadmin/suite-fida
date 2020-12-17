@@ -1,5 +1,6 @@
 <div class="modal-body">
-    <p>Do you realy want to delete version <strong>{{ gdbVersion.versionName }}</strong>?</p>
-    <button type="button" class="btn btn-default" (click)="cancelClick()">cancel</button>
-    <button type="button" class="btn btn-danger ml-2" (click)="deleteClick()">delete</button>
+    <p>{{ 'app.version_delete.dialog_text' | translate : {name: getFormatedVersionName()} }}</p>
+    <button type="button" class="btn btn-default" (click)="cancelClick()">{{ 'app.global.cancel' | translate }}</button>
+    <button type="button" class="btn btn-danger ml-2" (click)="deleteClick()">{{ 'app.global.delete' | translate
+        }}</button>
 </div>

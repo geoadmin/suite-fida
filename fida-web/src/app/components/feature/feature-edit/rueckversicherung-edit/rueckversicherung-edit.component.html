@@ -10,12 +10,12 @@
         <div class="card-body">
 
             <div class="row">
-                <div class="col-3 attribute-label">PUNKTBEZEICHNUNG</div>
+                <div class="col-3 attribute-label">{{ 'row.fida_rueckversicherunglfp.punktbezeichnung' | translate }}</div>
                 <div class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="PUNKTBEZEICHNUNG" [required]="true">
                     </app-attribute-value-edit>
                 </div>
-                <div class="col-3 attribute-label">AZIMUT</div>
+                <div class="col-3 attribute-label">{{ 'row.fida_rueckversicherunglfp.azimut' | translate }}</div>
                 <div class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="AZIMUT" [required]="true">
                     </app-attribute-value-edit>
@@ -23,19 +23,19 @@
             </div>
 
             <div class="row">
-                <div class="col-3 attribute-label">DELTAHOEHE</div>
+                <div class="col-3 attribute-label">{{ 'row.fida_rueckversicherunglfp.deltahoehe' | translate }}</div>
                 <div class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="DELTAHOEHE">
                     </app-attribute-value-edit>
                 </div>
-                <div class="col-3 attribute-label">DISTANZ</div>
+                <div class="col-3 attribute-label">{{ 'row.fida_rueckversicherunglfp.distanz' | translate }}</div>
                 <div class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="DISTANZ"></app-attribute-value-edit>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-3 attribute-label">MATERIALISIERUNG</div>
+                <div class="col-3 attribute-label">{{ 'row.fida_rueckversicherunglfp.materialisierung' | translate }}</div>
                 <div class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="MATERIALISIERUNG" [required]="true">
                     </app-attribute-value-edit>
@@ -45,7 +45,7 @@
             <!-- delete button -->
             <div class="row mt-2" [hidden]="readonly">
                 <div class="col-12">
-                    <button type="button" class="btn btn-danger float-right" (click)="deleteClick()">Delete</button>
+                    <button type="button" class="btn btn-danger float-right" (click)="deleteClick()">{{ 'app.global.delete' | translate }}</button>
                 </div>
             </div>
         </div>

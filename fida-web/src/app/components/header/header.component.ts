@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { FidaTranslateService } from 'src/app/services/translate.service';
 import { SettingService } from 'src/app/services/setting.service';
 import { UtilService } from 'src/app/services/util.service';
 
@@ -13,21 +13,20 @@ export class HeaderComponent {
 
   constructor(
     private settingService: SettingService,
-    public translateService: TranslateService
+    public translateService: FidaTranslateService
   ) {
   }
 
   getLanguages(): string[] {
-    return this.translateService.getLangs().slice().reverse();
+    return this.translateService.getLanguages();
   }
 
   isCurrentLanguage(language: string): boolean {
-    return this.translateService.currentLang === language;
+    return this.translateService.getCurrentLanguage() === language;
   }
 
   setCurrentLanguage(language: string): void {
-    this.translateService.setDefaultLang(language);
-    this.translateService.use(language);
+    this.translateService.setCurrentLanguage(language);
   }
 
   getLanguageName(languageId: string): string {

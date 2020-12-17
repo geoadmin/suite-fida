@@ -2,7 +2,7 @@
 
     <!-- header -->
     <div class="fida-widget-header">
-        <label>Create Feature</label>
+        <label>{{ 'app.feature_create.title' | translate }}</label>
         <button class="btn esri-icon-close float-right" (click)="closeClick()"></button>
     </div>
 
@@ -17,13 +17,13 @@
                 </option>
             </select>
 
-            <button class="btn btn-primary" (click)="startClick()">Start</button>
+            <button class="btn btn-primary" (click)="startClick()">{{ 'app.feature_create.start' | translate }}</button>
         </div>
 
         <!-- when active -->
         <div *ngIf="activated" class="d-flex felx-row">
-            <button type="button" class="btn btn-default flex-fill" (click)="cancelClick()">Cancel</button>
-            <button type="button" class="btn btn-primary flex-fill" (click)="createClick()">Create</button>
+            <button type="button" class="btn btn-default flex-fill" (click)="cancelClick()">{{ 'app.global.cancel' | translate }}</button>
+            <button type="button" class="btn btn-primary flex-fill" (click)="createClick()">{{ 'app.global.create' | translate }}</button>
         </div>
         
     </div>

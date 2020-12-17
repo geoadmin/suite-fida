@@ -2,7 +2,7 @@
   <img class="ch-logo float-left" src="assets/images/logo-CH.svg" />
   <div class="separator float-left"></div>
   <div class="float-left">
-    <h1>{{ 'BFL' | translate }}<br />{{ 'fida' | translate }}</h1>
+    <h1>{{ 'app.header.bundesamt' | translate }}<br />{{ 'app.header.title' | translate }}</h1>
   </div>
 
   <div>
@@ -13,6 +13,6 @@
   <div class="deployed font-italic font-weight-light">deployed: 16.12.2020</div>
 
   <div class="user-info">
-    GDB-Version: {{ getVersionName() }} | {{ 'user' | translate }}: {{ getUserName() }}
+    {{ 'app.header.gdb_version' | translate }}: {{ getVersionName() }} | {{ 'app.header.user' | translate }}: {{ getUserName() }}
   </div>
 </div>

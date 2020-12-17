@@ -1,22 +1,28 @@
 <!-- navigation -->
 <ul class="nav nav-pills nav-fill" role="tablist">
     <li class="nav-item">
-        <a class="nav-link active" href="#lfp_general_tab" role="tab" data-toggle="tab">Allgemein</a>
+        <a class="nav-link active" href="#lfp_general_tab" role="tab" data-toggle="tab">{{ 'app.relationship.general' |
+            translate }}</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#lfp_anhang_tab" role="tab" data-toggle="tab">Anhang</a>
+        <a class="nav-link" href="#lfp_anhang_tab" role="tab" data-toggle="tab">{{ 'app.relationship.anhang' |
+            translate }}</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#lfp_nachfuehrung_tab" role="tab" data-toggle="tab">Nachfuehrung</a>
+        <a class="nav-link" href="#lfp_nachfuehrung_tab" role="tab" data-toggle="tab">{{ 'app.relationship.nachfuehrung' |
+            translate }}</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#lfp_grundbuch_tab" role="tab" data-toggle="tab">Grundbuch</a>
+        <a class="nav-link" href="#lfp_grundbuch_tab" role="tab" data-toggle="tab">{{ 'app.relationship.grundbuch' |
+            translate }}</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#lfp_rueckversicherung_tab" role="tab" data-toggle="tab">Rückversicherung</a>
+        <a class="nav-link" href="#lfp_rueckversicherung_tab" role="tab" data-toggle="tab">{{ 'app.relationship.rueckversicherung' |
+            translate }}</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#lfp_kontakt_tab" role="tab" data-toggle="tab">Kontakt</a>
+        <a class="nav-link" href="#lfp_kontakt_tab" role="tab" data-toggle="tab">{{ 'app.relationship.kontakt' |
+            translate }}</a>
     </li>
 </ul>
 
@@ -69,7 +75,6 @@
             <div class="col-2">
             </div>
             <div class="col-2 attribute-label">
-                <!-- {{ 'row.fida_lfp.punktname' | translate }}  -->
                 Punktname
             </div>
             <div class="col-4">
@@ -414,8 +419,8 @@
       <div role="tabpanel" class="tab-pane fade py-2" id="lfp_anhang_tab">
         <div class="row mb-2" [hidden]="readonly">
             <div class="col-12">
-                <button type="button" class="btn btn-primary" (click)="addAnhangClick()">Add New
-                    Anhang</button>
+                <button type="button" class="btn btn-primary" (click)="addAnhangClick()">{{ 'app.global.create' |
+                    translate }}</button>
             </div>
         </div>
         <div *ngFor="let feature of getAnhangFeatures()">
@@ -430,8 +435,8 @@
     <div role="tabpanel" class="tab-pane fade py-2" id="lfp_nachfuehrung_tab">
         <div class="row mb-2" [hidden]="readonly">
             <div class="col-12">
-                <button type="button" class="btn btn-primary" (click)="addNachfuehrungClick()">Add New
-                    Nachfuehrung</button>
+                <button type="button" class="btn btn-primary" (click)="addNachfuehrungClick()">{{ 'app.global.create' |
+                    translate }}</button>
             </div>
         </div>
         <div *ngFor="let feature of getNachfuehrungFeatures()">
@@ -446,9 +451,10 @@
     <div role="tabpanel" class="tab-pane fade py-2" id="lfp_grundbuch_tab" [class.spinner]="redefining">
         <div class="row mb-2" [hidden]="readonly">
             <div class="col-12">
-                <button type="button" class="btn btn-primary mr-2" (click)="addGrundbuchClick()">Add New
-                    Grundbuch</button>
-                <button type="button" class="btn btn-danger" (click)="redefineGrundbuchDataClick()">redefine</button>
+                <button type="button" class="btn btn-primary mr-2" (click)="addGrundbuchClick()">{{ 'app.global.create' |
+                    translate }}</button>
+                <button type="button" class="btn btn-danger" (click)="redefineGrundbuchDataClick()">{{ 'app.feature_edit.redefine' |
+                    translate }}</button>
             </div>
         </div>
         <div *ngFor="let feature of getGrundbuchFeatures()">
@@ -463,8 +469,8 @@
     <div role="tabpanel" class="tab-pane fade py-2" id="lfp_rueckversicherung_tab">
         <div class="row mb-2" [hidden]="readonly">
             <div class="col-12">
-                <button type="button" class="btn btn-primary" (click)="addRueckversicherungClick()">Add New
-                    Rückversicherung</button>
+                <button type="button" class="btn btn-primary" (click)="addRueckversicherungClick()">{{ 'app.global.create' |
+                    translate }}</button>
             </div>
         </div>
         <div *ngFor="let feature of getRueckversicherungFeatures()">

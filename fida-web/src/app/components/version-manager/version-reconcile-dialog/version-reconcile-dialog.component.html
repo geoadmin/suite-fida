@@ -2,7 +2,7 @@
 
      <!-- header -->
      <div class="fida-widget-header">
-        <label>Version-Manager: Reconcile/Post</label>
+        <label>{{ 'app.version_reconcile.title' | translate }}</label>
         <button class="btn esri-icon-close float-right" (click)="cancelClick()"></button>
     </div>
 
@@ -14,10 +14,10 @@
     <!-- footer -->
     <div class="fida-widget-footer">
         <button type="button" class="btn btn-primary float-right ml-2"
-            (click)="acceptDifferencesClick()">Accept</button>
+            (click)="acceptDifferencesClick()">{{ 'app.version_reconcile.accept' | translate }}</button>
         <button type="button" class="btn btn-danger float-right ml-2"
-            (click)="declineDifferencesClick()">Decline</button>
-        <button type="button" class="btn btn-default float-right" (click)="cancelClick()">Cancel</button>
+            (click)="declineDifferencesClick()">{{ 'app.version_reconcile.decline' | translate }}</button>
+        <button type="button" class="btn btn-default float-right" (click)="cancelClick()">{{ 'app.global.cancel' | translate }}</button>
     </div>
 
 </div>

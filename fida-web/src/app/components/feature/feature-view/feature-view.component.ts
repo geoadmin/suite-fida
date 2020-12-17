@@ -115,4 +115,12 @@ export class FeatureViewComponent implements OnInit, OnDestroy {
   deleteCancelClick(): void {
     this.modalRef.hide();
   }
+
+  /**
+   * TEST
+   */
+
+  addTestTranslationToDb(): void {
+    this.featureService.addTestTranslationToDb();
+  }
 }

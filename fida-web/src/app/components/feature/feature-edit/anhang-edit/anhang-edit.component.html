@@ -25,12 +25,12 @@
 
             <!-- attributes -->
             <div class="row">
-                <div class="col-3 attribute-label">BILD_ART</div>
+                <div class="col-3 attribute-label">{{ 'row.fida_anhanglfp.bild_art' | translate }}</div>
                 <div class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="BILD_ART" [required]="true">
                     </app-attribute-value-edit>
                 </div>
-                <div class="col-3 attribute-label">BILD_STATUS</div>
+                <div class="col-3 attribute-label">{{ 'row.fida_anhanglfp.bild_status' | translate }}</div>
                 <div class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="BILD_STATUS" [required]="true">
                     </app-attribute-value-edit>
@@ -38,12 +38,12 @@
             </div>
 
             <div class="row">
-                <div class="col-3 attribute-label">BILD_DRUCKBREITE</div>
+                <div class="col-3 attribute-label">{{ 'row.fida_anhanglfp.bild_druckbreite' | translate }}</div>
                 <div class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="BILD_DRUCKBREITE">
                     </app-attribute-value-edit>
                 </div>
-                <div class="col-3 attribute-label">BILD_DRUCKHOEHE</div>
+                <div class="col-3 attribute-label">{{ 'row.fida_anhanglfp.bild_druckhoehe' | translate }}</div>
                 <div class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="BILD_DRUCKHOEHE">
                     </app-attribute-value-edit>
@@ -51,7 +51,7 @@
             </div>
 
             <div class="row">
-                <div class="col-3 attribute-label">BILD_DATUM</div>
+                <div class="col-3 attribute-label">{{ 'row.fida_anhanglfp.bild_datum' | translate }}</div>
                 <div class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="BILD_DATUM">
                     </app-attribute-value-edit>
@@ -61,7 +61,7 @@
             <!-- delete button -->
             <div class="row mt-2" [hidden]="readonly">
                 <div class="col-12">
-                    <button type="button" class="btn btn-danger float-right" (click)="deleteClick()">Delete</button>
+                    <button type="button" class="btn btn-danger float-right" (click)="deleteClick()">{{ 'app.global.delete' | translate }}</button>
                 </div>
             </div>
         </div>

@@ -71,6 +71,8 @@ export class MapService {
       this.view.ui.add(this.widgetsService.getLayerListWidget(this.view), 'top-right');
       this.view.ui.add(this.widgetsService.getFeatureCreateWidget(this.view), 'top-right');
       this.view.ui.add(this.widgetsService.getVersionManagerWidget(this.view), 'top-right');
+      // TODO find bether solution
+      this.widgetsService.initTooltips();
 
       // init popup
       this.initPopup();

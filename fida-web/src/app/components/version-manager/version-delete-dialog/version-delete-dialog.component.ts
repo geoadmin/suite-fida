@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
 import { GdbVersion } from 'src/app/models/GdbVersion.model';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-version-delete-dialog',
@@ -24,5 +25,9 @@ export class VersionDeleteDialogComponent implements OnInit {
 
   cancelClick(): void {
     this.modalRef.hide();
+  }
+
+  getFormatedVersionName(): string {
+    return UtilService.formatVersionName(this.gdbVersion.versionName);
   }
 }

@@ -1,13 +1,13 @@
 <div [formGroup]="formGroup" class="error-text-container">
 
     <!-- value -->
-    <div [ngSwitch]="getFieldType()">
+    <div [ngSwitch]="type">
         
         <!-- domain value -->
         <div *ngSwitchCase="'domain'">
             <select formControlName="valueControl" [(ngModel)]="feature?.attributes[formControlName]"
                 [name]="formControlName" [placeholder]="placeholder" class="form-control">
-                <option *ngFor="let codedValue of getCodedValues()" [ngValue]="codedValue.code"
+                <option *ngFor="let codedValue of codedValues" [ngValue]="codedValue.code"
                     [selected]="codedValue.code === feature?.attributes[formControlName]">
                     {{ codedValue.name }}
                 </option>

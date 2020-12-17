@@ -27,8 +27,8 @@
     <!-- footer -->
     <div class="fida-widget-footer">
         <button type="button" class="btn btn-primary float-right ml-2" (click)="saveClick(saveDialogTemplate)"
-            [disabled]="form.invalid">Save</button>
-        <button type="button" class="btn btn-default float-right" (click)="cancelClick()">Cancel</button>
+            [disabled]="form.invalid">{{ 'app.global.save' | translate }}</button>
+        <button type="button" class="btn btn-default float-right" (click)="cancelClick()">{{ 'app.global.cancel' | translate }}</button>
     </div>
 
 </div>
@@ -36,8 +36,8 @@
 <!-- save dialog -->
 <ng-template #saveDialogTemplate>
     <div class="modal-body text-center">
-        <p>Werte LV95E/LV95N/LN02 wurden verändert. Das hat Auswirkung auf die Geometry. Soll wirklich gespeichert werden?</p>
-        <button type="button" class="btn btn-primary" (click)="saveNoClick()">Nein</button>
-        <button type="button" class="btn btn-danger ml-2" (click)="saveYesClick()">Ja</button>
+        <p>{{ 'app.feature_edit.save_dialog_text' | translate }}</p>
+        <button type="button" class="btn btn-primary" (click)="saveNoClick()">{{ 'app.global.no' | translate }}</button>
+        <button type="button" class="btn btn-danger ml-2" (click)="saveYesClick()">{{ 'app.global.yes' | translate }}</button>
     </div>
 </ng-template>

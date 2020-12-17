@@ -2,7 +2,7 @@
 
     <!-- header -->
     <div class="fida-widget-header">
-        <label>Kontakt-Editor</label>
+        <label>{{ 'app.kontakt_manager.title' | translate }}</label>
         <button class="btn esri-icon-close float-right" (click)="cancelClick()"></button>
     </div>
 
@@ -11,12 +11,12 @@
         <form [formGroup]="form" novalidate>
             
             <div class="row">
-                <div class="col-3 attribute-label">ART</div>
+                <div class="col-3 attribute-label">{{ 'row.fida_kontakt.art' | translate }}</div>
                 <div class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="ART" [required]="true">
                     </app-attribute-value-edit>
                 </div>
-                <div class="col-3 attribute-label">FIRMA</div>
+                <div class="col-3 attribute-label">{{ 'row.fida_kontakt.firma' | translate }}</div>
                 <div class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="FIRMA">
                     </app-attribute-value-edit>
@@ -24,12 +24,12 @@
             </div>
 
             <div class="row">
-                <div class="col-3 attribute-label">VORNAME</div>
+                <div class="col-3 attribute-label">{{ 'row.fida_kontakt.vorname' | translate }}</div>
                 <div class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="VORNAME" [required]="true">
                     </app-attribute-value-edit>
                 </div>
-                <div class="col-3 attribute-label">NAME</div>
+                <div class="col-3 attribute-label">{{ 'row.fida_kontakt.name' | translate }}</div>
                 <div class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="NAME" [required]="true">
                     </app-attribute-value-edit>
@@ -37,7 +37,7 @@
             </div>
 
             <div class="row">
-                <div class="col-3 attribute-label">ADRESSE</div>
+                <div class="col-3 attribute-label">{{ 'row.fida_kontakt.adresse' | translate }}</div>
                 <div class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="ADRESSE">
                     </app-attribute-value-edit>
@@ -45,23 +45,23 @@
             </div>
 
             <div class="row">
-                <div class="col-3 attribute-label">PLZ</div>
+                <div class="col-3 attribute-label">{{ 'row.fida_kontakt.plz' | translate }}</div>
                 <div class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="PLZ"></app-attribute-value-edit>
                 </div>
-                <div class="col-3 attribute-label">ORT</div>
+                <div class="col-3 attribute-label">{{ 'row.fida_kontakt.ort' | translate }}</div>
                 <div class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="ORT"></app-attribute-value-edit>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-3 attribute-label">TELEFON</div>
+                <div class="col-3 attribute-label">{{ 'row.fida_kontakt.telefon' | translate }}</div>
                 <div class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="TELEFON">
                     </app-attribute-value-edit>
                 </div>
-                <div class="col-3 attribute-label">EMAIL</div>
+                <div class="col-3 attribute-label">{{ 'row.fida_kontakt.email' | translate }}</div>
                 <div class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="EMAIL">
                     </app-attribute-value-edit>
@@ -73,7 +73,7 @@
 
     <!-- footer -->
     <div class="fida-widget-footer">
-        <button type="button" class="btn btn-primary float-right ml-2" (click)="saveClick()">Änderung übernehmen</button>
-        <button type="button" class="btn btn-default float-right" (click)="cancelClick()">Cancel</button>
+        <button type="button" class="btn btn-primary float-right ml-2" (click)="saveClick()">{{ 'app.kontakt_manager.save' | translate }}</button>
+        <button type="button" class="btn btn-default float-right" (click)="cancelClick()">{{ 'app.global.cancel' | translate }}</button>
     </div>
 </div>

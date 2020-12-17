@@ -1,28 +1,36 @@
 <!-- navigation -->
 <ul class="nav nav-pills nav-fill" role="tablist">
     <li class="nav-item">
-        <a class="nav-link active" href="#hfp_general_tab" role="tab" data-toggle="tab">Allgemein</a>
+        <a class="nav-link active" href="#hfp_general_tab" role="tab" data-toggle="tab">{{ 'app.relationship.general' |
+            translate }}</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#hfp_anhang_tab" role="tab" data-toggle="tab">Anhang</a>
+        <a class="nav-link" href="#hfp_anhang_tab" role="tab" data-toggle="tab">{{ 'app.relationship.anhang' | translate
+            }}</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#hfp_nachfuehrung_tab" role="tab" data-toggle="tab">Nachfuehrung</a>
+        <a class="nav-link" href="#hfp_nachfuehrung_tab" role="tab" data-toggle="tab">{{ 'app.relationship.nachfuehrung'
+            | translate }}</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#hfp_grundbuch_tab" role="tab" data-toggle="tab">Grundbuch</a>
+        <a class="nav-link" href="#hfp_grundbuch_tab" role="tab" data-toggle="tab">{{ 'app.relationship.grundbuch' |
+            translate }}</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#hfp_auslandpunkt_tab" role="tab" data-toggle="tab">Auslandpunkt</a>
+        <a class="nav-link" href="#hfp_auslandpunkt_tab" role="tab" data-toggle="tab">{{ 'app.relationship.auslandpunkt'
+            | translate }}</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#hfp_schweremessung_tab" role="tab" data-toggle="tab">Schweremessung</a>
+        <a class="nav-link" href="#hfp_schweremessung_tab" role="tab" data-toggle="tab">{{
+            'app.relationship.schweremessung' | translate }}</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#hfp_schaeden_tab" role="tab" data-toggle="tab">Schäden</a>
+        <a class="nav-link" href="#hfp_schaeden_tab" role="tab" data-toggle="tab">{{ 'app.relationship.schaeden' |
+            translate }}</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#hfp_kontakt_tab" role="tab" data-toggle="tab">Kontakt</a>
+        <a class="nav-link" href="#hfp_kontakt_tab" role="tab" data-toggle="tab">{{ 'app.relationship.kontakt' |
+            translate }}</a>
     </li>
 </ul>
 
@@ -45,7 +53,7 @@
                 <app-attribute-value-edit [feature]="feature" formControlName="HFPNR" [required]="true">
                 </app-attribute-value-edit>
             </div>
-            
+
         </div>
 
         <!--Staties -->
@@ -153,7 +161,7 @@
                 </app-attribute-value-edit>
             </div>
             <div class="col-4">
-            </div>           
+            </div>
         </div>
 
         <!--Kennzeichnung Text -->
@@ -255,7 +263,7 @@
         <!--Begehbar -->
         <div class="row mt-2">
             <div class="col-4">
-               
+
                 <div class="row mt-m1">
                     <div class="col-6 attribute-label">
                         Begehbar
@@ -265,7 +273,7 @@
                         </app-attribute-value-edit>
                     </div>
                 </div>
-            </div>            
+            </div>
         </div>
 
         <!--Referenzepoche-->
@@ -281,15 +289,15 @@
         <div class="row mb-4  mt-m1">
             <div class="col-4 attribute-label">
                 Geschwindigkeit UP
-            </div>            
+            </div>
             <div class="col-1">
                 <app-attribute-value-edit [feature]="feature" formControlName="GESCHWINDIGKEIT_UP">
                 </app-attribute-value-edit>
             </div>
         </div>
 
-         <!-- HFPKANTON / ORTBEZEICHNUNG -->
-         <div class="row">
+        <!-- HFPKANTON / ORTBEZEICHNUNG -->
+        <div class="row">
             <div class="col-3 attribute-label">
                 HFPKANTON
             </div>
@@ -303,7 +311,7 @@
             <div class="col-3">
                 <app-attribute-value-edit [feature]="feature" formControlName="ORTBEZEICHNUNG">
                 </app-attribute-value-edit>
-            </div>            
+            </div>
         </div>
 
         <!-- INSCHRIFT / BEMERKUNG_BAUSTEIN -->
@@ -321,11 +329,11 @@
             <div class="col-3">
                 <app-attribute-value-edit [feature]="feature" formControlName="BEMERKUNG_BAUSTEIN">
                 </app-attribute-value-edit>
-            </div>            
+            </div>
         </div>
 
-         <!-- VERANKERUNG / ENVNUMMER-->
-         <div class="row">
+        <!-- VERANKERUNG / ENVNUMMER-->
+        <div class="row">
             <div class="col-3 attribute-label">
                 VERANKERUNG
             </div>
@@ -339,7 +347,7 @@
             <div class="col-3">
                 <app-attribute-value-edit [feature]="feature" formControlName="ENVNUMMER">
                 </app-attribute-value-edit>
-            </div>                     
+            </div>
         </div>
 
         <!-- SEKTOR -->
@@ -350,18 +358,17 @@
             <div class="col-3">
                 <app-attribute-value-edit [feature]="feature" formControlName="SEKTOR">
                 </app-attribute-value-edit>
-            </div>                         
+            </div>
         </div>
 
-        
+
     </div>
 
-      <!--anhang features -->
-      <div role="tabpanel" class="tab-pane fade py-2" id="hfp_anhang_tab">
+    <!--anhang features -->
+    <div role="tabpanel" class="tab-pane fade py-2" id="hfp_anhang_tab">
         <div class="row mb-2" [hidden]="readonly">
             <div class="col-12">
-                <button type="button" class="btn btn-primary" (click)="addAnhangClick()">Add New
-                    Anhang</button>
+                <button type="button" class="btn btn-primary" (click)="addAnhangClick()">{{ 'app.global.create' | translate }}</button>
             </div>
         </div>
         <div *ngFor="let feature of getAnhangFeatures()">
@@ -376,8 +383,8 @@
     <div role="tabpanel" class="tab-pane fade py-2" id="hfp_nachfuehrung_tab">
         <div class="row mb-2" [hidden]="readonly">
             <div class="col-12">
-                <button type="button" class="btn btn-primary" (click)="addNachfuehrungClick()">Add New
-                    Nachfuehrung</button>
+                <button type="button" class="btn btn-primary" (click)="addNachfuehrungClick()">{{ 'app.global.create' |
+                    translate }}</button>
             </div>
         </div>
         <div *ngFor="let feature of getNachfuehrungFeatures()">
@@ -392,8 +399,8 @@
     <div role="tabpanel" class="tab-pane fade py-2" id="hfp_grundbuch_tab" [class.spinner]="redefining">
         <div class="row mb-2" [hidden]="readonly">
             <div class="col-12">
-                <button type="button" class="btn btn-primary mr-2" (click)="addGrundbuchClick()">Add New
-                    Grundbuch</button>
+                <button type="button" class="btn btn-primary mr-2" (click)="addGrundbuchClick()">{{ 'app.global.create'
+                    | translate }}</button>
                 <button type="button" class="btn btn-danger" (click)="redefineGrundbuchDataClick()">redefine</button>
             </div>
         </div>
@@ -409,13 +416,14 @@
     <div role="tabpanel" class="tab-pane fade py-2" id="hfp_auslandpunkt_tab">
         <div class="row mb-2" [hidden]="readonly">
             <div class="col-12">
-                <button type="button" class="btn btn-primary" (click)="addAuslandpunktClick()">Add New
-                    Auslandpunkt</button>
+                <button type="button" class="btn btn-primary" (click)="addAuslandpunktClick()">{{ 'app.global.create' |
+                    translate }}</button>
             </div>
         </div>
         <div *ngFor="let feature of getAuslandpunktFeatures()">
             <div *ngIf="feature.state !== 'deleted'">
-                <app-auslandpunkt-edit [feature]="feature" [formGroup]="formGroup" [readonly]="readonly"></app-auslandpunkt-edit>
+                <app-auslandpunkt-edit [feature]="feature" [formGroup]="formGroup" [readonly]="readonly">
+                </app-auslandpunkt-edit>
             </div>
         </div>
     </div>
@@ -424,13 +432,14 @@
     <div role="tabpanel" class="tab-pane fade py-2" id="hfp_schweremessung_tab">
         <div class="row mb-2" [hidden]="readonly">
             <div class="col-12">
-                <button type="button" class="btn btn-primary" (click)="addSchweremessungClick()">Add New
-                    Schweremessung</button>
+                <button type="button" class="btn btn-primary" (click)="addSchweremessungClick()">{{ 'app.global.create'
+                    | translate }}</button>
             </div>
         </div>
         <div *ngFor="let feature of getSchweremessungFeatures()">
             <div *ngIf="feature.state !== 'deleted'">
-                <app-schweremessung-edit [feature]="feature" [formGroup]="formGroup" [readonly]="readonly"></app-schweremessung-edit>
+                <app-schweremessung-edit [feature]="feature" [formGroup]="formGroup" [readonly]="readonly">
+                </app-schweremessung-edit>
             </div>
         </div>
     </div>
@@ -439,13 +448,14 @@
     <div role="tabpanel" class="tab-pane fade py-2" id="hfp_schaeden_tab">
         <div class="row mb-2" [hidden]="readonly">
             <div class="col-12">
-                <button type="button" class="btn btn-primary" (click)="addSchaedenClick()">Add New
-                    Schäden</button>
+                <button type="button" class="btn btn-primary" (click)="addSchaedenClick()">{{ 'app.global.create' |
+                    translate }}</button>
             </div>
         </div>
         <div *ngFor="let feature of getSchaedenFeatures()">
             <div *ngIf="feature.state !== 'deleted'">
-                <app-schaeden-edit [feature]="feature" [formGroup]="formGroup" [readonly]="readonly"></app-schaeden-edit>
+                <app-schaeden-edit [feature]="feature" [formGroup]="formGroup" [readonly]="readonly">
+                </app-schaeden-edit>
             </div>
         </div>
     </div>

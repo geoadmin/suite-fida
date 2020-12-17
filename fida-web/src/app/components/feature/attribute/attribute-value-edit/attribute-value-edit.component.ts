@@ -3,11 +3,12 @@ import {
   AbstractControl, ControlValueAccessor, FormControl, FormGroup,
   NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validators
 } from '@angular/forms';
+import { FidaTranslateService } from 'src/app/services/translate.service';
+import { FidaFeature } from 'src/app/models/FidaFeature.model';
+import { UtilService } from 'src/app/services/util.service';
 import FeatureLayer from 'esri/layers/FeatureLayer';
 import CodedValueDomain from 'esri/layers/support/CodedValueDomain';
 import Field from 'esri/layers/support/Field';
-import { FidaFeature } from 'src/app/models/FidaFeature.model';
-import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-attribute-value-edit',
@@ -37,8 +38,9 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
   public disabled: boolean;
   public field: Field;
   public date: Date;
+  public codedValues: object[];
 
-  constructor() { }
+  constructor(private translateService: FidaTranslateService) { }
 
   ngOnInit(): void {
     if (!this.placeholder) {
@@ -58,9 +60,18 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
       return;
     }
 
+    // define type
+    this.defineFieldType();
+
     // convert value to date-object
-    if (this.field.type === 'date') {
+    if (this.type === 'date') {
       this.date = UtilService.esriToDate(this.feature.attributes[this.formControlName]);
+    }
+
+    // translate coded values
+    if (this.type === 'domain') {
+      const codedValueDomain = this.field.domain as CodedValueDomain;
+      this.codedValues =  this.translateService.translateCodedValueDomain(codedValueDomain).codedValues ?? [];
     }
 
     // define validation form-control
@@ -83,32 +94,21 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
     return this.feature?.layer as FeatureLayer;
   }
 
-  getFieldType(): string {
-    if (this.type) {
-      return this.type;
-    }
-
-    if (!this.field) {
+  defineFieldType(): string {
+    if (this.type || !this.field) {
       return;
     }
 
     if (this.field.domain != null && this.field.domain.type === 'coded-value') {
-      return 'domain';
-    }
-
-    if (this.field.type === 'small-integer'
+      this.type = 'domain';
+    } else if (this.field.type === 'small-integer'
       || this.field.type === 'integer'
       || this.field.type === 'single'
       || this.field.type === 'double') {
-      return 'number';
+      this.type = 'number';
+    } else {
+      this.type = this.field.type;
     }
-
-    return this.field.type;
-  }
-
-  getCodedValues(): object[] {
-    const codedValueDomain = this.field.domain as CodedValueDomain;
-    return codedValueDomain.codedValues ?? [];
   }
 
   /**

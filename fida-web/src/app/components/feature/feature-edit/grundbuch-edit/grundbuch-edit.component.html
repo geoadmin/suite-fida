@@ -10,12 +10,12 @@
         <div class="card-body">
 
             <div class="row">
-                <div class="col-3 attribute-label">LAND</div>
+                <div class="col-3 attribute-label">{{ 'row.fida_grundbuchlfp.land' | translate }}</div>
                 <div class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="LAND" [required]="true">
                     </app-attribute-value-edit>
                 </div>
-                <div class="col-3 attribute-label">KANTON</div>
+                <div class="col-3 attribute-label">{{ 'row.fida_grundbuchlfp.kanton' | translate }}</div>
                 <div class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="KANTON" [required]="true">
                     </app-attribute-value-edit>
@@ -23,11 +23,11 @@
             </div>
 
             <div class="row">
-                <div class="col-3 attribute-label">BEZIRK</div>
+                <div class="col-3 attribute-label">{{ 'row.fida_grundbuchlfp.bezirk' | translate }}</div>
                 <div class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="BEZIRK"></app-attribute-value-edit>
                 </div>
-                <div class="col-3 attribute-label">GEMEINDE</div>
+                <div class="col-3 attribute-label">{{ 'row.fida_grundbuchlfp.gemeinde' | translate }}</div>
                 <div class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="GEMEINDE" [required]="true">
                     </app-attribute-value-edit>
@@ -36,18 +36,20 @@
 
             <div class="row">
                 <div *ngIf="feature.attributes.ORTBEZEICHNUNG !== undefined" class="col-3 attribute-label">
-                    ORTBEZEICHNUNG</div>
+                    {{ 'row.fida_grundbuchhfp.ortbezeichnung' | translate }}</div>
                 <div *ngIf="feature.attributes.ORTBEZEICHNUNG !== undefined" class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="ORTBEZEICHNUNG">
                     </app-attribute-value-edit>
                 </div>
 
-                <div *ngIf="feature.attributes.PARZ !== undefined" class="col-3 attribute-label">PARZ</div>
+                <div *ngIf="feature.attributes.PARZ !== undefined" class="col-3 attribute-label">{{
+                    'row.fida_grundbuchlfp.parz' | translate }}</div>
                 <div *ngIf="feature.attributes.PARZ !== undefined" class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="PARZ">
                     </app-attribute-value-edit>
                 </div>
-                <div *ngIf="feature.attributes.ANMERKUNGIMGB !== undefined" class="col-3 attribute-label">ANMERKUNGIMGB
+                <div *ngIf="feature.attributes.ANMERKUNGIMGB !== undefined" class="col-3 attribute-label">{{
+                    'row.fida_grundbuchlfp.anmerkungimgb' | translate }}
                 </div>
                 <div *ngIf="feature.attributes.ANMERKUNGIMGB !== undefined" class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="ANMERKUNGIMGB">
@@ -58,7 +60,8 @@
             <!-- delete button -->
             <div class="row mt-2" [hidden]="readonly">
                 <div class="col-12">
-                    <button type="button" class="btn btn-danger float-right" (click)="deleteClick()">Delete</button>
+                    <button type="button" class="btn btn-danger float-right" (click)="deleteClick()">{{
+                        'app.global.delete' | translate }}</button>
                 </div>
             </div>
         </div>

@@ -10,12 +10,12 @@
         <div class="card-body">
 
             <div class="row">
-                <div class="col-3 attribute-label">DATUM</div>
+                <div class="col-3 attribute-label">{{ 'row.fida_schweremessunghfp.datum' | translate }}</div>
                 <div class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="DATUM" [required]="true">
                     </app-attribute-value-edit>
                 </div>
-                <div class="col-3 attribute-label">SCHWEREWERT</div>
+                <div class="col-3 attribute-label">{{ 'row.fida_schweremessunghfp.schwerewert' | translate }}</div>
                 <div class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="SCHWEREWERT" [required]="true">
                     </app-attribute-value-edit>
@@ -23,7 +23,7 @@
             </div>
 
             <div class="row">
-                <div class="col-3 attribute-label">SCHWEREHERKUNFT</div>
+                <div class="col-3 attribute-label">{{ 'row.fida_schweremessunghfp.schwereherkunft' | translate }}</div>
                 <div class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="SCHWEREHERKUNFT" [required]="true">
                     </app-attribute-value-edit>
@@ -33,7 +33,7 @@
             <!-- delete button -->
             <div class="row mt-2" [hidden]="readonly">
                 <div class="col-12">
-                    <button type="button" class="btn btn-danger float-right" (click)="deleteClick()">Delete</button>
+                    <button type="button" class="btn btn-danger float-right" (click)="deleteClick()">{{ 'app.global.delete' | translate }}</button>
                 </div>
             </div>
         </div>

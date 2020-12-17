@@ -6,6 +6,7 @@ import Feature from 'esri/Graphic';
 import { from, Observable, of, zip } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ConfigService } from '../configs/config.service';
+import { FidaFeature } from '../models/FidaFeature.model';
 
 export class FidaTranslateLoader implements TranslateLoader {
   private databaseTranslations: any = {};
@@ -16,7 +17,6 @@ export class FidaTranslateLoader implements TranslateLoader {
   ) { }
 
   public getTranslation(lang: string): Observable<any> {
-
     return zip(this.loadAppTranslations(lang), this.loadDatabaseTranslations(lang))
       .pipe(map((x: any) => ({ ...x[0], ...x[1] })));
   }
@@ -26,35 +26,39 @@ export class FidaTranslateLoader implements TranslateLoader {
   }
 
   private loadDatabaseTranslations(lang: string): Observable<any> {
-    let databaseTranslation: any = this.databaseTranslations[lang];
+    const databaseTranslation: any = this.databaseTranslations[lang];
 
-    if (!databaseTranslation) {
-      const result = this.url(this.configService.getTranslateTableUrl()).then((features) => {
-        this.databaseTranslations = this.createEmptyDatabaseTranslations();
-
-        features.forEach(feature => {
-          const translationKey = this.getDatabaseTranslationKey(feature);
-          const valDict = JSON.parse(feature.attributes.VALDICT);
-
-          // check dictionary
-          if (valDict == null) {
-            console.error(`invalid translation: `, feature.attributes);
-          }
-
-          // convert db-dictionary to specific language lists
-          for (const langKey of Object.keys(this.databaseTranslations)) {
-            const translation = valDict[langKey];
-            if (translation) {
-              this.databaseTranslations[langKey][translationKey] = translation;
-            }
-          }
-        });
-        databaseTranslation = this.databaseTranslations[lang];
-      });
-      return from(result);
-    } else {
+    if (databaseTranslation) {
       return of(databaseTranslation);
     }
+
+    return this.loadAndConvertDatabaseTranslations().pipe(map(() => {
+      return this.databaseTranslations[lang];
+    }));
+  }
+
+  private loadAndConvertDatabaseTranslations(): Observable<any> {
+    return this.url(this.configService.getTranslateTableUrl()).pipe(map((features: FidaFeature[]) => {
+      this.databaseTranslations = this.createEmptyDatabaseTranslations();
+
+      features.forEach(feature => {
+        const translationKey = this.getDatabaseTranslationKey(feature);
+        const valDict = JSON.parse(feature.attributes.VALDICT);
+
+        // check dictionary
+        if (valDict == null) {
+          console.error(`invalid translation: `, feature.attributes);
+        }
+
+        // convert db-dictionary to specific language lists
+        for (const langKey of Object.keys(this.databaseTranslations)) {
+          const translation = valDict[langKey];
+          if (translation) {
+            this.databaseTranslations[langKey][translationKey] = translation;
+          }
+        }
+      });
+    }));
   }
 
   private createEmptyDatabaseTranslations(): any {
@@ -74,7 +78,7 @@ export class FidaTranslateLoader implements TranslateLoader {
     return `${type}.${group}.${key}`;
   }
 
-  private url(url: string): Promise<Feature[]> {
+  private url(url: string): Observable<any> {
     const query = new Query();
     query.where = '1=1';
     query.outFields = ['*'];
@@ -82,12 +86,12 @@ export class FidaTranslateLoader implements TranslateLoader {
     const queryTask = new QueryTask();
     queryTask.url = url;
 
-    return new Promise((resolve, reject) => {
+    return from(new Promise((resolve, reject) => {
       queryTask.execute(query)
         .then((result: any) => resolve(result.features))
         .catch((error: any) => {
           reject(error);
         });
-    });
+    }));
   }
 }

@@ -422,7 +422,7 @@ export class FeatureService {
     return name;
   }
 
-  private async addTEST_TranslationToDb(): Promise<void> {
+  public async addTestTranslationToDb(): Promise<void> {
     const translationFeatureLayer = new FeatureLayer({
       url: 'https://s7t2530a.adr.admin.ch/arcgis/rest/services/FIDA/FIDA/FeatureServer',
       layerId: 17
@@ -440,24 +440,69 @@ export class FeatureService {
       console.log(`table uebersetzung cleaned`);
     }
 
-    const feature1 = new Feature();
-    feature1.attributes = { ...translationFeatureLayer.templates[0].prototype.attributes };
-    feature1.layer = translationFeatureLayer;
-    feature1.attributes.OBJEKTART = 1; // 0 = domain, 1 = row-name
-    feature1.attributes.GRUPPENAME = 'FIDA_LFP';
-    feature1.attributes.KEY = 'PUNKTNAME';
-    feature1.attributes.VALDICT = '{"de":"Punktname","fr":"FR:Punktname"}';
-
-    const feature2 = new Feature();
-    feature2.attributes = { ...translationFeatureLayer.templates[0].prototype.attributes };
-    feature2.layer = translationFeatureLayer;
-    feature2.attributes.OBJEKTART = 0; // 0 = domain, 1 = row-name
-    feature2.attributes.GRUPPENAME = 'FIDA_PUNKTSTATE_CD';
-    feature2.attributes.KEY = '0';
-    feature2.attributes.VALDICT = '{"de":"Aktiv","fr":"FR:Aktiv"}';
-
+    // create translation features
     const addProperties: __esri.FeatureLayerApplyEditsEdits = {};
-    addProperties.addFeatures = [feature1, feature2];
+    addProperties.addFeatures = [];
+
+    const result = await this.queryService.request('https://s7t2530a.adr.admin.ch/arcgis/rest/services/FIDA/FIDA/FeatureServer/layers');
+    const allLayers = result.data.layers.concat(result.data.tables);
+    const domainNames: string[] = [];
+    allLayers.forEach((layer: any) => {
+      if (layer.name !== 'FIDA_UEBERSETZUNG' && layer.name !== 'FIDA_NIVLINIEN') {
+        layer.fields.forEach((field: any) => {
+          if (field.name !== 'OBJECTID' && field.name !== 'GLOBALID'
+            && field.name !== 'CREATOR_FIELD' && field.name !== 'CREATOR_DATE_FIELD'
+            && field.name !== 'LAST_EDITOR_FIELD' && field.name !== 'LAST_EDITOR_DATE_FIELD'
+            && field.name !== 'FK_FIDA_LFP' && field.name !== 'FK_FIDA_HFP'
+            && field.name !== 'PUNKTID_FPDS' && field.name !== 'MUTATIONID_FPDS') {
+
+            // create row feature
+            const feature1 = new Feature();
+            feature1.attributes = { ...translationFeatureLayer.templates[0].prototype.attributes };
+            feature1.layer = translationFeatureLayer;
+            feature1.attributes.OBJEKTART = 1;
+            feature1.attributes.GRUPPENAME = layer.name;
+            feature1.attributes.KEY = field.name;
+            feature1.attributes.VALDICT = `{"de":"${field.name}","fr":"FR:${field.name}","it":"IT:${field.name}"}`;
+            addProperties.addFeatures.push(feature1);
+
+            // create domain features
+            if (field.domain != null && field.domain.codedValues != null) {
+              if (domainNames.includes(field.domain.name) === false) {
+                field.domain.codedValues.forEach((codeValue: any) => {
+                  const feature2 = new Feature();
+                  feature2.attributes = { ...translationFeatureLayer.templates[0].prototype.attributes };
+                  feature2.layer = translationFeatureLayer;
+                  feature2.attributes.OBJEKTART = 0;
+                  feature2.attributes.GRUPPENAME = field.domain.name;
+                  feature2.attributes.KEY = codeValue.code;
+                  feature2.attributes.VALDICT = `{"de":"${codeValue.name}","fr":"FR:${codeValue.name}","it":"IT:${codeValue.name}"}`;
+                  addProperties.addFeatures.push(feature2);
+                  domainNames.push(field.domain.name);
+                });
+              }
+            }
+          }
+        });
+      }
+    });
+
+    // const feature1 = new Feature();
+    // feature1.attributes = { ...translationFeatureLayer.templates[0].prototype.attributes };
+    // feature1.layer = translationFeatureLayer;
+    // feature1.attributes.OBJEKTART = 1; // 0 = domain, 1 = row-name
+    // feature1.attributes.GRUPPENAME = 'FIDA_LFP';
+    // feature1.attributes.KEY = 'PUNKTNAME';
+    // feature1.attributes.VALDICT = '{"de":"Punktname","fr":"FR:Punktname"}';
+
+    // const feature2 = new Feature();
+    // feature2.attributes = { ...translationFeatureLayer.templates[0].prototype.attributes };
+    // feature2.layer = translationFeatureLayer;
+    // feature2.attributes.OBJEKTART = 0; // 0 = domain, 1 = row-name
+    // feature2.attributes.GRUPPENAME = 'FIDA_PUNKTSTATE_CD';
+    // feature2.attributes.KEY = '0';
+    // feature2.attributes.VALDICT = '{"de":"Aktiv","fr":"FR:Aktiv"}';
+
     await this.applyEdits(translationFeatureLayer, addProperties);
   }
 }

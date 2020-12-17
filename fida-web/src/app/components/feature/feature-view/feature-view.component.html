@@ -1,6 +1,6 @@
 <div *ngIf="feature" class="feature-view">
     <div class="feature-view-container">
-    
+
         <!-- header -->
         <div class="fida-widget-header">
             <label>{{ getHeaderText() }}</label>
@@ -12,11 +12,11 @@
             <!-- lfp feature -->
             <app-lfp-edit *ngSwitchCase="'LFP'" [feature]="feature" [formGroup]="form" [readonly]="true"></app-lfp-edit>
 
-             <!-- hfp feature -->
-             <app-hfp-edit *ngSwitchCase="'HFP'" [feature]="feature" [formGroup]="form" [readonly]="true"></app-hfp-edit>
+            <!-- hfp feature -->
+            <app-hfp-edit *ngSwitchCase="'HFP'" [feature]="feature" [formGroup]="form" [readonly]="true"></app-hfp-edit>
 
-              <!-- lsn feature -->
-              <app-lsn-edit *ngSwitchCase="'LSN'" [feature]="feature" [formGroup]="form" [readonly]="true"></app-lsn-edit>
+            <!-- lsn feature -->
+            <app-lsn-edit *ngSwitchCase="'LSN'" [feature]="feature" [formGroup]="form" [readonly]="true"></app-lsn-edit>
 
             <!-- default -->
             <app-default-view *ngSwitchDefault [feature]="feature"></app-default-view>
@@ -25,19 +25,24 @@
 
     <!-- footer -->
     <div class="fida-widget-footer">
-        <button type="button" class="btn btn-primary float-right ml-2" (click)="editClick()">Edit</button>
-        <button type="button" class="btn btn-primary float-right ml-2" (click)="editGeometryClick()">Edit
-            Geometry</button>
+        <button type="button" class="btn btn-primary float-right ml-2" (click)="editClick()">{{
+            'app.feature_view.edit_attributes' | translate }}</button>
+        <button type="button" class="btn btn-primary float-right ml-2" (click)="editGeometryClick()">{{
+            'app.feature_view.edit_geometry' | translate }}</button>
         <button type="button" class="btn btn-danger float-right"
-            (click)="showDeleteDialogClick(deleteDialotTemplate)">Delete</button>
+            (click)="showDeleteDialogClick(deleteDialotTemplate)">{{ 'app.feature_view.delete' | translate }}</button>
+        <button type="button" class="btn btn-warning float-right mr-5 d-none"
+            (click)="addTestTranslationToDb()">addToDb</button>
     </div>
 </div>
 
 <!-- delete dialog -->
 <ng-template #deleteDialotTemplate>
     <div class="modal-body text-center">
-        <p>Do you realy want to delete Feature<br /><strong>{{ getFeatureName() }}?</strong></p>
-        <button type="button" class="btn btn-default" (click)="deleteCancelClick()">Cancel</button>
-        <button type="button" class="btn btn-danger ml-2" (click)="deleteClick()">Delete</button>
+        <p>{{ 'app.feature_view.delete_dialog_text' | translate : {name: getFeatureName()} }}</p>
+        <button type="button" class="btn btn-default" (click)="deleteCancelClick()">{{ 'app.global.cancel' | translate
+            }}</button>
+        <button type="button" class="btn btn-danger ml-2" (click)="deleteClick()">{{ 'app.global.delete' | translate
+            }}</button>
     </div>
 </ng-template>

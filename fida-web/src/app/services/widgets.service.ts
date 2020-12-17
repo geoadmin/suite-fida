@@ -1,5 +1,4 @@
-import { Injectable, Inject, ElementRef } from '@angular/core';
-
+import { Injectable, ElementRef } from '@angular/core';
 import MapView from 'esri/views/MapView';
 import Expand from 'esri/widgets/Expand';
 import BasemapGallery from 'esri/widgets/BasemapGallery';
@@ -9,19 +8,25 @@ import LayerList from 'esri/widgets/LayerList';
 import Home from 'esri/widgets/Home';
 import Extent from 'esri/geometry/Extent';
 import Viewpoint from 'esri/Viewpoint';
+import { FidaTranslateService } from './translate.service';
+import { LangChangeEvent } from '@ngx-translate/core';
 
 @Injectable({ providedIn: 'root' })
 export class WidgetsService {
   private featureCreateWidget: Expand;
   private versionManagerWidget: Expand;
+  private basemapGalleryWidget: Expand;
+  private searchWidget: Expand;
+  private layerListWidget: Expand;
+  private zoomWidget: Zoom;
+  private homeWidget: Home;
 
-  constructor() {
+  constructor(private translateService: FidaTranslateService) {
   }
 
   public registerFeatureCreateWidgetContent(element: ElementRef): Expand {
     this.featureCreateWidget = new Expand({
       expandIconClass: 'esri-icon-edit',
-      expandTooltip: 'Create Feature',
       expanded: false,
       content: element.nativeElement
     });
@@ -32,7 +37,6 @@ export class WidgetsService {
   public registerVersionManagerWidgetContent(element: ElementRef): Expand {
     this.versionManagerWidget = new Expand({
       expandIconClass: 'esri-icon-collection',
-      expandTooltip: 'Manage Versions',
       expanded: false,
       content: element.nativeElement
     });
@@ -62,63 +66,76 @@ export class WidgetsService {
     const basemapGallery = new BasemapGallery({
       view: mapView
     });
-    const expand = new Expand({
-      expandTooltip: 'Basemaps',
+    this.basemapGalleryWidget = new Expand({
       view: mapView,
       content: basemapGallery
     });
-    this.synchExpandCollapse(expand);
-    return expand;
+    this.synchExpandCollapse(this.basemapGalleryWidget);
+    return this.basemapGalleryWidget;
   }
 
   public getSearchWidget(mapView: MapView): Expand {
     const serach = new Search({
       view: mapView
     });
-    const expand = new Expand({
+    this.searchWidget = new Expand({
       expandIconClass: 'esri-icon-search',
-      expandTooltip: 'Search',
       view: mapView,
       content: serach
     });
-    this.synchExpandCollapse(expand);
-    return expand;
+    this.synchExpandCollapse(this.searchWidget);
+    return this.searchWidget;
   }
 
   public getZoomWidget(mapView: MapView): Zoom {
-    const zoom = new Zoom({
+    this.zoomWidget = new Zoom({
       view: mapView
     });
-    return zoom;
+    return this.zoomWidget;
   }
 
   public getHomeWidget(mapView: MapView, extent: Extent): Home {
     const viewPoint = new Viewpoint({
       targetGeometry: extent
     });
-    const home = new Home({
+    this.homeWidget = new Home({
       view: mapView,
       viewpoint: viewPoint
     });
-    return home;
+    return  this.homeWidget;
   }
 
   public getLayerListWidget(mapView: MapView): Expand {
     const layerList = new LayerList({
       view: mapView
     });
-    const expand = new Expand({
-      expandTooltip: 'Layers',
+    this.layerListWidget = new Expand({
       view: mapView,
       content: layerList
     });
-    this.synchExpandCollapse(expand);
-    return expand;
+    this.synchExpandCollapse(this.layerListWidget);
+    return this.layerListWidget;
   }
 
   private synchExpandCollapse(expand: Expand): void {
     expand.collapseIconClass = expand.expandIconClass;
     expand.collapseTooltip = expand.expandTooltip;
+  }
+
+  public initTooltips(): void {
+    this.translateService.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.refreshTooltips();
+    });
+    this.refreshTooltips();
+  }
+
+  private refreshTooltips(): void {
+    this.versionManagerWidget.expandTooltip = this.translateService.translate('app.version_manager.title');
+    this.featureCreateWidget.expandTooltip = this.translateService.translate('app.feature_create.title');
+    this.basemapGalleryWidget.expandTooltip = this.translateService.translate('app.basemap.title');
+    this.searchWidget.expandTooltip = this.translateService.translate('app.search.title');
+    this.layerListWidget.expandTooltip = this.translateService.translate('app.toc.title');
+    this.homeWidget.label = this.translateService.translate('app.home.title');
   }
 
 }

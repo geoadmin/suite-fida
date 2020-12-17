@@ -5,17 +5,15 @@
             [typeaheadWaitMs]="100" [typeaheadMinLength]="3"
             (typeaheadLoading)="typeaheadService.onSearchLoading($event)"
             (typeaheadNoResults)="typeaheadService.onSearchNoResults($event)"
-            (typeaheadOnSelect)="typeaheadService.onSearchSelect($event)" placeholder="Kontakt suchen ..."
+            (typeaheadOnSelect)="typeaheadService.onSearchSelect($event)" placeholder="{{ 'app.kontakt_manager.search' | translate }}"
             class="form-control h-100">
         <div class="input-group-append">
             <button type="button" class="btn btn-primary float-left pl-2" (click)="addKontaktClick()"
-                [disabled]="!typeaheadService.selectedSearchItem">Kontakt
-                hinzufügen</button>
+                [disabled]="!typeaheadService.selectedSearchItem">{{ 'app.kontakt_manager.add' | translate }}</button>
         </div>
     </div>
     <div class="col-3">
-        <button type="button" class="btn btn-primary float-right " (click)="createKontaktClick()">New
-            Kontakt</button>
+        <button type="button" class="btn btn-primary float-right " (click)="createKontaktClick()">{{ 'app.global.create' | translate }}</button>
     </div>
 </div>
 <div *ngFor="let feature of getKontaktFeatures()">

@@ -74,6 +74,10 @@ export class ConfigService {
         return environment.arcGisServer;
     }
 
+    public getLayerInfos(): any {
+        return this.config.layerInfos;
+    }
+
     /**
      *  get configs
      */
