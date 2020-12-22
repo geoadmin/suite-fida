@@ -22,9 +22,8 @@ import { MapComponent } from './components/map/map.component';
 import { FeatureEditComponent } from './components/feature/feature-edit/feature-edit.component';
 import { FeatureCreateComponent } from './components/feature/feature-create/feature-create.component';
 import { FeatureViewComponent } from './components/feature/feature-view/feature-view.component';
-import { AttributeEditComponent } from './components/feature/attribute/attribute-edit/attribute-edit.component';
-import { AttributeViewComponent } from './components/feature/attribute/attribute-view/attribute-view.component';
-import { AttributeValueEditComponent } from './components/feature/attribute/attribute-value-edit/attribute-value-edit.component';
+import { AttributeViewComponent } from './components/version-manager/version-reconcile-dialog/attribute-view/attribute-view.component';
+import { AttributeValueEditComponent } from './components/feature/feature-edit/attribute-value-edit/attribute-value-edit.component';
 import { GeometryEditComponent } from './components/feature/geometry-edit/geometry-edit.component';
 import { VersionManagerComponent } from './components/version-manager/version-manager.component';
 import { VersionCreateDialogComponent } from './components/version-manager/version-create-dialog/version-create-dialog.component';
@@ -35,7 +34,6 @@ import { NachfuehrungEditComponent } from './components/feature/feature-edit/nac
 import { GrundbuchEditComponent } from './components/feature/feature-edit/grundbuch-edit/grundbuch-edit.component';
 import { RueckversicherungEditComponent } from './components/feature/feature-edit/rueckversicherung-edit/rueckversicherung-edit.component';
 import { AnhangEditComponent } from './components/feature/feature-edit/anhang-edit/anhang-edit.component';
-import { DefaultViewComponent } from './components/feature/feature-view/default-view/default-view.component';
 import { HfpEditComponent } from './components/feature/feature-edit/hfp-edit/hfp-edit.component';
 import { AuslandpunktEditComponent } from './components/feature/feature-edit/auslandpunkt-edit/auslandpunkt-edit.component';
 import { SchweremessungEditComponent } from './components/feature/feature-edit/schweremessung-edit/schweremessung-edit.component';
@@ -45,6 +43,8 @@ import { KontaktEditDialogComponent } from './components/feature/kontakt-manager
 import { KontaktManagerComponent } from './components/feature/kontakt-manager/kontakt-manager.component';
 import { KontaktViewComponent } from './components/feature/feature-view/kontakt-view/kontakt-view.component';
 import { FidaTranslateLoader } from './helpers/FidaTranslateLoader';
+import { FeatureTreeComponent } from './components/version-manager/version-reconcile-dialog/feature-tree/feature-tree.component';
+import { FeatureListTreeComponent } from './components/version-manager/version-reconcile-dialog/feature-list-tree/feature-list-tree.component';
 
 // config
 export function initApp(configService: ConfigService): any {
@@ -63,7 +63,6 @@ export function createCompiler(compilerFactory: CompilerFactory): Compiler {
     MapComponent,
     FeatureEditComponent,
     FeatureViewComponent,
-    AttributeEditComponent,
     FeatureCreateComponent,
     GeometryEditComponent,
     AttributeViewComponent,
@@ -77,7 +76,6 @@ export function createCompiler(compilerFactory: CompilerFactory): Compiler {
     GrundbuchEditComponent,
     RueckversicherungEditComponent,
     AnhangEditComponent,
-    DefaultViewComponent,
     HfpEditComponent,
     AuslandpunktEditComponent,
     SchweremessungEditComponent,
@@ -85,7 +83,9 @@ export function createCompiler(compilerFactory: CompilerFactory): Compiler {
     LsnEditComponent,
     KontaktEditDialogComponent,
     KontaktManagerComponent,
-    KontaktViewComponent
+    KontaktViewComponent,
+    FeatureTreeComponent,
+    FeatureListTreeComponent
   ],
   imports: [
     FormsModule,

@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { FeatureState, FidaFeature } from 'src/app/models/FidaFeature.model';
+import { FeatureState, FidaFeature, RelationshipName } from 'src/app/models/FidaFeature.model';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-auslandpunkt-edit',
@@ -29,6 +30,6 @@ export class AuslandpunktEditComponent implements OnInit {
   }
 
   getHeaderText(): string {
-    return this.feature.attributes.PUNKTNAME;
+    return UtilService.getFeatureHeader(this.feature, RelationshipName.auslandpunkt);
   }
 }

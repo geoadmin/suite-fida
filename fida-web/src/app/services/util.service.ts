@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FidaFeature } from '../models/FidaFeature.model';
+import { FidaFeature, RelationshipName } from '../models/FidaFeature.model';
 
 @Injectable({
   providedIn: 'root'
@@ -82,7 +82,6 @@ export class UtilService {
     return list.join(' ');
   }
 
-
   public static kontaktToLine(feature: FidaFeature): string {
     const list: string[] = [];
     this.addToList(list, feature.attributes.ART);
@@ -102,4 +101,36 @@ export class UtilService {
     }
   }
 
+  /**
+   * HEADER METHODS
+   */
+
+  public static getFeatureHeader(feature: FidaFeature, relationshipName?: RelationshipName): string {
+    if (relationshipName === RelationshipName.grundbuch) {
+      return `${feature.attributes.GEMEINDE} - ${feature.attributes.PARZ}`;
+    }
+
+    if (relationshipName === RelationshipName.auslandpunkt) {
+      return feature.attributes.PUNKTNAME;
+    }
+
+    if (relationshipName === RelationshipName.nachfuehrung) {
+      const date = this.esriToDate(feature.attributes.NACHFUEHRUNGSDATUM);
+      return this.formatDate(date, 'yyyy-mm-dd') || '-no date-';
+    }
+
+    if (relationshipName === RelationshipName.rueckversicherung) {
+      return feature.attributes.PUNKTBEZEICHNUNG || '- no name -';
+    }
+
+    if (relationshipName === RelationshipName.schaeden) {
+      const date = this.esriToDate(feature.attributes.DATUM);
+      return this.formatDate(date, 'yyyy-mm-dd') || '-no date-';
+    }
+
+    if (relationshipName === RelationshipName.schweremessung) {
+      const date = this.esriToDate(feature.attributes.DATUM);
+      return this.formatDate(date, 'yyyy-mm-dd') || '-no date-';
+    }
+  }
 }

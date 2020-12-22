@@ -1,23 +1,29 @@
 <div class="version-reconcile-dialog" [class.spinner]="showSpinner">
 
-     <!-- header -->
-     <div class="fida-widget-header">
+    <!-- header -->
+    <div class="fida-widget-header">
         <label>{{ 'app.version_reconcile.title' | translate }}</label>
         <button class="btn esri-icon-close float-right" (click)="cancelClick()"></button>
     </div>
 
     <!-- body -->
-    <div class="fida-widget-body">
-        <p>{{ differences }}</p>
+    <div class="fida-widget-body container">
+        <app-feature-list-tree [features]="createdFeatures" componentId="feature_tree_list_created" title="app.version_reconcile.created">
+        </app-feature-list-tree>
+        <app-feature-list-tree [features]="editedFeatures" componentId="feature_tree_list_updated" title="app.version_reconcile.edited">
+        </app-feature-list-tree>
+        <app-feature-list-tree [features]="deletedFeatures" componentId="feature_tree_list_deleted" title="app.version_reconcile.deleted">
+        </app-feature-list-tree>
     </div>
 
     <!-- footer -->
     <div class="fida-widget-footer">
-        <button type="button" class="btn btn-primary float-right ml-2"
-            (click)="acceptDifferencesClick()">{{ 'app.version_reconcile.accept' | translate }}</button>
-        <button type="button" class="btn btn-danger float-right ml-2"
-            (click)="declineDifferencesClick()">{{ 'app.version_reconcile.decline' | translate }}</button>
-        <button type="button" class="btn btn-default float-right" (click)="cancelClick()">{{ 'app.global.cancel' | translate }}</button>
+        <button type="button" class="btn btn-primary float-right ml-2" (click)="acceptDifferencesClick()">{{
+            'app.version_reconcile.accept' | translate }}</button>
+        <button type="button" class="btn btn-danger float-right ml-2" (click)="declineDifferencesClick()">{{
+            'app.version_reconcile.decline' | translate }}</button>
+        <button type="button" class="btn btn-default float-right" (click)="cancelClick()">{{ 'app.global.cancel' |
+            translate }}</button>
     </div>
 
 </div>

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DefaultViewComponent } from './default-view.component';
+import { FeatureTreeComponent } from './feature-tree.component';
 
-describe('DefaultViewComponent', () => {
-  let component: DefaultViewComponent;
-  let fixture: ComponentFixture<DefaultViewComponent>;
+describe('FeatureTreeComponent', () => {
+  let component: FeatureTreeComponent;
+  let fixture: ComponentFixture<FeatureTreeComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DefaultViewComponent ]
+      declarations: [ FeatureTreeComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DefaultViewComponent);
+    fixture = TestBed.createComponent(FeatureTreeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

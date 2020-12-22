@@ -29,7 +29,7 @@ export class FeatureService {
     private lk25Service: Lk25Service
   ) { }
 
-  public async saveFeature(feature: FidaFeature): Promise<any> {
+  public async saveFeature(feature: FidaFeature): Promise<boolean> {
     try {
       // create save properties
       const applyEditProperties: __esri.FeatureLayerApplyEditsEdits = {};
@@ -47,9 +47,11 @@ export class FeatureService {
 
       // save related features
       if (feature.state !== FeatureState.Delete) {
-        await Promise.all(Object.entries(feature.relatedFeatures).map(async ([key, value]) => {
+        // NOTE: do not call applyEdits parrallel (await Promise.all) because the can be a lock error
+        for (const [key, value] of Object.entries(feature.relatedFeatures)) {
           const relationshipName: RelationshipName = (RelationshipName as any)[key];
           const relatedFeatures = value as FidaFeature[];
+
 
           if (relationshipName && relatedFeatures && relatedFeatures.length > 0) {
             const relatedFeatureLayer = await this.getRelatedFeatureLayerByName(featureLayer, relationshipName);
@@ -68,7 +70,7 @@ export class FeatureService {
             await this.saveRelatedFeatures(relatedFeatureLayer, relatedFeatures);
             console.log(`related features "${relationshipName}" saved.`);
           }
-        }));
+        }
       } else {
         this.deleteUnlinkedKontaktFeatures(featureLayer);
       }
@@ -80,8 +82,9 @@ export class FeatureService {
       // reset state
       feature.state = undefined;
     } catch (error) {
-      this.messageService.error(error);
+      return false;
     }
+    return true;
   }
 
   public async saveRelatedFeatures(relatedFeatureLayer: FeatureLayer, relatedFeatures: FidaFeature[]): Promise<any> {
@@ -189,7 +192,7 @@ export class FeatureService {
     });
   }
 
-  public async loadRelatedFeatures(feature: FidaFeature, loadedCallback: () => void): Promise<any> {
+  public async loadRelatedFeatures(feature: FidaFeature, loadedCallback?: () => void): Promise<any> {
     if (!feature.layer) {
       return;
     }
@@ -219,7 +222,9 @@ export class FeatureService {
         // store related features
         (feature.relatedFeatures as any)[key] = resultFeatures;
         console.log(`related features "${value}" loaded. count=${resultFeatures.length}`);
-        loadedCallback();
+        if (loadedCallback) {
+          loadedCallback();
+        }
       }
     }));
   }
@@ -398,9 +403,10 @@ export class FeatureService {
   private hasRelationship(featureLayer: FeatureLayer, relationshipName: RelationshipName): boolean {
     // find esri-relationship-name (stored in config)
     const relationshipsConfig = this.configService.getRelationshipsConfigs(featureLayer.id);
-    const esriRelationshipName = this.getEsriRelationshipName(relationshipsConfig, relationshipName);
-    const relationship = featureLayer.relationships.find(f => f.name.toLowerCase() === esriRelationshipName.toLowerCase());
-    return relationship !== undefined;
+    const name = (relationshipsConfig as any)[relationshipName.toString()];
+    if (name === undefined) {
+      return false;
+    }
   }
 
   private getEsriRelationship(featureLayer: FeatureLayer, relationshipName: RelationshipName): EsriRelationship {

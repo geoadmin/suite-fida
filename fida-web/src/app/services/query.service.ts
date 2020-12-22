@@ -112,8 +112,11 @@ export class QueryService {
     });
   }
 
-  public url(url: string): Promise<FidaFeature[]> {
+  public url(url: string, objectIds?: number[]): Promise<FidaFeature[]> {
     const query = new Query();
+    if (objectIds != null) {
+      query.where = `OBJECTID IN (${objectIds.join(',')})`;
+    }
     query.outFields = ['*'];
 
     const queryTask = new QueryTask();

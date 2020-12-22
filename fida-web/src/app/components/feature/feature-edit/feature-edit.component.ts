@@ -123,16 +123,18 @@ export class FeatureEditComponent implements OnInit {
     const featureState = this.feature.state;
     this.showSpinner = true;
     this.featureService.updateGeometryFromAttributes(this.feature);
-    await this.featureService.saveFeature(this.feature);
+    const success = await this.featureService.saveFeature(this.feature);
     this.showSpinner = false;
     this.changeDetectorRef.detectChanges();
 
-    if (featureState === FeatureState.Create) {
-      this.widgetNotifyService.onFeatureCreateCompleteSubject.next(CompleteState.Saved);
-    } else {
-      this.widgetNotifyService.onFeatureEditCompleteSubject.next(CompleteState.Saved);
-    }
+    if (success) {
+      if (featureState === FeatureState.Create) {
+        this.widgetNotifyService.onFeatureCreateCompleteSubject.next(CompleteState.Saved);
+      } else {
+        this.widgetNotifyService.onFeatureEditCompleteSubject.next(CompleteState.Saved);
+      }
 
-    this.deactivate();
+      this.deactivate();
+    }
   }
 }

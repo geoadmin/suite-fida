@@ -69,11 +69,13 @@ export class GeometryEditComponent implements OnInit {
       this.featureService.updateLK25(this.originalFeature)
     ]);
     this.featureService.updateAttributesFromGeometry(this.originalFeature);
-    await this.featureService.saveFeature(this.originalFeature);
+    const success = await this.featureService.saveFeature(this.originalFeature);
     this.showSpinner = false;
 
-    this.widgetNotifyService.onGeometryEditCompleteSubject.next(CompleteState.Saved);
-    this.deactivate();
+    if (success) {
+      this.widgetNotifyService.onGeometryEditCompleteSubject.next(CompleteState.Saved);
+      this.deactivate();
+    }
   }
 
   cancelClick(close: boolean): void {

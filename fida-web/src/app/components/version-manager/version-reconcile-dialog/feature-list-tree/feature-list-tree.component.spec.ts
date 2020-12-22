@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AttributeEditComponent } from './attribute-edit.component';
+import { FeatureListTreeComponent } from './feature-list-tree.component';
 
-describe('AttributeEditComponent', () => {
-  let component: AttributeEditComponent;
-  let fixture: ComponentFixture<AttributeEditComponent>;
+describe('FeatureListTreeComponent', () => {
+  let component: FeatureListTreeComponent;
+  let fixture: ComponentFixture<FeatureListTreeComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AttributeEditComponent ]
+      declarations: [ FeatureListTreeComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AttributeEditComponent);
+    fixture = TestBed.createComponent(FeatureListTreeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

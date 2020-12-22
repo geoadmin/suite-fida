@@ -35,10 +35,7 @@
                                     (click)="showReconcilePostDialogClick(version)">{{ 'app.version_manager.reconcile' | translate }}</button>
                                 <button class="btn btn-danger" [disabled]="isReadonlyVersion(version)"
                                     title="{{ 'app.global.delete' | translate }}" (click)="showDeleteDialogClick(version)">
-                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash"
-                                        fill="currentColor">
-                                        <use xlink:href="assets/images/bootstrap-icons.svg#trash" />
-                                    </svg>
+                                    <i class='fas fa-trash'></i>
                                 </button>
 
                             </div>
