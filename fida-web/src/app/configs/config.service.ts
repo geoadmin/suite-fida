@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
     Config, ExtentConfig, GpConfig, LayerConfig, LayerType,
-    RelationshipsConfig, VersionManagementConfig
+    RelationshipsConfig, SearchSourceConfig, SearchType, VersionManagementConfig
 } from '../models/config.model';
 import { environment } from '../../environments/environment';
 import esriRequest from 'esri/request';
@@ -97,6 +97,10 @@ export class ConfigService {
 
     public getLanguages(): string[] {
         return this.config.languages;
+    }
+
+    public getSearchConfig(): [SearchSourceConfig] {
+        return this.config.search;
     }
 
     public getGpConfig(): GpConfig {

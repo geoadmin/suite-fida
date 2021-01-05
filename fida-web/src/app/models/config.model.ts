@@ -5,6 +5,12 @@ export enum LayerType {
     RelatedLayer = 'RelatedLayer'
 }
 
+export enum SearchType {
+    Locator = 'Locator',
+    Layer = 'Layer',
+    Fida = 'Fida'
+}
+
 export class RelationshipsConfig {
     [key: string]: string
 }
@@ -37,6 +43,13 @@ export class GpConfig {
     getLK25Url: string;
 }
 
+export class SearchSourceConfig {
+    type: SearchType;
+    idLayer?: string;
+    url?: string;
+    properties: any;
+}
+
 export class Config {
     arcGisUrlPlaceholder: string;
     layerBaseUrl: string;
@@ -48,4 +61,5 @@ export class Config {
     gp: GpConfig;
     layers: [LayerConfig];
     layerInfos: any;
+    search: [SearchSourceConfig];
 }

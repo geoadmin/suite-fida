@@ -10,6 +10,7 @@ import Extent from 'esri/geometry/Extent';
 import Viewpoint from 'esri/Viewpoint';
 import { FidaTranslateService } from './translate.service';
 import { LangChangeEvent } from '@ngx-translate/core';
+import { SearchSourceService } from './search-source.service';
 
 @Injectable({ providedIn: 'root' })
 export class WidgetsService {
@@ -21,7 +22,10 @@ export class WidgetsService {
   private zoomWidget: Zoom;
   private homeWidget: Home;
 
-  constructor(private translateService: FidaTranslateService) {
+  constructor(
+    private translateService: FidaTranslateService,
+    private searchSourceService: SearchSourceService
+  ) {
   }
 
   public registerFeatureCreateWidgetContent(element: ElementRef): Expand {
@@ -78,6 +82,10 @@ export class WidgetsService {
     const serach = new Search({
       view: mapView
     });
+    serach.sources.removeAll();
+    serach.sources.addMany(this.searchSourceService.getSearchSource());
+    serach.activeSourceIndex = -1;
+
     this.searchWidget = new Expand({
       expandIconClass: 'esri-icon-search',
       view: mapView,
@@ -102,7 +110,7 @@ export class WidgetsService {
       view: mapView,
       viewpoint: viewPoint
     });
-    return  this.homeWidget;
+    return this.homeWidget;
   }
 
   public getLayerListWidget(mapView: MapView): Expand {
@@ -137,5 +145,4 @@ export class WidgetsService {
     this.layerListWidget.expandTooltip = this.translateService.translate('app.toc.title');
     this.homeWidget.label = this.translateService.translate('app.home.title');
   }
-
 }

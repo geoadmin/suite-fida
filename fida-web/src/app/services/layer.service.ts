@@ -47,6 +47,14 @@ export class LayerService {
     return this.layers;
   }
 
+  public getFeatureLayer(id: string): FeatureLayer {
+    const featureLayer = this.getLayers().find(f => f.id === id) as FeatureLayer;
+    if (featureLayer) {
+      return featureLayer;
+    }
+    throw new Error(`No FeatureLayer with id ${id} found`);
+  }
+
   public getEditableFeatureLayers(): FeatureLayer[] {
     // TODO filter editable layers only
     return this.getLayers().map(m => m as FeatureLayer);

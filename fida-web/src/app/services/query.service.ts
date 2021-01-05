@@ -97,14 +97,42 @@ export class QueryService {
     });
   }
 
-  public where(featureLayer: FeatureLayer, where: string, outFields?: string[]): Promise<FidaFeature[]> {
+  public where(featureLayer: FeatureLayer, where: string, outFields?: string[], num?: number): Promise<FidaFeature[]> {
     const query = new Query();
     query.where = where;
     query.outFields = outFields ?? ['*'];
+    if (num) {
+      query.num = num;
+    }
 
     return new Promise((resolve, reject) => {
       featureLayer.queryFeatures(query)
         .then((result: any) => resolve(this.convertToFidaFeature(result.features)))
+        .catch((error: EsriError) => {
+          this.messageService.error('Query failed.', error);
+          reject(error);
+        });
+    });
+  }
+
+  public feature(featureLayer: FeatureLayer, objectid: number): Promise<FidaFeature> {
+    const query = new Query();
+    query.where = `OBJECTID=${objectid}`;
+    query.outFields = ['*'];
+    query.returnGeometry = true;
+
+    return new Promise((resolve, reject) => {
+      featureLayer.queryFeatures(query)
+        .then((result: any) => {
+          if (result.features.length === 1) {
+            const fidaFeatures = this.convertToFidaFeature(result.features);
+            resolve(fidaFeatures[0]);
+          } else {
+            const error = new EsriError(`Invalid OBJECTID ${objectid}`);
+            this.messageService.error('Query failed.', error);
+            reject(error);
+          }
+        })
         .catch((error: EsriError) => {
           this.messageService.error('Query failed.', error);
           reject(error);
@@ -168,7 +196,6 @@ export class QueryService {
     (orderByFields) ? query.orderByFields = orderByFields : query.orderByFields = null;
     return query;
   }
-
 
   private async getToken(): Promise<string> {
     if (this.token) {
