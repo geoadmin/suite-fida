@@ -67,8 +67,10 @@ export class FeatureService {
               this.correctDeletedKontaktFeatures(feature, relatedFeatures);
             }
 
-            await this.saveRelatedFeatures(relatedFeatureLayer, relatedFeatures);
-            console.log(`related features "${relationshipName}" saved.`);
+            const saved = await this.saveRelatedFeatures(relatedFeatureLayer, relatedFeatures);
+            if (saved === true) {
+              console.log(`related features "${relationshipName}" saved.`);
+            }
           }
         }
       } else {
@@ -87,22 +89,35 @@ export class FeatureService {
     return true;
   }
 
-  public async saveRelatedFeatures(relatedFeatureLayer: FeatureLayer, relatedFeatures: FidaFeature[]): Promise<any> {
+  public async saveRelatedFeatures(relatedFeatureLayer: FeatureLayer, relatedFeatures: FidaFeature[]): Promise<boolean> {
+    let saved = false;
     try {
 
       // check empty related features
       if (!relatedFeatures || relatedFeatures.length === 0) {
-        return Promise.resolve();
+        return Promise.resolve(false);
       }
+
+      // find changes
+      relatedFeatures.filter(f => f.state === undefined
+        && JSON.stringify(f.orginalAttributes) !== JSON.stringify(f.attributes)).map(feature => {
+          feature.state = FeatureState.Edit;
+          console.log(feature.attributes.OBJECTID);
+        });
 
       // create save properties
       const applyEditProperties: __esri.FeatureLayerApplyEditsEdits = {};
       applyEditProperties.addFeatures = relatedFeatures.filter(f => f.state === FeatureState.Create);
       applyEditProperties.deleteFeatures = relatedFeatures.filter(f => f.state === FeatureState.Delete);
-      applyEditProperties.updateFeatures = relatedFeatures.filter(f => f.state === FeatureState.Edit || f.state === undefined);
+      applyEditProperties.updateFeatures = relatedFeatures.filter(f => f.state === FeatureState.Edit);
 
       // save related features
-      await this.applyEdits(relatedFeatureLayer, applyEditProperties);
+      if (applyEditProperties.addFeatures.length > 0
+        || applyEditProperties.deleteFeatures.length > 0
+        || applyEditProperties.updateFeatures.length > 0) {
+        await this.applyEdits(relatedFeatureLayer, applyEditProperties);
+        saved = true;
+      }
 
       // add attachments
       if (relatedFeatureLayer.capabilities.operations.supportsQueryAttachments) {
@@ -110,10 +125,14 @@ export class FeatureService {
       }
 
       // reset state
-      relatedFeatures.map(f => f.state = undefined);
+      relatedFeatures.map(f => {
+        f.state = undefined;
+        f.orginalAttributes = { ...f.attributes };
+      });
     } catch (error) {
       this.messageService.error(error);
     }
+    return Promise.resolve(saved);
   }
 
   private correctDeletedKontaktFeatures(feature: FidaFeature, relatedFeatures: FidaFeature[]): void {
@@ -428,6 +447,9 @@ export class FeatureService {
     return name;
   }
 
+  /**
+   * TEMPORARY: TODO DELETE 
+   */
   public async addTestTranslationToDb(): Promise<void> {
     const translationFeatureLayer = new FeatureLayer({
       url: 'https://s7t2530a.adr.admin.ch/arcgis/rest/services/FIDA/FIDA/FeatureServer',
@@ -492,22 +514,6 @@ export class FeatureService {
         });
       }
     });
-
-    // const feature1 = new Feature();
-    // feature1.attributes = { ...translationFeatureLayer.templates[0].prototype.attributes };
-    // feature1.layer = translationFeatureLayer;
-    // feature1.attributes.OBJEKTART = 1; // 0 = domain, 1 = row-name
-    // feature1.attributes.GRUPPENAME = 'FIDA_LFP';
-    // feature1.attributes.KEY = 'PUNKTNAME';
-    // feature1.attributes.VALDICT = '{"de":"Punktname","fr":"FR:Punktname"}';
-
-    // const feature2 = new Feature();
-    // feature2.attributes = { ...translationFeatureLayer.templates[0].prototype.attributes };
-    // feature2.layer = translationFeatureLayer;
-    // feature2.attributes.OBJEKTART = 0; // 0 = domain, 1 = row-name
-    // feature2.attributes.GRUPPENAME = 'FIDA_PUNKTSTATE_CD';
-    // feature2.attributes.KEY = '0';
-    // feature2.attributes.VALDICT = '{"de":"Aktiv","fr":"FR:Aktiv"}';
 
     await this.applyEdits(translationFeatureLayer, addProperties);
   }

@@ -8,11 +8,23 @@
 
     <!-- body -->
     <div class="fida-widget-body container">
-        <app-feature-list-tree [features]="createdFeatures" componentId="feature_tree_list_created" title="app.version_reconcile.created">
+        <div class="row">
+            <div class="col-12">
+                <div class="float-right">
+                    <input type="checkbox" [(ngModel)]="showAll" />
+                    {{'show all' | translate }}
+                </div>
+            </div>
+        </div>
+
+        <app-feature-list-tree [differences]="createDifferences" componentId="feature_tree_list_created"
+            title="app.version_reconcile.created" [showAll]="showAll">
         </app-feature-list-tree>
-        <app-feature-list-tree [features]="editedFeatures" componentId="feature_tree_list_updated" title="app.version_reconcile.edited">
+        <app-feature-list-tree [differences]="editDifferences" componentId="feature_tree_list_updated"
+            title="app.version_reconcile.edited" [showAll]="showAll">
         </app-feature-list-tree>
-        <app-feature-list-tree [features]="deletedFeatures" componentId="feature_tree_list_deleted" title="app.version_reconcile.deleted">
+        <app-feature-list-tree [differences]="deleteDifferences" componentId="feature_tree_list_deleted"
+            title="app.version_reconcile.deleted" [showAll]="showAll">
         </app-feature-list-tree>
     </div>
 

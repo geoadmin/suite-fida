@@ -1,10 +1,11 @@
 <!-- general feature body -->
 <div class="row">
-    <div class="col-12 plus-minus-header" data-toggle="collapse" [attr.data-target]="'#' + getId('general', feature)">
+    <div class="col-12 plus-minus-header collapsed" data-toggle="collapse"
+        [attr.data-target]="'#' + getId('general', feature)">
         {{ 'app.relationship.general' | translate }}</div>
 </div>
 
-<!-- related feature body -->
+<!-- general feature body -->
 <div class="row collapse plus-minus-body" [id]="getId('general', feature)">
     <div class="col-12">
         <div *ngFor="let attribute of feature.attributes | keyvalue">
@@ -13,11 +14,11 @@
     </div>
 </div>
 
-<div *ngFor="let relatedFeatures of feature?.relatedFeatures | keyvalue">
-
+<div *ngFor="let relatedFeatures of feature?.relatedFeatures | keyvalue"
+    [hidden]="hideRelatedFeatures(relatedFeatures.value)">
     <!-- related feature list header-->
     <div class="row">
-        <div class="col-12 plus-minus-header" data-toggle="collapse"
+        <div class="col-12 plus-minus-header collapsed" data-toggle="collapse"
             [attr.data-target]="'#' + getId(relatedFeatures.key, feature)">
             {{ 'app.relationship.' + relatedFeatures.key | translate }} ({{ relatedFeatures.value.length }})</div>
     </div>
@@ -29,8 +30,8 @@
 
                 <!-- related feature header-->
                 <div class="row">
-                    <div class="col-12 plus-minus-header" data-toggle="collapse"
-                        [attr.data-target]="'#' + getId('rid',relatedFeature)">
+                    <div class="col-12 plus-minus-header collapsed" data-toggle="collapse"
+                        [attr.data-target]="'#' + getId('rid',relatedFeature)" [class]="getDiffClass(relatedFeature)">
                         {{ getRelatedFeatureHeader(relatedFeature, relatedFeatures.key) }}</div>
                 </div>
 

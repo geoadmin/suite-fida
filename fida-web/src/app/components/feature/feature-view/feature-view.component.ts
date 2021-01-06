@@ -4,6 +4,7 @@ import { CompleteState, WidgetNotifyService } from 'src/app/services/widget-noti
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { FeatureState, FidaFeature } from 'src/app/models/FidaFeature.model';
 import { FormGroup } from '@angular/forms';
+import FeatureLayer from 'esri/layers/FeatureLayer';
 
 export enum FeatureMode {
   View = 'view',
@@ -39,6 +40,7 @@ export class FeatureViewComponent implements OnInit, OnDestroy {
   public setFeature(feature: FidaFeature): void {
     try {
       this.feature = feature;
+      this.feature.layer.visible = true;
       this.loadRelatedFeatures();
     } catch (error) {
       console.error(error);

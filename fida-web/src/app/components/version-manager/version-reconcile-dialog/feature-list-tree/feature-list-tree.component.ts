@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { FidaDifference } from 'src/app/models/Differences';
 import { FidaFeature } from 'src/app/models/FidaFeature.model';
 import { FeatureService } from 'src/app/services/feature.service';
 
@@ -8,9 +9,10 @@ import { FeatureService } from 'src/app/services/feature.service';
   styleUrls: ['./feature-list-tree.component.scss']
 })
 export class FeatureListTreeComponent implements OnInit {
-  @Input() features: FidaFeature[];
+  @Input() differences: FidaDifference[];
   @Input() title: string;
   @Input() componentId: string;
+  @Input() showAll: boolean;
 
   constructor(private featureService: FeatureService) { }
 
@@ -24,4 +26,9 @@ export class FeatureListTreeComponent implements OnInit {
   getId(prefix: string, feature: any): string {
     return `${prefix}-${feature?.attributes.GLOBALID.replace('{', '').replace('}', '')}`;
   }
+
+  getDiffClass(feature: FidaFeature): string {
+    return 'diff-' + feature.state?.toString();
+  }
+
 }

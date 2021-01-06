@@ -42,5 +42,6 @@ export class FidaFeature extends Feature {
     relatedFeatures: RelatedFeatures;
     attachmentInfos: AttachmentInfo[];
     attachmentUpload: any;
+    orginalAttributes: any;
 }
 

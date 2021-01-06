@@ -9,6 +9,7 @@ import { UtilService } from 'src/app/services/util.service';
 })
 export class FeatureTreeComponent implements OnInit {
   @Input() feature: FidaFeature;
+  @Input() showAll: boolean;
 
   constructor() { }
 
@@ -20,6 +21,14 @@ export class FeatureTreeComponent implements OnInit {
   }
 
   getRelatedFeatureHeader(feature: FidaFeature, relationshipName: RelationshipName): string {
-    return UtilService.getFeatureHeader(feature, relationshipName);
+    return `${UtilService.getFeatureHeader(feature, relationshipName) || ''} [${feature.attributes.OBJECTID}]`;
+  }
+
+  hideRelatedFeatures(relatedFeatures: FidaFeature[]): boolean {
+    return !this.showAll && relatedFeatures.length === 0;
+  }
+
+  getDiffClass(feature: FidaFeature): string {
+    return 'diff-' + feature.state?.toString();
   }
 }

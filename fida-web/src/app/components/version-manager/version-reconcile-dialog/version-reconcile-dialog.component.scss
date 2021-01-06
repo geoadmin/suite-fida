@@ -1,3 +1,28 @@
 .version-reconcile-dialog {
-    min-height: 50px;       
+    min-height: 50px;
+}
+
+.diff-create {
+    background-color: rgb(163, 241, 163);
+}
+.diff-edit {
+    background-color: rgb(247, 212, 149);
+}
+.diff-delete {
+    background-color: rgb(252, 159, 159);
+}
+
+.plus-minus-header:before {
+    display: inline-block;
+    content: "-";
+    width: 12px;
+}
+.plus-minus-header.collapsed:before {
+    display: inline-block;
+    content: "+";
+    width: 12px;
+}
+
+.plus-minus-body {
+    padding-left: 20px;
 }

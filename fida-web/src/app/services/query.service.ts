@@ -60,7 +60,7 @@ export class QueryService {
     });
   }
 
-  public relatedFeatures(featureLayer: FeatureLayer, objectId: number, relationshipId: number): Promise<Feature[]> {
+  public relatedFeatures(featureLayer: FeatureLayer, objectId: number, relationshipId: number): Promise<FidaFeature[]> {
     const query = new RelationshipQuery();
     query.objectIds = [objectId];
     query.relationshipId = relationshipId;
@@ -70,7 +70,7 @@ export class QueryService {
       featureLayer.queryRelatedFeatures(query)
         .then((result: any) => {
           const resultGroup = result[objectId];
-          resolve(resultGroup ? resultGroup.features : []);
+          resolve(resultGroup ? this.convertToFidaFeature(resultGroup.features) : []);
         })
         .catch((error: EsriError) => {
           this.messageService.error('Query failed.', error);
@@ -79,7 +79,7 @@ export class QueryService {
     });
   }
 
-  public intersect(layerUrl: string, geometry: Geometry): Promise<Feature[]> {
+  public intersect(layerUrl: string, geometry: Geometry): Promise<FidaFeature[]> {
     const query = this.buildQuery(true);
     query.geometry = geometry;
     query.spatialRelationship = 'intersects';
@@ -89,7 +89,7 @@ export class QueryService {
 
     return new Promise((resolve, reject) => {
       queryTask.execute(query)
-        .then((result: any) => resolve(result.features))
+        .then((result: any) => resolve(this.convertToFidaFeature(result.features)))
         .catch((error: EsriError) => {
           this.messageService.error('Query failed.', error);
           reject(error);
@@ -220,6 +220,10 @@ export class QueryService {
   }
 
   private convertToFidaFeature(features: any): FidaFeature[] {
-    return features.map((m: any) => m as FidaFeature);
+    return features.map((feature: Feature) => {
+      const fidaFeature = feature as FidaFeature;
+      fidaFeature.orginalAttributes = { ...feature.attributes };
+      return fidaFeature;
+    });
   }
 }

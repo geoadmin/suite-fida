@@ -1,30 +1,29 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import Feature from 'esri/Graphic';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import Geometry from 'esri/geometry/Geometry';
 import FeatureLayer from 'esri/layers/FeatureLayer';
-import { ConfigService } from 'src/app/configs/config.service';
-import { DifferenceFeature, Differences } from 'src/app/models/Differences';
+import { DifferenceFeature, Differences, FidaDifference } from 'src/app/models/Differences';
 import { FeatureState, FidaFeature } from 'src/app/models/FidaFeature.model';
 import { GdbVersion } from 'src/app/models/GdbVersion.model';
 import { FeatureService } from 'src/app/services/feature.service';
 import { LayerService } from 'src/app/services/layer.service';
-import { MapService } from 'src/app/services/map.service';
 import { MessageService } from 'src/app/services/message.service';
-import { QueryService } from 'src/app/services/query.service';
 import { VersionManagementService } from 'src/app/services/version-management.service';
 
 @Component({
   selector: 'app-version-reconcile-dialog',
   templateUrl: './version-reconcile-dialog.component.html',
-  styleUrls: ['./version-reconcile-dialog.component.scss']
+  styleUrls: ['./version-reconcile-dialog.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class VersionReconcileDialogComponent implements OnInit {
   @Output() reconcileFinished: EventEmitter<boolean> = new EventEmitter();
   showSpinner: boolean;
   version: GdbVersion;
   differencesSet: Differences[];
-  createdFeatures: FidaFeature[];
-  editedFeatures: FidaFeature[];
-  deletedFeatures: FidaFeature[];
+  createDifferences: FidaDifference[];
+  editDifferences: FidaDifference[];
+  deleteDifferences: FidaDifference[];
+  showAll: boolean;
 
   constructor(
     private versionManagementService: VersionManagementService,
@@ -38,42 +37,83 @@ export class VersionReconcileDialogComponent implements OnInit {
   }
 
   private fillLists(differencesSet: Differences[]): void {
+    if (!differencesSet) {
+      return;
+    }
 
     // 2. load root-features with related-features
     // 3. eliminate loaded features from difference-list
     // 4. find root-features form remaining features and load it with related-features
 
-    this.createdFeatures = [];
-    this.editedFeatures = [];
-    this.deletedFeatures = [];
+    this.createDifferences = [];
+    this.editDifferences = [];
+    this.deleteDifferences = [];
 
     // loop ovar all root-layers
     const rootLayers = this.layerService.getLayers();
     rootLayers.forEach(rootLayer => {
-      // 1. find root-features in difference-list
+      // find root-features in difference-list
       const featureLayer = (rootLayer as FeatureLayer);
       const differences = differencesSet.find((f: any) => f.layerId === featureLayer.layerId);
       if (differences) {
-        this.differenceFeaturesToList(differences.inserts, featureLayer, FeatureState.Create, this.createdFeatures);
-        this.differenceFeaturesToList(differences.updates, featureLayer, FeatureState.Edit, this.editedFeatures);
-        this.differenceFeaturesToList(differences.deletes, featureLayer, FeatureState.Delete, this.deletedFeatures);
+        this.differenceFeaturesToList(differences.inserts, featureLayer, FeatureState.Create, this.createDifferences, differencesSet);
+        this.differenceFeaturesToList(differences.updates, featureLayer, FeatureState.Edit, this.editDifferences, differencesSet);
+        this.differenceFeaturesToList(differences.deletes, featureLayer, FeatureState.Delete, this.deleteDifferences, differencesSet);
       }
     });
   }
 
   private differenceFeaturesToList(differenceFeatures: DifferenceFeature[], featureLayer: FeatureLayer,
-    featureState: FeatureState, list: FidaFeature[]): void {
+    featureState: FeatureState, list: FidaDifference[], differencesSet: Differences[]): void {
     if (differenceFeatures) {
-      differenceFeatures.map(differenceFeature => {
+      differenceFeatures.map(async differenceFeature => {
+        // create root fida-feature
         const fidaFeature = new FidaFeature();
         fidaFeature.attributes = { ...differenceFeature.attributes };
-        fidaFeature.geometry = differenceFeature.geometry;
+        fidaFeature.geometry = new Geometry(differenceFeature.geometry);
         fidaFeature.state = featureState;
         fidaFeature.layer = featureLayer;
-        this.featureService.loadRelatedFeatures(fidaFeature);
-        list.push(fidaFeature);
+        list.push({
+          versionFeature: fidaFeature,
+          defaultFeature: fidaFeature,
+        });
+
+        // load root-features with related-features
+        await this.featureService.loadRelatedFeatures(fidaFeature);
+
+        // synch loaded related-fetures with difference-list
+        this.syncRelatedFeaturesWithDifferences(differencesSet, fidaFeature);
       });
     }
+  }
+
+  private syncRelatedFeaturesWithDifferences(differencesSet: Differences[], fidaFeature: FidaFeature): void {
+    Object.values(fidaFeature.relatedFeatures).map(value => {
+      const relatedFeatures = value as FidaFeature[];
+      relatedFeatures.forEach(relatedFeature => {
+        const relatedFeatureLayer = relatedFeature.layer as FeatureLayer;
+        const relatedDifferences = differencesSet.find(f => f.layerId === relatedFeatureLayer.layerId);
+
+        if (relatedDifferences == null) {
+          console.log('no differences found..');
+          return;
+        }
+        // search for id in the lits
+        if (relatedDifferences.inserts &&
+          relatedDifferences.inserts.find(f => f.attributes.OBJECTID === relatedFeature.attributes.OBJECTID)) {
+          relatedFeature.state = FeatureState.Create;
+        } else if (relatedDifferences.updates &&
+          relatedDifferences.updates.find(f => f.attributes.OBJECTID === relatedFeature.attributes.OBJECTID)) {
+          relatedFeature.state = FeatureState.Edit;
+        } else if (relatedDifferences.deletes &&
+          relatedDifferences.deletes.find(f => f.attributes.OBJECTID === relatedFeature.attributes.OBJECTID)) {
+          relatedFeature.state = FeatureState.Delete;
+        }
+        console.log('no difference found..');
+
+      });
+    });
+
   }
 
   /**
@@ -102,7 +142,6 @@ export class VersionReconcileDialogComponent implements OnInit {
     }
     this.showSpinner = false;
   }
-
 
   private checkResult(result: any): void {
     if (result.success === false) {
