@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import Feature from 'esri/Graphic';
-import FeatureLayer from 'esri/layers/FeatureLayer';
 import Locator from 'esri/tasks/Locator';
-import LayerSearchSource from 'esri/widgets/Search/LayerSearchSource';
 import LocatorSearchSource from 'esri/widgets/Search/LocatorSearchSource';
 import SearchSource from 'esri/widgets/Search/SearchSource';
 import { ConfigService } from '../configs/config.service';
@@ -30,7 +28,7 @@ export class SearchSourceService {
     const searchConfig = this.configService.getSearchConfig();
     searchConfig.forEach(searchSourceConfig => {
       const searchSource = this.searchSourceFactory(searchSourceConfig);
-      //this.translateSource(searchSource);
+      this.translateSource(searchSource);
       searchSources.push(searchSource);
     });
 
@@ -40,13 +38,11 @@ export class SearchSourceService {
   }
 
 
-  /* private translateSource(source: __esri.FeatureLayerSource | __esri.LocatorSource): void {
-     this._translate.get([source.name, source.placeholder]).subscribe(
-       translates => {
-         source.name = translates[source.name];
-         source.placeholder = translates[source.placeholder];
-       });
-   }*/
+  private translateSource(source: SearchSource): void {
+    const sourceAny: any = source;
+    sourceAny.name = this.translateService.translate(sourceAny.name);
+    source.placeholder = this.translateService.translate(source.placeholder);
+  }
 
   private searchSourceFactory(searchSourceConfig: SearchSourceConfig): SearchSource {
     const properties = searchSourceConfig.properties;
@@ -59,24 +55,27 @@ export class SearchSourceService {
     }
 
     // layer search
-    if (searchSourceConfig.type === SearchType.Layer) {
+    /*if (searchSourceConfig.type === SearchType.Layer) {
       const featureLayerSource = new LayerSearchSource(properties);
-      featureLayerSource.layer = new FeatureLayer({ url: searchSourceConfig.url });
-      //featureLayerSource.popupTemplate = this.templateService.getFeatureTemplate();
+      const featureLayer = this.layerService.getFeatureLayer(searchSourceConfig.idLayer);
+      featureLayerSource.layer =  featureLayer;
+      featureLayerSource.popupTemplate = featureLayer.popupTemplate;
       return featureLayerSource;
-    }
+    }*/
 
     // special search
     if (searchSourceConfig.type === SearchType.Fida) {
       const featureLayer = this.layerService.getFeatureLayer(searchSourceConfig.idLayer);
       const searchSource = new SearchSource(properties);
       searchSource.getSuggestions = (params) => {
-        const where = `${properties.where} like '%${params.suggestTerm}%'`;
+        const where = (properties.where as string).replace('???', params.suggestTerm);
         return this.queryService.where(featureLayer, where, properties.outFields, properties.maxResults).then((features) => {
           return features.map(m => {
+            let text = '';
+            (properties.displayField as string).split(',').map(s => text += m.attributes[s.trim()]);
             return {
               key: m.attributes.OBJECTID,
-              text: `${m.attributes.LFPNR}`,
+              text: `${text}`,
               sourceIndex: params.sourceIndex
             };
           });

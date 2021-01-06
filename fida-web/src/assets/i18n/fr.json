@@ -51,6 +51,11 @@
   "app.version_manager.reconcile": "FR:Reconcile/Post",
   "app.basemap.title": "FR:Basiskarten",
   "app.search.title": "FR:Suche",
+  "app.search.all_placeholder": "FR:Suche HLP, LFP oder Adresse",
+  "app.search.lfp_placeholder": "FR:Suche LFP",
+  "app.search.lhp_placeholder": "FR:Suche HLP",
+  "app.search.locator_placeholder": "FR:Suche Adresse",
+  "app.search.locator_name": "FR:Adressen",
   "app.home.title": "FR:Home",
   "app.toc.title": "FR:Layerauswahl"
 }

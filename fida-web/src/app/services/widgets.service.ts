@@ -79,20 +79,28 @@ export class WidgetsService {
   }
 
   public getSearchWidget(mapView: MapView): Expand {
-    const serach = new Search({
+    const search = new Search({
       view: mapView
     });
-    serach.sources.removeAll();
-    serach.sources.addMany(this.searchSourceService.getSearchSource());
-    serach.activeSourceIndex = -1;
+    search.includeDefaultSources = false;
+
+    this.refreshSearchSource(search);
+    this.translateService.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.refreshSearchSource(search);
+    });
 
     this.searchWidget = new Expand({
       expandIconClass: 'esri-icon-search',
       view: mapView,
-      content: serach
+      content: search
     });
     this.synchExpandCollapse(this.searchWidget);
     return this.searchWidget;
+  }
+
+  public updateSearchWidget(searchWidget: Expand): void {
+    const search = searchWidget.content as Search;
+    this.refreshSearchSource(search);
   }
 
   public getZoomWidget(mapView: MapView): Zoom {
@@ -144,5 +152,13 @@ export class WidgetsService {
     this.searchWidget.expandTooltip = this.translateService.translate('app.search.title');
     this.layerListWidget.expandTooltip = this.translateService.translate('app.toc.title');
     this.homeWidget.label = this.translateService.translate('app.home.title');
+  }
+
+  private refreshSearchSource(search: Search): void {
+    const activeSourceIndex = search.activeSourceIndex || -1;
+    search.sources.removeAll();
+    search.sources.addMany(this.searchSourceService.getSearchSource());
+    search.allPlaceholder = this.translateService.translate('app.search.all_placeholder');
+    search.activeSourceIndex = activeSourceIndex;
   }
 }

@@ -67,7 +67,8 @@ export class MapService {
       this.view.ui.add(this.widgetsService.getBasemapWidget(this.view), 'bottom-left');
       this.view.ui.add(this.widgetsService.getZoomWidget(this.view), 'top-left');
       this.view.ui.add(this.widgetsService.getHomeWidget(this.view, this.getDefaultExtent()), 'top-left');
-      this.view.ui.add(this.widgetsService.getSearchWidget(this.view), 'top-right');
+      const searchWidget = this.widgetsService.getSearchWidget(this.view);
+      this.view.ui.add(searchWidget, 'top-right');
       this.view.ui.add(this.widgetsService.getLayerListWidget(this.view), 'top-right');
       this.view.ui.add(this.widgetsService.getFeatureCreateWidget(this.view), 'top-right');
       this.view.ui.add(this.widgetsService.getVersionManagerWidget(this.view), 'top-right');
@@ -81,6 +82,7 @@ export class MapService {
       this.widgetNotifyService.onGdbVersionChangedSubject.subscribe((gdbVersionName: string) => {
         this.view.map.removeAll();
         this.addLayersToMap(this.view.map);
+        this.widgetsService.updateSearchWidget(searchWidget);
       });
 
       // listen to extent change

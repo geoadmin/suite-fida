@@ -80,18 +80,75 @@
             "idLayer": "LFP",
             "properties": {
                 "maxResults": 6,
-                "minSuggestCharacters": 3,
+                "minSuggestCharacters": 2,
                 "zoomScale": 5000,
                 "name": "LFP",
-                "placeholder": "Search LFP",
+                "placeholder": "app.search.lfp_placeholder",
                 "displayField": "LFPNR",
                 "exactMatch": false,
-                "where": "CAST(LFPNR AS VARCHAR(10))",
+                "where": "CAST(LFPNR AS VARCHAR(10)) like '%???%'",
                 "outFields": [
                     "LFPNR",
                     "OBJECTID"
                 ]
             }
+        },
+        {
+            "type": "Fida",
+            "idLayer": "HFP",
+            "properties": {
+                "maxResults": 6,
+                "minSuggestCharacters": 2,
+                "zoomScale": 5000,
+                "name": "HFP",
+                "placeholder": "app.search.lhp_placeholder",
+                "displayField": "HFPKANTON,HFPNR",
+                "exactMatch": false,
+                "where": "UPPER(CONCAT(HFPKANTON,HFPNR)) like UPPER('%???%')",
+                "outFields": [
+                    "HFPKANTON",
+                    "HFPNR",
+                    "OBJECTID"
+                ]
+            }
+        },
+        {
+            "type": "Locator",
+            "properties": {
+                "url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer",
+                "countryCode": "CHE",
+                "singleLineFieldName": "SingleLine",
+                "popupEnabled": false,
+                "outFields": [
+                    "Addr_type"
+                ],
+                "name": "app.search.locator_name",
+                "localSearchOptions": {
+                    "minScale": 300000,
+                    "distance": 50000
+                },
+                "placeholder": "app.search.locator_placeholder",
+                "resultSymbol": {
+                    "type": "simple-marker",
+                    "style": "circle",
+                    "color": [
+                        255,
+                        0,
+                        0,
+                        0.7
+                    ],
+                    "size": "18px",
+                    "outline": {
+                        "color": [
+                            170,
+                            0,
+                            0
+                        ],
+                        "width": 2
+                    }
+                }
+            }
         }
+
     ]
 }
