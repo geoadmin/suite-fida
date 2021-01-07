@@ -99,6 +99,43 @@ export class VersionReconcileDialogComponent implements OnInit {
     }
   }
 
+  private async V2differenceFeaturesToList(differenceFeatures: DifferenceFeature[], featureLayer: FeatureLayer,
+    featureState: FeatureState, list: FidaDifference[], differencesSet: Differences[]): Promise<void> {
+    if (differenceFeatures) {
+      
+      // create default feature-layer (gdbVersion = null)
+      const defaultFeatureLayer = await this.createFeatureLayer(featureLayer, undefined);
+        
+      differenceFeatures.map(async differenceFeature => {
+        // create root fida-feature
+        const fidaFeature = new FidaFeature();
+        fidaFeature.attributes = { ...differenceFeature.attributes };
+        fidaFeature.geometry = new Geometry(differenceFeature.geometry);
+        fidaFeature.state = featureState;
+        fidaFeature.layer = featureLayer;
+        fidaFeature.originalAttributes = { ...fidaFeature.attributes };
+
+        // create fida difference
+        const fidaDifference: FidaDifference = {
+          versionFeature: fidaFeature,
+          defaultFeature: undefined,
+        }
+        list.push(fidaDifference);
+
+        // load root-features with related-features
+        // load default root feature
+        await Promise.all([
+          this.featureService.loadRelatedFeatures(fidaFeature),
+          this.featureService.loadFeature(defaultFeatureLayer, fidaFeature.attributes.OBJECTID)
+            .then(defaultFeature => fidaDifference.defaultFeature = defaultFeature),
+        ]);
+
+        // synch loaded related-fetures with difference-list
+        this.syncRelatedFeaturesWithDifferences(differencesSet, fidaFeature);
+      });
+    }
+  }
+
   private async createFeatureLayer(templateFeatureLayer: FeatureLayer, versionName: string): Promise<FeatureLayer> {
     const featureLayer = new FeatureLayer({
       url: templateFeatureLayer.url,
