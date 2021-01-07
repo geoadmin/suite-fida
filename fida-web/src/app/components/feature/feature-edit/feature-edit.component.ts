@@ -18,7 +18,6 @@ export class FeatureEditComponent implements OnInit {
   public form: FormGroup;
 
   private modalRef: BsModalRef;
-  private originalAttributes: any;
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
@@ -32,7 +31,6 @@ export class FeatureEditComponent implements OnInit {
 
     this.widgetNotifyService.onFeatureEditSubject.subscribe(async (feature: FidaFeature) => {
       this.feature = feature;
-      this.originalAttributes = { ...feature.attributes };
 
       this.activate();
 
@@ -69,7 +67,7 @@ export class FeatureEditComponent implements OnInit {
   }
 
   cancelClick(close: boolean): void {
-    this.feature.attributes = this.originalAttributes;
+    this.feature.attributes = { ...this.feature.originalAttributes };
     const completeState = close === true ? CompleteState.Closed : CompleteState.Canceld;
     if (this.feature.state === FeatureState.Create) {
       this.widgetNotifyService.onFeatureCreateCompleteSubject.next(completeState);
@@ -82,7 +80,6 @@ export class FeatureEditComponent implements OnInit {
   private deactivate(): void {
     this.activated = false;
     this.feature = undefined;
-    this.originalAttributes = undefined;
   }
 
   private activate(): void {
@@ -97,9 +94,9 @@ export class FeatureEditComponent implements OnInit {
     if (this.feature.state !== FeatureState.Create) {
 
       // check of geometry-attribute change
-      if (this.feature.attributes.LV95E !== this.originalAttributes.LV95E
-        || this.feature.attributes.LV95N !== this.originalAttributes.LV95N
-        || this.feature.attributes.LN02 !== this.originalAttributes.LN02) {
+      if (this.feature.attributes.LV95E !== this.feature.originalAttributes.LV95E
+        || this.feature.attributes.LV95N !== this.feature.originalAttributes.LV95N
+        || this.feature.attributes.LN02 !== this.feature.originalAttributes.LN02) {
         this.modalRef = this.modalService.show(saveDialogTemplate, { class: 'modal-sm' });
         return;
       }

@@ -4,11 +4,11 @@ import { FidaFeature } from 'src/app/models/FidaFeature.model';
 import { FeatureService } from 'src/app/services/feature.service';
 
 @Component({
-  selector: 'app-feature-list-tree',
-  templateUrl: './feature-list-tree.component.html',
-  styleUrls: ['./feature-list-tree.component.scss']
+  selector: 'app-difference-list-tree',
+  templateUrl: './difference-list-tree.component.html',
+  styleUrls: ['./difference-list-tree.component.scss']
 })
-export class FeatureListTreeComponent implements OnInit {
+export class DifferenceListTreeComponent implements OnInit {
   @Input() differences: FidaDifference[];
   @Input() title: string;
   @Input() componentId: string;

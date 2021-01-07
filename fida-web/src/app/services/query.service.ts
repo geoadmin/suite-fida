@@ -222,7 +222,7 @@ export class QueryService {
   private convertToFidaFeature(features: any): FidaFeature[] {
     return features.map((feature: Feature) => {
       const fidaFeature = feature as FidaFeature;
-      fidaFeature.orginalAttributes = { ...feature.attributes };
+      fidaFeature.originalAttributes = { ...feature.attributes };
       return fidaFeature;
     });
   }

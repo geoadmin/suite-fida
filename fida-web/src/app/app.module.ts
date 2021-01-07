@@ -43,8 +43,9 @@ import { KontaktEditDialogComponent } from './components/feature/kontakt-manager
 import { KontaktManagerComponent } from './components/feature/kontakt-manager/kontakt-manager.component';
 import { KontaktViewComponent } from './components/feature/feature-view/kontakt-view/kontakt-view.component';
 import { FidaTranslateLoader } from './helpers/FidaTranslateLoader';
-import { FeatureTreeComponent } from './components/version-manager/version-reconcile-dialog/feature-tree/feature-tree.component';
-import { FeatureListTreeComponent } from './components/version-manager/version-reconcile-dialog/feature-list-tree/feature-list-tree.component';
+import { DifferenceTreeComponent } from './components/version-manager/version-reconcile-dialog/difference-tree/difference-tree.component';
+import { DifferenceListTreeComponent } from './components/version-manager/version-reconcile-dialog/difference-list-tree/difference-list-tree.component';
+import { DifferenceAttributeTreeComponent } from './components/version-manager/version-reconcile-dialog/difference-attribute-tree/difference-attribute-tree.component';
 
 // config
 export function initApp(configService: ConfigService): any {
@@ -84,8 +85,9 @@ export function createCompiler(compilerFactory: CompilerFactory): Compiler {
     KontaktEditDialogComponent,
     KontaktManagerComponent,
     KontaktViewComponent,
-    FeatureTreeComponent,
-    FeatureListTreeComponent
+    DifferenceTreeComponent,
+    DifferenceListTreeComponent,
+    DifferenceAttributeTreeComponent
   ],
   imports: [
     FormsModule,

@@ -1,0 +1,25 @@
+<!-- general feature -->
+<app-difference-attribute-tree [versionFeature]="difference.versionFeature" [defaultFeature]="difference.defaultFeature"
+    relationshipName="general" header="app.relationship.general" [showAll]="showAll">
+</app-difference-attribute-tree>
+
+<div *ngFor="let relatedFeatures of difference.versionFeature?.relatedFeatures | keyvalue"
+    [hidden]="hideRelatedFeatures(relatedFeatures.value)">
+    <!-- related feature list header-->
+    <div class="row">
+        <div class="col-12 plus-minus-header collapsed" data-toggle="collapse"
+            [attr.data-target]="'#' + getId(relatedFeatures.key, difference.versionFeature)">
+            {{ 'app.relationship.' + relatedFeatures.key | translate }} ({{ relatedFeatures.value.length }})</div>
+    </div>
+
+    <!-- related feature list body -->
+    <div class="row collapse plus-minus-body" [id]=" getId(relatedFeatures.key, difference.versionFeature)">
+        <div class="col-12">
+            <div *ngFor="let relatedFeature of relatedFeatures.value">
+                <app-difference-attribute-tree [versionFeature]="relatedFeature"
+                    [defaultFeature]="getDefaultRelatedFeature(relatedFeature, relatedFeatures.key)" [relationshipName]="relatedFeatures.key"
+                    [showAll]="showAll"></app-difference-attribute-tree>
+            </div>
+        </div>
+    </div>
+</div>

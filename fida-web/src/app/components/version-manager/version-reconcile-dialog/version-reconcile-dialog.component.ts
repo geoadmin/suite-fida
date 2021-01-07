@@ -41,31 +41,34 @@ export class VersionReconcileDialogComponent implements OnInit {
       return;
     }
 
-    // 2. load root-features with related-features
-    // 3. eliminate loaded features from difference-list
-    // 4. find root-features form remaining features and load it with related-features
-
     this.createDifferences = [];
     this.editDifferences = [];
     this.deleteDifferences = [];
 
     // loop ovar all root-layers
     const rootLayers = this.layerService.getLayers();
-    rootLayers.forEach(rootLayer => {
+    rootLayers.forEach(async rootLayer => {
+      
+       // create default feature-layer (gdbVersion = null)       
+       const versionFeatureLayer = await this.createFeatureLayer(rootLayer as FeatureLayer, this.version.versionName);
+      
       // find root-features in difference-list
-      const featureLayer = (rootLayer as FeatureLayer);
-      const differences = differencesSet.find((f: any) => f.layerId === featureLayer.layerId);
+      const differences = differencesSet.find((f: any) => f.layerId === versionFeatureLayer.layerId);
       if (differences) {
-        this.differenceFeaturesToList(differences.inserts, featureLayer, FeatureState.Create, this.createDifferences, differencesSet);
-        this.differenceFeaturesToList(differences.updates, featureLayer, FeatureState.Edit, this.editDifferences, differencesSet);
-        this.differenceFeaturesToList(differences.deletes, featureLayer, FeatureState.Delete, this.deleteDifferences, differencesSet);
+        this.differenceFeaturesToList(differences.inserts, versionFeatureLayer, FeatureState.Create, this.createDifferences, differencesSet);
+        this.differenceFeaturesToList(differences.updates, versionFeatureLayer, FeatureState.Edit, this.editDifferences, differencesSet);
+        this.differenceFeaturesToList(differences.deletes, versionFeatureLayer, FeatureState.Delete, this.deleteDifferences, differencesSet);
       }
     });
   }
 
-  private differenceFeaturesToList(differenceFeatures: DifferenceFeature[], featureLayer: FeatureLayer,
-    featureState: FeatureState, list: FidaDifference[], differencesSet: Differences[]): void {
+  private async differenceFeaturesToList(differenceFeatures: DifferenceFeature[], featureLayer: FeatureLayer,
+    featureState: FeatureState, list: FidaDifference[], differencesSet: Differences[]): Promise<void> {
     if (differenceFeatures) {
+      
+      // create default feature-layer (gdbVersion = null)
+      const defaultFeatureLayer = await this.createFeatureLayer(featureLayer, undefined);
+        
       differenceFeatures.map(async differenceFeature => {
         // create root fida-feature
         const fidaFeature = new FidaFeature();
@@ -73,18 +76,38 @@ export class VersionReconcileDialogComponent implements OnInit {
         fidaFeature.geometry = new Geometry(differenceFeature.geometry);
         fidaFeature.state = featureState;
         fidaFeature.layer = featureLayer;
-        list.push({
+        fidaFeature.originalAttributes = { ...fidaFeature.attributes };
+
+        // create fida difference
+        const fidaDifference: FidaDifference = {
           versionFeature: fidaFeature,
-          defaultFeature: fidaFeature,
-        });
+          defaultFeature: undefined,
+        }
+        list.push(fidaDifference);
 
         // load root-features with related-features
-        await this.featureService.loadRelatedFeatures(fidaFeature);
+        // load default root feature
+        await Promise.all([
+          this.featureService.loadRelatedFeatures(fidaFeature),
+          this.featureService.loadFeature(defaultFeatureLayer, fidaFeature.attributes.OBJECTID)
+            .then(defaultFeature => fidaDifference.defaultFeature = defaultFeature),
+        ]);
 
         // synch loaded related-fetures with difference-list
         this.syncRelatedFeaturesWithDifferences(differencesSet, fidaFeature);
       });
     }
+  }
+
+  private async createFeatureLayer(templateFeatureLayer: FeatureLayer, versionName: string): Promise<FeatureLayer> {
+    const featureLayer = new FeatureLayer({
+      url: templateFeatureLayer.url,
+      id: templateFeatureLayer.id,
+      layerId: templateFeatureLayer.layerId,
+      gdbVersion: versionName
+    });
+    await featureLayer.load();
+    return featureLayer;
   }
 
   private syncRelatedFeaturesWithDifferences(differencesSet: Differences[], fidaFeature: FidaFeature): void {

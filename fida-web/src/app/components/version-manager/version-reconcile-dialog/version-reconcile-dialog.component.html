@@ -17,15 +17,15 @@
             </div>
         </div>
 
-        <app-feature-list-tree [differences]="createDifferences" componentId="feature_tree_list_created"
+        <app-difference-list-tree [differences]="createDifferences" componentId="feature_tree_list_created"
             title="app.version_reconcile.created" [showAll]="showAll">
-        </app-feature-list-tree>
-        <app-feature-list-tree [differences]="editDifferences" componentId="feature_tree_list_updated"
+        </app-difference-list-tree>
+        <app-difference-list-tree [differences]="editDifferences" componentId="feature_tree_list_updated"
             title="app.version_reconcile.edited" [showAll]="showAll">
-        </app-feature-list-tree>
-        <app-feature-list-tree [differences]="deleteDifferences" componentId="feature_tree_list_deleted"
+        </app-difference-list-tree>
+        <app-difference-list-tree [differences]="deleteDifferences" componentId="feature_tree_list_deleted"
             title="app.version_reconcile.deleted" [showAll]="showAll">
-        </app-feature-list-tree>
+        </app-difference-list-tree>
     </div>
 
     <!-- footer -->

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FeatureListTreeComponent } from './feature-list-tree.component';
+import { DifferenceListTreeComponent } from './difference-list-tree.component';
 
-describe('FeatureListTreeComponent', () => {
-  let component: FeatureListTreeComponent;
-  let fixture: ComponentFixture<FeatureListTreeComponent>;
+describe('DifferenceListTreeComponent', () => {
+  let component: DifferenceListTreeComponent;
+  let fixture: ComponentFixture<DifferenceListTreeComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FeatureListTreeComponent ]
+      declarations: [ DifferenceListTreeComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FeatureListTreeComponent);
+    fixture = TestBed.createComponent(DifferenceListTreeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

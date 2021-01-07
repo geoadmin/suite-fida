@@ -83,6 +83,7 @@ export class FeatureService {
 
       // reset state
       feature.state = undefined;
+      feature.originalAttributes = { ...feature.attributes };
     } catch (error) {
       return false;
     }
@@ -100,7 +101,7 @@ export class FeatureService {
 
       // find changes
       relatedFeatures.filter(f => f.state === undefined
-        && JSON.stringify(f.orginalAttributes) !== JSON.stringify(f.attributes)).map(feature => {
+        && JSON.stringify(f.originalAttributes) !== JSON.stringify(f.attributes)).map(feature => {
           feature.state = FeatureState.Edit;
           console.log(feature.attributes.OBJECTID);
         });
@@ -127,7 +128,7 @@ export class FeatureService {
       // reset state
       relatedFeatures.map(f => {
         f.state = undefined;
-        f.orginalAttributes = { ...f.attributes };
+        f.originalAttributes = { ...f.attributes };
       });
     } catch (error) {
       this.messageService.error(error);
@@ -211,6 +212,13 @@ export class FeatureService {
     });
   }
 
+  public async loadFeature(featureLayer: FeatureLayer, objectId: number): Promise<FidaFeature> {
+    await featureLayer.load();
+    const feature = await this.queryService.feature(featureLayer, objectId);
+    await this.loadRelatedFeatures(feature);
+    return feature;
+  }
+
   public async loadRelatedFeatures(feature: FidaFeature, loadedCallback?: () => void): Promise<any> {
     if (!feature.layer) {
       return;
@@ -268,6 +276,7 @@ export class FeatureService {
     relatedFeature.attributes = { ...relatedFeatureLayer.templates[0].prototype.attributes };
     relatedFeature.layer = relatedFeatureLayer;
     relatedFeature.state = FeatureState.Create;
+    relatedFeature.originalAttributes = { ...relatedFeature.attributes };
     this.updateFk(relatedFeature, feature, esriRelationship);
 
     // add related feature to list
@@ -311,6 +320,7 @@ export class FeatureService {
       grundbuchFeature.attributes.PARZ = parcelInfo.ParzNummer;
       grundbuchFeature.state = FeatureState.Create;
       grundbuchFeature.layer = grundbuchLayer;
+      grundbuchFeature.originalAttributes = { ...grundbuchFeature.attributes };
       feature.relatedFeatures.grundbuch.push(grundbuchFeature);
     });
 
