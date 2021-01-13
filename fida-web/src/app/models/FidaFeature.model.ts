@@ -42,6 +42,10 @@ export class FidaFeature extends Feature {
     relatedFeatures: RelatedFeatures;
     attachmentInfos: AttachmentInfo[];
     attachmentUpload: any;
+    /** 
+     * copy from attributes after load. 
+     * originalAttributes can be used to check of changes or reset changes 
+     * */
     originalAttributes: any;
 }
 

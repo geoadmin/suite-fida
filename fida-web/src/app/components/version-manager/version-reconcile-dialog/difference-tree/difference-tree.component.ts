@@ -1,7 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FidaDifference } from 'src/app/models/Differences';
-import { FidaFeature, RelationshipName } from 'src/app/models/FidaFeature.model';
-import { UtilService } from 'src/app/services/util.service';
+import { FidaFeature } from 'src/app/models/FidaFeature.model';
 
 @Component({
   selector: 'app-difference-tree',
@@ -9,8 +7,8 @@ import { UtilService } from 'src/app/services/util.service';
   styleUrls: ['./difference-tree.component.scss']
 })
 export class DifferenceTreeComponent implements OnInit {
-  @Input() difference: FidaDifference;
-  @Input() showAll: boolean;
+  @Input() feature: FidaFeature;
+  @Input() defaultFeatures: FidaFeature[];
 
   constructor() { }
 
@@ -22,18 +20,14 @@ export class DifferenceTreeComponent implements OnInit {
   }
 
   hideRelatedFeatures(relatedFeatures: FidaFeature[]): boolean {
-    return !this.showAll && relatedFeatures.length === 0;
+    return relatedFeatures.length === 0;
   }
 
   getDiffClass(feature: FidaFeature): string {
     return 'diff-' + feature.state?.toString();
   }
 
-  getDefaultRelatedFeature(relatedFeature: FidaFeature, relationshipName: string): FidaFeature {
-    const defaultRelatedFeatures = this.difference.defaultFeature?.relatedFeatures as any;
-    if(defaultRelatedFeatures){
-      const fidaFeatures = defaultRelatedFeatures[relationshipName] as FidaFeature[];
-      return fidaFeatures.find(f => f.attributes.OBJECTID === relatedFeature.attributes.OBJECTID);
-    }
+  getDefaultFeature(relatedFeature: FidaFeature): FidaFeature {
+    return this.defaultFeatures?.find(f => f.attributes.GLOBALID === relatedFeature.attributes.GLOBALID);
   }
 }

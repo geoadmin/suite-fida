@@ -84,11 +84,13 @@
                 "zoomScale": 5000,
                 "name": "LFP",
                 "placeholder": "app.search.lfp_placeholder",
-                "displayField": "LFPNR",
+                "displayFields": "LFPNR,PUNKTNAME",
+                "displayFieldsDelimiter": " - ",
                 "exactMatch": false,
-                "where": "CAST(LFPNR AS VARCHAR(10)) like '%???%'",
+                "where": "CAST(LFPNR AS VARCHAR(10)) like '%???%' OR UPPER(PUNKTNAME) like UPPER('%???%')",
                 "outFields": [
                     "LFPNR",
+                    "PUNKTNAME",
                     "OBJECTID"
                 ]
             }
@@ -102,7 +104,8 @@
                 "zoomScale": 5000,
                 "name": "HFP",
                 "placeholder": "app.search.lhp_placeholder",
-                "displayField": "HFPKANTON,HFPNR",
+                "displayFields": "HFPKANTON,HFPNR",
+                "displayFieldsDelimiter": "",
                 "exactMatch": false,
                 "where": "UPPER(CONCAT(HFPKANTON,HFPNR)) like UPPER('%???%')",
                 "outFields": [

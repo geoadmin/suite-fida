@@ -9,9 +9,10 @@
 <div class="row collapse plus-minus-body" [id]="componentId">
     <div class="col-12">
         <div *ngFor="let attribute of versionFeature?.attributes | keyvalue">
-            <div class="row">
+            <div class="row" [class]="getDiffClass(attribute.key)">
                 <div class="col-6">{{ attribute.key }} : {{ attribute.value }} </div>
-                <div class="col-6">{{ attribute.key }} : {{ getDefaultAttribute(attribute.key) }} </div>
+                <div class="col-6" [hidden]="!hasDifference(attribute.key)" >
+                    Default-Version: {{ getDefaultAttribute(attribute.key) }} </div>
             </div>
         </div>
     </div>

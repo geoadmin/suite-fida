@@ -68,18 +68,20 @@ export class SearchSourceService {
       const featureLayer = this.layerService.getFeatureLayer(searchSourceConfig.idLayer);
       const searchSource = new SearchSource(properties);
       searchSource.getSuggestions = (params) => {
-        const where = (properties.where as string).replace('???', params.suggestTerm);
-        return this.queryService.where(featureLayer, where, properties.outFields, properties.maxResults).then((features) => {
-          return features.map(m => {
-            let text = '';
-            (properties.displayField as string).split(',').map(s => text += m.attributes[s.trim()]);
-            return {
-              key: m.attributes.OBJECTID,
-              text: `${text}`,
-              sourceIndex: params.sourceIndex
-            };
+        // replaceAll
+        const where = (properties.where as string).split('???').join(params.suggestTerm);
+        //const where = (properties.where as string).replace('???', params.suggestTerm);
+        return this.queryService.where(featureLayer, where, properties.outFields, properties.outFields, properties.maxResults)
+          .then((features) => {
+            return features.map(m => {
+              const fieldValues = (properties.displayFields as string).split(',').map(s => m.attributes[s.trim()]);
+              return {
+                key: m.attributes.OBJECTID,
+                text: fieldValues.join(properties.displayFieldsDelimiter),
+                sourceIndex: params.sourceIndex
+              };
+            });
           });
-        });
       };
 
       searchSource.getResults = (params) => {

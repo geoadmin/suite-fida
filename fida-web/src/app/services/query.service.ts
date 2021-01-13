@@ -97,10 +97,13 @@ export class QueryService {
     });
   }
 
-  public where(featureLayer: FeatureLayer, where: string, outFields?: string[], num?: number): Promise<FidaFeature[]> {
+  public where(featureLayer: FeatureLayer, where: string, outFields?: string[], orderByFields?: string[], num?: number): Promise<FidaFeature[]> {
     const query = new Query();
     query.where = where;
     query.outFields = outFields ?? ['*'];
+    if (orderByFields) {
+      query.orderByFields = orderByFields;
+    }
     if (num) {
       query.num = num;
     }

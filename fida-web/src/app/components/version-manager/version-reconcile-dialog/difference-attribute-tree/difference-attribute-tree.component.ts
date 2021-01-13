@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FidaFeature, RelationshipName } from 'src/app/models/FidaFeature.model';
+import { FeatureState, FidaFeature, RelationshipName } from 'src/app/models/FidaFeature.model';
 import { UtilService } from 'src/app/services/util.service';
 
 @Component({
@@ -28,5 +28,22 @@ export class DifferenceAttributeTreeComponent implements OnInit {
 
   getDefaultAttribute(key: string): any {
     return this.defaultFeature?.attributes[key];
+  }
+
+  getVersionAttribute(key: string): any {
+    return this.versionFeature?.attributes[key];
+  }
+
+  hasDifference(key: string): boolean {
+    return this.defaultFeature && this.getDefaultAttribute(key) !== this.getVersionAttribute(key);
+  }
+
+  getDiffClass(key: string): string {
+    if (this.versionFeature.state === FeatureState.Edit && this.hasDifference(key)) {
+      return 'diff-' + FeatureState.Edit.toString();
+    }
+    if (this.versionFeature.state === FeatureState.Create || this.versionFeature.state === FeatureState.Delete) {
+      return 'diff-' + this.versionFeature.state.toString();
+    }
   }
 }
