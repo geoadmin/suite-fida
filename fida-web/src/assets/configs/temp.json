@@ -1,293 +1,2312 @@
 {
-    "features": [
+    "date": "2021-01-14T13:20:56.370Z",
+    "version": {
+        "versionName": "X60024308@ADB.simple",
+        "versionGuid": "{F5D77037-411E-4786-8939-6878B1C2335E}",
+        "versionId": 584,
+        "description": "",
+        "creationDate": 1609941977464,
+        "modifiedDate": 1610630438028,
+        "reconcileDate": null,
+        "evaluationDate": null,
+        "previousAncestorDate": null,
+        "commonAncestorDate": 1609941977464,
+        "access": "public"
+    },
+    "groups": [
         {
-            "layerId": 0,
-            "inserts": [
+            "name": "creates",
+            "features": [
                 {
-                    "attributes": {
-                        "OBJECTID": 964,
-                        "GLOBALID": "{54E24F2E-4CF7-4760-9CEB-766F99C26D7C}",
-                        "CREATOR_FIELD": "Esri_Anonymous",
-                        "CREATOR_DATE_FIELD": 1608458140000,
-                        "LAST_EDITOR_FIELD": "Esri_Anonymous",
-                        "LAST_EDITOR_DATE_FIELD": 1608458140000,
-                        "FK_FIDA_HFP": null,
-                        "OBJEKTART": 1,
-                        "PUNKTNAME": "55",
-                        "PUNKT_STATUS": 0,
-                        "REALISIERUNG_STATUS": 0,
-                        "LV95E": 2497001.414,
-                        "LV95N": 1113871.8969,
-                        "LN02": 402,
-                        "LHN95": null,
-                        "ELLIPSOIDH": null,
-                        "GENLAGELV95": 5,
-                        "GENHOEHELN02": 5,
-                        "ZUVLAGELV95": 1,
-                        "ZUVHOEHELN02": 1,
-                        "GESCHWINDIGKEIT_E": null,
-                        "GESCHWINDIGKEIT_N": null,
-                        "GESCHWINDIGKEIT_UP": null,
-                        "REFERENZEPOCHE": null,
-                        "TSP": 1,
-                        "LK25": 1300,
-                        "LFPNR": 55,
-                        "LFPNR_NUMMERZUSATZ": null,
-                        "EUREFNUMMER": null,
-                        "NEOTEKNUMMER": null,
-                        "HERKUNFT": 1,
-                        "KENNZEICHNUNG": 9,
-                        "KENNZEICHNUNGTEXT": null,
-                        "RUECKVERSICHRG_BEMERK": null,
-                        "ANZAHLRINGSCHRAUBEN": null,
-                        "FLANSCHEN": 0,
-                        "ANZAHLANSCLAGPKT": null,
-                        "BEGEHBAR": 1,
-                        "GNSSSICHTBARKEIT": 1,
-                        "GSMEMPFANG": 1,
-                        "BEMERKUNG": null,
-                        "IDENTITAET": null,
-                        "LFPORDNUNG": 1,
-                        "SCHUTZART": 1,
-                        "STABILITAET": 1,
-                        "ZUGANG": null,
-                        "DELTAHOEHE_OBERKANTE": null,
-                        "PUNKTBESCHREIBUNG": null,
-                        "BILD_B_BESCH_OBEN": null,
-                        "BILD_B_BESCH_UNTEN": null,
-                        "BEGEHUNGSZYKLUS": null,
-                        "ABSTURZGEFAHR": 0,
-                        "ABSTURZGEFAHR_ERLAEUTERUNGEN": null,
-                        "PUNKTID_FPDS": null,
-                        "MUTATIONID_FPDS": null
-                    },
-                    "geometry": {
-                        "x": 2497001.414000001,
-                        "y": 1113871.8968999982,
-                        "z": 402
-                    }
-                }
-            ],
-            "updates": [
-                {
-                    "attributes": {
-                        "OBJECTID": 446,
-                        "GLOBALID": "{34872C3E-695C-4B7D-9B8B-94FACA636261}",
-                        "CREATOR_FIELD": "U80849175@ADB",
-                        "CREATOR_DATE_FIELD": 1607939848000,
-                        "LAST_EDITOR_FIELD": "Esri_Anonymous",
-                        "LAST_EDITOR_DATE_FIELD": 1608558599000,
-                        "FK_FIDA_HFP": null,
-                        "OBJEKTART": 1,
-                        "PUNKTNAME": "Dent d'OcheX",
-                        "PUNKT_STATUS": 0,
-                        "REALISIERUNG_STATUS": 0,
-                        "LV95E": 2545557.0700000003,
-                        "LV95N": 1133756.18,
-                        "LN02": 2220,
-                        "LHN95": null,
-                        "ELLIPSOIDH": null,
-                        "GENLAGELV95": 0.05,
-                        "GENHOEHELN02": 1,
-                        "ZUVLAGELV95": 1,
-                        "ZUVHOEHELN02": 0,
-                        "GESCHWINDIGKEIT_E": null,
-                        "GESCHWINDIGKEIT_N": null,
-                        "GESCHWINDIGKEIT_UP": null,
-                        "REFERENZEPOCHE": null,
-                        "TSP": 0,
-                        "LK25": 1283,
-                        "LFPNR": 12840020,
-                        "LFPNR_NUMMERZUSATZ": null,
-                        "EUREFNUMMER": null,
-                        "NEOTEKNUMMER": null,
-                        "HERKUNFT": 2,
-                        "KENNZEICHNUNG": 95,
-                        "KENNZEICHNUNGTEXT": "17/16/-- cm (IGN), borne bétonnée, 9 cm hors du sol;\nexc: 2 petites chevilles, 1 croix",
-                        "RUECKVERSICHRG_BEMERK": "17/16/-- cm (IGN), borne bétonnée, 9 cm hors du sol;\nexc: 2 petites chevilles, 1 croix",
-                        "ANZAHLRINGSCHRAUBEN": 0,
-                        "FLANSCHEN": 0,
-                        "ANZAHLANSCLAGPKT": 0,
-                        "BEGEHBAR": 1,
-                        "GNSSSICHTBARKEIT": 1,
-                        "GSMEMPFANG": 0,
-                        "BEMERKUNG": null,
-                        "IDENTITAET": "Id. (Sit+H) au PFP de 1946/1883",
-                        "LFPORDNUNG": 2,
-                        "SCHUTZART": 0,
-                        "STABILITAET": 1,
-                        "ZUGANG": null,
-                        "DELTAHOEHE_OBERKANTE": null,
-                        "PUNKTBESCHREIBUNG": null,
-                        "BILD_B_BESCH_OBEN": null,
-                        "BILD_B_BESCH_UNTEN": null,
-                        "BEGEHUNGSZYKLUS": null,
-                        "ABSTURZGEFAHR": 0,
-                        "ABSTURZGEFAHR_ERLAEUTERUNGEN": null,
-                        "PUNKTID_FPDS": 34279,
-                        "MUTATIONID_FPDS": null
-                    },
-                    "geometry": {
-                        "x": 2545557.0700000003,
-                        "y": 1133756.1799999997,
-                        "z": 2220
-                    }
-                },
-                {
-                    "attributes": {
-                        "OBJECTID": 644,
-                        "GLOBALID": "{4599322A-DCCB-48A2-8FAA-F11AC8F629D4}",
-                        "CREATOR_FIELD": "Esri_Anonymous",
-                        "CREATOR_DATE_FIELD": 1608119680000,
-                        "LAST_EDITOR_FIELD": "Esri_Anonymous",
-                        "LAST_EDITOR_DATE_FIELD": 1608457641000,
-                        "FK_FIDA_HFP": null,
-                        "OBJEKTART": 1,
-                        "PUNKTNAME": "1",
-                        "PUNKT_STATUS": 0,
-                        "REALISIERUNG_STATUS": 0,
-                        "LV95E": 2498791.2203,
-                        "LV95N": 1116268.1581000001,
-                        "LN02": 378,
-                        "LHN95": null,
-                        "ELLIPSOIDH": null,
-                        "GENLAGELV95": 1,
-                        "GENHOEHELN02": 1,
-                        "ZUVLAGELV95": 1,
-                        "ZUVHOEHELN02": 1,
-                        "GESCHWINDIGKEIT_E": null,
-                        "GESCHWINDIGKEIT_N": null,
-                        "GESCHWINDIGKEIT_UP": null,
-                        "REFERENZEPOCHE": null,
-                        "TSP": 1,
-                        "LK25": 1301,
-                        "LFPNR": 1,
-                        "LFPNR_NUMMERZUSATZ": null,
-                        "EUREFNUMMER": null,
-                        "NEOTEKNUMMER": null,
-                        "HERKUNFT": 1,
-                        "KENNZEICHNUNG": 9,
-                        "KENNZEICHNUNGTEXT": null,
-                        "RUECKVERSICHRG_BEMERK": null,
-                        "ANZAHLRINGSCHRAUBEN": null,
-                        "FLANSCHEN": 0,
-                        "ANZAHLANSCLAGPKT": null,
-                        "BEGEHBAR": 1,
-                        "GNSSSICHTBARKEIT": 1,
-                        "GSMEMPFANG": 1,
-                        "BEMERKUNG": null,
-                        "IDENTITAET": null,
-                        "LFPORDNUNG": 1,
-                        "SCHUTZART": 1,
-                        "STABILITAET": 1,
-                        "ZUGANG": null,
-                        "DELTAHOEHE_OBERKANTE": null,
-                        "PUNKTBESCHREIBUNG": null,
-                        "BILD_B_BESCH_OBEN": null,
-                        "BILD_B_BESCH_UNTEN": null,
-                        "BEGEHUNGSZYKLUS": null,
-                        "ABSTURZGEFAHR": 0,
-                        "ABSTURZGEFAHR_ERLAEUTERUNGEN": null,
-                        "PUNKTID_FPDS": null,
-                        "MUTATIONID_FPDS": null
-                    },
-                    "geometry": {
-                        "x": 2498791.2203,
-                        "y": 1116268.1581000015,
-                        "z": 378
-                    }
+                    "globalId": "{18EFD2B0-073E-4295-B9E5-7FC956DF9BAE}",
+                    "objectId": 21761,
+                    "layerName": "FIDA_HFP",
+                    "state": "create",
+                    "attributes": [
+                        {
+                            "name": "OBJECTID",
+                            "versionValue": 21761,
+                            "state": "create"
+                        },
+                        {
+                            "name": "GLOBALID",
+                            "versionValue": "{18EFD2B0-073E-4295-B9E5-7FC956DF9BAE}",
+                            "state": "create"
+                        },
+                        {
+                            "name": "CREATOR_FIELD",
+                            "versionValue": "Esri_Anonymous",
+                            "state": "create"
+                        },
+                        {
+                            "name": "CREATOR_DATE_FIELD",
+                            "versionValue": 1610630379000,
+                            "state": "create"
+                        },
+                        {
+                            "name": "LAST_EDITOR_FIELD",
+                            "versionValue": "Esri_Anonymous",
+                            "state": "create"
+                        },
+                        {
+                            "name": "LAST_EDITOR_DATE_FIELD",
+                            "versionValue": 1610630437000,
+                            "state": "create"
+                        },
+                        {
+                            "name": "OBJEKTART",
+                            "versionValue": 1,
+                            "state": "create"
+                        },
+                        {
+                            "name": "PUNKT_STATUS",
+                            "versionValue": 0,
+                            "state": "create"
+                        },
+                        {
+                            "name": "REALISIERUNG_STATUS",
+                            "versionValue": 0,
+                            "state": "create"
+                        },
+                        {
+                            "name": "LV95E",
+                            "versionValue": 2498655.6965,
+                            "state": "create"
+                        },
+                        {
+                            "name": "LV95N",
+                            "versionValue": 1114927.2621,
+                            "state": "create"
+                        },
+                        {
+                            "name": "LN02",
+                            "versionValue": 384,
+                            "state": "create"
+                        },
+                        {
+                            "name": "LHN95",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "ELLIPSOIDH",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "GENLAGELV95",
+                            "versionValue": 6,
+                            "state": "create"
+                        },
+                        {
+                            "name": "GENHOEHELN02",
+                            "versionValue": 6,
+                            "state": "create"
+                        },
+                        {
+                            "name": "ZUVLAGELV95",
+                            "versionValue": 1,
+                            "state": "create"
+                        },
+                        {
+                            "name": "ZUVHOEHELN02",
+                            "versionValue": 1,
+                            "state": "create"
+                        },
+                        {
+                            "name": "GESCHWINDIGKEIT_UP",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "REFERENZEPOCHE",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "LK25",
+                            "versionValue": 1301,
+                            "state": "create"
+                        },
+                        {
+                            "name": "HFPKANTON",
+                            "versionValue": "ZH",
+                            "state": "create"
+                        },
+                        {
+                            "name": "HFPNR",
+                            "versionValue": "6666",
+                            "state": "create"
+                        },
+                        {
+                            "name": "ORTBEZEICHNUNG",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "KENNZEICHNUNG",
+                            "versionValue": 9,
+                            "state": "create"
+                        },
+                        {
+                            "name": "BEGEHBAR",
+                            "versionValue": 1,
+                            "state": "create"
+                        },
+                        {
+                            "name": "BEMERKUNG_BAUSTEIN",
+                            "versionValue": 0,
+                            "state": "create"
+                        },
+                        {
+                            "name": "BEMERKUNG",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "IDENTITAET",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "SCHUTZART",
+                            "versionValue": 1,
+                            "state": "create"
+                        },
+                        {
+                            "name": "STABILITAET",
+                            "versionValue": 1,
+                            "state": "create"
+                        },
+                        {
+                            "name": "ZUGANG",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "PUNKTBESCHREIBUNG",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "BILD_B_BESCH_OBEN",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "BILD_B_BESCH_UNTEN",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "INSCHRIFT",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "VERANKERUNG",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "ENVNUMMER",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "SEKTOR",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "PUNKTID_FPDS",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "MUTATIONID_FPDS",
+                            "versionValue": null
+                        }
+                    ],
+                    "relatedFeatures": [
+                        {
+                            "name": "anhang",
+                            "features": []
+                        },
+                        {
+                            "name": "grundbuch",
+                            "features": [
+                                {
+                                    "globalId": "{9E044E1C-9552-4454-B7D3-B6CC5ADC38A7}",
+                                    "objectId": 21442,
+                                    "layerName": "FIDA_GRUNDBUCHHFP",
+                                    "state": "create",
+                                    "attributes": [
+                                        {
+                                            "name": "OBJECTID",
+                                            "versionValue": 21442,
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "GLOBALID",
+                                            "versionValue": "{9E044E1C-9552-4454-B7D3-B6CC5ADC38A7}",
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "CREATOR_FIELD",
+                                            "versionValue": "Esri_Anonymous",
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "CREATOR_DATE_FIELD",
+                                            "versionValue": 1610630379000,
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "LAST_EDITOR_FIELD",
+                                            "versionValue": "Esri_Anonymous",
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "LAST_EDITOR_DATE_FIELD",
+                                            "versionValue": 1610630379000,
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "FK_FIDA_HFP",
+                                            "versionValue": "{18EFD2B0-073E-4295-B9E5-7FC956DF9BAE}",
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "LAND",
+                                            "versionValue": "CH",
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "KANTON",
+                                            "versionValue": "GE",
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "BEZIRK",
+                                            "versionValue": null
+                                        },
+                                        {
+                                            "name": "GEMEINDE",
+                                            "versionValue": "Lancy",
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "ORTBEZEICHNUNG",
+                                            "versionValue": null
+                                        },
+                                        {
+                                            "name": "PUNKTID_FPDS",
+                                            "versionValue": null
+                                        },
+                                        {
+                                            "name": "MUTATIONID_FPDS",
+                                            "versionValue": null
+                                        }
+                                    ]
+                                },
+                                {
+                                    "globalId": "{52625BE3-F3A1-430D-8176-80A19B2507B6}",
+                                    "objectId": 21441,
+                                    "layerName": "FIDA_GRUNDBUCHHFP",
+                                    "state": "create",
+                                    "attributes": [
+                                        {
+                                            "name": "OBJECTID",
+                                            "versionValue": 21441,
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "GLOBALID",
+                                            "versionValue": "{52625BE3-F3A1-430D-8176-80A19B2507B6}",
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "CREATOR_FIELD",
+                                            "versionValue": "Esri_Anonymous",
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "CREATOR_DATE_FIELD",
+                                            "versionValue": 1610630379000,
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "LAST_EDITOR_FIELD",
+                                            "versionValue": "Esri_Anonymous",
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "LAST_EDITOR_DATE_FIELD",
+                                            "versionValue": 1610630379000,
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "FK_FIDA_HFP",
+                                            "versionValue": "{18EFD2B0-073E-4295-B9E5-7FC956DF9BAE}",
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "LAND",
+                                            "versionValue": "CH",
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "KANTON",
+                                            "versionValue": "GE",
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "BEZIRK",
+                                            "versionValue": null
+                                        },
+                                        {
+                                            "name": "GEMEINDE",
+                                            "versionValue": "Lancy",
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "ORTBEZEICHNUNG",
+                                            "versionValue": null
+                                        },
+                                        {
+                                            "name": "PUNKTID_FPDS",
+                                            "versionValue": null
+                                        },
+                                        {
+                                            "name": "MUTATIONID_FPDS",
+                                            "versionValue": null
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "nachfuehrung",
+                            "features": [
+                                {
+                                    "globalId": "{9E668B15-EB8C-49A8-9439-383BDA51060D}",
+                                    "objectId": 65921,
+                                    "layerName": "FIDA_NACHFUEHRUNGHFP",
+                                    "state": "create",
+                                    "attributes": [
+                                        {
+                                            "name": "OBJECTID",
+                                            "versionValue": 65921,
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "GLOBALID",
+                                            "versionValue": "{9E668B15-EB8C-49A8-9439-383BDA51060D}",
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "CREATOR_FIELD",
+                                            "versionValue": "Esri_Anonymous",
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "CREATOR_DATE_FIELD",
+                                            "versionValue": 1610630438000,
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "LAST_EDITOR_FIELD",
+                                            "versionValue": "Esri_Anonymous",
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "LAST_EDITOR_DATE_FIELD",
+                                            "versionValue": 1610630438000,
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "FK_FIDA_HFP",
+                                            "versionValue": "{18EFD2B0-073E-4295-B9E5-7FC956DF9BAE}",
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "NACHFUEHRUNGSDATUM",
+                                            "versionValue": 1617231600000,
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "NACHFUER_HERKUNFT",
+                                            "versionValue": 0,
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "ARBEITSKUERZELTEXT",
+                                            "versionValue": null
+                                        },
+                                        {
+                                            "name": "ERSTERSTELLUNG",
+                                            "versionValue": 0,
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "PROTOKOLLSICHTBAR",
+                                            "versionValue": 0,
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "PUNKTID_FPDS",
+                                            "versionValue": null
+                                        },
+                                        {
+                                            "name": "MUTATIONID_FPDS",
+                                            "versionValue": null
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "kontakt",
+                            "features": []
+                        },
+                        {
+                            "name": "schweremessung",
+                            "features": []
+                        },
+                        {
+                            "name": "schaeden",
+                            "features": []
+                        },
+                        {
+                            "name": "auslandpunkt",
+                            "features": []
+                        }
+                    ]
                 }
             ]
         },
         {
-            "layerId": 4,
-            "updates": [
+            "name": "edits",
+            "features": [
                 {
-                    "attributes": {
-                        "OBJECTID": 1281,
-                        "GLOBALID": "{D850751B-584D-4D3D-9B44-D7149E261A60}",
-                        "CREATOR_FIELD": "Esri_Anonymous",
-                        "CREATOR_DATE_FIELD": 1608121720000,
-                        "LAST_EDITOR_FIELD": "Esri_Anonymous",
-                        "LAST_EDITOR_DATE_FIELD": 1608457641000,
-                        "FK_FIDA_LFP": "{4599322A-DCCB-48A2-8FAA-F11AC8F629D4}",
-                        "BILD_ART": 1,
-                        "BILD_STATUS": 0,
-                        "BILD_DRUCKBREITE": null,
-                        "BILD_DRUCKHOEHE": null,
-                        "BILD_DATUM": null,
-                        "BILD_BESCHREIBUNG": null,
-                        "BILD_NAME": null,
-                        "PUNKTID_FPDS": null,
-                        "MUTATIONID_FPDS": null
-                    }
+                    "globalId": "{32952010-008A-45E2-9A5A-7F5C7D5A1FF8}",
+                    "objectId": 189,
+                    "layerName": "FIDA_LFP",
+                    "state": "edit",
+                    "attributes": [
+                        {
+                            "name": "OBJECTID",
+                            "versionValue": 189
+                        },
+                        {
+                            "name": "GLOBALID",
+                            "versionValue": "{32952010-008A-45E2-9A5A-7F5C7D5A1FF8}"
+                        },
+                        {
+                            "name": "CREATOR_FIELD",
+                            "versionValue": "U80849175@ADB"
+                        },
+                        {
+                            "name": "CREATOR_DATE_FIELD",
+                            "versionValue": 1607939833000
+                        },
+                        {
+                            "name": "LAST_EDITOR_FIELD",
+                            "versionValue": "Esri_Anonymous",
+                            "state": "edit",
+                            "defaultValue": ""
+                        },
+                        {
+                            "name": "LAST_EDITOR_DATE_FIELD",
+                            "versionValue": 1609944593000,
+                            "state": "edit",
+                            "defaultValue": 1609942585000
+                        },
+                        {
+                            "name": "FK_FIDA_HFP",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "OBJEKTART",
+                            "versionValue": 2
+                        },
+                        {
+                            "name": "PUNKTNAME",
+                            "versionValue": "Filisur C"
+                        },
+                        {
+                            "name": "PUNKT_STATUS",
+                            "versionValue": 0
+                        },
+                        {
+                            "name": "REALISIERUNG_STATUS",
+                            "versionValue": 0
+                        },
+                        {
+                            "name": "LV95E",
+                            "versionValue": 2771382.94
+                        },
+                        {
+                            "name": "LV95N",
+                            "versionValue": 1171945.1400000001
+                        },
+                        {
+                            "name": "LN02",
+                            "versionValue": 1144.525
+                        },
+                        {
+                            "name": "LHN95",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "ELLIPSOIDH",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "GENLAGELV95",
+                            "versionValue": 0.005
+                        },
+                        {
+                            "name": "GENHOEHELN02",
+                            "versionValue": 0.003
+                        },
+                        {
+                            "name": "ZUVLAGELV95",
+                            "versionValue": 1
+                        },
+                        {
+                            "name": "ZUVHOEHELN02",
+                            "versionValue": 1
+                        },
+                        {
+                            "name": "GESCHWINDIGKEIT_E",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "GESCHWINDIGKEIT_N",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "GESCHWINDIGKEIT_UP",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "REFERENZEPOCHE",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "TSP",
+                            "versionValue": 1
+                        },
+                        {
+                            "name": "LK25",
+                            "versionValue": 1216
+                        },
+                        {
+                            "name": "LFPNR",
+                            "versionValue": 12165390
+                        },
+                        {
+                            "name": "LFPNR_NUMMERZUSATZ",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "EUREFNUMMER",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "NEOTEKNUMMER",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "HERKUNFT",
+                            "versionValue": 1
+                        },
+                        {
+                            "name": "KENNZEICHNUNG",
+                            "versionValue": 9
+                        },
+                        {
+                            "name": "KENNZEICHNUNGTEXT",
+                            "versionValue": "in Betonsockel,/n22 cm unter Betonschacht/nØ 40 cm mit Gussdeckel/n/n"
+                        },
+                        {
+                            "name": "RUECKVERSICHRG_BEMERK",
+                            "versionValue": "Exz: 3 Exzenterbolzen"
+                        },
+                        {
+                            "name": "ANZAHLRINGSCHRAUBEN",
+                            "versionValue": 0
+                        },
+                        {
+                            "name": "FLANSCHEN",
+                            "versionValue": 0
+                        },
+                        {
+                            "name": "ANZAHLANSCLAGPKT",
+                            "versionValue": 0
+                        },
+                        {
+                            "name": "BEGEHBAR",
+                            "versionValue": 1
+                        },
+                        {
+                            "name": "GNSSSICHTBARKEIT",
+                            "versionValue": 1
+                        },
+                        {
+                            "name": "GSMEMPFANG",
+                            "versionValue": 1
+                        },
+                        {
+                            "name": "BEMERKUNG",
+                            "versionValue": "Anschluss an LFP: Identisch mit LFP1 1216.539 von 1919, (Filisur 3. Ordnung)\n\nIdentisch mit HFP1 GR2 350"
+                        },
+                        {
+                            "name": "IDENTITAET",
+                            "versionValue": "Identisch in Lage, H-0.34 m mit LFP1 1216.539 von 1919 (3. Ord. Filisur)"
+                        },
+                        {
+                            "name": "LFPORDNUNG",
+                            "versionValue": 4
+                        },
+                        {
+                            "name": "SCHUTZART",
+                            "versionValue": 1
+                        },
+                        {
+                            "name": "STABILITAET",
+                            "versionValue": 1
+                        },
+                        {
+                            "name": "ZUGANG",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "DELTAHOEHE_OBERKANTE",
+                            "versionValue": 0.016
+                        },
+                        {
+                            "name": "PUNKTBESCHREIBUNG",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "BILD_B_BESCH_OBEN",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "BILD_B_BESCH_UNTEN",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "BEGEHUNGSZYKLUS",
+                            "versionValue": 6
+                        },
+                        {
+                            "name": "ABSTURZGEFAHR",
+                            "versionValue": 0
+                        },
+                        {
+                            "name": "ABSTURZGEFAHR_ERLAEUTERUNGEN",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "PUNKTID_FPDS",
+                            "versionValue": 19889
+                        },
+                        {
+                            "name": "MUTATIONID_FPDS",
+                            "versionValue": null
+                        }
+                    ],
+                    "relatedFeatures": [
+                        {
+                            "name": "anhang",
+                            "features": []
+                        },
+                        {
+                            "name": "grundbuch",
+                            "features": []
+                        },
+                        {
+                            "name": "nachfuehrung",
+                            "features": []
+                        },
+                        {
+                            "name": "kontakt",
+                            "features": []
+                        },
+                        {
+                            "name": "rueckversicherung",
+                            "features": [
+                                {
+                                    "globalId": "{6016B038-28EC-4CE8-8A09-D28B0705DC13}",
+                                    "objectId": 484,
+                                    "layerName": "FIDA_RUECKVERSICHERUNGLFP",
+                                    "state": "edit",
+                                    "attributes": [
+                                        {
+                                            "name": "OBJECTID",
+                                            "versionValue": 484
+                                        },
+                                        {
+                                            "name": "GLOBALID",
+                                            "versionValue": "{6016B038-28EC-4CE8-8A09-D28B0705DC13}"
+                                        },
+                                        {
+                                            "name": "CREATOR_FIELD",
+                                            "versionValue": "U80849175@ADB"
+                                        },
+                                        {
+                                            "name": "CREATOR_DATE_FIELD",
+                                            "versionValue": 1607938653000
+                                        },
+                                        {
+                                            "name": "LAST_EDITOR_FIELD",
+                                            "versionValue": "Esri_Anonymous",
+                                            "state": "edit",
+                                            "defaultValue": "U80849175@ADB"
+                                        },
+                                        {
+                                            "name": "LAST_EDITOR_DATE_FIELD",
+                                            "versionValue": 1609942953000,
+                                            "state": "edit",
+                                            "defaultValue": 1607940222000
+                                        },
+                                        {
+                                            "name": "FK_FIDA_LFP",
+                                            "versionValue": "{32952010-008A-45E2-9A5A-7F5C7D5A1FF8}"
+                                        },
+                                        {
+                                            "name": "PUNKTBEZEICHNUNG",
+                                            "versionValue": "Bolzen CC",
+                                            "state": "edit",
+                                            "defaultValue": "Bolzen C"
+                                        },
+                                        {
+                                            "name": "AZIMUT",
+                                            "versionValue": 210.481
+                                        },
+                                        {
+                                            "name": "DELTAHOEHE",
+                                            "versionValue": -7.7410000000000005
+                                        },
+                                        {
+                                            "name": "DISTANZ",
+                                            "versionValue": 70.62400000000001
+                                        },
+                                        {
+                                            "name": "MATERIALISIERUNG",
+                                            "versionValue": 0
+                                        },
+                                        {
+                                            "name": "PUNKTID_FPDS",
+                                            "versionValue": 19889
+                                        },
+                                        {
+                                            "name": "MUTATIONID_FPDS",
+                                            "versionValue": null
+                                        }
+                                    ]
+                                },
+                                {
+                                    "globalId": "{14566032-65D7-441D-84F0-C09C747F2358}",
+                                    "objectId": 2588,
+                                    "layerName": "FIDA_RUECKVERSICHERUNGLFP",
+                                    "state": "create",
+                                    "attributes": [
+                                        {
+                                            "name": "OBJECTID",
+                                            "versionValue": 2588,
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "GLOBALID",
+                                            "versionValue": "{14566032-65D7-441D-84F0-C09C747F2358}",
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "CREATOR_FIELD",
+                                            "versionValue": "Esri_Anonymous",
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "CREATOR_DATE_FIELD",
+                                            "versionValue": 1609944593000,
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "LAST_EDITOR_FIELD",
+                                            "versionValue": "Esri_Anonymous",
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "LAST_EDITOR_DATE_FIELD",
+                                            "versionValue": 1609944593000,
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "FK_FIDA_LFP",
+                                            "versionValue": "{32952010-008A-45E2-9A5A-7F5C7D5A1FF8}",
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "PUNKTBEZEICHNUNG",
+                                            "versionValue": "GAGA",
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "AZIMUT",
+                                            "versionValue": 222,
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "DELTAHOEHE",
+                                            "versionValue": null
+                                        },
+                                        {
+                                            "name": "DISTANZ",
+                                            "versionValue": null
+                                        },
+                                        {
+                                            "name": "MATERIALISIERUNG",
+                                            "versionValue": 1,
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "PUNKTID_FPDS",
+                                            "versionValue": null
+                                        },
+                                        {
+                                            "name": "MUTATIONID_FPDS",
+                                            "versionValue": null
+                                        }
+                                    ]
+                                },
+                                {
+                                    "globalId": "{57D2C4D9-D806-4AF8-892D-FB91C69F06C5}",
+                                    "objectId": 483,
+                                    "layerName": "FIDA_RUECKVERSICHERUNGLFP",
+                                    "state": "delete",
+                                    "attributes": [
+                                        {
+                                            "name": "OBJECTID",
+                                            "versionValue": 483,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "GLOBALID",
+                                            "versionValue": "{57D2C4D9-D806-4AF8-892D-FB91C69F06C5}",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "CREATOR_FIELD",
+                                            "versionValue": "U80849175@ADB",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "CREATOR_DATE_FIELD",
+                                            "versionValue": 1607938653000,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "LAST_EDITOR_FIELD",
+                                            "versionValue": "U80849175@ADB",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "LAST_EDITOR_DATE_FIELD",
+                                            "versionValue": 1607940222000,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "FK_FIDA_LFP",
+                                            "versionValue": "{32952010-008A-45E2-9A5A-7F5C7D5A1FF8}",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "PUNKTBEZEICHNUNG",
+                                            "versionValue": "Bolzen B",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "AZIMUT",
+                                            "versionValue": 143.877,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "DELTAHOEHE",
+                                            "versionValue": -0.502,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "DISTANZ",
+                                            "versionValue": 7.649,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "MATERIALISIERUNG",
+                                            "versionValue": 0,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "PUNKTID_FPDS",
+                                            "versionValue": 19889,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "MUTATIONID_FPDS",
+                                            "versionValue": null
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "globalId": "{A151C163-6607-4983-B56D-64EDC24A659F}",
+                    "objectId": 71,
+                    "layerName": "FIDA_LFP",
+                    "state": "edit",
+                    "attributes": [
+                        {
+                            "name": "OBJECTID",
+                            "versionValue": 71
+                        },
+                        {
+                            "name": "GLOBALID",
+                            "versionValue": "{A151C163-6607-4983-B56D-64EDC24A659F}"
+                        },
+                        {
+                            "name": "CREATOR_FIELD",
+                            "versionValue": "U80849175@ADB"
+                        },
+                        {
+                            "name": "CREATOR_DATE_FIELD",
+                            "versionValue": 1607939827000
+                        },
+                        {
+                            "name": "LAST_EDITOR_FIELD",
+                            "versionValue": "Esri_Anonymous",
+                            "state": "edit",
+                            "defaultValue": "U80849175@ADB"
+                        },
+                        {
+                            "name": "LAST_EDITOR_DATE_FIELD",
+                            "versionValue": 1609944498000,
+                            "state": "edit",
+                            "defaultValue": 1609857367000
+                        },
+                        {
+                            "name": "FK_FIDA_HFP",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "OBJEKTART",
+                            "versionValue": 3
+                        },
+                        {
+                            "name": "PUNKTNAME",
+                            "versionValue": "Ruswil"
+                        },
+                        {
+                            "name": "PUNKT_STATUS",
+                            "versionValue": 0
+                        },
+                        {
+                            "name": "REALISIERUNG_STATUS",
+                            "versionValue": 0
+                        },
+                        {
+                            "name": "LV95E",
+                            "versionValue": 2652322.36
+                        },
+                        {
+                            "name": "LV95N",
+                            "versionValue": 1212752.3900000001
+                        },
+                        {
+                            "name": "LN02",
+                            "versionValue": 785.28
+                        },
+                        {
+                            "name": "LHN95",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "ELLIPSOIDH",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "GENLAGELV95",
+                            "versionValue": 0.005
+                        },
+                        {
+                            "name": "GENHOEHELN02",
+                            "versionValue": 0.1
+                        },
+                        {
+                            "name": "ZUVLAGELV95",
+                            "versionValue": 1
+                        },
+                        {
+                            "name": "ZUVHOEHELN02",
+                            "versionValue": 1
+                        },
+                        {
+                            "name": "GESCHWINDIGKEIT_E",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "GESCHWINDIGKEIT_N",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "GESCHWINDIGKEIT_UP",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "REFERENZEPOCHE",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "TSP",
+                            "versionValue": 1
+                        },
+                        {
+                            "name": "LK25",
+                            "versionValue": 1149
+                        },
+                        {
+                            "name": "LFPNR",
+                            "versionValue": 11497510
+                        },
+                        {
+                            "name": "LFPNR_NUMMERZUSATZ",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "EUREFNUMMER",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "NEOTEKNUMMER",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "HERKUNFT",
+                            "versionValue": 1
+                        },
+                        {
+                            "name": "KENNZEICHNUNG",
+                            "versionValue": 9
+                        },
+                        {
+                            "name": "KENNZEICHNUNGTEXT",
+                            "versionValue": "in Betonsockel,/n14 cm unter ZR-Schacht/nØ 50 cm mit Gussdeckel"
+                        },
+                        {
+                            "name": "RUECKVERSICHRG_BEMERK",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "ANZAHLRINGSCHRAUBEN",
+                            "versionValue": 0
+                        },
+                        {
+                            "name": "FLANSCHEN",
+                            "versionValue": 0
+                        },
+                        {
+                            "name": "ANZAHLANSCLAGPKT",
+                            "versionValue": 0
+                        },
+                        {
+                            "name": "BEGEHBAR",
+                            "versionValue": 1
+                        },
+                        {
+                            "name": "GNSSSICHTBARKEIT",
+                            "versionValue": 1
+                        },
+                        {
+                            "name": "GSMEMPFANG",
+                            "versionValue": 1
+                        },
+                        {
+                            "name": "BEMERKUNG",
+                            "versionValue": "Anschluss an LFP: 1149.725, 1149.822, 1149.827\nAnschluss an HFP: nein"
+                        },
+                        {
+                            "name": "IDENTITAET",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "LFPORDNUNG",
+                            "versionValue": 5
+                        },
+                        {
+                            "name": "SCHUTZART",
+                            "versionValue": 1
+                        },
+                        {
+                            "name": "STABILITAET",
+                            "versionValue": 1
+                        },
+                        {
+                            "name": "ZUGANG",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "DELTAHOEHE_OBERKANTE",
+                            "versionValue": 0.016
+                        },
+                        {
+                            "name": "PUNKTBESCHREIBUNG",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "BILD_B_BESCH_OBEN",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "BILD_B_BESCH_UNTEN",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "BEGEHUNGSZYKLUS",
+                            "versionValue": 6
+                        },
+                        {
+                            "name": "ABSTURZGEFAHR",
+                            "versionValue": 0
+                        },
+                        {
+                            "name": "ABSTURZGEFAHR_ERLAEUTERUNGEN",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "PUNKTID_FPDS",
+                            "versionValue": 20084
+                        },
+                        {
+                            "name": "MUTATIONID_FPDS",
+                            "versionValue": null
+                        }
+                    ],
+                    "relatedFeatures": [
+                        {
+                            "name": "anhang",
+                            "features": []
+                        },
+                        {
+                            "name": "grundbuch",
+                            "features": []
+                        },
+                        {
+                            "name": "nachfuehrung",
+                            "features": []
+                        },
+                        {
+                            "name": "kontakt",
+                            "features": []
+                        },
+                        {
+                            "name": "rueckversicherung",
+                            "features": [
+                                {
+                                    "globalId": "{96AE9311-B43B-43CF-A96F-BF359804E9EB}",
+                                    "objectId": 2587,
+                                    "layerName": "FIDA_RUECKVERSICHERUNGLFP",
+                                    "state": "create",
+                                    "attributes": [
+                                        {
+                                            "name": "OBJECTID",
+                                            "versionValue": 2587,
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "GLOBALID",
+                                            "versionValue": "{96AE9311-B43B-43CF-A96F-BF359804E9EB}",
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "CREATOR_FIELD",
+                                            "versionValue": "Esri_Anonymous",
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "CREATOR_DATE_FIELD",
+                                            "versionValue": 1609944498000,
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "LAST_EDITOR_FIELD",
+                                            "versionValue": "Esri_Anonymous",
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "LAST_EDITOR_DATE_FIELD",
+                                            "versionValue": 1609944498000,
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "FK_FIDA_LFP",
+                                            "versionValue": "{A151C163-6607-4983-B56D-64EDC24A659F}",
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "PUNKTBEZEICHNUNG",
+                                            "versionValue": "Test",
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "AZIMUT",
+                                            "versionValue": 111,
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "DELTAHOEHE",
+                                            "versionValue": null
+                                        },
+                                        {
+                                            "name": "DISTANZ",
+                                            "versionValue": null
+                                        },
+                                        {
+                                            "name": "MATERIALISIERUNG",
+                                            "versionValue": 1,
+                                            "state": "create"
+                                        },
+                                        {
+                                            "name": "PUNKTID_FPDS",
+                                            "versionValue": null
+                                        },
+                                        {
+                                            "name": "MUTATIONID_FPDS",
+                                            "versionValue": null
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 }
             ]
         },
         {
-            "layerId": 7,
-            "inserts": [
+            "name": "deletes",
+            "features": [
                 {
-                    "attributes": {
-                        "OBJECTID": 1283,
-                        "GLOBALID": "{A1E5B60D-F8CC-46B3-93B5-AC3CADECC0E9}",
-                        "CREATOR_FIELD": "Esri_Anonymous",
-                        "CREATOR_DATE_FIELD": 1608458140000,
-                        "LAST_EDITOR_FIELD": "Esri_Anonymous",
-                        "LAST_EDITOR_DATE_FIELD": 1608458140000,
-                        "FK_FIDA_LFP": "{54E24F2E-4CF7-4760-9CEB-766F99C26D7C}",
-                        "LAND": "CH",
-                        "KANTON": "GE",
-                        "BEZIRK": null,
-                        "GEMEINDE": "Plan-les-Ouates",
-                        "PARZ": "36:11138",
-                        "ANMERKUNGIMGB": null,
-                        "PUNKTID_FPDS": null,
-                        "MUTATIONID_FPDS": null
-                    }
-                },
-                {
-                    "attributes": {
-                        "OBJECTID": 1284,
-                        "GLOBALID": "{9A804EFA-6DDA-405D-BA36-57D4B034E1B2}",
-                        "CREATOR_FIELD": "Esri_Anonymous",
-                        "CREATOR_DATE_FIELD": 1608458140000,
-                        "LAST_EDITOR_FIELD": "Esri_Anonymous",
-                        "LAST_EDITOR_DATE_FIELD": 1608458140000,
-                        "FK_FIDA_LFP": "{54E24F2E-4CF7-4760-9CEB-766F99C26D7C}",
-                        "LAND": "CH",
-                        "KANTON": "GE",
-                        "BEZIRK": null,
-                        "GEMEINDE": "Plan-les-Ouates",
-                        "PARZ": "36:11095",
-                        "ANMERKUNGIMGB": null,
-                        "PUNKTID_FPDS": null,
-                        "MUTATIONID_FPDS": null
-                    }
-                }
-            ],
-            "updates": [
-                {
-                    "attributes": {
-                        "OBJECTID": 526,
-                        "GLOBALID": "{DB259A6A-CB4D-4674-8E81-E67892B55C45}",
-                        "CREATOR_FIELD": "U80849175@ADB",
-                        "CREATOR_DATE_FIELD": 1607939801000,
-                        "LAST_EDITOR_FIELD": "Esri_Anonymous",
-                        "LAST_EDITOR_DATE_FIELD": 1608558599000,
-                        "FK_FIDA_LFP": "{34872C3E-695C-4B7D-9B8B-94FACA636261}",
-                        "LAND": "FR",
-                        "KANTON": "FA",
-                        "BEZIRK": "France",
-                        "GEMEINDE": "France",
-                        "PARZ": null,
-                        "ANMERKUNGIMGB": null,
-                        "PUNKTID_FPDS": 34279,
-                        "MUTATIONID_FPDS": null
-                    }
+                    "globalId": "{68EE6B16-2743-4259-8BD0-6B390AA4704B}",
+                    "objectId": 55,
+                    "layerName": "FIDA_LFP",
+                    "state": "delete",
+                    "attributes": [
+                        {
+                            "name": "OBJECTID",
+                            "versionValue": 55,
+                            "state": "delete"
+                        },
+                        {
+                            "name": "GLOBALID",
+                            "versionValue": "{68EE6B16-2743-4259-8BD0-6B390AA4704B}",
+                            "state": "delete"
+                        },
+                        {
+                            "name": "CREATOR_FIELD",
+                            "versionValue": "U80849175@ADB",
+                            "state": "delete"
+                        },
+                        {
+                            "name": "CREATOR_DATE_FIELD",
+                            "versionValue": 1607939826000,
+                            "state": "delete"
+                        },
+                        {
+                            "name": "LAST_EDITOR_FIELD",
+                            "versionValue": "U80849175@ADB",
+                            "state": "delete"
+                        },
+                        {
+                            "name": "LAST_EDITOR_DATE_FIELD",
+                            "versionValue": 1609857367000,
+                            "state": "delete"
+                        },
+                        {
+                            "name": "FK_FIDA_HFP",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "OBJEKTART",
+                            "versionValue": 3,
+                            "state": "delete"
+                        },
+                        {
+                            "name": "PUNKTNAME",
+                            "versionValue": "Sils i.D.",
+                            "state": "delete"
+                        },
+                        {
+                            "name": "PUNKT_STATUS",
+                            "versionValue": 0,
+                            "state": "delete"
+                        },
+                        {
+                            "name": "REALISIERUNG_STATUS",
+                            "versionValue": 0,
+                            "state": "delete"
+                        },
+                        {
+                            "name": "LV95E",
+                            "versionValue": 2754532.45,
+                            "state": "delete"
+                        },
+                        {
+                            "name": "LV95N",
+                            "versionValue": 1174419.48,
+                            "state": "delete"
+                        },
+                        {
+                            "name": "LN02",
+                            "versionValue": 721.504,
+                            "state": "delete"
+                        },
+                        {
+                            "name": "LHN95",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "ELLIPSOIDH",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "GENLAGELV95",
+                            "versionValue": 0.005,
+                            "state": "delete"
+                        },
+                        {
+                            "name": "GENHOEHELN02",
+                            "versionValue": 0.003,
+                            "state": "delete"
+                        },
+                        {
+                            "name": "ZUVLAGELV95",
+                            "versionValue": 1,
+                            "state": "delete"
+                        },
+                        {
+                            "name": "ZUVHOEHELN02",
+                            "versionValue": 1,
+                            "state": "delete"
+                        },
+                        {
+                            "name": "GESCHWINDIGKEIT_E",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "GESCHWINDIGKEIT_N",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "GESCHWINDIGKEIT_UP",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "REFERENZEPOCHE",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "TSP",
+                            "versionValue": 0,
+                            "state": "delete"
+                        },
+                        {
+                            "name": "LK25",
+                            "versionValue": 1215,
+                            "state": "delete"
+                        },
+                        {
+                            "name": "LFPNR",
+                            "versionValue": 12156310,
+                            "state": "delete"
+                        },
+                        {
+                            "name": "LFPNR_NUMMERZUSATZ",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "EUREFNUMMER",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "NEOTEKNUMMER",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "HERKUNFT",
+                            "versionValue": 1,
+                            "state": "delete"
+                        },
+                        {
+                            "name": "KENNZEICHNUNG",
+                            "versionValue": 9,
+                            "state": "delete"
+                        },
+                        {
+                            "name": "KENNZEICHNUNGTEXT",
+                            "versionValue": "in Betonsockel,/n16 cm unter ZR-Schacht/nØ 50 cm mit Gussdeckel",
+                            "state": "delete"
+                        },
+                        {
+                            "name": "RUECKVERSICHRG_BEMERK",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "ANZAHLRINGSCHRAUBEN",
+                            "versionValue": 0,
+                            "state": "delete"
+                        },
+                        {
+                            "name": "FLANSCHEN",
+                            "versionValue": 0,
+                            "state": "delete"
+                        },
+                        {
+                            "name": "ANZAHLANSCLAGPKT",
+                            "versionValue": 0,
+                            "state": "delete"
+                        },
+                        {
+                            "name": "BEGEHBAR",
+                            "versionValue": 1,
+                            "state": "delete"
+                        },
+                        {
+                            "name": "GNSSSICHTBARKEIT",
+                            "versionValue": 1,
+                            "state": "delete"
+                        },
+                        {
+                            "name": "GSMEMPFANG",
+                            "versionValue": 1,
+                            "state": "delete"
+                        },
+                        {
+                            "name": "BEMERKUNG",
+                            "versionValue": "Anschluss an LFP: 1215.631\n\nIdentisch mit HFP1 GR2 339",
+                            "state": "delete"
+                        },
+                        {
+                            "name": "IDENTITAET",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "LFPORDNUNG",
+                            "versionValue": 5,
+                            "state": "delete"
+                        },
+                        {
+                            "name": "SCHUTZART",
+                            "versionValue": 1,
+                            "state": "delete"
+                        },
+                        {
+                            "name": "STABILITAET",
+                            "versionValue": 1,
+                            "state": "delete"
+                        },
+                        {
+                            "name": "ZUGANG",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "DELTAHOEHE_OBERKANTE",
+                            "versionValue": 0.016,
+                            "state": "delete"
+                        },
+                        {
+                            "name": "PUNKTBESCHREIBUNG",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "BILD_B_BESCH_OBEN",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "BILD_B_BESCH_UNTEN",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "BEGEHUNGSZYKLUS",
+                            "versionValue": 6,
+                            "state": "delete"
+                        },
+                        {
+                            "name": "ABSTURZGEFAHR",
+                            "versionValue": 0,
+                            "state": "delete"
+                        },
+                        {
+                            "name": "ABSTURZGEFAHR_ERLAEUTERUNGEN",
+                            "versionValue": null
+                        },
+                        {
+                            "name": "PUNKTID_FPDS",
+                            "versionValue": 20097,
+                            "state": "delete"
+                        },
+                        {
+                            "name": "MUTATIONID_FPDS",
+                            "versionValue": null
+                        }
+                    ],
+                    "relatedFeatures": [
+                        {
+                            "name": "anhang",
+                            "features": [
+                                {
+                                    "globalId": "{E1E3148C-3EFF-4970-AAB2-14EA0D57C2F7}",
+                                    "objectId": 109,
+                                    "layerName": "FIDA_ANHANGLFP",
+                                    "state": "delete",
+                                    "attributes": [
+                                        {
+                                            "name": "OBJECTID",
+                                            "versionValue": 109,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "GLOBALID",
+                                            "versionValue": "{E1E3148C-3EFF-4970-AAB2-14EA0D57C2F7}",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "CREATOR_FIELD",
+                                            "versionValue": "U80849175@ADB",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "CREATOR_DATE_FIELD",
+                                            "versionValue": 1607939722000,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "LAST_EDITOR_FIELD",
+                                            "versionValue": "U80849175@ADB",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "LAST_EDITOR_DATE_FIELD",
+                                            "versionValue": 1607942499000,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "FK_FIDA_LFP",
+                                            "versionValue": "{68EE6B16-2743-4259-8BD0-6B390AA4704B}",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "BILD_ART",
+                                            "versionValue": 0,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "BILD_STATUS",
+                                            "versionValue": 0,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "BILD_DRUCKBREITE",
+                                            "versionValue": 12.7,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "BILD_DRUCKHOEHE",
+                                            "versionValue": 8.2,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "BILD_DATUM",
+                                            "versionValue": 1467248400000,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "BILD_BESCHREIBUNG",
+                                            "versionValue": null
+                                        },
+                                        {
+                                            "name": "BILD_NAME",
+                                            "versionValue": "20097_1.png",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "PUNKTID_FPDS",
+                                            "versionValue": 20097,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "MUTATIONID_FPDS",
+                                            "versionValue": null
+                                        }
+                                    ]
+                                },
+                                {
+                                    "globalId": "{E6EAF099-4302-4B75-9FA0-D3395F68FD8F}",
+                                    "objectId": 110,
+                                    "layerName": "FIDA_ANHANGLFP",
+                                    "state": "delete",
+                                    "attributes": [
+                                        {
+                                            "name": "OBJECTID",
+                                            "versionValue": 110,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "GLOBALID",
+                                            "versionValue": "{E6EAF099-4302-4B75-9FA0-D3395F68FD8F}",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "CREATOR_FIELD",
+                                            "versionValue": "U80849175@ADB",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "CREATOR_DATE_FIELD",
+                                            "versionValue": 1607939722000,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "LAST_EDITOR_FIELD",
+                                            "versionValue": "U80849175@ADB",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "LAST_EDITOR_DATE_FIELD",
+                                            "versionValue": 1607942499000,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "FK_FIDA_LFP",
+                                            "versionValue": "{68EE6B16-2743-4259-8BD0-6B390AA4704B}",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "BILD_ART",
+                                            "versionValue": 1,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "BILD_STATUS",
+                                            "versionValue": 0,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "BILD_DRUCKBREITE",
+                                            "versionValue": 10,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "BILD_DRUCKHOEHE",
+                                            "versionValue": 7.5,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "BILD_DATUM",
+                                            "versionValue": 1265158800000,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "BILD_BESCHREIBUNG",
+                                            "versionValue": null
+                                        },
+                                        {
+                                            "name": "BILD_NAME",
+                                            "versionValue": "20097_2.jpg",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "PUNKTID_FPDS",
+                                            "versionValue": 20097,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "MUTATIONID_FPDS",
+                                            "versionValue": null
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "grundbuch",
+                            "features": [
+                                {
+                                    "globalId": "{441EB184-635B-43C6-B242-FBDF3393991B}",
+                                    "objectId": 55,
+                                    "layerName": "FIDA_GRUNDBUCHLFP",
+                                    "state": "delete",
+                                    "attributes": [
+                                        {
+                                            "name": "OBJECTID",
+                                            "versionValue": 55,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "GLOBALID",
+                                            "versionValue": "{441EB184-635B-43C6-B242-FBDF3393991B}",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "CREATOR_FIELD",
+                                            "versionValue": "U80849175@ADB",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "CREATOR_DATE_FIELD",
+                                            "versionValue": 1607939801000,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "LAST_EDITOR_FIELD",
+                                            "versionValue": "U80849175@ADB",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "LAST_EDITOR_DATE_FIELD",
+                                            "versionValue": 1609928921000,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "FK_FIDA_LFP",
+                                            "versionValue": "{68EE6B16-2743-4259-8BD0-6B390AA4704B}",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "LAND",
+                                            "versionValue": "CH",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "KANTON",
+                                            "versionValue": "GR",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "BEZIRK",
+                                            "versionValue": "Viamala",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "GEMEINDE",
+                                            "versionValue": "Sils im Domleschg",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "PARZ",
+                                            "versionValue": "374",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "ANMERKUNGIMGB",
+                                            "versionValue": 1237424400000,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "PUNKTID_FPDS",
+                                            "versionValue": 20097,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "MUTATIONID_FPDS",
+                                            "versionValue": null
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "nachfuehrung",
+                            "features": [
+                                {
+                                    "globalId": "{1B12EF65-C1A5-4146-A42C-FB429FC5A6AD}",
+                                    "objectId": 406,
+                                    "layerName": "FIDA_NACHFUEHRUNGLFP",
+                                    "state": "delete",
+                                    "attributes": [
+                                        {
+                                            "name": "OBJECTID",
+                                            "versionValue": 406,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "GLOBALID",
+                                            "versionValue": "{1B12EF65-C1A5-4146-A42C-FB429FC5A6AD}",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "CREATOR_FIELD",
+                                            "versionValue": "U80849175@ADB",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "CREATOR_DATE_FIELD",
+                                            "versionValue": 1607938645000,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "LAST_EDITOR_FIELD",
+                                            "versionValue": "U80849175@ADB",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "LAST_EDITOR_DATE_FIELD",
+                                            "versionValue": 1607940245000,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "FK_FIDA_LFP",
+                                            "versionValue": "{68EE6B16-2743-4259-8BD0-6B390AA4704B}",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "NACHFUEHRUNGSDATUM",
+                                            "versionValue": 966301200000,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "NACHFUEHRUNGSPERIMETER",
+                                            "versionValue": 2021,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "UNTERHALTART",
+                                            "versionValue": 0,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "ARBEITSKUERZELTEXT",
+                                            "versionValue": "Textfeld hat nur Leerzeichen",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "ERSTERSTELLUNG",
+                                            "versionValue": 1,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "PROTOKOLLSICHTBAR",
+                                            "versionValue": 0,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "ERLEDARBBESCHREIBUNG",
+                                            "versionValue": "obligarisches Feld",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "BEMERKUNG",
+                                            "versionValue": null
+                                        },
+                                        {
+                                            "name": "BESCHAEDIGUNG_PENDENZ",
+                                            "versionValue": null
+                                        },
+                                        {
+                                            "name": "PUNKTID_FPDS",
+                                            "versionValue": 20097,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "MUTATIONID_FPDS",
+                                            "versionValue": 346,
+                                            "state": "delete"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "globalId": "{423F658D-FA91-4BB8-A86B-02649721DA00}",
+                                    "objectId": 407,
+                                    "layerName": "FIDA_NACHFUEHRUNGLFP",
+                                    "state": "delete",
+                                    "attributes": [
+                                        {
+                                            "name": "OBJECTID",
+                                            "versionValue": 407,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "GLOBALID",
+                                            "versionValue": "{423F658D-FA91-4BB8-A86B-02649721DA00}",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "CREATOR_FIELD",
+                                            "versionValue": "U80849175@ADB",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "CREATOR_DATE_FIELD",
+                                            "versionValue": 1607938645000,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "LAST_EDITOR_FIELD",
+                                            "versionValue": "U80849175@ADB",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "LAST_EDITOR_DATE_FIELD",
+                                            "versionValue": 1607940245000,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "FK_FIDA_LFP",
+                                            "versionValue": "{68EE6B16-2743-4259-8BD0-6B390AA4704B}",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "NACHFUEHRUNGSDATUM",
+                                            "versionValue": 1086051600000,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "NACHFUEHRUNGSPERIMETER",
+                                            "versionValue": 2021,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "UNTERHALTART",
+                                            "versionValue": 0,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "ARBEITSKUERZELTEXT",
+                                            "versionValue": "VinO",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "ERSTERSTELLUNG",
+                                            "versionValue": 0,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "PROTOKOLLSICHTBAR",
+                                            "versionValue": 1,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "ERLEDARBBESCHREIBUNG",
+                                            "versionValue": "obligarisches Feld",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "BEMERKUNG",
+                                            "versionValue": null
+                                        },
+                                        {
+                                            "name": "BESCHAEDIGUNG_PENDENZ",
+                                            "versionValue": null
+                                        },
+                                        {
+                                            "name": "PUNKTID_FPDS",
+                                            "versionValue": 20097,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "MUTATIONID_FPDS",
+                                            "versionValue": 346,
+                                            "state": "delete"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "globalId": "{6B9F666A-E5E4-4906-8A3A-B5FAA2ED5883}",
+                                    "objectId": 409,
+                                    "layerName": "FIDA_NACHFUEHRUNGLFP",
+                                    "state": "delete",
+                                    "attributes": [
+                                        {
+                                            "name": "OBJECTID",
+                                            "versionValue": 409,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "GLOBALID",
+                                            "versionValue": "{6B9F666A-E5E4-4906-8A3A-B5FAA2ED5883}",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "CREATOR_FIELD",
+                                            "versionValue": "U80849175@ADB",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "CREATOR_DATE_FIELD",
+                                            "versionValue": 1607938645000,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "LAST_EDITOR_FIELD",
+                                            "versionValue": "U80849175@ADB",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "LAST_EDITOR_DATE_FIELD",
+                                            "versionValue": 1607940245000,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "FK_FIDA_LFP",
+                                            "versionValue": "{68EE6B16-2743-4259-8BD0-6B390AA4704B}",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "NACHFUEHRUNGSDATUM",
+                                            "versionValue": 1253235600000,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "NACHFUEHRUNGSPERIMETER",
+                                            "versionValue": 2021,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "UNTERHALTART",
+                                            "versionValue": 0,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "ARBEITSKUERZELTEXT",
+                                            "versionValue": "VinO,S",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "ERSTERSTELLUNG",
+                                            "versionValue": 0,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "PROTOKOLLSICHTBAR",
+                                            "versionValue": 1,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "ERLEDARBBESCHREIBUNG",
+                                            "versionValue": "Punktbegehung durch swisstopo",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "BEMERKUNG",
+                                            "versionValue": null
+                                        },
+                                        {
+                                            "name": "BESCHAEDIGUNG_PENDENZ",
+                                            "versionValue": null
+                                        },
+                                        {
+                                            "name": "PUNKTID_FPDS",
+                                            "versionValue": 20097,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "MUTATIONID_FPDS",
+                                            "versionValue": null
+                                        }
+                                    ]
+                                },
+                                {
+                                    "globalId": "{D5AB6CE1-211B-4608-9148-4AA04655ADED}",
+                                    "objectId": 408,
+                                    "layerName": "FIDA_NACHFUEHRUNGLFP",
+                                    "state": "delete",
+                                    "attributes": [
+                                        {
+                                            "name": "OBJECTID",
+                                            "versionValue": 408,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "GLOBALID",
+                                            "versionValue": "{D5AB6CE1-211B-4608-9148-4AA04655ADED}",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "CREATOR_FIELD",
+                                            "versionValue": "U80849175@ADB",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "CREATOR_DATE_FIELD",
+                                            "versionValue": 1607938645000,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "LAST_EDITOR_FIELD",
+                                            "versionValue": "U80849175@ADB",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "LAST_EDITOR_DATE_FIELD",
+                                            "versionValue": 1607940245000,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "FK_FIDA_LFP",
+                                            "versionValue": "{68EE6B16-2743-4259-8BD0-6B390AA4704B}",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "NACHFUEHRUNGSDATUM",
+                                            "versionValue": 1072918800000,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "NACHFUEHRUNGSPERIMETER",
+                                            "versionValue": 2021,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "UNTERHALTART",
+                                            "versionValue": 0,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "ARBEITSKUERZELTEXT",
+                                            "versionValue": "H",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "ERSTERSTELLUNG",
+                                            "versionValue": 0,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "PROTOKOLLSICHTBAR",
+                                            "versionValue": 1,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "ERLEDARBBESCHREIBUNG",
+                                            "versionValue": "obligarisches Feld",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "BEMERKUNG",
+                                            "versionValue": null
+                                        },
+                                        {
+                                            "name": "BESCHAEDIGUNG_PENDENZ",
+                                            "versionValue": null
+                                        },
+                                        {
+                                            "name": "PUNKTID_FPDS",
+                                            "versionValue": 20097,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "MUTATIONID_FPDS",
+                                            "versionValue": 346,
+                                            "state": "delete"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "globalId": "{5160C751-4B36-4748-97AB-23BB20747205}",
+                                    "objectId": 410,
+                                    "layerName": "FIDA_NACHFUEHRUNGLFP",
+                                    "state": "delete",
+                                    "attributes": [
+                                        {
+                                            "name": "OBJECTID",
+                                            "versionValue": 410,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "GLOBALID",
+                                            "versionValue": "{5160C751-4B36-4748-97AB-23BB20747205}",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "CREATOR_FIELD",
+                                            "versionValue": "U80849175@ADB",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "CREATOR_DATE_FIELD",
+                                            "versionValue": 1607938645000,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "LAST_EDITOR_FIELD",
+                                            "versionValue": "U80849175@ADB",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "LAST_EDITOR_DATE_FIELD",
+                                            "versionValue": 1607940245000,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "FK_FIDA_LFP",
+                                            "versionValue": "{68EE6B16-2743-4259-8BD0-6B390AA4704B}",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "NACHFUEHRUNGSDATUM",
+                                            "versionValue": 1427418000000,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "NACHFUEHRUNGSPERIMETER",
+                                            "versionValue": 2021,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "UNTERHALTART",
+                                            "versionValue": 0,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "ARBEITSKUERZELTEXT",
+                                            "versionValue": "VinO,S",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "ERSTERSTELLUNG",
+                                            "versionValue": 0,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "PROTOKOLLSICHTBAR",
+                                            "versionValue": 1,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "ERLEDARBBESCHREIBUNG",
+                                            "versionValue": "Punktbegehung durch swisstopo",
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "BEMERKUNG",
+                                            "versionValue": null
+                                        },
+                                        {
+                                            "name": "BESCHAEDIGUNG_PENDENZ",
+                                            "versionValue": null
+                                        },
+                                        {
+                                            "name": "PUNKTID_FPDS",
+                                            "versionValue": 20097,
+                                            "state": "delete"
+                                        },
+                                        {
+                                            "name": "MUTATIONID_FPDS",
+                                            "versionValue": 5525,
+                                            "state": "delete"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "kontakt",
+                            "features": []
+                        },
+                        {
+                            "name": "rueckversicherung",
+                            "features": []
+                        }
+                    ]
                 }
             ]
         }
-    ],
-    "success": true
+    ]
 }

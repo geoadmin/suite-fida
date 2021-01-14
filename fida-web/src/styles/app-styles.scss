@@ -103,6 +103,10 @@ input.ng-invalid:focus {
   visibility: visible;
 }
 
+.warning {
+  background-color: #fde394;
+  border: 1px solid var(--dark);
+}
 // ----------------------------------------------------------------------------------------------------
 // grid styles
 // ----------------------------------------------------------------------------------------------------
@@ -132,19 +136,6 @@ input.ng-invalid:focus {
   border: 1px solid var(--light);
   border-radius: 0;
 }
-
-// .card-header, .card-header:first-child {
-//   padding: 0;
-//   margin-bottom: 0;
-//   background-color: var(--super-light);
-//   border-bottom: 1px solid var(--dark);  
-
-//   button {
-//     width: 100%;
-//     text-align: left;
-//     color: inherit;
-//   }
-// }
 
 // ----------------------------------------------------------------------------------------------------
 // button styles

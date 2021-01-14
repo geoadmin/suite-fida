@@ -6,6 +6,7 @@ import {
 } from '../models/config.model';
 import { environment } from '../../environments/environment';
 import esriRequest from 'esri/request';
+import { layer } from 'esri/views/3d/support/LayerPerformanceInfo';
 
 
 @Injectable({ providedIn: 'root' })
@@ -78,6 +79,22 @@ export class ConfigService {
         return this.config.layerInfos;
     }
 
+    public getLayerInfoById(layerId: number): any {
+        let layerInfo = this.config.layerInfos.layers.find((f: any) => f.id === layerId);
+        if (layerInfo === undefined) {
+            layerInfo = this.config.layerInfos.tables.find((f: any) => f.id === layerId);
+        }
+        return layerInfo;
+    }
+
+    public getLayerInfoByName(layerName: string): any {
+        let layerInfo = this.config.layerInfos.layers.find((f: any) => f.name === layerName);
+        if (layerInfo === undefined) {
+            layerInfo = this.config.layerInfos.tables.find((f: any) => f.name === layerName);
+        }
+        return layerInfo;
+    }
+
     /**
      *  get configs
      */
@@ -131,6 +148,14 @@ export class ConfigService {
         const layerConfigs = this.config.layers.filter(f => f.properties.id === id);
         if (layerConfigs.length !== 1) {
             throw new Error(`invalid configuration for id "${id}"`);
+        }
+        return layerConfigs[0];
+    }
+
+    public getLayerConfigByName(name: string): LayerConfig {
+        const layerConfigs = this.config.layers.filter(f => f.name === name);
+        if (layerConfigs.length !== 1) {
+            throw new Error(`invalid configuration for name "${name}"`);
         }
         return layerConfigs[0];
     }

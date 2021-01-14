@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import Expand from 'esri/widgets/Expand';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { GdbVersion } from 'src/app/models/GdbVersion.model';
@@ -28,6 +28,7 @@ export class VersionManagerComponent implements OnInit, OnDestroy {
     private widgetsService: WidgetsService,
     private versionManagementService: VersionManagementService,
     private settingService: SettingService,
+    private changeDetectorRef: ChangeDetectorRef,
     private modalService: BsModalService
   ) { }
 

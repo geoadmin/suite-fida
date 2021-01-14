@@ -70,7 +70,6 @@ export class SearchSourceService {
       searchSource.getSuggestions = (params) => {
         // replaceAll
         const where = (properties.where as string).split('???').join(params.suggestTerm);
-        //const where = (properties.where as string).replace('???', params.suggestTerm);
         return this.queryService.where(featureLayer, where, properties.outFields, properties.outFields, properties.maxResults)
           .then((features) => {
             return features.map(m => {
@@ -99,7 +98,6 @@ export class SearchSourceService {
       };
 
       searchSource.popupTemplate = featureLayer.popupTemplate;
-      //searchSource.popupEnabled = false;
       return searchSource;
     }
 

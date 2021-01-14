@@ -1,6 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FeatureState, FidaFeature, RelationshipName } from 'src/app/models/FidaFeature.model';
-import { UtilService } from 'src/app/services/util.service';
+import CodedValueDomain from 'esri/layers/support/CodedValueDomain';
+import Field from 'esri/layers/support/Field';
+import { ConfigService } from 'src/app/configs/config.service';
+import { FidaDifferenceAttribute, FidaDifferenceFeature } from 'src/app/models/Difference.model';
+import { RelationshipName } from 'src/app/models/FidaFeature.model';
+import { FidaTranslateService } from 'src/app/services/translate.service';
 
 @Component({
   selector: 'app-difference-attribute-tree',
@@ -8,42 +12,78 @@ import { UtilService } from 'src/app/services/util.service';
   styleUrls: ['./difference-attribute-tree.component.scss']
 })
 export class DifferenceAttributeTreeComponent implements OnInit {
-  @Input() versionFeature: FidaFeature;
-  @Input() defaultFeature: FidaFeature;
+  @Input() differenceFeature: FidaDifferenceFeature;
   @Input() showAll: boolean;
   @Input() relationshipName: RelationshipName;
   @Input() header: string;
 
   componentId: string;
+  cutomHeader = true;
+  private layerInfo: any;
 
 
-  constructor() { }
+  constructor(
+    private translateService: FidaTranslateService,
+    private configService: ConfigService,
+  ) { }
 
   ngOnInit(): void {
-    this.componentId = `fid-${this.versionFeature?.attributes.GLOBALID.replace('{', '').replace('}', '')}`;
-    if (!this.header && this.versionFeature != null) {
-      this.header = `${UtilService.getFeatureHeader(this.versionFeature, this.relationshipName) || ''} [${this.versionFeature.attributes.OBJECTID}]`;
+    this.componentId = `fid-${this.differenceFeature?.globalId.replace('{', '').replace('}', '')}`;
+
+    if (!this.header && this.differenceFeature != null) {
+      this.header = `${this.differenceFeature.layerName} [${this.differenceFeature.objectId}]`;
+      this.cutomHeader = false;
     }
+
+    this.layerInfo = this.configService.getLayerInfoByName(this.differenceFeature.layerName);
   }
 
-  getDefaultAttribute(key: string): any {
-    return this.defaultFeature?.attributes[key];
+  getHeaderClass(): string {
+    return this.cutomHeader ? 'diff-custom' : 'diff-' + this.differenceFeature?.state?.toString();
   }
 
-  getVersionAttribute(key: string): any {
-    return this.versionFeature?.attributes[key];
+  getDiffClass(attribute: FidaDifferenceAttribute): string {
+    return 'diff-' + attribute?.state?.toString();
   }
 
-  hasDifference(key: string): boolean {
-    return this.defaultFeature && this.getDefaultAttribute(key) !== this.getVersionAttribute(key);
+  hideAttribute(attribute: FidaDifferenceAttribute): boolean {
+    return (attribute.state === undefined) && !this.showAll;
   }
 
-  getDiffClass(key: string): string {
-    if (this.versionFeature.state === FeatureState.Edit && this.hasDifference(key)) {
-      return 'diff-' + FeatureState.Edit.toString();
+  getAttributeName(attribute: FidaDifferenceAttribute): string {
+    return this.translateService.translateAttributeName(this.differenceFeature.layerName, attribute.name);
+  }
+
+  getColClass(attribute: FidaDifferenceAttribute): string {
+    return attribute.defaultValue ? 'col-6' : 'col-12';
+  }
+
+  getFormatedVersionValue(attribute: FidaDifferenceAttribute): string {
+    return this.getFormatedValue(attribute.versionValue, attribute.name);
+  }
+
+  getFormatedDefaultValue(attribute: FidaDifferenceAttribute): string {
+    return this.getFormatedValue(attribute.defaultValue, attribute.name);
+  }
+
+  getFormatedValue(value: any, fieldName: string): string {
+    if (this.layerInfo) {
+      const field = Field.fromJSON(this.layerInfo.fields.find((f: any) => f.name === fieldName));
+
+      if (field.domain != null && field.domain.type === 'coded-value') {
+        const codedValueDomain = this.translateService.translateCodedValueDomain(field.domain as CodedValueDomain);
+        const codedValue = codedValueDomain.codedValues.find(f => f.code === parseInt(value, 10));
+        if (codedValue !== undefined) {
+          return codedValue.name;
+        }
+      }
+
+      if (field.type === 'date') {
+        const date = new Date(value);
+        return date.toDateString();
+      }
     }
-    if (this.versionFeature.state === FeatureState.Create || this.versionFeature.state === FeatureState.Delete) {
-      return 'diff-' + this.versionFeature.state.toString();
-    }
+
+    return value;
   }
 }

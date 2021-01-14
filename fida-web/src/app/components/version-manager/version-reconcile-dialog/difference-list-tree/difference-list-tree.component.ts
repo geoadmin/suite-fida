@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FidaFeature } from 'src/app/models/FidaFeature.model';
-import { FeatureService } from 'src/app/services/feature.service';
+import { ConfigService } from 'src/app/configs/config.service';
+import { FidaDifferenceFeature } from 'src/app/models/Difference.model';
 
 @Component({
   selector: 'app-difference-list-tree',
@@ -8,27 +8,28 @@ import { FeatureService } from 'src/app/services/feature.service';
   styleUrls: ['./difference-list-tree.component.scss']
 })
 export class DifferenceListTreeComponent implements OnInit {
-  @Input() features: FidaFeature[];
-  @Input() defaultFeatures: FidaFeature[];
+  @Input() differenceFeatures: FidaDifferenceFeature[];
   @Input() title: string;
   @Input() componentId: string;
   @Input() showAll: boolean;
 
-  constructor(private featureService: FeatureService) { }
+  constructor(private configService: ConfigService) { }
 
   ngOnInit(): void {
   }
 
-  getFeatureName(feature: FidaFeature): string {
-    return this.featureService.getFeatureName(feature);
+  getFeatureName(differenceFeature: FidaDifferenceFeature): string {
+    const layerConfig = this.configService.getLayerConfigByName(differenceFeature.layerName);
+    const idAttribute = differenceFeature.attributes.find(f => f.name === layerConfig.idField);
+    return `${layerConfig.properties.id}-${idAttribute?.versionValue?.toString()}`;
   }
 
-  getId(prefix: string, feature: any): string {
-    return `${prefix}-${feature?.attributes.GLOBALID.replace('{', '').replace('}', '')}`;
+  getId(prefix: string, differenceFeature: FidaDifferenceFeature): string {
+    return `${prefix}-${differenceFeature?.globalId.replace('{', '').replace('}', '')}`;
   }
 
-  getDiffClass(feature: FidaFeature): string {
-    return 'diff-' + feature.state?.toString();
+  getDiffClass(differenceFeature: FidaDifferenceFeature): string {
+    return 'diff-dark-' + differenceFeature.state?.toString();
   }
 
 }

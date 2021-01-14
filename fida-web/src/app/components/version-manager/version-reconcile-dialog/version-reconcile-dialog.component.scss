@@ -12,6 +12,16 @@
     background-color: rgb(252, 159, 159);
 }
 
+.diff-dark-create {
+    background-color: rgb(77, 230, 77);
+}
+.diff-dark-edit {
+    background-color: rgb(255, 191, 72);
+}
+.diff-dark-delete {
+    background-color: rgb(255, 104, 104);
+}
+
 .plus-minus-header:before {
     display: inline-block;
     content: "-";

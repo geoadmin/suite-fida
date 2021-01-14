@@ -43,6 +43,15 @@ export class FidaTranslateService {
     return domain;
   }
 
+  public translateAttributeName(layerName: string, attributeName: string): string {
+    const key = `row.${layerName.toLocaleLowerCase()}.${attributeName.toLocaleLowerCase()}`;
+    const translation = this.translateService.instant(key);
+    if (key !== translation) {
+      return translation;
+    }
+    return attributeName;
+  }
+
   public translate(key: string): string {
     return this.translateService.instant(key);
   }

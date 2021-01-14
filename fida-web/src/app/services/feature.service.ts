@@ -458,7 +458,7 @@ export class FeatureService {
   }
 
   /**
-   * TEMPORARY: TODO DELETE 
+   * TEMPORARY: TODO DELETE
    */
   public async addTestTranslationToDb(): Promise<void> {
     const translationFeatureLayer = new FeatureLayer({
