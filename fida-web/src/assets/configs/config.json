@@ -34,7 +34,7 @@
             "fkField": "",
             "properties": {
                 "id": "LSN",
-                "visible": false
+                "visible": true
             }
         },
         {

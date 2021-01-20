@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AttributeViewComponent } from './attribute-view.component';
+import { AttributeValueViewComponent } from './attribute-value-view.component';
 
-describe('AttributeViewComponent', () => {
-  let component: AttributeViewComponent;
-  let fixture: ComponentFixture<AttributeViewComponent>;
+describe('AttributeValueViewComponent', () => {
+  let component: AttributeValueViewComponent;
+  let fixture: ComponentFixture<AttributeValueViewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AttributeViewComponent ]
+      declarations: [ AttributeValueViewComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AttributeViewComponent);
+    fixture = TestBed.createComponent(AttributeValueViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

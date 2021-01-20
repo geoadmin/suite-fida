@@ -22,7 +22,7 @@ import { MapComponent } from './components/map/map.component';
 import { FeatureEditComponent } from './components/feature/feature-edit/feature-edit.component';
 import { FeatureCreateComponent } from './components/feature/feature-create/feature-create.component';
 import { FeatureViewComponent } from './components/feature/feature-view/feature-view.component';
-import { AttributeViewComponent } from './components/version-manager/version-reconcile-dialog/attribute-view/attribute-view.component';
+import { AttributeValueViewComponent } from './components/feature/feature-view/attribute-value-view/attribute-value-view.component';
 import { AttributeValueEditComponent } from './components/feature/feature-edit/attribute-value-edit/attribute-value-edit.component';
 import { GeometryEditComponent } from './components/feature/geometry-edit/geometry-edit.component';
 import { VersionManagerComponent } from './components/version-manager/version-manager.component';
@@ -66,7 +66,7 @@ export function createCompiler(compilerFactory: CompilerFactory): Compiler {
     FeatureViewComponent,
     FeatureCreateComponent,
     GeometryEditComponent,
-    AttributeViewComponent,
+    AttributeValueViewComponent,
     VersionManagerComponent,
     VersionCreateDialogComponent,
     VersionDeleteDialogComponent,

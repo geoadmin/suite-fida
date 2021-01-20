@@ -1,8 +1,8 @@
-<div [formGroup]="formGroup" class="error-text-container">
+<div *ngIf="!readonly" [formGroup]="formGroup" class="error-text-container">
 
     <!-- value -->
     <div [ngSwitch]="type">
-        
+
         <!-- domain value -->
         <div *ngSwitchCase="'domain'">
             <select formControlName="valueControl" [(ngModel)]="feature?.attributes[formControlName]"
@@ -23,7 +23,7 @@
 
         <!-- number value -->
         <div *ngSwitchCase="'number'">
-            <input type="number" class="form-control" formControlName="valueControl" [name]="formControlName"
+            <input type="number" class="form-control text-right" formControlName="valueControl" [name]="formControlName"
                 [placeholder]="placeholder" [(ngModel)]="feature?.attributes[formControlName]">
         </div>
 
@@ -48,3 +48,6 @@
         Value cannot contain more than {{ field?.length }} characters.
     </div>
 </div>
+
+<!-- readonly -->
+<app-attribute-value-view *ngIf="readonly" [feature]="feature" [name]="formControlName"></app-attribute-value-view>

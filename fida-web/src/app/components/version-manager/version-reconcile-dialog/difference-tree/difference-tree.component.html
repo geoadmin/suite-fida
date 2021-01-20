@@ -1,6 +1,6 @@
 <!-- general feature -->
 <app-difference-attribute-tree [differenceFeature]="differenceFeature" relationshipName="general"
-    header="app.relationship.general">
+    header="app.relationship.general" [showAll]="showAll">
 </app-difference-attribute-tree>
 
 <div *ngFor="let relatedFeatureGroup of differenceFeature?.relatedFeatures"

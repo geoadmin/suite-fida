@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import FeatureLayer from 'esri/layers/FeatureLayer';
 import Feature from 'esri/Graphic';
 import { ConfigService } from '../configs/config.service';
-import { DefaultFeatureMemeory, EsriDifferenceFeature, EsriDifferences, FidaDifferenceFeature, FidaDifferenceGroup, FidaDifferences } from '../models/Difference.model';
+import { DefaultFeatureMemeory, EsriDifferenceFeature, EsriDifferences, FidaDifferenceAttribute, FidaDifferenceFeature, FidaDifferenceGroup, FidaDifferences } from '../models/Difference.model';
 import { FeatureState } from '../models/FidaFeature.model';
 import { GdbVersion } from '../models/GdbVersion.model';
 import { LayerService } from './layer.service';
@@ -22,12 +22,14 @@ export class DifferenceService {
   public async convertDifferences(esriDifferencesSets: EsriDifferences[], version: GdbVersion): Promise<FidaDifferences> {
     const creates: FidaDifferenceGroup = { name: 'creates', features: [] };
     const edits: FidaDifferenceGroup = { name: 'edits', features: [] };
+    const editAttributes: FidaDifferenceGroup = { name: 'edit-attributes', features: [] };
+    const editGeometry: FidaDifferenceGroup = { name: 'edit-geometry', features: [] };
     const deletes: FidaDifferenceGroup = { name: 'deletes', features: [] };
 
     const differences = new FidaDifferences();
     differences.date = new Date();
     differences.version = version;
-    differences.groups = [creates, edits, deletes];
+    differences.groups = [creates, editAttributes, editGeometry, deletes];
 
     if (!esriDifferencesSets) {
       return Promise.resolve(differences);
@@ -70,7 +72,17 @@ export class DifferenceService {
     }
 
     // merge the default-feature into the difference-features
-    edits.features.forEach(differenceFeature => {
+    this.mergeDefaultFeatureToDifferenceFeature(edits, defaultFeatures);
+
+    // split the edits into edits-attributes and edits-geometry
+    editAttributes.features = edits.features.filter(f => this.hasAttributeChanges(f));
+    editGeometry.features = edits.features.filter(f => this.hasGeometryChange(f));
+
+    return differences;
+  }
+
+  private mergeDefaultFeatureToDifferenceFeature(group: FidaDifferenceGroup, defaultFeatures: Feature[]): void {
+    group.features.forEach(differenceFeature => {
       const defaultFeature = defaultFeatures.find(f => f.attributes.GLOBALID === differenceFeature.globalId);
       this.mergeToDifferenceFeature(defaultFeature, differenceFeature);
       if (differenceFeature.relatedFeatures) {
@@ -82,8 +94,6 @@ export class DifferenceService {
         });
       }
     });
-
-    return differences;
   }
 
   private mergeToDifferenceFeature(feature: Feature, differenceFeature: FidaDifferenceFeature): void {
@@ -213,5 +223,30 @@ export class DifferenceService {
     });
     await featureLayer.load();
     return featureLayer;
+  }
+
+  private hasGeometryChange(differenceFeature: FidaDifferenceFeature): boolean {
+    return this.isAttributeChanged(differenceFeature, 'LV95E') ||
+      this.isAttributeChanged(differenceFeature, 'LV95N') ||
+      this.isAttributeChanged(differenceFeature, 'LN02');
+  }
+
+  private hasAttributeChanges(differenceFeature: FidaDifferenceFeature): boolean {
+    const geometryAttributeNameList = ['LV95E', 'LV95N', 'LN02'];
+    const databaseAttributeNameList = ['CREATOR_FIELD', 'CREATOR_DATE_FIELD', 'LAST_EDITOR_FIELD', 'LAST_EDITOR_DATE_FIELD', 'FK_FIDA_HFP', 'FK_FIDA_LFP', 'OBJECTID', 'GLOBALID', 'PUNKTID_FPDS', 'MUTATIONID_FPDS'];
+    const excludeList = geometryAttributeNameList.concat(databaseAttributeNameList);
+    const differenceAttributes = differenceFeature.attributes.filter(f => !excludeList.includes(f.name));
+    for (const differenceAttribute of differenceAttributes) {
+      if(differenceAttribute?.state === FeatureState.Edit){
+        return true;
+      }
+    }
+    // check related-features
+    return differenceFeature.relatedFeatures?.length > 0;
+  }
+
+  private isAttributeChanged(differenceFeature: FidaDifferenceFeature, name: string): boolean {
+    const differenceAttribute = differenceFeature.attributes.find(f => f.name === name);
+    return differenceAttribute?.state === FeatureState.Edit;
   }
 }

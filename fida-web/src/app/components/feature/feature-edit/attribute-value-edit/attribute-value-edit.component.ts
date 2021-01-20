@@ -33,6 +33,7 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
   @Input() placeholder: string;
   @Input() type: string;
   @Input() required = false;
+  @Input() readonly = false;
 
   public formGroup: FormGroup;
   public disabled: boolean;
@@ -71,7 +72,7 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
     // translate coded values
     if (this.type === 'domain') {
       const codedValueDomain = this.field.domain as CodedValueDomain;
-      this.codedValues =  this.translateService.translateCodedValueDomain(codedValueDomain).codedValues ?? [];
+      this.codedValues = this.translateService.translateCodedValueDomain(codedValueDomain).codedValues ?? [];
     }
 
     // define validation form-control
@@ -101,10 +102,7 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
 
     if (this.field.domain != null && this.field.domain.type === 'coded-value') {
       this.type = 'domain';
-    } else if (this.field.type === 'small-integer'
-      || this.field.type === 'integer'
-      || this.field.type === 'single'
-      || this.field.type === 'double') {
+    } else if (UtilService.isNumberField(this.field)) {
       this.type = 'number';
     } else {
       this.type = this.field.type;

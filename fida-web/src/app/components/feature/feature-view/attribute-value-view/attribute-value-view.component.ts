@@ -3,16 +3,17 @@ import FeatureLayer from 'esri/layers/FeatureLayer';
 import CodedValueDomain from 'esri/layers/support/CodedValueDomain';
 import Field from 'esri/layers/support/Field';
 import { FidaFeature } from 'src/app/models/FidaFeature.model';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
-  selector: 'app-attribute-view',
-  templateUrl: './attribute-view.component.html',
-  styleUrls: ['./attribute-view.component.scss']
+  selector: 'app-attribute-value-view',
+  templateUrl: './attribute-value-view.component.html',
+  styleUrls: ['./attribute-value-view.component.scss']
 })
-export class AttributeViewComponent implements OnInit {
+export class AttributeValueViewComponent implements OnInit {
   @Input() feature: FidaFeature;
   @Input() name: string;
-  private field: Field;
+  field: Field;
 
   constructor() { }
 
@@ -27,7 +28,7 @@ export class AttributeViewComponent implements OnInit {
   getFormatedValue(): string {
     const value = this.feature.attributes[this.name];
     if (value == null) {
-      return '';
+      return ' ';
     }
     if (this.field === undefined) {
       console.log('field is undefined', this.name);
@@ -49,6 +50,10 @@ export class AttributeViewComponent implements OnInit {
     }
 
     return value;
+  }
+
+  isNumber(): boolean {
+    return this.field.domain == null && UtilService.isNumberField(this.field);
   }
 
 }

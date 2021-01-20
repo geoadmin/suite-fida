@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import Field from 'esri/layers/support/Field';
 import { FidaFeature, RelationshipName } from '../models/FidaFeature.model';
 
 @Injectable({
@@ -7,6 +8,19 @@ import { FidaFeature, RelationshipName } from '../models/FidaFeature.model';
 export class UtilService {
 
   constructor() { }
+
+  /**
+   * NUMBER METHODS
+   */
+
+  public static isNumberField(field: Field): boolean {
+    return field &&
+      (field.type === 'small-integer'
+        || field.type === 'integer'
+        || field.type === 'single'
+        || field.type === 'double');
+  }
+
 
   /**
    * FORMAT METHODS
@@ -51,7 +65,11 @@ export class UtilService {
     if (date == null) {
       return undefined;
     }
-    return new Date(date);
+
+    // correct date, because if date is saved, esri asumes its a utc date
+    const localDate  = new Date();
+    const offsetTicks = localDate.getTimezoneOffset() * 60 * 1000;
+    return new Date(date + offsetTicks);
   }
 
   public static dateToEsri(date: any): any {
@@ -59,7 +77,7 @@ export class UtilService {
       return null;
     }
     if (typeof date.getMonth === 'function') {
-      return (date as Date).getMilliseconds;
+      return (date as Date).valueOf();
     }
     return date;
   }

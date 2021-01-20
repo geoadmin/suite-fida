@@ -84,7 +84,7 @@ export class VersionReconcileDialogComponent implements OnInit {
   }
 
   private prepareDownload(): void {
-    const differencesJSON = JSON.stringify(this.differences);
+    const differencesJSON = JSON.stringify(this.differences, null, 2);
     this.downloadUrl = this.sanitizer.bypassSecurityTrustUrl('data:text/json;charset=UTF-8,' + encodeURIComponent(differencesJSON));
     this.downloadName = `differences_[${this.differences.version.versionName}]_[${this.differences.date.toLocaleString()}].json`;
   }
