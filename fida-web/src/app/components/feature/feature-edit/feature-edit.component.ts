@@ -1,7 +1,8 @@
-import { ChangeDetectorRef, Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, TemplateRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { FeatureState, FidaFeature, RelationshipName } from 'src/app/models/FidaFeature.model';
+import { ConfigService } from 'src/app/configs/config.service';
+import { FeatureState, FidaFeature } from 'src/app/models/FidaFeature.model';
 import { FeatureService } from 'src/app/services/feature.service';
 import { CompleteState, WidgetNotifyService } from 'src/app/services/widget-notify.service';
 
@@ -23,7 +24,8 @@ export class FeatureEditComponent implements OnInit {
     private changeDetectorRef: ChangeDetectorRef,
     private featureService: FeatureService,
     private widgetNotifyService: WidgetNotifyService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private configService: ConfigService
   ) { }
 
   ngOnInit(): void {
@@ -94,11 +96,12 @@ export class FeatureEditComponent implements OnInit {
     if (this.feature.state !== FeatureState.Create) {
 
       // check of geometry-attribute change
-      if (this.feature.attributes.LV95E !== this.feature.originalAttributes.LV95E
-        || this.feature.attributes.LV95N !== this.feature.originalAttributes.LV95N
-        || this.feature.attributes.LN02 !== this.feature.originalAttributes.LN02) {
-        this.modalRef = this.modalService.show(saveDialogTemplate, { class: 'modal-sm' });
-        return;
+      const geometryFields = this.configService.getGeometryFields();
+      for (const geometryField of geometryFields) {
+        if (this.feature.attributes[geometryField] !== this.feature.originalAttributes[geometryField]) {
+          this.modalRef = this.modalService.show(saveDialogTemplate, { class: 'modal-sm modal-dialog-centered' });
+          return;
+        }
       }
     }
 
@@ -134,4 +137,5 @@ export class FeatureEditComponent implements OnInit {
       this.deactivate();
     }
   }
+
 }

@@ -226,18 +226,22 @@ export class DifferenceService {
   }
 
   private hasGeometryChange(differenceFeature: FidaDifferenceFeature): boolean {
-    return this.isAttributeChanged(differenceFeature, 'LV95E') ||
-      this.isAttributeChanged(differenceFeature, 'LV95N') ||
-      this.isAttributeChanged(differenceFeature, 'LN02');
+    const geometryFields = this.configService.getGeometryFields();
+    for (const geometryField of geometryFields) {
+      if (this.isAttributeChanged(differenceFeature, geometryField)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   private hasAttributeChanges(differenceFeature: FidaDifferenceFeature): boolean {
-    const geometryAttributeNameList = ['LV95E', 'LV95N', 'LN02'];
-    const databaseAttributeNameList = ['CREATOR_FIELD', 'CREATOR_DATE_FIELD', 'LAST_EDITOR_FIELD', 'LAST_EDITOR_DATE_FIELD', 'FK_FIDA_HFP', 'FK_FIDA_LFP', 'OBJECTID', 'GLOBALID', 'PUNKTID_FPDS', 'MUTATIONID_FPDS'];
-    const excludeList = geometryAttributeNameList.concat(databaseAttributeNameList);
+    const geometryFields = this.configService.getGeometryFields();
+    const databaseFields = this.configService.getDatabaseFields();
+    const excludeList = geometryFields.concat(databaseFields);
     const differenceAttributes = differenceFeature.attributes.filter(f => !excludeList.includes(f.name));
     for (const differenceAttribute of differenceAttributes) {
-      if(differenceAttribute?.state === FeatureState.Edit){
+      if (differenceAttribute?.state === FeatureState.Edit) {
         return true;
       }
     }

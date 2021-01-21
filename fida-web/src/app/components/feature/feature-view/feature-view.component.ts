@@ -103,7 +103,7 @@ export class FeatureViewComponent implements OnInit, OnDestroy {
   }
 
   showDeleteDialogClick(deleteDialogTemplate: TemplateRef<any>): void {
-    this.modalRef = this.modalService.show(deleteDialogTemplate, { class: 'modal-sm' });
+    this.modalRef = this.modalService.show(deleteDialogTemplate, { class: 'modal-sm modal-dialog-centered' });
   }
 
   async deleteClick(): Promise<void> {

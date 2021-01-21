@@ -148,7 +148,7 @@ export class VersionReconcileDialogComponent implements OnInit {
 
   showAcceptDifferencesDialogClick(acceptDifferencesDialogTemplate: TemplateRef<any>): void {
     this.downloaded = false;
-    this.modalRef = this.modalService.show(acceptDifferencesDialogTemplate);
+    this.modalRef = this.modalService.show(acceptDifferencesDialogTemplate, { class: 'modal-dialog-centered' });
   }
 
   acceptDifferencesCancelClick(): void {

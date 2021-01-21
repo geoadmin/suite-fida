@@ -69,4 +69,13 @@ export class LfpEditComponent implements OnInit {
   getAnhangFeatures(): FidaFeature[] {
     return this.feature?.relatedFeatures?.anhang?.filter((f: FidaFeature) => f.state !== FeatureState.Delete);
   }
+
+  isActiveTab(tab: string): boolean {
+    const activeTab = this.feature?.activeTab || 'lfp_general_tab';
+    return activeTab === tab;
+  }
+
+  tabClick(tab: string): void {
+    this.feature.activeTab = tab;
+  }
 }

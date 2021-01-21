@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { WidgetNotifyService } from './widget-notify.service';
+import { WidgetNotifyService } from '../widget-notify.service';
 
 describe('WidgetNotifyService', () => {
   let service: WidgetNotifyService;

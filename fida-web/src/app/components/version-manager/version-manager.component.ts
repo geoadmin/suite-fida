@@ -100,7 +100,7 @@ export class VersionManagerComponent implements OnInit, OnDestroy {
    * create version
    */
   showCreateDialogClick(): void {
-    const modalRef = this.modalService.show(VersionCreateDialogComponent);
+    const modalRef = this.modalService.show(VersionCreateDialogComponent, { class: 'modal-dialog-centered' });
 
     modalRef.content.onCreate.subscribe(async (gdbVersion: GdbVersion) => {
       const createdVersion = await this.versionManagementService.createVersion(gdbVersion.versionName, gdbVersion.description);
@@ -117,7 +117,8 @@ export class VersionManagerComponent implements OnInit, OnDestroy {
    * delete version
    */
   showDeleteDialogClick(version: GdbVersion): void {
-    const modalRef = this.modalService.show(VersionDeleteDialogComponent, { class: 'modal-sm', initialState: { gdbVersion: version } });
+    const modalRef = this.modalService.show(VersionDeleteDialogComponent,
+      { class: 'modal-sm modal-dialog-centered', initialState: { gdbVersion: version } });
 
     modalRef.content.onDelete.subscribe(async (gdbVersion: GdbVersion) => {
       const success = await this.versionManagementService.deleteVersion(gdbVersion.versionName);

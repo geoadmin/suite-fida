@@ -26,6 +26,23 @@
         "getHeightUrl": "https://api3.geo.admin.ch/rest/services/height",
         "getLK25Url": "https://api3.geo.admin.ch/rest/services/api/MapServer/identify"
     },
+    "geometryFields": [
+        "LV95E",
+        "LV95N",
+        "LN02"
+    ],
+    "databaseFields": [
+        "CREATOR_FIELD",
+        "CREATOR_DATE_FIELD",
+        "LAST_EDITOR_FIELD",
+        "LAST_EDITOR_DATE_FIELD",
+        "FK_FIDA_HFP",
+        "FK_FIDA_LFP",
+        "OBJECTID",
+        "GLOBALID",
+        "PUNKTID_FPDS",
+        "MUTATIONID_FPDS"
+    ],
     "layers": [
         {
             "type": "FeatureLayer",
@@ -152,6 +169,5 @@
                 }
             }
         }
-
     ]
 }

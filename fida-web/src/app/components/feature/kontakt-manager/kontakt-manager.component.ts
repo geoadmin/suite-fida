@@ -52,7 +52,8 @@ export class KontaktManagerComponent implements OnInit {
 
   async createKontaktClick(): Promise<any> {
     const kontaktFeautre = await this.featureService.createRelatedFeature(this.feature, RelationshipName.kontakt, false);
-    const modalRef = this.modalService.show(KontaktEditDialogComponent, { initialState: { feature: kontaktFeautre } });
+    const modalRef = this.modalService.show(KontaktEditDialogComponent,
+      { class: 'modal-dialog-centered', initialState: { feature: kontaktFeautre } });
 
     modalRef.content.onSave.subscribe(async (createdFeature: FidaFeature) => {
       this.featureService.addRelatedFeatureToList(this.feature, RelationshipName.kontakt, createdFeature);

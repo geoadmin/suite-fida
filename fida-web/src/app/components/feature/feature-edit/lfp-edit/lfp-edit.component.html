@@ -1,27 +1,33 @@
 <!-- navigation -->
 <ul class="nav nav-pills nav-fill" role="tablist">
-    <li class="nav-item">
-        <a class="nav-link active" href="#lfp_general_tab" role="tab" data-toggle="tab">{{ 'app.relationship.general' |
+    <li class="nav-item" (click)="tabClick('lfp_general_tab')">
+        <a class="nav-link" [class.active]="isActiveTab('lfp_general_tab')" href="#lfp_general_tab" role="tab"
+            data-toggle="tab">{{ 'app.relationship.general' |
             translate }}</a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#lfp_anhang_tab" role="tab" data-toggle="tab">{{ 'app.relationship.anhang' |
+    <li class="nav-item" (click)="tabClick('lfp_anhang_tab')">
+        <a class="nav-link" [class.active]="isActiveTab('lfp_anhang_tab')" href="#lfp_anhang_tab" role="tab"
+            data-toggle="tab">{{ 'app.relationship.anhang' |
             translate }}</a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#lfp_nachfuehrung_tab" role="tab" data-toggle="tab">{{ 'app.relationship.nachfuehrung' |
+    <li class="nav-item" (click)="tabClick('lfp_nachfuehrung_tab')">
+        <a class="nav-link" [class.active]="isActiveTab('lfp_nachfuehrung_tab')" href="#lfp_nachfuehrung_tab" role="tab"
+            data-toggle="tab">{{ 'app.relationship.nachfuehrung' |
             translate }}</a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#lfp_grundbuch_tab" role="tab" data-toggle="tab">{{ 'app.relationship.grundbuch' |
+    <li class="nav-item" (click)="tabClick('lfp_grundbuch_tab')">
+        <a class="nav-link" [class.active]="isActiveTab('lfp_grundbuch_tab')" href="#lfp_grundbuch_tab" role="tab"
+            data-toggle="tab">{{ 'app.relationship.grundbuch' |
             translate }}</a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#lfp_rueckversicherung_tab" role="tab" data-toggle="tab">{{ 'app.relationship.rueckversicherung' |
+    <li class="nav-item" (click)="tabClick('lfp_rueckversicherung_tab')">
+        <a class="nav-link" [class.active]="isActiveTab('lfp_rueckversicherung_tab')" href="#lfp_rueckversicherung_tab"
+            role="tab" data-toggle="tab">{{ 'app.relationship.rueckversicherung' |
             translate }}</a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#lfp_kontakt_tab" role="tab" data-toggle="tab">{{ 'app.relationship.kontakt' |
+    <li class="nav-item" (click)="tabClick('lfp_kontakt_tab')">
+        <a class="nav-link" [class.active]="isActiveTab('lfp_kontakt_tab')" href="#lfp_kontakt_tab" role="tab"
+            data-toggle="tab">{{ 'app.relationship.kontakt' |
             translate }}</a>
     </li>
 </ul>
@@ -30,7 +36,8 @@
 <div class="tab-content container" [formGroup]="formGroup">
 
     <!--general attributes -->
-    <div role="tabpanel" class="tab-pane fade in active show py-2" id="lfp_general_tab" [class.readonly]="readonly">
+    <div role="tabpanel" class="tab-pane fade py-2" id="lfp_general_tab" [class.readonly]="readonly"
+        [class.active]="isActiveTab('lfp_general_tab')" [class.show]="isActiveTab('lfp_general_tab')">
 
         <!--Punktart / Nr-->
         <div class="row mt-4">
@@ -415,8 +422,9 @@
 
     </div>
 
-      <!--anhang features -->
-      <div role="tabpanel" class="tab-pane fade py-2" id="lfp_anhang_tab">
+    <!--anhang features -->
+    <div role="tabpanel" class="tab-pane fade py-2" id="lfp_anhang_tab" [class.active]="isActiveTab('lfp_anhang_tab')"
+        [class.show]="isActiveTab('lfp_anhang_tab')">
         <div class="row mb-2" [hidden]="readonly">
             <div class="col-12">
                 <button type="button" class="btn btn-primary" (click)="addAnhangClick()">{{ 'app.global.create' |
@@ -432,7 +440,8 @@
     </div>
 
     <!--nachführung features -->
-    <div role="tabpanel" class="tab-pane fade py-2" id="lfp_nachfuehrung_tab">
+    <div role="tabpanel" class="tab-pane fade py-2" id="lfp_nachfuehrung_tab"
+        [class.active]="isActiveTab('lfp_nachfuehrung_tab')" [class.show]="isActiveTab('lfp_nachfuehrung_tab')">
         <div class="row mb-2" [hidden]="readonly">
             <div class="col-12">
                 <button type="button" class="btn btn-primary" (click)="addNachfuehrungClick()">{{ 'app.global.create' |
@@ -448,12 +457,15 @@
     </div>
 
     <!--grundbuch features -->
-    <div role="tabpanel" class="tab-pane fade py-2" id="lfp_grundbuch_tab" [class.spinner]="redefining">
+    <div role="tabpanel" class="tab-pane fade py-2" id="lfp_grundbuch_tab" [class.spinner]="redefining"
+        [class.active]="isActiveTab('lfp_grundbuch_tab')" [class.show]="isActiveTab('lfp_grundbuch_tab')">
         <div class="row mb-2" [hidden]="readonly">
             <div class="col-12">
-                <button type="button" class="btn btn-primary mr-2" (click)="addGrundbuchClick()">{{ 'app.global.create' |
+                <button type="button" class="btn btn-primary mr-2" (click)="addGrundbuchClick()">{{ 'app.global.create'
+                    |
                     translate }}</button>
-                <button type="button" class="btn btn-danger" (click)="redefineGrundbuchDataClick()">{{ 'app.feature_edit.redefine' |
+                <button type="button" class="btn btn-danger" (click)="redefineGrundbuchDataClick()">{{
+                    'app.feature_edit.redefine' |
                     translate }}</button>
             </div>
         </div>
@@ -466,10 +478,13 @@
     </div>
 
     <!--rückversicherung features -->
-    <div role="tabpanel" class="tab-pane fade py-2" id="lfp_rueckversicherung_tab">
+    <div role="tabpanel" class="tab-pane fade py-2" id="lfp_rueckversicherung_tab"
+        [class.active]="isActiveTab('lfp_rueckversicherung_tab')"
+        [class.show]="isActiveTab('lfp_rueckversicherung_tab')">
         <div class="row mb-2" [hidden]="readonly">
             <div class="col-12">
-                <button type="button" class="btn btn-primary" (click)="addRueckversicherungClick()">{{ 'app.global.create' |
+                <button type="button" class="btn btn-primary" (click)="addRueckversicherungClick()">{{
+                    'app.global.create' |
                     translate }}</button>
             </div>
         </div>
@@ -482,7 +497,8 @@
     </div>
 
     <!--kontakt features -->
-    <div role="tabpanel" class="tab-pane fade py-2" id="lfp_kontakt_tab">
+    <div role="tabpanel" class="tab-pane fade py-2" id="lfp_kontakt_tab" [class.active]="isActiveTab('lfp_kontakt_tab')"
+        [class.show]="isActiveTab('lfp_kontakt_tab')">
         <app-kontakt-manager [feature]="feature" [formGroup]="formGroup" [readonly]="readonly"></app-kontakt-manager>
     </div>
 </div>

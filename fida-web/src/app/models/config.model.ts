@@ -59,6 +59,8 @@ export class Config {
     languages: string[];
     versionManagement: VersionManagementConfig;
     gp: GpConfig;
+    geometryFields: string[];
+    databaseFields: string[];
     layers: [LayerConfig];
     layerInfos: any;
     search: [SearchSourceConfig];

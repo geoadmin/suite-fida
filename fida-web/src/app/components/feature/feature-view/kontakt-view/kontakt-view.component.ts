@@ -25,7 +25,8 @@ export class KontaktViewComponent implements OnInit {
 
   async editClick(): Promise<void> {
     const orgAttributes = { ...this.feature.attributes };
-    const modalRef = this.modalService.show(KontaktEditDialogComponent, { initialState: { feature: this.feature } });
+    const modalRef = this.modalService.show(KontaktEditDialogComponent,
+      { class: 'modal-dialog-centered', initialState: { feature: this.feature } });
 
     modalRef.content.onSave.subscribe(async () => {
       this.feature.state = FeatureState.Edit;

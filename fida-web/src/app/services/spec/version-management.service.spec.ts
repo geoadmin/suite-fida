@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { VersionManagementService } from './version-management.service';
+import { VersionManagementService } from '../version-management.service';
 
 describe('VersionService', () => {
   let service: VersionManagementService;

@@ -47,5 +47,9 @@ export class FidaFeature extends Feature {
      * originalAttributes can be used to check of changes or reset changes
      */
     originalAttributes: any;
+    /**
+     * current tab open in view/edit
+     */
+    activeTab: string;
 }
 

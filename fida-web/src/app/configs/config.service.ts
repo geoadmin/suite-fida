@@ -116,6 +116,14 @@ export class ConfigService {
         return this.config.languages;
     }
 
+    public getDatabaseFields(): string[] {
+        return this.config.databaseFields;
+    }
+
+    public getGeometryFields(): string[] {
+        return this.config.geometryFields;
+    }
+
     public getSearchConfig(): [SearchSourceConfig] {
         return this.config.search;
     }

@@ -1,35 +1,43 @@
 <!-- navigation -->
 <ul class="nav nav-pills nav-fill" role="tablist">
-    <li class="nav-item">
-        <a class="nav-link active" href="#hfp_general_tab" role="tab" data-toggle="tab">{{ 'app.relationship.general' |
+    <li class="nav-item" (click)="tabClick('hfp_general_tab')">
+        <a class="nav-link" [class.active]="isActiveTab('hfp_general_tab')" href="#hfp_general_tab" role="tab"
+            data-toggle="tab">{{ 'app.relationship.general' |
             translate }}</a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#hfp_anhang_tab" role="tab" data-toggle="tab">{{ 'app.relationship.anhang' | translate
+    <li class="nav-item" (click)="tabClick('hfp_anhang_tab')">
+        <a class="nav-link" [class.active]="isActiveTab('hfp_anhang_tab')" href="#hfp_anhang_tab" role="tab"
+            data-toggle="tab">{{ 'app.relationship.anhang' | translate
             }}</a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#hfp_nachfuehrung_tab" role="tab" data-toggle="tab">{{ 'app.relationship.nachfuehrung'
+    <li class="nav-item" (click)="tabClick('hfp_nachfuehrung_tab')">
+        <a class="nav-link" [class.active]="isActiveTab('hfp_nachfuehrung_tab')" href="#hfp_nachfuehrung_tab" role="tab"
+            data-toggle="tab">{{ 'app.relationship.nachfuehrung'
             | translate }}</a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#hfp_grundbuch_tab" role="tab" data-toggle="tab">{{ 'app.relationship.grundbuch' |
+    <li class="nav-item" (click)="tabClick('hfp_grundbuch_tab')">
+        <a class="nav-link" [class.active]="isActiveTab('hfp_grundbuch_tab')" href="#hfp_grundbuch_tab" role="tab"
+            data-toggle="tab">{{ 'app.relationship.grundbuch' |
             translate }}</a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#hfp_auslandpunkt_tab" role="tab" data-toggle="tab">{{ 'app.relationship.auslandpunkt'
+    <li class="nav-item" (click)="tabClick('hfp_auslandpunkt_tab')">
+        <a class="nav-link" [class.active]="isActiveTab('hfp_auslandpunkt_tab')" href="#hfp_auslandpunkt_tab" role="tab"
+            data-toggle="tab">{{ 'app.relationship.auslandpunkt'
             | translate }}</a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#hfp_schweremessung_tab" role="tab" data-toggle="tab">{{
+    <li class="nav-item" (click)="tabClick('hfp_schweremessung_tab')">
+        <a class="nav-link" [class.active]="isActiveTab('hfp_schweremessung_tab')" href="#hfp_schweremessung_tab"
+            role="tab" data-toggle="tab">{{
             'app.relationship.schweremessung' | translate }}</a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#hfp_schaeden_tab" role="tab" data-toggle="tab">{{ 'app.relationship.schaeden' |
+    <li class="nav-item" (click)="tabClick('hfp_schaeden_tab')">
+        <a class="nav-link" [class.active]="isActiveTab('hfp_schaeden_tab')" href="#hfp_schaeden_tab" role="tab"
+            data-toggle="tab">{{ 'app.relationship.schaeden' |
             translate }}</a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#hfp_kontakt_tab" role="tab" data-toggle="tab">{{ 'app.relationship.kontakt' |
+    <li class="nav-item" (click)="tabClick('hfp_kontakt_tab')">
+        <a class="nav-link" [class.active]="isActiveTab('hfp_kontakt_tab')" href="#hfp_kontakt_tab" role="tab"
+            data-toggle="tab">{{ 'app.relationship.kontakt' |
             translate }}</a>
     </li>
 </ul>
@@ -38,7 +46,8 @@
 <div class="tab-content container" [formGroup]="formGroup">
 
     <!--general attributes -->
-    <div role="tabpanel" class="tab-pane fade in active show py-2" id="hfp_general_tab" [class.readonly]="readonly">
+    <div role="tabpanel" class="tab-pane fade py-2" id="hfp_general_tab" [class.readonly]="readonly"
+        [class.active]="isActiveTab('hfp_general_tab')" [class.show]="isActiveTab('hfp_general_tab')">
 
         <!--Punktart / Nr-->
         <div class="row mt-4">
@@ -365,10 +374,12 @@
     </div>
 
     <!--anhang features -->
-    <div role="tabpanel" class="tab-pane fade py-2" id="hfp_anhang_tab">
+    <div role="tabpanel" class="tab-pane fade py-2" id="hfp_anhang_tab" [class.active]="isActiveTab('lfp_anhang_tab')"
+        [class.show]="isActiveTab('lfp_anhang_tab')">
         <div class="row mb-2" [hidden]="readonly">
             <div class="col-12">
-                <button type="button" class="btn btn-primary" (click)="addAnhangClick()">{{ 'app.global.create' | translate }}</button>
+                <button type="button" class="btn btn-primary" (click)="addAnhangClick()">{{ 'app.global.create' |
+                    translate }}</button>
             </div>
         </div>
         <div *ngFor="let feature of getAnhangFeatures()">
@@ -380,7 +391,8 @@
     </div>
 
     <!--nachführung features -->
-    <div role="tabpanel" class="tab-pane fade py-2" id="hfp_nachfuehrung_tab">
+    <div role="tabpanel" class="tab-pane fade py-2" id="hfp_nachfuehrung_tab"
+        [class.active]="isActiveTab('hfp_nachfuehrung_tab')" [class.show]="isActiveTab('hfp_nachfuehrung_tab')">
         <div class="row mb-2" [hidden]="readonly">
             <div class="col-12">
                 <button type="button" class="btn btn-primary" (click)="addNachfuehrungClick()">{{ 'app.global.create' |
@@ -396,7 +408,8 @@
     </div>
 
     <!--grundbuch features -->
-    <div role="tabpanel" class="tab-pane fade py-2" id="hfp_grundbuch_tab" [class.spinner]="redefining">
+    <div role="tabpanel" class="tab-pane fade py-2" id="hfp_grundbuch_tab" [class.spinner]="redefining"
+        [class.active]="isActiveTab('hfp_auslandpunkt_tab')" [class.show]="isActiveTab('hfp_auslandpunkt_tab')">
         <div class="row mb-2" [hidden]="readonly">
             <div class="col-12">
                 <button type="button" class="btn btn-primary mr-2" (click)="addGrundbuchClick()">{{ 'app.global.create'
@@ -413,7 +426,8 @@
     </div>
 
     <!--auslandpunkt features -->
-    <div role="tabpanel" class="tab-pane fade py-2" id="hfp_auslandpunkt_tab">
+    <div role="tabpanel" class="tab-pane fade py-2" id="hfp_auslandpunkt_tab"
+        [class.active]="isActiveTab('hfp_auslandpunkt_tab')" [class.show]="isActiveTab('hfp_auslandpunkt_tab')">
         <div class="row mb-2" [hidden]="readonly">
             <div class="col-12">
                 <button type="button" class="btn btn-primary" (click)="addAuslandpunktClick()">{{ 'app.global.create' |
@@ -429,7 +443,8 @@
     </div>
 
     <!--schweremessung features -->
-    <div role="tabpanel" class="tab-pane fade py-2" id="hfp_schweremessung_tab">
+    <div role="tabpanel" class="tab-pane fade py-2" id="hfp_schweremessung_tab"
+        [class.active]="isActiveTab('hfp_schweremessung_tab')" [class.show]="isActiveTab('hfp_schweremessung_tab')">
         <div class="row mb-2" [hidden]="readonly">
             <div class="col-12">
                 <button type="button" class="btn btn-primary" (click)="addSchweremessungClick()">{{ 'app.global.create'
@@ -445,7 +460,8 @@
     </div>
 
     <!--schaeden features -->
-    <div role="tabpanel" class="tab-pane fade py-2" id="hfp_schaeden_tab">
+    <div role="tabpanel" class="tab-pane fade py-2" id="hfp_schaeden_tab"
+        [class.active]="isActiveTab('hfp_schaeden_tab')" [class.show]="isActiveTab('hfp_schaeden_tab')">
         <div class="row mb-2" [hidden]="readonly">
             <div class="col-12">
                 <button type="button" class="btn btn-primary" (click)="addSchaedenClick()">{{ 'app.global.create' |
@@ -461,7 +477,8 @@
     </div>
 
     <!--kontakt features -->
-    <div role="tabpanel" class="tab-pane fade py-2" id="hfp_kontakt_tab">
+    <div role="tabpanel" class="tab-pane fade py-2" id="hfp_kontakt_tab" [class.active]="isActiveTab('hfp_kontakt_tab')"
+        [class.show]="isActiveTab('hfp_kontakt_tab')">
         <app-kontakt-manager [feature]="feature" [formGroup]="formGroup" [readonly]="readonly"></app-kontakt-manager>
     </div>
 </div>

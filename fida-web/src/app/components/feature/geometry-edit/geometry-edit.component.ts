@@ -44,7 +44,7 @@ export class GeometryEditComponent implements OnInit {
   }
 
   async saveClick(saveDialogTemplate: TemplateRef<any>): Promise<void> {
-    this.modalRef = this.modalService.show(saveDialogTemplate, { class: 'modal-sm' });
+    this.modalRef = this.modalService.show(saveDialogTemplate, { class: 'modal-sm modal-dialog-centered' });
 
   }
 

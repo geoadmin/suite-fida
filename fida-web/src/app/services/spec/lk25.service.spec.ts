@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { Lk25Service } from './lk25.service';
+import { Lk25Service } from '../lk25.service';
 
 describe('Lk25Service', () => {
   let service: Lk25Service;
