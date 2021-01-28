@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import Geometry from 'esri/geometry/Geometry';
-import Point from 'esri/geometry/Point';
+import Geometry from '@arcgis/core/geometry/Geometry';
+import Point from '@arcgis/core/geometry/Point';
 import { ConfigService } from '../configs/config.service';
 import { ParcelInfo } from '../models/ParcelInfo.model';
 import { QueryService } from './query.service';

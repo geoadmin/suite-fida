@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import CodedValueDomain from 'esri/layers/support/CodedValueDomain';
-import Field from 'esri/layers/support/Field';
+import CodedValueDomain from '@arcgis/core/layers/support/CodedValueDomain';
+import Field from '@arcgis/core/layers/support/Field';
 import { ConfigService } from 'src/app/configs/config.service';
 import { FidaDifferenceAttribute, FidaDifferenceFeature } from 'src/app/models/Difference.model';
 import { RelationshipName } from 'src/app/models/FidaFeature.model';

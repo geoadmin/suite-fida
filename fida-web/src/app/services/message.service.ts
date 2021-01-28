@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NotificationsService } from 'angular2-notifications';
-import EsriError from 'esri/core/Error';
+import EsriError from '@arcgis/core/core/Error';
 
 @Injectable({
   providedIn: 'root'

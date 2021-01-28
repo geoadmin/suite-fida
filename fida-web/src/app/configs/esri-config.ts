@@ -1,4 +1,4 @@
-import esriConfig from 'esri/config';
+import esriConfig from '@arcgis/core/config';
 
 const DEFAULT_WORKER_URL = 'https://js.arcgis.com/4.17/';
 const DEFAULT_LOADER_URL = `${DEFAULT_WORKER_URL}dojo/dojo-lite.js`;

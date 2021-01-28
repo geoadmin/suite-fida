@@ -6,7 +6,7 @@ import { FeatureViewComponent } from '../components/feature/feature-view/feature
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
-import Feature from 'esri/Graphic';
+import Feature from '@arcgis/core/Graphic';
 import { FidaFeature } from '../models/FidaFeature.model';
 
 @Injectable({ providedIn: 'root' })

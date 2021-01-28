@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { QueryService } from './query.service';
 import { ConfigService } from '../configs/config.service';
 import { MessageService } from './message.service';
-import Feature from 'esri/Graphic';
-import FeatureLayer from 'esri/layers/FeatureLayer';
-import EsriRelationship from 'esri/layers/support/Relationship';
+import Feature from '@arcgis/core/Graphic';
+import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
+import EsriRelationship from '@arcgis/core/layers/support/Relationship';
 import { FeatureState, FidaFeature, LayerId, RelatedFeatures, RelationshipName } from '../models/FidaFeature.model';
 import { ParcelInfoService } from './parcel-info.service';
 import { RelationshipsConfig } from '../models/config.model';
-import Point from 'esri/geometry/Point';
+import Point from '@arcgis/core/geometry/Point';
 import { HeightService } from './height.service';
 import { Lk25Service } from './lk25.service';
 

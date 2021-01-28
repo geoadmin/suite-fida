@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import Expand from 'esri/widgets/Expand';
+import Expand from '@arcgis/core/widgets/Expand';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { GdbVersion } from 'src/app/models/GdbVersion.model';
 import { SettingService } from 'src/app/services/setting.service';

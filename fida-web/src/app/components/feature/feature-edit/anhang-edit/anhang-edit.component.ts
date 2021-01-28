@@ -1,7 +1,7 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import AttachmentInfo from 'esri/layers/support/AttachmentInfo';
-import Attachments from 'esri/widgets/Attachments';
+import AttachmentInfo from '@arcgis/core/layers/support/AttachmentInfo';
+import Attachments from '@arcgis/core/widgets/Attachments';
 import { FeatureState, FidaFeature } from 'src/app/models/FidaFeature.model';
 
 @Component({

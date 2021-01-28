@@ -5,8 +5,8 @@ import {
     RelationshipsConfig, SearchSourceConfig, SearchType, VersionManagementConfig
 } from '../models/config.model';
 import { environment } from '../../environments/environment';
-import esriRequest from 'esri/request';
-import { layer } from 'esri/views/3d/support/LayerPerformanceInfo';
+import esriRequest from '@arcgis/core/request';
+import esriConfig from '@arcgis/core/config';
 
 
 @Injectable({ providedIn: 'root' })
@@ -14,6 +14,12 @@ export class ConfigService {
     private config: Config;
 
     constructor(private httpClient: HttpClient) {
+        esriConfig.request.interceptors.push({
+            urls: /FeatureServer\/\d+$/,
+            after: (response) => {
+              response.data.supportedQueryFormats = 'JSON';
+            }
+          });
     }
 
     public async load(): Promise<any> {

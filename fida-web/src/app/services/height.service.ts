@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Point } from 'esri/geometry';
+import { Inject, Injectable } from '@angular/core';
+import { Point } from '@arcgis/core/geometry';
 import { ConfigService } from '../configs/config.service';
 import { MessageService } from './message.service';
 
@@ -10,9 +10,9 @@ import { MessageService } from './message.service';
 export class HeightService {
 
   constructor(
-    private httpClient: HttpClient,
-    private configService: ConfigService,
-    private messageService: MessageService
+    @Inject(HttpClient) private httpClient: HttpClient,
+    @Inject(ConfigService) private configService: ConfigService,
+    @Inject(MessageService) private messageService: MessageService
   ) { }
 
   async getHeight(point: Point): Promise<any> {
@@ -25,7 +25,7 @@ export class HeightService {
     return await this.httpClient.get(url, { params })
       .toPromise()
       .then((result: any) => {
-        const height: number = parseInt(result.height, 10);
+        const height: number = parseFloat(result.height);
         return height;
       })
       .catch((error: any) => {

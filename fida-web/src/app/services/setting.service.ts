@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import PortalUser from 'esri/portal/PortalUser';
+import { Inject, Injectable } from '@angular/core';
+import PortalUser from '@arcgis/core/portal/PortalUser';
 import { ConfigService } from '../configs/config.service';
 import { CookieService } from './cookie.service';
 import { WidgetNotifyService } from './widget-notify.service';
@@ -12,9 +12,9 @@ export class SettingService {
   public user: PortalUser;
 
   constructor(
-    private widgetNotifyService: WidgetNotifyService,
-    private cookieService: CookieService,
-    private configSevice: ConfigService) {
+    @Inject(WidgetNotifyService) private widgetNotifyService: WidgetNotifyService,
+    @Inject(CookieService) private cookieService: CookieService,
+    @Inject(ConfigService) private configSevice: ConfigService) {
     this.gdbVersionName = this.cookieService.gdbVersionName || this.configSevice.getDefaultVersionName();
   }
 

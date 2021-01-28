@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import Feature from 'esri/Graphic';
-import Locator from 'esri/tasks/Locator';
-import LocatorSearchSource from 'esri/widgets/Search/LocatorSearchSource';
-import SearchSource from 'esri/widgets/Search/SearchSource';
+import Feature from '@arcgis/core/Graphic';
+import Locator from '@arcgis/core/tasks/Locator';
+import LocatorSearchSource from '@arcgis/core/widgets/Search/LocatorSearchSource';
+import SearchSource from '@arcgis/core/widgets/Search/SearchSource';
 import { ConfigService } from '../configs/config.service';
 import { SearchSourceConfig, SearchType } from '../models/config.model';
 import { QueryService } from './query.service';

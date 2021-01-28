@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import FeatureLayer from 'esri/layers/FeatureLayer';
-import CodedValueDomain from 'esri/layers/support/CodedValueDomain';
-import Field from 'esri/layers/support/Field';
+import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
+import CodedValueDomain from '@arcgis/core/layers/support/CodedValueDomain';
+import Field from '@arcgis/core/layers/support/Field';
 import { FidaFeature } from 'src/app/models/FidaFeature.model';
 import { UtilService } from 'src/app/services/util.service';
 

@@ -1,5 +1,5 @@
-import Feature from 'esri/Graphic';
-import AttachmentInfo from 'esri/layers/support/AttachmentInfo';
+import Feature from '@arcgis/core/Graphic';
+import AttachmentInfo from '@arcgis/core/layers/support/AttachmentInfo';
 
 export enum FeatureState {
     Create = 'create',

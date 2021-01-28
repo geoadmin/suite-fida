@@ -1,6 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
-import CodedValueDomain from 'esri/layers/support/CodedValueDomain';
+import CodedValueDomain from '@arcgis/core/layers/support/CodedValueDomain';
 
 @Injectable({
   providedIn: 'root'

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import FeatureLayer from 'esri/layers/FeatureLayer';
+import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import { TypeaheadMatch } from 'ngx-bootstrap/typeahead';
 import { FidaFeature, LayerId } from '../models/FidaFeature.model';
 import { FidaFeatureSearch } from '../models/FidaFeatureSearch.model';

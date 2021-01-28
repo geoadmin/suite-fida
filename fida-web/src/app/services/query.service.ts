@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { MessageService } from './message.service';
 import { SettingService } from './setting.service';
-import Geometry from 'esri/geometry/Geometry';
-import Query from 'esri/tasks/support/Query';
-import QueryTask from 'esri/tasks/QueryTask';
-import RelationshipQuery from 'esri/tasks/support/RelationshipQuery';
-import FeatureLayer from 'esri/layers/FeatureLayer';
-import Feature from 'esri/Graphic';
-import EsriError from 'esri/core/Error';
-import esriRequest from 'esri/request';
+import Geometry from '@arcgis/core/geometry/Geometry';
+import Query from '@arcgis/core/tasks/support/Query';
+import QueryTask from '@arcgis/core/tasks/QueryTask';
+import RelationshipQuery from '@arcgis/core/tasks/support/RelationshipQuery';
+import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
+import Feature from '@arcgis/core/Graphic';
+import EsriError from '@arcgis/core/core/Error';
+import esriRequest from '@arcgis/core/request';
 import { environment } from '../../environments/environment';
-import Geoprocessor from 'esri/tasks/Geoprocessor';
+import Geoprocessor from '@arcgis/core/tasks/Geoprocessor';
 import { FidaFeature } from '../models/FidaFeature.model';
 
 

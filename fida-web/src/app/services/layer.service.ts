@@ -3,11 +3,11 @@ import { ConfigService } from '../configs/config.service';
 import { TemplateService } from './template.service';
 import { LayerConfig, LayerType } from '../models/config.model';
 import { SettingService } from './setting.service';
-import esriConfig from 'esri/config';
-import Portal from 'esri/portal/Portal';
-import Basemap from 'esri/Basemap';
-import Layer from 'esri/layers/Layer';
-import FeatureLayer from 'esri/layers/FeatureLayer';
+import esriConfig from '@arcgis/core/config';
+import Portal from '@arcgis/core/portal/Portal';
+import Basemap from '@arcgis/core/Basemap';
+import Layer from '@arcgis/core/layers/Layer';
+import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 
 
 @Injectable({ providedIn: 'root' })

@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 // vendors
-import './configs/esri-config';
+//import './configs/esri-config';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { ModalModule } from 'ngx-bootstrap/modal';

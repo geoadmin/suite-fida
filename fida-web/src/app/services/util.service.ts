@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import Field from 'esri/layers/support/Field';
+import Field from '@arcgis/core/layers/support/Field';
 import { FidaFeature, RelationshipName } from '../models/FidaFeature.model';
 
 @Injectable({

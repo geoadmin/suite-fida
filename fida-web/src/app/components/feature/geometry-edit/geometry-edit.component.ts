@@ -2,10 +2,10 @@ import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/
 import { MapService } from 'src/app/services/map.service';
 import { CompleteState, WidgetNotifyService } from 'src/app/services/widget-notify.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import MapView from 'esri/views/MapView';
-import Feature from 'esri/Graphic';
-import SketchViewModel from 'esri/widgets/Sketch/SketchViewModel';
-import GraphicsLayer from 'esri/layers/GraphicsLayer';
+import MapView from '@arcgis/core/views/MapView';
+import Feature from '@arcgis/core/Graphic';
+import SketchViewModel from '@arcgis/core/widgets/Sketch/SketchViewModel';
+import GraphicsLayer from '@arcgis/core/layers/GraphicsLayer';
 import { FeatureService } from 'src/app/services/feature.service';
 import { FidaFeature } from 'src/app/models/FidaFeature.model';
 

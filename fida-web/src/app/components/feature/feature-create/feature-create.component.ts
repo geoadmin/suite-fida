@@ -3,12 +3,12 @@ import { MapService } from 'src/app/services/map.service';
 import { WidgetsService } from 'src/app/services/widgets.service';
 import { LayerService } from 'src/app/services/layer.service';
 import { WidgetNotifyService } from 'src/app/services/widget-notify.service';
-import MapView from 'esri/views/MapView';
-import FeatureLayer from 'esri/layers/FeatureLayer';
-import Feature from 'esri/Graphic';
-import SketchViewModel from 'esri/widgets/Sketch/SketchViewModel';
-import GraphicsLayer from 'esri/layers/GraphicsLayer';
-import Expand from 'esri/widgets/Expand';
+import MapView from '@arcgis/core/views/MapView';
+import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
+import Feature from '@arcgis/core/Graphic';
+import SketchViewModel from '@arcgis/core/widgets/Sketch/SketchViewModel';
+import GraphicsLayer from '@arcgis/core/layers/GraphicsLayer';
+import Expand from '@arcgis/core/widgets/Expand';
 import { FeatureState, FidaFeature } from 'src/app/models/FidaFeature.model';
 
 @Component({

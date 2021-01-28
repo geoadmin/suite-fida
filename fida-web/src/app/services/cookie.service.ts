@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { CookieService as NgxCookieService } from 'ngx-cookie-service';
-import Extent from 'esri/geometry/Extent';
+import Extent from '@arcgis/core/geometry/Extent';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ export class CookieService {
   private languageCookieName = 'LANG';
 
 
-  constructor(private ngxCookieService: NgxCookieService) { }
+  constructor(@Inject(NgxCookieService) private ngxCookieService: NgxCookieService) { }
 
   public get extent(): Extent {
     return this.getCookie(this.mapExtentCookieName);

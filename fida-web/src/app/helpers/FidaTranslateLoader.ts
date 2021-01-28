@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { TranslateLoader } from '@ngx-translate/core';
-import QueryTask from 'esri/tasks/QueryTask';
-import Query from 'esri/tasks/support/Query';
-import Feature from 'esri/Graphic';
+import QueryTask from '@arcgis/core/tasks/QueryTask';
+import Query from '@arcgis/core/tasks/support/Query';
+import Feature from '@arcgis/core/Graphic';
 import { from, Observable, of, zip } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ConfigService } from '../configs/config.service';

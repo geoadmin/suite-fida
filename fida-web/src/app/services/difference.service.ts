@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import FeatureLayer from 'esri/layers/FeatureLayer';
-import Feature from 'esri/Graphic';
+import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
+import Feature from '@arcgis/core/Graphic';
 import { ConfigService } from '../configs/config.service';
 import { DefaultFeatureMemeory, EsriDifferenceFeature, EsriDifferences, FidaDifferenceAttribute, FidaDifferenceFeature, FidaDifferenceGroup, FidaDifferences } from '../models/Difference.model';
 import { FeatureState } from '../models/FidaFeature.model';
