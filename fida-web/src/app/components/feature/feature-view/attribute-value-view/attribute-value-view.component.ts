@@ -31,7 +31,6 @@ export class AttributeValueViewComponent implements OnInit {
       return ' ';
     }
     if (this.field === undefined) {
-      console.log('field is undefined', this.name);
       return value;
     }
     if (this.field.domain != null && this.field.domain.type === 'coded-value') {

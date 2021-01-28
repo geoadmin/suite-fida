@@ -19,9 +19,6 @@ describe('HeightService', () => {
     getGpConfig = () => ({ getHeightUrl: 'URL' });
   }
 
-  class MessageServiceStub {
-  }
-
   /**
    * Run before each test block
    */

@@ -1,31 +1,25 @@
 import {
   Injectable, ComponentFactoryResolver, Injector, Compiler, ComponentFactory,
-  Component, ModuleWithComponentFactories, NgModule, ComponentRef
+  Component, ModuleWithComponentFactories, NgModule, ComponentRef, Inject
 } from '@angular/core';
-import { FeatureViewComponent } from '../components/feature/feature-view/feature-view.component';
 import { HttpClient } from '@angular/common/http';
-import { DomSanitizer } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import Feature from '@arcgis/core/Graphic';
 import { FidaFeature } from '../models/FidaFeature.model';
+import { FeatureViewComponent } from '../components/feature/feature-view/feature-view.component';
 
 @Injectable({ providedIn: 'root' })
 export class ComponentService {
   private featureViewTemplate: string;
-  private featureEditTemplate: string;
-
 
   constructor(
-    private componentFactoryResolver: ComponentFactoryResolver,
-    private compiler: Compiler,
-    private injector: Injector,
-    private sanitizer: DomSanitizer,
-    private http: HttpClient) {
+    @Inject(ComponentFactoryResolver) private componentFactoryResolver: ComponentFactoryResolver,
+    @Inject(Compiler) private compiler: Compiler,
+    @Inject(Injector) private injector: Injector,
+    @Inject(HttpClient) private http: HttpClient) {
 
     this.http.get('assets/templates/featureViewTemplate.html', { responseType: 'text' })
       .subscribe(data => this.featureViewTemplate = data);
-    this.http.get('assets/templates/featureEditTemplate.html', { responseType: 'text' })
-      .subscribe(data => this.featureEditTemplate = data);
   }
 
   public createFeatureViewComponent(feature: FidaFeature): ComponentRef<FeatureViewComponent> {
@@ -37,6 +31,10 @@ export class ComponentService {
     component.changeDetectorRef.detectChanges();
     return component;
   }
+
+  /**
+   * NOT JET USED
+   */
   private createFeatureComponent(feature: Feature): any {
     const metadata = {
       selector: 'runtime-component',

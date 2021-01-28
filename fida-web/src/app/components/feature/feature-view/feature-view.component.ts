@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { FeatureService } from 'src/app/services/feature.service';
 import { CompleteState, WidgetNotifyService } from 'src/app/services/widget-notify.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
@@ -23,17 +23,17 @@ export class FeatureViewComponent implements OnInit, OnDestroy {
   public form: FormGroup = new FormGroup({}); // Temporary
 
   constructor(
-    private changeDetectorRef: ChangeDetectorRef,
-    private featureService: FeatureService,
-    private widgetNotifyService: WidgetNotifyService,
-    private modalService: BsModalService
+    @Inject(ChangeDetectorRef) private changeDetectorRef: ChangeDetectorRef,
+    @Inject(FeatureService) private featureService: FeatureService,
+    @Inject(WidgetNotifyService) private widgetNotifyService: WidgetNotifyService,
+    @Inject(BsModalService) private modalService: BsModalService
   ) { }
 
   ngOnInit(): void {
   }
 
   ngOnDestroy(): void {
-    console.log('Items destroyed');
+    // console.log('Items destroyed');
   }
 
   public setFeature(feature: FidaFeature): void {

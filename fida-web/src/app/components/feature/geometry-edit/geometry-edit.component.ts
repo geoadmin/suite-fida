@@ -8,6 +8,7 @@ import SketchViewModel from '@arcgis/core/widgets/Sketch/SketchViewModel';
 import GraphicsLayer from '@arcgis/core/layers/GraphicsLayer';
 import { FeatureService } from 'src/app/services/feature.service';
 import { FidaFeature } from 'src/app/models/FidaFeature.model';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-geometry-edit',
@@ -93,7 +94,11 @@ export class GeometryEditComponent implements OnInit {
     if (!this.sketchViewModel) {
       this.mapView = this.mapService.getMapView();
       this.graphicsLayer = this.mapService.getGraphicsLayer();
-      this.sketchViewModel = new SketchViewModel({ view: this.mapView, layer: this.graphicsLayer });
+      this.sketchViewModel = new SketchViewModel({
+        view: this.mapView,
+        layer: this.graphicsLayer,
+        pointSymbol: UtilService.getSketchPointSymbol()
+      });
 
       this.sketchViewModel.on('update', (event) => {
         if (event.state === 'complete') {

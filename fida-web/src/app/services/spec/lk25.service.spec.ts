@@ -1,12 +1,10 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController, RequestMatch } from '@angular/common/http/testing';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { Lk25Service } from '../lk25.service';
 import { ConfigService } from '../../configs/config.service';
 import { MessageService } from './../message.service';
 import Point from '@arcgis/core/geometry/Point';
-import { GpConfig } from 'src/app/models/config.model';
 
 describe('Lk25Service', () => {
   let service: Lk25Service;
@@ -21,9 +19,6 @@ describe('Lk25Service', () => {
     getGpConfig = () => ({ getLK25Url: 'URL' });
   }
 
-  class MessageServiceStub {
-  }
-
   /**
    * Run before each test block
    */
@@ -36,7 +31,6 @@ describe('Lk25Service', () => {
       providers: [
         Lk25Service,
         { provide: ConfigService, useClass: ConfigServiceStub },
-        { provide: MessageService, useClass: MessageServiceStub },
         { provide: MessageService, useValue: spy }
       ]
     });

@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import Feature from '@arcgis/core/Graphic';
-import { ConfigService } from '../configs/config.service';
-import { DefaultFeatureMemeory, EsriDifferenceFeature, EsriDifferences, FidaDifferenceAttribute, FidaDifferenceFeature, FidaDifferenceGroup, FidaDifferences } from '../models/Difference.model';
+import { DefaultFeatureMemeory, EsriDifferenceFeature, EsriDifferences, FidaDifferenceFeature, FidaDifferenceGroup, FidaDifferences } from '../models/Difference.model';
 import { FeatureState } from '../models/FidaFeature.model';
 import { GdbVersion } from '../models/GdbVersion.model';
 import { LayerService } from './layer.service';
+import { ConfigService } from '../configs/config.service';
 import { QueryService } from './query.service';
 
 @Injectable({
@@ -14,9 +14,9 @@ import { QueryService } from './query.service';
 export class DifferenceService {
 
   constructor(
-    private queryService: QueryService,
-    private layerService: LayerService,
-    private configService: ConfigService
+    @Inject(QueryService) private queryService: QueryService,
+    @Inject(LayerService) private layerService: LayerService,
+    @Inject(ConfigService) private configService: ConfigService
   ) { }
 
   public async convertDifferences(esriDifferencesSets: EsriDifferences[], version: GdbVersion): Promise<FidaDifferences> {

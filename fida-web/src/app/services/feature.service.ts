@@ -67,10 +67,7 @@ export class FeatureService {
               this.correctDeletedKontaktFeatures(feature, relatedFeatures);
             }
 
-            const saved = await this.saveRelatedFeatures(relatedFeatureLayer, relatedFeatures);
-            if (saved === true) {
-              console.log(`related features "${relationshipName}" saved.`);
-            }
+            await this.saveRelatedFeatures(relatedFeatureLayer, relatedFeatures);
           }
         }
       } else {
@@ -103,7 +100,6 @@ export class FeatureService {
       relatedFeatures.filter(f => f.state === undefined
         && JSON.stringify(f.originalAttributes) !== JSON.stringify(f.attributes)).map(feature => {
           feature.state = FeatureState.Edit;
-          console.log(feature.attributes.OBJECTID);
         });
 
       // create save properties
@@ -162,7 +158,7 @@ export class FeatureService {
 
     // delete features
     if (unlinkedFeatures.length > 0) {
-      console.log(`delete unlinked kontakt features with id ${unlinkedFeatures.map(m => m.attributes.OBJECID).join(',')}`);
+      // console.log(`delete unlinked kontakt features with id ${unlinkedFeatures.map(m => m.attributes.OBJECID).join(',')}`);
       const applyEditProperties: __esri.FeatureLayerApplyEditsEdits = {};
       applyEditProperties.deleteFeatures = unlinkedFeatures;
       this.applyEdits(kntaktFeatureLayer, applyEditProperties);
@@ -248,7 +244,6 @@ export class FeatureService {
 
         // store related features
         (feature.relatedFeatures as any)[key] = resultFeatures;
-        console.log(`related features "${value}" loaded. count=${resultFeatures.length}`);
         if (loadedCallback) {
           loadedCallback();
         }
@@ -301,7 +296,7 @@ export class FeatureService {
     }
 
     // get grundbuch
-    const parcelInfos = await this.parcelInfoService.getParcelInfo(feature.geometry);
+    const parcelInfos = await this.parcelInfoService.getParcelInfo(feature.geometry) || [];
 
     // flag old grundbuch features as deleted and delete new once
     this.checkRelatedFeatureList(feature, RelationshipName.grundbuch);

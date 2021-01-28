@@ -9,7 +9,9 @@ import Feature from '@arcgis/core/Graphic';
 import SketchViewModel from '@arcgis/core/widgets/Sketch/SketchViewModel';
 import GraphicsLayer from '@arcgis/core/layers/GraphicsLayer';
 import Expand from '@arcgis/core/widgets/Expand';
+import SimpleMarkerSymbol from '@arcgis/core/symbols/SimpleMarkerSymbol';
 import { FeatureState, FidaFeature } from 'src/app/models/FidaFeature.model';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-feature-create',
@@ -115,7 +117,11 @@ export class FeatureCreateComponent implements OnInit, OnDestroy {
     if (!this.sketchViewModel) {
       this.mapView = this.mapService.getMapView();
       this.graphicsLayer = this.mapService.getGraphicsLayer();
-      this.sketchViewModel = new SketchViewModel({ view: this.mapView, layer: this.graphicsLayer });
+      this.sketchViewModel = new SketchViewModel({
+        view: this.mapView,
+        layer: this.graphicsLayer,
+        pointSymbol: UtilService.getSketchPointSymbol()
+      });
 
       this.sketchViewModel.on(['create', 'update'] as any, (event: any) => {
         if (event.state === 'complete') {
@@ -151,4 +157,5 @@ export class FeatureCreateComponent implements OnInit, OnDestroy {
     this.wating = false;
     this.graphicsLayer.removeAll();
   }
+
 }

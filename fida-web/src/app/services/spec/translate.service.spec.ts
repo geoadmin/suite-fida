@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { FidaTranslateService } from '../translate.service';
 
-describe('FidaTranslateService', () => {
+xdescribe('FidaTranslateService', () => {
   let service: FidaTranslateService;
 
   beforeEach(() => {

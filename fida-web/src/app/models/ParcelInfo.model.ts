@@ -6,4 +6,5 @@ export class ParcelInfo {
     BFSNummer: number;
     Bezirk: string;
     Kanton: string;
+    Land: string;
 }

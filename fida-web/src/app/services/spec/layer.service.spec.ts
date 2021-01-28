@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SearchSourceService } from '../search-source.service';
+import { LayerService } from '../layer.service';
 
-xdescribe('SearchSourceService', () => {
-  let service: SearchSourceService;
+xdescribe('LayerService', () => {
+  let service: LayerService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(SearchSourceService);
+    service = TestBed.inject(LayerService);
   });
 
   it('should be created', () => {

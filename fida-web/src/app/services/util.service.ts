@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import Field from '@arcgis/core/layers/support/Field';
+import SimpleMarkerSymbol from '@arcgis/core/symbols/SimpleMarkerSymbol';
 import { FidaFeature, RelationshipName } from '../models/FidaFeature.model';
 
 @Injectable({
@@ -151,4 +152,22 @@ export class UtilService {
       return this.formatDate(date, 'yyyy-mm-dd') || '-no date-';
     }
   }
+
+  /**
+   * SYMBOL METHODS
+   */
+
+  public static getSketchPointSymbol(): SimpleMarkerSymbol {
+    return new SimpleMarkerSymbol({
+      style: 'circle',
+      size: 6,
+      color: [0, 195, 255, 0.5],
+      outline: {
+        color: [25, 25, 25],
+        width: 1
+      }
+    });
+  }
+
+
 }
