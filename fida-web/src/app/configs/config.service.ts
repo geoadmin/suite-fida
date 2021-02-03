@@ -17,9 +17,9 @@ export class ConfigService {
         esriConfig.request.interceptors.push({
             urls: /FeatureServer\/\d+$/,
             after: (response) => {
-              response.data.supportedQueryFormats = 'JSON';
+                response.data.supportedQueryFormats = 'JSON';
             }
-          });
+        });
     }
 
     public async load(): Promise<any> {
@@ -146,10 +146,10 @@ export class ConfigService {
         return this.config.versionManagement;
     }
 
-    public getRelationshipsConfigs(featureLayerId: string): RelationshipsConfig {
+    public getRelationshipsConfigs(featureLayerId: string, throwError = true): RelationshipsConfig {
         const layerConfigs = this.config.layers.filter(c => c.properties.id === featureLayerId);
         if (layerConfigs.length !== 1) {
-            throw new Error(`on layer with id "${featureLayerId}" found in configuration`);
+            return this.handleError(`on layer with id "${featureLayerId}" found in configuration`, throwError);
         }
         return layerConfigs[0].relationships ?? {} as RelationshipsConfig;
     }
@@ -158,35 +158,42 @@ export class ConfigService {
         return this.config.layers.filter(f => f.type === LayerType.FeatureLayer);
     }
 
-    public getLayerConfigById(id: string): LayerConfig {
+    public getLayerConfigById(id: string, throwError = true): LayerConfig {
         const layerConfigs = this.config.layers.filter(f => f.properties.id === id);
         if (layerConfigs.length !== 1) {
-            throw new Error(`invalid configuration for id "${id}"`);
+            return this.handleError(`invalid configuration for id "${id}"`, throwError);
         }
         return layerConfigs[0];
     }
 
-    public getLayerConfigByName(name: string): LayerConfig {
+    public getLayerConfigByName(name: string, throwError = true): LayerConfig {
         const layerConfigs = this.config.layers.filter(f => f.name === name);
         if (layerConfigs.length !== 1) {
-            throw new Error(`invalid configuration for name "${name}"`);
+            return this.handleError(`invalid configuration for name "${name}"`, throwError);
         }
         return layerConfigs[0];
     }
 
-    public getLayerConfigByUrl(url: string): LayerConfig {
+    public getLayerConfigByUrl(url: string, throwError = true): LayerConfig {
         const layerConfigs = this.config.layers.filter(f => f.properties.url === url);
         if (layerConfigs.length !== 1) {
-            throw new Error(`invalid configuration for url "${url}"`);
+            return this.handleError(`invalid configuration for url "${url}"`, throwError);
         }
         return layerConfigs[0];
     }
 
-    public getLayerConfig(type: LayerType, id: string): LayerConfig {
+    public getLayerConfig(type: LayerType, id: string, throwError = true): LayerConfig {
         const layerConfigs = this.config.layers.filter(f => f.type === type && f.properties.id === id);
         if (layerConfigs.length !== 1) {
-            throw new Error(`invalid configuration for layer-type "${type}" and id "${id}"`);
+            return this.handleError(`invalid configuration for layer-type "${type}" and id "${id}"`, throwError);
         }
         return layerConfigs[0];
+    }
+
+    private handleError(errorString: string, throwError: boolean): any {
+        if (throwError) {
+            throw new Error(errorString);
+        }
+        return;
     }
 }

@@ -2,11 +2,12 @@ import { Inject, Injectable } from '@angular/core';
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import Feature from '@arcgis/core/Graphic';
 import { DefaultFeatureMemeory, EsriDifferenceFeature, EsriDifferences, FidaDifferenceFeature, FidaDifferenceGroup, FidaDifferences } from '../models/Difference.model';
-import { FeatureState } from '../models/FidaFeature.model';
+import { FeatureState, FidaFeature } from '../models/FidaFeature.model';
 import { GdbVersion } from '../models/GdbVersion.model';
 import { LayerService } from './layer.service';
 import { ConfigService } from '../configs/config.service';
 import { QueryService } from './query.service';
+import { RelationshipsConfig } from '../models/config.model';
 
 @Injectable({
   providedIn: 'root'
@@ -25,41 +26,61 @@ export class DifferenceService {
     const editAttributes: FidaDifferenceGroup = { name: 'edit-attributes', features: [] };
     const editGeometry: FidaDifferenceGroup = { name: 'edit-geometry', features: [] };
     const deletes: FidaDifferenceGroup = { name: 'deletes', features: [] };
+    const unlinked: FidaDifferenceGroup = { name: 'unlinked', features: [] };
 
     const differences = new FidaDifferences();
     differences.date = new Date();
     differences.version = version;
-    differences.groups = [creates, editAttributes, editGeometry, deletes];
+    differences.groups = [creates, editAttributes, editGeometry, deletes, unlinked];
 
     if (!esriDifferencesSets) {
       return Promise.resolve(differences);
     }
 
     const defaultFeatureMemeories: DefaultFeatureMemeory[] = [];
-    let defaultFeatures: Feature[] = [];
+    let defaultFeatures: FidaFeature[] = [];
 
-    // loop ovar all root-layers
+    // loop ovar all root-layers (LFP, HFP and LSN)
     const rootLayers = this.layerService.getLayers();
-
     for (const rootLayer of rootLayers) {
       // create version and default feature-layer
       const versionFeatureLayer = await this.createFeatureLayer(rootLayer as FeatureLayer, version.versionName);
 
       // find root-features in difference-lists
-      const esriFifferences = esriDifferencesSets.find((f: any) => f.layerId === versionFeatureLayer.layerId);
-      if (esriFifferences) {
-        this.convertDifferenceFeatures(esriFifferences.inserts, versionFeatureLayer, FeatureState.Create,
+      const esriDifferences = esriDifferencesSets.find(f => f.layerId === versionFeatureLayer.layerId);
+      if (esriDifferences) {
+        this.convertDifferenceFeatures(esriDifferences.inserts, versionFeatureLayer, FeatureState.Create,
           creates, esriDifferencesSets, defaultFeatureMemeories);
-        this.convertDifferenceFeatures(esriFifferences.updates, versionFeatureLayer, FeatureState.Edit,
+        this.convertDifferenceFeatures(esriDifferences.updates, versionFeatureLayer, FeatureState.Edit,
           edits, esriDifferencesSets, defaultFeatureMemeories);
-        this.convertDifferenceFeatures(esriFifferences.deletes, versionFeatureLayer, FeatureState.Delete,
+        this.convertDifferenceFeatures(esriDifferences.deletes, versionFeatureLayer, FeatureState.Delete,
           deletes, esriDifferencesSets, defaultFeatureMemeories);
 
         // memorise all updates because for this the default-feature will be loaded
-        if (esriFifferences.updates) {
-          const objectIds = esriFifferences.updates.map((m: any) => m.attributes.OBJECTID);
-          this.updateDefaultFeatureMemery(defaultFeatureMemeories, versionFeatureLayer.layerId, objectIds);
+        if (esriDifferences.updates) {
+          const objectIds = esriDifferences.updates.map((m: any) => m.attributes.OBJECTID);
+          this.updateDefaultFeatureMemory(defaultFeatureMemeories, versionFeatureLayer.layerId, objectIds);
         }
+      }
+    }
+
+    // find not linked difference (there should be none, exept editing are done out of fida-web)
+    const unlinkedEsriDifferencesSet = this.findUnlinkedEsriDifferences(esriDifferencesSets);
+    for (const unlinkedEsriDifferences of unlinkedEsriDifferencesSet) {
+      const featureLayer = new FeatureLayer({ layerId: unlinkedEsriDifferences.layerId, url: this.configService.getLayerBaseUrl() });
+      const versionFeatureLayer = await this.createFeatureLayer(featureLayer, version.versionName);
+
+      this.convertDifferenceFeatures(unlinkedEsriDifferences.inserts, versionFeatureLayer, FeatureState.Create,
+        unlinked, esriDifferencesSets, defaultFeatureMemeories);
+      this.convertDifferenceFeatures(unlinkedEsriDifferences.updates, versionFeatureLayer, FeatureState.Edit,
+        unlinked, esriDifferencesSets, defaultFeatureMemeories);
+      this.convertDifferenceFeatures(unlinkedEsriDifferences.deletes, versionFeatureLayer, FeatureState.Delete,
+        unlinked, esriDifferencesSets, defaultFeatureMemeories);
+
+      // memorise all updates because for this the default-feature will be loaded
+      if (unlinkedEsriDifferences.updates) {
+        const objectIds = unlinkedEsriDifferences.updates.map((m: any) => m.attributes.OBJECTID);
+        this.updateDefaultFeatureMemory(defaultFeatureMemeories, versionFeatureLayer.layerId, objectIds);
       }
     }
 
@@ -73,6 +94,7 @@ export class DifferenceService {
 
     // merge the default-feature into the difference-features
     this.mergeDefaultFeatureToDifferenceFeature(edits, defaultFeatures);
+    this.mergeDefaultFeatureToDifferenceFeature(unlinked, defaultFeatures);
 
     // split the edits into edits-attributes and edits-geometry
     editAttributes.features = edits.features.filter(f => this.hasAttributeChanges(f));
@@ -81,7 +103,7 @@ export class DifferenceService {
     return differences;
   }
 
-  private mergeDefaultFeatureToDifferenceFeature(group: FidaDifferenceGroup, defaultFeatures: Feature[]): void {
+  private mergeDefaultFeatureToDifferenceFeature(group: FidaDifferenceGroup, defaultFeatures: FidaFeature[]): void {
     group.features.forEach(differenceFeature => {
       const defaultFeature = defaultFeatures.find(f => f.attributes.GLOBALID === differenceFeature.globalId);
       this.mergeToDifferenceFeature(defaultFeature, differenceFeature);
@@ -94,6 +116,23 @@ export class DifferenceService {
         });
       }
     });
+  }
+
+  private findUnlinkedEsriDifferences(esriDifferencesSets: EsriDifferences[]): EsriDifferences[] {
+    const unlinkedDifferencesSet: EsriDifferences[] = [];
+    esriDifferencesSets.forEach(esriDifference => {
+      const unlinkedDifferences = new EsriDifferences();
+      unlinkedDifferences.layerId = esriDifference.layerId;
+      unlinkedDifferences.inserts = esriDifference.inserts?.filter(f => f.isLinked !== true);
+      unlinkedDifferences.updates = esriDifference.updates?.filter(f => f.isLinked !== true);
+      unlinkedDifferences.deletes = esriDifference.deletes?.filter(f => f.isLinked !== true);
+      if ((unlinkedDifferences.inserts && unlinkedDifferences.inserts.length > 0)
+        || (unlinkedDifferences.updates && unlinkedDifferences.updates.length > 0)
+        || (unlinkedDifferences.deletes && unlinkedDifferences.deletes.length > 0)) {
+        unlinkedDifferencesSet.push(unlinkedDifferences);
+      }
+    });
+    return unlinkedDifferencesSet;
   }
 
   private mergeToDifferenceFeature(feature: Feature, differenceFeature: FidaDifferenceFeature): void {
@@ -119,7 +158,8 @@ export class DifferenceService {
 
   private convertDifferenceFeatures(
     esriDifferenceFeatures: EsriDifferenceFeature[], versionFeatureLayer: FeatureLayer, featureState: FeatureState,
-    group: FidaDifferenceGroup, esriDifferencesSets: EsriDifferences[], defaultFeatureMemeories: DefaultFeatureMemeory[]): void {
+    group: FidaDifferenceGroup, esriDifferencesSets: EsriDifferences[], defaultFeatureMemeories: DefaultFeatureMemeory[],
+    withRelated: boolean = true): void {
     if (esriDifferenceFeatures) {
       const versionFeatureLayerName = this.configService.getLayerInfoById(versionFeatureLayer.layerId).name;
       esriDifferenceFeatures.map(esriDifferenceFeature => {
@@ -137,42 +177,44 @@ export class DifferenceService {
   private convertRelatedDifferenceFeatures(
     esriDifferencesSets: EsriDifferences[], rootDifferenceFeature: FidaDifferenceFeature,
     versionFeatureLayer: FeatureLayer, defaultFeatureMemeories: DefaultFeatureMemeory[]): void {
-    const relationshipsConfig = this.configService.getRelationshipsConfigs(versionFeatureLayer.id);
-    const fkField = this.configService.getLayerConfigById(versionFeatureLayer.id).fkField;
+    const relationshipsConfig = this.configService.getRelationshipsConfigs(versionFeatureLayer.id, false) || [] as RelationshipsConfig[];
+    const fkField = this.configService.getLayerConfigById(versionFeatureLayer.id, false)?.fkField;
 
     // find all related features over relationships
     Object.entries(relationshipsConfig).map(([key, value]) => {
-      const relationship = versionFeatureLayer.relationships.find(f => f.name.toLowerCase() === value.toLowerCase());
-      if (relationship) {
+      if (versionFeatureLayer.relationships != null) {
+        const relationship = versionFeatureLayer.relationships.find(f => f.name.toLowerCase() === value.toLowerCase());
+        if (relationship) {
 
-        let updatesFeatures: FidaDifferenceFeature[] = [];
-        let insertsFeatures: FidaDifferenceFeature[] = [];
-        let deletesFeatures: FidaDifferenceFeature[] = [];
-        const esriRelatedDifferences = esriDifferencesSets.find(f => f.layerId === relationship.relatedTableId);
-        const layerName = this.configService.getLayerInfoById(relationship.relatedTableId).name;
-        if (esriRelatedDifferences) {
-          updatesFeatures = this.findRelatedDifferenceFeatures(esriRelatedDifferences.updates, rootDifferenceFeature,
-            fkField, FeatureState.Edit, layerName);
-          insertsFeatures = this.findRelatedDifferenceFeatures(esriRelatedDifferences.inserts, rootDifferenceFeature,
-            fkField, FeatureState.Create, layerName);
-          deletesFeatures = this.findRelatedDifferenceFeatures(esriRelatedDifferences.deletes, rootDifferenceFeature,
-            fkField, FeatureState.Delete, layerName);
+          let updatesFeatures: FidaDifferenceFeature[] = [];
+          let insertsFeatures: FidaDifferenceFeature[] = [];
+          let deletesFeatures: FidaDifferenceFeature[] = [];
+          const esriRelatedDifferences = esriDifferencesSets.find(f => f.layerId === relationship.relatedTableId);
+          const layerName = this.configService.getLayerInfoById(relationship.relatedTableId).name;
+          if (esriRelatedDifferences) {
+            updatesFeatures = this.findRelatedDifferenceFeatures(esriRelatedDifferences.updates, rootDifferenceFeature,
+              fkField, FeatureState.Edit, layerName);
+            insertsFeatures = this.findRelatedDifferenceFeatures(esriRelatedDifferences.inserts, rootDifferenceFeature,
+              fkField, FeatureState.Create, layerName);
+            deletesFeatures = this.findRelatedDifferenceFeatures(esriRelatedDifferences.deletes, rootDifferenceFeature,
+              fkField, FeatureState.Delete, layerName);
 
-          // memorise all updates because for this the default-feature will be loaded
-          const objectIds = updatesFeatures.map(m => m.objectId);
-          this.updateDefaultFeatureMemery(defaultFeatureMemeories, relationship.relatedTableId, objectIds);
+            // memorise all updates because for this the default-feature will be loaded
+            const objectIds = updatesFeatures.map(m => m.objectId);
+            this.updateDefaultFeatureMemory(defaultFeatureMemeories, relationship.relatedTableId, objectIds);
+          }
+
+          // create related-difference-group and add it to the related-list
+          rootDifferenceFeature.relatedFeatures.push({
+            name: key,
+            features: updatesFeatures.concat(insertsFeatures, deletesFeatures)
+          });
         }
-
-        // create related-difference-group and add it to the related-list
-        rootDifferenceFeature.relatedFeatures.push({
-          name: key,
-          features: updatesFeatures.concat(insertsFeatures, deletesFeatures)
-        });
       }
     });
   }
 
-  private updateDefaultFeatureMemery(list: DefaultFeatureMemeory[], layerId: number, objectIds: number[]): void {
+  private updateDefaultFeatureMemory(list: DefaultFeatureMemeory[], layerId: number, objectIds: number[]): void {
     if (objectIds.length > 0) {
       let memory = list.find(f => f.layerId === layerId);
       if (!memory) {
@@ -211,6 +253,9 @@ export class DifferenceService {
         state: versionValue == null ? undefined : featureState
       };
     });
+
+    // flag esriDifference as linked to a feature
+    esriDifferenceFeature.isLinked = true;
     return differenceFeature;
   }
 
@@ -218,7 +263,9 @@ export class DifferenceService {
     const featureLayer = new FeatureLayer({
       url: templateFeatureLayer.url,
       id: templateFeatureLayer.id,
+      source: templateFeatureLayer.source,
       layerId: templateFeatureLayer.layerId,
+      objectIdField: templateFeatureLayer.objectIdField,
       gdbVersion: versionName
     });
     await featureLayer.load();

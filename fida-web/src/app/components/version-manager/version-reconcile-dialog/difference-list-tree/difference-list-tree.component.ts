@@ -19,9 +19,11 @@ export class DifferenceListTreeComponent implements OnInit {
   }
 
   getFeatureName(differenceFeature: FidaDifferenceFeature): string {
-    const layerConfig = this.configService.getLayerConfigByName(differenceFeature.layerName);
-    const idAttribute = differenceFeature.attributes.find(f => f.name === layerConfig.idField);
-    return `${layerConfig.properties.id}-${idAttribute?.versionValue?.toString()}`;
+    const layerConfig = this.configService.getLayerConfigByName(differenceFeature.layerName, false);
+    const idField =  layerConfig?.idField || 'OBJECTID';
+    const layerName = layerConfig?.properties?.id || differenceFeature.layerName;
+    const idAttribute = differenceFeature.attributes.find(f => f.name === idField);
+    return `${layerName}-${idAttribute?.versionValue?.toString()}`;
   }
 
   getId(prefix: string, differenceFeature: FidaDifferenceFeature): string {

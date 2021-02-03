@@ -13,7 +13,6 @@ import { HeightService } from './height.service';
 import { Lk25Service } from './lk25.service';
 
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -43,7 +42,7 @@ export class FeatureService {
 
       // save feature
       const featureLayer = this.getFeatureLayer(feature);
-      const applyEditsResult = await this.applyEdits(featureLayer, applyEditProperties);
+      await this.applyEdits(featureLayer, applyEditProperties);
 
       // save related features
       if (feature.state !== FeatureState.Delete) {

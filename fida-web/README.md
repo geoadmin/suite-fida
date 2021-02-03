@@ -5,7 +5,7 @@ Based on [Angular](https://angular.io/) 10.
 Noteworthy packages:
 
 - [Bootstrap 4](https://getbootstrap.com/) - UI components
-- [ArcGIS API for JavaScript](https://developers.arcgis.com/javascript/) set up like this [Example](https://github.com/Esri/angular-cli-esri-map/tree/arcgis-webpack-angular) - Map and general GIS functionality
+- [ArcGIS API for JavaScript](https://developers.arcgis.com/javascript/) set up with ES modules (beta)
 
 Note: all commands are meant to be run in `/fida-web`.
 
@@ -20,6 +20,14 @@ Navigate to `http://localhost:4200/`. The app will automatically reload if you c
 `npm run build` - default build
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Test
+
+`npm run test` - run unit-test
+
+## Lint
+
+`npm run lint` - run static code analysis
 
 ## deploy 
 

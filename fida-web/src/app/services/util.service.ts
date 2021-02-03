@@ -68,9 +68,10 @@ export class UtilService {
     }
 
     // correct date, because if date is saved, esri asumes its a utc date
-    const localDate  = new Date();
-    const offsetTicks = localDate.getTimezoneOffset() * 60 * 1000;
-    return new Date(date + offsetTicks);
+    // const localDate  = new Date();
+    // const offsetTicks = localDate.getTimezoneOffset() * 60 * 1000;
+    // return new Date(date + offsetTicks);
+    return new Date(date);
   }
 
   public static dateToEsri(date: any): any {

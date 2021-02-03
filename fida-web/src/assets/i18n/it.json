@@ -48,6 +48,7 @@
   "app.version_reconcile.edit-attributes": "IT:Bearbeitete Features - nur Attribute",
   "app.version_reconcile.edit-geometry": "IT:Bearbeitete Features - Geometry",
   "app.version_reconcile.deletes": "IT:Gelöschte Features",
+  "app.version_reconcile.unlinked": "IT: Andere",
   "app.version_reconcile.showAll": "IT:Alle Attribute anzeigen",
   "app.version_reconcile.download": "IT:Differenz herunterladen",
   "app.version_reconcile.accept_dialog_text": "IT:Bevor die Änderungen angenommen werden können, muss eine Sicherheitskopie heruntergeladen werden.",

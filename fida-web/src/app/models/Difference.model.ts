@@ -16,6 +16,7 @@ export class EsriDifferences {
 export class EsriDifferenceFeature {
     attributes?: any;
     geometry?: any;
+    isLinked?: boolean;
 }
 
 export class FidaDifferences {
