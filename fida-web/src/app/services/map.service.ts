@@ -80,8 +80,11 @@ export class MapService {
 
       // on gdb version changed
       this.widgetNotifyService.onGdbVersionChangedSubject.subscribe((gdbVersionName: string) => {
+        // NOTE: keep visible layer visble
+        const visibleLayerIds = this.view.map.layers.filter(f => f.visible).map(m => m.id);
         this.view.map.removeAll();
         this.addLayersToMap(this.view.map);
+        this.view.map.layers.map(f => f.visible = visibleLayerIds.includes(f.id));
         this.widgetsService.updateSearchWidget(searchWidget);
       });
 

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import Expand from '@arcgis/core/widgets/Expand';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { GdbVersion } from 'src/app/models/GdbVersion.model';
@@ -9,6 +9,7 @@ import { VersionCreateDialogComponent } from './version-create-dialog/version-cr
 import { VersionDeleteDialogComponent } from './version-delete-dialog/version-delete-dialog.component';
 import { UtilService } from 'src/app/services/util.service';
 import { VersionReconcileDialogComponent } from './version-reconcile-dialog/version-reconcile-dialog.component';
+import { ConfigService } from 'src/app/configs/config.service';
 
 @Component({
   selector: 'app-version-manager',
@@ -27,8 +28,8 @@ export class VersionManagerComponent implements OnInit, OnDestroy {
   constructor(
     private widgetsService: WidgetsService,
     private versionManagementService: VersionManagementService,
+    private configService: ConfigService,
     private settingService: SettingService,
-    private changeDetectorRef: ChangeDetectorRef,
     private modalService: BsModalService
   ) { }
 
@@ -50,8 +51,16 @@ export class VersionManagerComponent implements OnInit, OnDestroy {
     return version.versionName === this.settingService.getGdbVersionName();
   }
 
-  isReadonlyVersion(version: GdbVersion): boolean {
+  isDefaultVersion(version: GdbVersion): boolean {
     return version.versionName === this.versionManagementService.getDefaultVersionName();
+  }
+
+  isOwner(version: GdbVersion): boolean {
+    return version.versionName?.startsWith(this.settingService.user.username) || (this.isAdmin() && !this.isDefaultVersion(version));
+  }
+
+  isAdmin(): boolean {
+    return this.settingService.user.role === this.configService.getRolesConfig().admin;
   }
 
   setActiveVersionClick(version: GdbVersion): void {

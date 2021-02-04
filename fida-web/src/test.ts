@@ -20,8 +20,7 @@ getTestBed().initTestEnvironment(
   platformBrowserDynamicTesting()
 );
 // Then we find all the tests.
-// const context = require.context('./', true, /\.spec\.ts$/);
-// const context = require.context('./', true, /service\.spec\.ts$/);
+const context = require.context('./', true, /\.spec\.ts$/);
 // const context = require.context('./', true, /setting\.service\.spec\.ts$/);
 // const context = require.context('./', true, /cookie\.service\.spec\.ts$/);
 // const context = require.context('./', true, /widget-notify\.service\.spec\.ts$/);
@@ -29,6 +28,6 @@ getTestBed().initTestEnvironment(
 // const context = require.context('./', true, /lk25\.service\.spec\.ts$/);
 // const context = require.context('./', true, /parcel-info\.service\.spec\.ts$/);
 // const context = require.context('./', true, /component\.service\.spec\.ts$/);
-const context = require.context('./', true, /difference\.service\.spec\.ts$/);
+// const context = require.context('./', true, /difference\.service\.spec\.ts$/);
 // And load the modules.
 context.keys().map(context);

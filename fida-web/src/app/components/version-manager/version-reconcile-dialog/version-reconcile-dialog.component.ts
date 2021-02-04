@@ -60,6 +60,7 @@ export class VersionReconcileDialogComponent implements OnInit {
 
   async reconcile(version: GdbVersion): Promise<void> {
     this.showSpinner = true;
+    this.downloaded = false;
     try {
       this.version = version;
       this.differences = undefined;
@@ -147,7 +148,6 @@ export class VersionReconcileDialogComponent implements OnInit {
   }
 
   showAcceptDifferencesDialogClick(acceptDifferencesDialogTemplate: TemplateRef<any>): void {
-    this.downloaded = false;
     this.modalRef = this.modalService.show(acceptDifferencesDialogTemplate, { class: 'modal-dialog-centered' });
   }
 

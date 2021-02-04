@@ -4,7 +4,7 @@ import Locator from '@arcgis/core/tasks/Locator';
 import LocatorSearchSource from '@arcgis/core/widgets/Search/LocatorSearchSource';
 import SearchSource from '@arcgis/core/widgets/Search/SearchSource';
 import { ConfigService } from '../configs/config.service';
-import { SearchSourceConfig, SearchType } from '../models/config.model';
+import { SearchSourceConfig, SearchType } from '../configs/config.model';
 import { QueryService } from './query.service';
 import { FidaTranslateService } from './translate.service';
 import { LayerService } from './layer.service';

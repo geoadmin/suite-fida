@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ConfigService } from '../configs/config.service';
-import { VersionManagementConfig } from '../models/config.model';
+import { VersionManagementConfig } from '../configs/config.model';
 import { GdbVersion } from '../models/GdbVersion.model';
 import { QueryService } from './query.service';
 

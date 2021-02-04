@@ -50,7 +50,13 @@ export class SearchSourceConfig {
     properties: any;
 }
 
+export class RolesConfig {
+    admin: string;
+}
+
 export class Config {
+    appVersion: string;
+    roles: RolesConfig;
     arcGisUrlPlaceholder: string;
     layerBaseUrl: string;
     defaultVersion: string;

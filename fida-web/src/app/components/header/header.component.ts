@@ -2,6 +2,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { FidaTranslateService } from 'src/app/services/translate.service';
 import { SettingService } from 'src/app/services/setting.service';
 import { UtilService } from 'src/app/services/util.service';
+import { ConfigService } from 'src/app/configs/config.service';
 
 @Component({
   selector: 'app-header',
@@ -13,8 +14,13 @@ export class HeaderComponent {
 
   constructor(
     private settingService: SettingService,
-    public translateService: FidaTranslateService
+    private configService: ConfigService,
+    private translateService: FidaTranslateService
   ) {
+  }
+
+  getAppVersion(): string {
+    return this.configService.getAppVersion();
   }
 
   getLanguages(): string[] {
@@ -37,7 +43,7 @@ export class HeaderComponent {
     return this.settingService.user?.fullName;
   }
 
-  getVersionName(): string {
+  getGdbVersionName(): string {
     return UtilService.formatVersionName(this.settingService.getGdbVersionName());
   }
 }

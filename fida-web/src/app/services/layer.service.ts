@@ -1,7 +1,7 @@
 import { Injectable, ComponentFactoryResolver, Injector } from '@angular/core';
 import { ConfigService } from '../configs/config.service';
 import { TemplateService } from './template.service';
-import { LayerConfig, LayerType } from '../models/config.model';
+import { LayerConfig, LayerType } from '../configs/config.model';
 import { SettingService } from './setting.service';
 import esriConfig from '@arcgis/core/config';
 import Portal from '@arcgis/core/portal/Portal';

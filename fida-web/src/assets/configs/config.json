@@ -1,4 +1,8 @@
 {
+    "appVersion": "deployed: 03.02.2021",
+    "roles": {
+        "admin": "org_admin"
+    },
     "arcGisUrlPlaceholder": "[EVIRONMENT_ARCGISURL]",
     "layerBaseUrl": "[EVIRONMENT_ARCGISURL]/rest/services/FIDA/FIDA/FeatureServer",
     "defaultVersion": "SDE.DEFAULT",
@@ -120,7 +124,7 @@
                 "minSuggestCharacters": 2,
                 "zoomScale": 5000,
                 "name": "HFP",
-                "placeholder": "app.search.lhp_placeholder",
+                "placeholder": "app.search.hfp_placeholder",
                 "displayFields": "HFPKANTON,HFPNR",
                 "displayFieldsDelimiter": "",
                 "exactMatch": false,

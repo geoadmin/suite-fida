@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
     Config, ExtentConfig, GpConfig, LayerConfig, LayerType,
-    RelationshipsConfig, SearchSourceConfig, SearchType, VersionManagementConfig
-} from '../models/config.model';
+    RelationshipsConfig, RolesConfig, SearchSourceConfig, SearchType, VersionManagementConfig
+} from './config.model';
 import { environment } from '../../environments/environment';
 import esriRequest from '@arcgis/core/request';
 import esriConfig from '@arcgis/core/config';
@@ -104,6 +104,15 @@ export class ConfigService {
     /**
      *  get configs
      */
+
+    public getAppVersion(): string {
+        return this.config.appVersion;
+    }
+
+    public getRolesConfig(): RolesConfig {
+        return this.config.roles;
+    }
+
 
     public getLayerBaseUrl(): string {
         return this.config.layerBaseUrl;

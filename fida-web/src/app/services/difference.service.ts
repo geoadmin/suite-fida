@@ -7,7 +7,8 @@ import { GdbVersion } from '../models/GdbVersion.model';
 import { LayerService } from './layer.service';
 import { ConfigService } from '../configs/config.service';
 import { QueryService } from './query.service';
-import { RelationshipsConfig } from '../models/config.model';
+import { RelationshipsConfig } from '../configs/config.model';
+import { UtilService } from './util.service';
 
 @Injectable({
   providedIn: 'root'
@@ -87,7 +88,10 @@ export class DifferenceService {
     // load default-features from edited-features
     for (const memory of defaultFeatureMemeories) {
       const url = `${this.configService.getLayerBaseUrl()}/${memory.layerId}`;
+      const featureLayer = new FeatureLayer({ url });
+      await featureLayer.load();
       await this.queryService.url(url, memory.objectIds).then(features => {
+        features.map(m => m.layer = featureLayer);
         defaultFeatures = defaultFeatures.concat(features);
       });
     }
@@ -121,15 +125,18 @@ export class DifferenceService {
   private findUnlinkedEsriDifferences(esriDifferencesSets: EsriDifferences[]): EsriDifferences[] {
     const unlinkedDifferencesSet: EsriDifferences[] = [];
     esriDifferencesSets.forEach(esriDifference => {
-      const unlinkedDifferences = new EsriDifferences();
-      unlinkedDifferences.layerId = esriDifference.layerId;
-      unlinkedDifferences.inserts = esriDifference.inserts?.filter(f => f.isLinked !== true);
-      unlinkedDifferences.updates = esriDifference.updates?.filter(f => f.isLinked !== true);
-      unlinkedDifferences.deletes = esriDifference.deletes?.filter(f => f.isLinked !== true);
-      if ((unlinkedDifferences.inserts && unlinkedDifferences.inserts.length > 0)
-        || (unlinkedDifferences.updates && unlinkedDifferences.updates.length > 0)
-        || (unlinkedDifferences.deletes && unlinkedDifferences.deletes.length > 0)) {
-        unlinkedDifferencesSet.push(unlinkedDifferences);
+      // check if in server-config because it could be a attachment-layer
+      if (this.configService.getLayerInfoById(esriDifference.layerId)) {
+        const unlinkedDifferences = new EsriDifferences();
+        unlinkedDifferences.layerId = esriDifference.layerId;
+        unlinkedDifferences.inserts = esriDifference.inserts?.filter(f => f.isLinked !== true);
+        unlinkedDifferences.updates = esriDifference.updates?.filter(f => f.isLinked !== true);
+        unlinkedDifferences.deletes = esriDifference.deletes?.filter(f => f.isLinked !== true);
+        if ((unlinkedDifferences.inserts && unlinkedDifferences.inserts.length > 0)
+          || (unlinkedDifferences.updates && unlinkedDifferences.updates.length > 0)
+          || (unlinkedDifferences.deletes && unlinkedDifferences.deletes.length > 0)) {
+          unlinkedDifferencesSet.push(unlinkedDifferences);
+        }
       }
     });
     return unlinkedDifferencesSet;
@@ -141,12 +148,19 @@ export class DifferenceService {
         differenceAttribute.state = undefined;
         let defaultValue = feature.attributes[differenceAttribute.name];
         let versionValue = differenceAttribute.versionValue;
-        // clean number values
-        if (typeof versionValue === 'number') {
+        const field = (feature.layer as FeatureLayer)?.fields.find(f => f.name === differenceAttribute.name);
+        // clean double values
+        if (field.type === 'double') {
           versionValue = Math.round(versionValue * 1000000) / 1000000;
-        }
-        if (typeof defaultValue === 'number') {
           defaultValue = Math.round(defaultValue * 1000000) / 1000000;
+        }
+        // clean date values
+        if (field.type === 'date') {
+          const versionDate = UtilService.esriToDate(versionValue);
+          const defaultDate = UtilService.esriToDate(defaultValue);
+          if (versionDate?.toDateString() === defaultDate?.toDateString()) {
+            defaultValue = versionValue;
+          }
         }
         if (defaultValue !== versionValue) {
           differenceAttribute.state = FeatureState.Edit;

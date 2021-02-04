@@ -31,9 +31,9 @@
                             <div>
                                 <button class="btn btn-primary" (click)="setActiveVersionClick(version)"
                                     [disabled]="isActiveVersion(version)">{{ 'app.version_manager.activate' | translate }}</button>
-                                <button class="btn btn-primary" [disabled]="isReadonlyVersion(version)"
+                                <button class="btn btn-primary" [disabled]="!isOwner(version)"
                                     (click)="showReconcilePostDialogClick(version)">{{ 'app.version_manager.reconcile' | translate }}</button>
-                                <button class="btn btn-danger" [disabled]="isReadonlyVersion(version)"
+                                <button class="btn btn-danger" [disabled]="!isOwner(version)"
                                     title="{{ 'app.global.delete' | translate }}" (click)="showDeleteDialogClick(version)">
                                     <i class='fas fa-trash'></i>
                                 </button>

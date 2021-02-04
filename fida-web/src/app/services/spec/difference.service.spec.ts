@@ -69,7 +69,7 @@ describe('DifferenceService', () => {
 
     const fidaDifferences = await service.convertDifferences(esriDifferencesSets, version);
     const creates = fidaDifferences.groups.find(f => f.name === 'creates');
-    expect(fidaDifferences.groups.length).toBe(4);
+    expect(fidaDifferences.groups.length).toBe(5);
     expect(creates).toBeDefined();
     expect(creates.features.length).toBe(1);
     const feature = creates.features[0];
@@ -99,7 +99,7 @@ describe('DifferenceService', () => {
 
     queryServiceSpy.url.and.returnValue(Promise.resolve([defaultFeature11, defaultFeature22]));
     const fidaDifferences = await service.convertDifferences(esriDifferencesSets, version);
-    expect(fidaDifferences.groups.length).toBe(4);
+    expect(fidaDifferences.groups.length).toBe(5);
 
     // check edit-attributes
     const editAttributes = fidaDifferences.groups.find(f => f.name === 'edit-attributes');

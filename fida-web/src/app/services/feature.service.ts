@@ -7,7 +7,7 @@ import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import EsriRelationship from '@arcgis/core/layers/support/Relationship';
 import { FeatureState, FidaFeature, LayerId, RelatedFeatures, RelationshipName } from '../models/FidaFeature.model';
 import { ParcelInfoService } from './parcel-info.service';
-import { RelationshipsConfig } from '../models/config.model';
+import { RelationshipsConfig } from '../configs/config.model';
 import Point from '@arcgis/core/geometry/Point';
 import { HeightService } from './height.service';
 import { Lk25Service } from './lk25.service';
@@ -457,12 +457,13 @@ export class FeatureService {
   public async addTestTranslationToDb(): Promise<void> {
     const translationFeatureLayer = new FeatureLayer({
       url: 'https://s7t2530a.adr.admin.ch/arcgis/rest/services/FIDA/FIDA/FeatureServer',
-      layerId: 17
+      layerId: 17,
+      gdbVersion: 'X60024308@ADB.Alex Hugo'
     });
     await translationFeatureLayer.load();
 
     // clear table
-    const where = '1=1';
+    /*const where = '1=1';
     const outFields = ['OBJECTID'];
     const deleteFeatures = await this.queryService.where(translationFeatureLayer, where, outFields);
     if (deleteFeatures.length > 0) {
@@ -470,13 +471,13 @@ export class FeatureService {
       deleteProperties.deleteFeatures = deleteFeatures;
       await this.applyEdits(translationFeatureLayer, deleteProperties);
       console.log(`table uebersetzung cleaned`);
-    }
+    }*/
 
     // create translation features
     const addProperties: __esri.FeatureLayerApplyEditsEdits = {};
     addProperties.addFeatures = [];
 
-    const result = await this.queryService.request('https://s7t2530a.adr.admin.ch/arcgis/rest/services/FIDA/FIDA/FeatureServer/layers');
+    /*const result = await this.queryService.request('https://s7t2530a.adr.admin.ch/arcgis/rest/services/FIDA/FIDA/FeatureServer/layers');
     const allLayers = result.data.layers.concat(result.data.tables);
     const domainNames: string[] = [];
     allLayers.forEach((layer: any) => {
@@ -517,7 +518,18 @@ export class FeatureService {
           }
         });
       }
-    });
+    });*/
+
+    // create row feature
+    const feature1 = new Feature();
+    feature1.attributes = { ...translationFeatureLayer.templates[0].prototype.attributes };
+    feature1.layer = translationFeatureLayer;
+    feature1.attributes.OBJEKTART = 1;
+    feature1.attributes.GRUPPENAME = 'TEST';
+    feature1.attributes.KEY = 'TEST';
+    feature1.attributes.VALDICT = `{"de":"TEST","fr":"FR:TEST","it":"IT:TEST"}`;
+    addProperties.addFeatures.push(feature1);
+
 
     await this.applyEdits(translationFeatureLayer, addProperties);
   }
