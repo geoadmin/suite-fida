@@ -113,7 +113,9 @@ export class ConfigService {
         return this.config.roles;
     }
 
-
+    public getMaxGeometryDifference(): number {
+        return this.config.maxGeometryDifference;
+    }
     public getLayerBaseUrl(): string {
         return this.config.layerBaseUrl;
     }

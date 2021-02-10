@@ -16,6 +16,7 @@ export class FeatureEditComponent implements OnInit {
   public activated = false;
   public feature: FidaFeature;
   public showSpinner: boolean;
+  public maxGeometryDifference: number;
   public form: FormGroup;
 
   private modalRef: BsModalRef;
@@ -29,6 +30,7 @@ export class FeatureEditComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.maxGeometryDifference = this.configService.getMaxGeometryDifference();
     this.form = new FormGroup({});
 
     this.widgetNotifyService.onFeatureEditSubject.subscribe(async (feature: FidaFeature) => {
@@ -92,8 +94,17 @@ export class FeatureEditComponent implements OnInit {
    *  SAVE METHODS
    */
 
-  async saveClick(saveDialogTemplate: TemplateRef<any>): Promise<void> {
+  async saveClick(saveDialogTemplate: TemplateRef<any>, largeDifferenceTemplate: TemplateRef<any>): Promise<void> {
     if (this.feature.state !== FeatureState.Create) {
+
+      // check of max LV95E/LV95N change
+      const diffLV95E = Math.abs(this.feature.attributes.LV95E - this.feature.originalAttributes.LV95E);
+      const diffLV95N = Math.abs(this.feature.attributes.LV95N - this.feature.originalAttributes.LV95N);
+
+      if (diffLV95E > this.maxGeometryDifference || diffLV95N > this.maxGeometryDifference) {
+        this.modalRef = this.modalService.show(largeDifferenceTemplate, { class: 'modal-sm modal-dialog-centered' });
+        return;
+      }
 
       // check of geometry-attribute change
       const geometryFields = this.configService.getGeometryFields();

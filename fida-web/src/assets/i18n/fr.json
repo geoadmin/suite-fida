@@ -65,5 +65,7 @@
   "app.search.locator_placeholder": "FR:Suche Adresse",
   "app.search.locator_name": "FR:Adressen",
   "app.home.title": "FR:Home",
-  "app.toc.title": "FR:Layerauswahl"
+  "app.toc.title": "FR:Layerauswahl",
+  "app.global.ok": "Ok",
+  "app.feature_edit.large_diff_dialog_text": "FR: Änderungen an LV95E und LV95N von über {{max}}m ist nicht zugelassen. Bitte einen neuen Punkt erstellen."
 }

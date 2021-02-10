@@ -67,6 +67,7 @@ export class Config {
     gp: GpConfig;
     geometryFields: string[];
     databaseFields: string[];
+    maxGeometryDifference: number;
     layers: [LayerConfig];
     layerInfos: any;
     search: [SearchSourceConfig];

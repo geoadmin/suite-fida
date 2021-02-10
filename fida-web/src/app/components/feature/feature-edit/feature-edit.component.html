@@ -26,9 +26,11 @@
 
     <!-- footer -->
     <div class="fida-widget-footer">
-        <button type="button" class="btn btn-primary float-right ml-2" (click)="saveClick(saveDialogTemplate)"
-            [disabled]="form.invalid">{{ 'app.global.save' | translate }}</button>
-        <button type="button" class="btn btn-default float-right" (click)="cancelClick()">{{ 'app.global.cancel' | translate }}</button>
+        <button type="button" class="btn btn-primary float-right ml-2"
+            (click)="saveClick(saveDialogTemplate, largeDifferenceTemplate)" [disabled]="form.invalid">{{
+            'app.global.save' | translate }}</button>
+        <button type="button" class="btn btn-default float-right" (click)="cancelClick()">{{ 'app.global.cancel' |
+            translate }}</button>
     </div>
 
 </div>
@@ -38,6 +40,16 @@
     <div class="modal-body text-center">
         <p>{{ 'app.feature_edit.save_dialog_text' | translate }}</p>
         <button type="button" class="btn btn-primary" (click)="saveNoClick()">{{ 'app.global.no' | translate }}</button>
-        <button type="button" class="btn btn-danger ml-2" (click)="saveYesClick()">{{ 'app.global.yes' | translate }}</button>
+        <button type="button" class="btn btn-danger ml-2" (click)="saveYesClick()">{{ 'app.global.yes' | translate
+            }}</button>
+    </div>
+</ng-template>
+
+<!-- save dialog -->
+<ng-template #largeDifferenceTemplate>
+    <div class="modal-body text-center">
+        <p>{{ 'app.feature_edit.large_diff_dialog_text' | translate : {max: maxGeometryDifference} }}</p>
+        <button type="button" class="btn btn-primary" (click)="saveNoClick()">{{ 'app.global.ok' | translate
+            }}</button>
     </div>
 </ng-template>
