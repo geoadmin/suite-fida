@@ -13,6 +13,7 @@ import { UtilService } from 'src/app/services/util.service';
 export class AttributeValueViewComponent implements OnInit {
   @Input() feature: FidaFeature;
   @Input() name: string;
+  @Input() type: string;
   field: Field;
 
   constructor() { }
@@ -53,6 +54,11 @@ export class AttributeValueViewComponent implements OnInit {
 
   isNumber(): boolean {
     return this.field.domain == null && UtilService.isNumberField(this.field);
+  }
+
+  isMultiselect(): boolean {
+    console.log(this.name, this.type, this.type === 'multiselect');
+    return this.type === 'multiselect';
   }
 
 }

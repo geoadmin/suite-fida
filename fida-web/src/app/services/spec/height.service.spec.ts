@@ -16,7 +16,7 @@ describe('HeightService', () => {
    */
 
   class ConfigServiceStub {
-    getGpConfig = () => ({ getHeightUrl: 'URL' });
+    getGpConfig = () => ({ heightUrl: 'URL' });
   }
 
   /**

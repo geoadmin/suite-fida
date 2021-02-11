@@ -82,6 +82,7 @@ export class QueryService {
   public intersect(layerUrl: string, geometry: Geometry): Promise<FidaFeature[]> {
     const query = this.buildQuery(true);
     query.geometry = geometry;
+    query.returnGeometry = false;
     query.spatialRelationship = 'intersects';
 
     const queryTask = new QueryTask();

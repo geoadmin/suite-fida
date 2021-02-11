@@ -39,8 +39,9 @@ export class ExtentConfig {
 
 export class GpConfig {
     getParcelInfoUrl: string;
-    getHeightUrl: string;
-    getLK25Url: string;
+    heightUrl: string;
+    lk25Url: string;
+    pureComUrl: string;
 }
 
 export class SearchSourceConfig {

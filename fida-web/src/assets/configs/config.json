@@ -1,5 +1,5 @@
 {
-    "appVersion": "deployed: 10.02.2021",
+    "appVersion": "deployed: 11.02.2021",
     "roles": {
         "admin": "org_admin"
     },
@@ -27,8 +27,9 @@
     },
     "gp": {
         "getParcelInfoUrl": "[EVIRONMENT_ARCGISURL]/rest/services/FIDA/GetParzInfo/GPServer/GetParzInfo",
-        "getHeightUrl": "https://api3.geo.admin.ch/rest/services/height",
-        "getLK25Url": "https://api3.geo.admin.ch/rest/services/api/MapServer/identify"
+        "heightUrl": "https://api3.geo.admin.ch/rest/services/height",
+        "lk25Url": "https://api3.geo.admin.ch/rest/services/api/MapServer/identify",
+        "pureComUrl": "[EVIRONMENT_ARCGISURL]/rest/services/PURE/Pure_Com/FeatureServer/0"
     },
     "geometryFields": [
         "LV95E",

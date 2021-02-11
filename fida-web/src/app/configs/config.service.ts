@@ -7,6 +7,7 @@ import {
 import { environment } from '../../environments/environment';
 import esriRequest from '@arcgis/core/request';
 import esriConfig from '@arcgis/core/config';
+import CodedValueDomain from '@arcgis/core/layers/support/CodedValueDomain';
 
 
 @Injectable({ providedIn: 'root' })
@@ -25,12 +26,14 @@ export class ConfigService {
     public async load(): Promise<any> {
         this.config = await this.httpClient.get('assets/configs/config.json').toPromise() as Config;
 
-        // update arcgis-server-placeholders
+        // update arcgis-server-placeholders (TODO: dynamic over all objects)
         this.config.layerBaseUrl = this.config.layerBaseUrl
             .replace(this.config.arcGisUrlPlaceholder, environment.arcGisServer);
         this.config.versionManagement.serverUrl = this.config.versionManagement.serverUrl
             .replace(this.config.arcGisUrlPlaceholder, environment.arcGisServer);
         this.config.gp.getParcelInfoUrl = this.config.gp.getParcelInfoUrl
+            .replace(this.config.arcGisUrlPlaceholder, environment.arcGisServer);
+        this.config.gp.pureComUrl = this.config.gp.pureComUrl
             .replace(this.config.arcGisUrlPlaceholder, environment.arcGisServer);
 
         // load arcgis-server-config
@@ -43,18 +46,14 @@ export class ConfigService {
         });
     }
 
-    private findLayerId(layerName: string): number {
-        const layerInfo = this.config.layerInfos.layers.find((f: any) => f.name === layerName);
-        if (!layerInfo) {
-            throw new Error(`on layer with name "${layerName}" found in esri-configuration`);
-        }
-        return layerInfo.id;
+    private getLayersTables(): any[] {
+        return this.config.layerInfos.layers.concat(this.config.layerInfos.tables);
     }
 
-    private findTableId(tableName: string): number {
-        const layerInfo = this.config.layerInfos.tables.find((f: any) => f.name === tableName);
+    private findLayerId(layerName: string): number {
+        const layerInfo = this.getLayersTables().find((f: any) => f.name === layerName);
         if (!layerInfo) {
-            throw new Error(`on table with name "${tableName}" found in esri-configuration`);
+            throw new Error(`on layer with name "${layerName}" found in esri-configuration`);
         }
         return layerInfo.id;
     }
@@ -86,19 +85,22 @@ export class ConfigService {
     }
 
     public getLayerInfoById(layerId: number): any {
-        let layerInfo = this.config.layerInfos.layers.find((f: any) => f.id === layerId);
-        if (layerInfo === undefined) {
-            layerInfo = this.config.layerInfos.tables.find((f: any) => f.id === layerId);
-        }
-        return layerInfo;
+        return this.getLayersTables().find((f: any) => f.id === layerId);
     }
 
     public getLayerInfoByName(layerName: string): any {
-        let layerInfo = this.config.layerInfos.layers.find((f: any) => f.name === layerName);
-        if (layerInfo === undefined) {
-            layerInfo = this.config.layerInfos.tables.find((f: any) => f.name === layerName);
+        return this.getLayersTables().find((f: any) => f.name === layerName);
+    }
+
+    public getDomainByName(domainName: string): CodedValueDomain {
+        for (const layer of this.getLayersTables()) {
+            for (const field of layer.fields) {
+                if (field.domain != null && field.domain.name === domainName) {
+                    return CodedValueDomain.fromJSON(field.domain);
+                }
+            }
         }
-        return layerInfo;
+        throw new Error(`on domain with name "${domainName}" found in esri-configuration`);
     }
 
     /**
@@ -125,7 +127,7 @@ export class ConfigService {
     }
 
     public getTranslateTableUrl(): string {
-        const tableId = this.findTableId(this.config.translateTableName);
+        const tableId = this.findLayerId(this.config.translateTableName);
         return `${this.config.layerBaseUrl}/${tableId}`;
     }
 

@@ -255,8 +255,10 @@
                 </div>
             </div>
             <div class="col-8">
-                <app-attribute-value-edit [feature]="feature" formControlName="RUECKVERSICHRG_BEMERK" type="textarea"
-                    placeholder="Rückversicherung Bemerkung"></app-attribute-value-edit>
+                <app-attribute-value-edit [feature]="feature" formControlName="RUECKVERSICHRG_BEMERK" type="multiselect"
+                    [multiselectList]='materialisierungList' placeholder="Rückversicherung Bemerkung"
+                    [readonly]="readonly" >
+                </app-attribute-value-edit>
             </div>
         </div>
 

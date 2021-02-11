@@ -49,6 +49,7 @@ body {
   border-radius: 0;
   height: 24px;
   font-size: 14px;
+  border-color: var(--control-border);
 }
 
 .form-group {
@@ -65,10 +66,20 @@ textarea.form-control {
   align-items: center;
 }
 
+// WORKAROUND: wiso wird das eingebundene ng-multiselect-dropdown.themes.scss vom alten css überschrieben???
+.multiselect-dropdown .dropdown-btn {
+  border: 1px solid var(--control-border) !important;
+  border-radius: 0 !important;
+}
+.dropdown-list {
+  margin-top: 0 !important;
+}
+
 // ----------------------------------------------------------------------------------------------------
 // validation styles
 // ----------------------------------------------------------------------------------------------------
-input.ng-invalid, select.ng-invalid {
+input.ng-invalid,
+select.ng-invalid {
   border-color: var(--danger);
   background-color: var(--light);
   // outline: 2px solid var(--danger);
@@ -262,7 +273,7 @@ a[role="tab"] {
   max-height: 100% !important;
   //min-height: 100% !important;
   height: 100% !important;
-  width: 680px;    
+  width: 680px;
 }
 
 .esri-popup__header {
@@ -320,5 +331,5 @@ a[role="tab"] {
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;    
+  bottom: 0;
 }

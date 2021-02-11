@@ -9,6 +9,7 @@ import { UtilService } from 'src/app/services/util.service';
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import CodedValueDomain from '@arcgis/core/layers/support/CodedValueDomain';
 import Field from '@arcgis/core/layers/support/Field';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
 @Component({
   selector: 'app-attribute-value-edit',
@@ -34,12 +35,16 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
   @Input() type: string;
   @Input() required = false;
   @Input() readonly = false;
+  @Input() multiselectList: string[] = [];
 
   public formGroup: FormGroup;
   public disabled: boolean;
   public field: Field;
   public date: Date;
   public codedValues: object[];
+  public multiselectItems: string[] = [];
+  public multiselectSettings: IDropdownSettings;
+  private mulitselectDelimiter = ',';
 
   constructor(private translateService: FidaTranslateService) { }
 
@@ -69,6 +74,18 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
       this.date = UtilService.esriToDate(this.feature.attributes[this.formControlName]);
     }
 
+    if (this.type === 'multiselect') {
+      this.multiselectSettings = {
+         enableCheckAll: false,
+         allowSearchFilter: true,
+         searchPlaceholderText: this.translateService.translate('app.search.title'),
+         clearSearchFilter: true
+      };
+      const multiselectString = this.feature.attributes[this.formControlName] as string;
+      this.multiselectItems = multiselectString != null ?
+        multiselectString.split(this.mulitselectDelimiter).map(m => m.trim()) : [];
+    }
+
     // translate coded values
     if (this.type === 'domain') {
       const codedValueDomain = this.field.domain as CodedValueDomain;
@@ -84,11 +101,15 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
       validators.push(Validators.maxLength(this.field.length));
     }
     formControl.setValidators(validators);
-
   }
 
   onDateChanged(): void {
     this.feature.attributes[this.formControlName] = this.date ? this.date.valueOf() : null;
+  }
+
+  onMultiselectChanged(item: string): void {
+    this.feature.attributes[this.formControlName] =
+      this.multiselectItems.length > 0 ? this.multiselectItems.join(this.mulitselectDelimiter + ' ') : null;
   }
 
   private getFeatureLayer(): FeatureLayer {

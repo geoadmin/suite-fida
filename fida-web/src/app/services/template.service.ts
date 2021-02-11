@@ -19,11 +19,15 @@ export class TemplateService {
       content: (result: any) => {
         const featureViewContent = new CustomContent({
           creator: () => {
-            const feature: FidaFeature = result.graphic;
-            feature.state = createMode === true ? FeatureState.Create : undefined;
-            feature.originalAttributes = { ...feature.attributes };
-            componentRef = self.componentService.createFeatureViewComponent(feature);
-            return componentRef.location.nativeElement;
+            try {
+              const feature: FidaFeature = result.graphic;
+              feature.state = createMode === true ? FeatureState.Create : undefined;
+              feature.originalAttributes = { ...feature.attributes };
+              componentRef = self.componentService.createFeatureViewComponent(feature);
+              return componentRef.location.nativeElement;
+            } catch (error) {
+              console.error(error);
+            }
           },
           destroyer: () => {
             componentRef.destroy();

@@ -46,7 +46,6 @@ import { FidaTranslateLoader } from './helpers/FidaTranslateLoader';
 import { DifferenceTreeComponent } from './components/version-manager/version-reconcile-dialog/difference-tree/difference-tree.component';
 import { DifferenceListTreeComponent } from './components/version-manager/version-reconcile-dialog/difference-list-tree/difference-list-tree.component';
 import { DifferenceAttributeTreeComponent } from './components/version-manager/version-reconcile-dialog/difference-attribute-tree/difference-attribute-tree.component';
-import { AttributeMultiselectComponent } from './components/feature/feature-edit/attribute-multiselect/attribute-multiselect.component';
 
 // config
 export function initApp(configService: ConfigService): any {
@@ -88,8 +87,7 @@ export function createCompiler(compilerFactory: CompilerFactory): Compiler {
     KontaktViewComponent,
     DifferenceTreeComponent,
     DifferenceListTreeComponent,
-    DifferenceAttributeTreeComponent,
-    AttributeMultiselectComponent
+    DifferenceAttributeTreeComponent
   ],
   imports: [
     FormsModule,

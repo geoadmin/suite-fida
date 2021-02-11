@@ -1,7 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { ConfigService } from 'src/app/configs/config.service';
 import { FeatureState, FidaFeature, RelationshipName } from 'src/app/models/FidaFeature.model';
 import { FeatureService } from 'src/app/services/feature.service';
+import { PureComService } from 'src/app/services/pureCom.service';
+import { FidaTranslateService } from 'src/app/services/translate.service';
 
 @Component({
   selector: 'app-lfp-edit',
@@ -13,15 +16,26 @@ export class LfpEditComponent implements OnInit {
   @Input() formGroup: FormGroup;
   @Input() readonly = false;
   public redefining = false;
+  public materialisierungList: string[];
 
   constructor(
-    private featureService: FeatureService
+    private featureService: FeatureService,
+    private configService: ConfigService,
+    private pureComeService: PureComService,
+    private fidaTranslateService: FidaTranslateService
   ) { }
 
   ngOnInit(): void {
     for (const key of Object.keys(this.feature.attributes)) {
       this.formGroup.addControl(key, new FormControl());
     }
+
+    this.pureComeService.getLang(this.feature.geometry).then(featureLang => {
+      const materialisierungDomain = this.configService.getDomainByName('FIDA_MATERIALISIERUNG_CD');
+      this.fidaTranslateService.getTranslatedCodedValueNamesByLang(materialisierungDomain, featureLang).subscribe((translatedNames) =>{
+        this.materialisierungList = translatedNames;
+      });
+    });
   }
 
   async redefineGrundbuchDataClick(): Promise<any> {

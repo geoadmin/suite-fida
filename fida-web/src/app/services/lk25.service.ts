@@ -16,7 +16,7 @@ export class Lk25Service {
   ) { }
 
   async getTileId(point: Point): Promise<number> {
-    const url = this.configService.getGpConfig().getLK25Url;
+    const url = this.configService.getGpConfig().lk25Url;
     const geometry = `${point.x.toString()},${point.y.toString()}`;
 
     let params = new HttpParams();

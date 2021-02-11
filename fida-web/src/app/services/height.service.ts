@@ -16,7 +16,7 @@ export class HeightService {
   ) { }
 
   async getHeight(point: Point): Promise<any> {
-    const url = this.configService.getGpConfig().getHeightUrl;
+    const url = this.configService.getGpConfig().heightUrl;
 
     let params = new HttpParams();
     params = params.append('easting', point.x.toString());

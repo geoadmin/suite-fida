@@ -28,7 +28,7 @@
     "angular2-notifications": "^9.0.0",
     "bootstrap": "4.5.3",
     "jquery": "^3.5.1",
-    "ng-multiselect-dropdown": "^0.2.14",
+    "ng-multiselect-dropdown": "^0.3.0",
     "ngx-bootstrap": "^6.1.0",
     "ngx-cookie-service": "^10.1.1",
     "popper.js": "^1.16.1",

@@ -16,7 +16,7 @@ describe('Lk25Service', () => {
    */
 
   class ConfigServiceStub {
-    getGpConfig = () => ({ getLK25Url: 'URL' });
+    getGpConfig = () => ({ lk25Url: 'URL' });
   }
 
   /**
