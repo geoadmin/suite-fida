@@ -5,6 +5,7 @@ import { FeatureState, FidaFeature, RelationshipName } from 'src/app/models/Fida
 import { FeatureService } from 'src/app/services/feature.service';
 import { PureComService } from 'src/app/services/pureCom.service';
 import { FidaTranslateService } from 'src/app/services/translate.service';
+import { WorkAbbreviationService } from 'src/app/services/work-abbreviation.service';
 
 @Component({
   selector: 'app-lfp-edit',
@@ -22,20 +23,30 @@ export class LfpEditComponent implements OnInit {
     private featureService: FeatureService,
     private configService: ConfigService,
     private pureComeService: PureComService,
-    private fidaTranslateService: FidaTranslateService
+    private fidaTranslateService: FidaTranslateService,
+    private workAbbreviationService: WorkAbbreviationService
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     for (const key of Object.keys(this.feature.attributes)) {
       this.formGroup.addControl(key, new FormControl());
     }
 
-    this.pureComeService.getLang(this.feature.geometry).then(featureLang => {
-      const materialisierungDomain = this.configService.getDomainByName('FIDA_MATERIALISIERUNG_CD');
-      this.fidaTranslateService.getTranslatedCodedValueNamesByLang(materialisierungDomain, featureLang).subscribe((translatedNames) =>{
+    // set feature language 
+    if (!this.feature.language) {
+      this.feature.language = await this.pureComeService.getLang(this.feature.geometry);
+    }
+
+    const materialisierungDomain = this.configService.getDomainByName('FIDA_MATERIALISIERUNG_CD');
+    const appLanguage = this.fidaTranslateService.getCurrentLanguage();
+    // TODO use feature.language...
+    this.fidaTranslateService.getTranslatedCodedValueNamesByLang(materialisierungDomain, appLanguage)
+      .subscribe((translatedNames) => {
         this.materialisierungList = translatedNames;
       });
-    });
+
+    // for optimization force a load
+    await this.workAbbreviationService.getWorkAbbreviationList(this.feature.language);
   }
 
   async redefineGrundbuchDataClick(): Promise<any> {

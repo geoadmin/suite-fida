@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { Component, forwardRef, Input, OnInit, TemplateRef } from '@angular/core';
 import {
   AbstractControl, ControlValueAccessor, FormControl, FormGroup,
   NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validators
@@ -10,6 +10,7 @@ import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import CodedValueDomain from '@arcgis/core/layers/support/CodedValueDomain';
 import Field from '@arcgis/core/layers/support/Field';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-attribute-value-edit',
@@ -35,18 +36,25 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
   @Input() type: string;
   @Input() required = false;
   @Input() readonly = false;
-  @Input() multiselectList: string[] = [];
+  @Input() list: string[] = [];
 
   public formGroup: FormGroup;
   public disabled: boolean;
   public field: Field;
   public date: Date;
   public codedValues: object[];
+  public tags: string[] = [];
+  public addTagNumber: number;
+  public addTagText: string;
   public multiselectItems: string[] = [];
   public multiselectSettings: IDropdownSettings;
-  private mulitselectDelimiter = ',';
+  private delimiter = ',';
+  private modalRef: BsModalRef;
 
-  constructor(private translateService: FidaTranslateService) { }
+  constructor(
+    private translateService: FidaTranslateService,
+    private modalService: BsModalService
+  ) { }
 
   ngOnInit(): void {
     if (!this.placeholder) {
@@ -76,14 +84,20 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
 
     if (this.type === 'multiselect') {
       this.multiselectSettings = {
-         enableCheckAll: false,
-         allowSearchFilter: true,
-         searchPlaceholderText: this.translateService.translate('app.search.title'),
-         clearSearchFilter: true
+        enableCheckAll: false,
+        allowSearchFilter: true,
+        searchPlaceholderText: this.translateService.translate('app.search.title'),
+        clearSearchFilter: true
       };
       const multiselectString = this.feature.attributes[this.formControlName] as string;
       this.multiselectItems = multiselectString != null ?
-        multiselectString.split(this.mulitselectDelimiter).map(m => m.trim()) : [];
+        multiselectString.split(this.delimiter).map(m => m.trim()) : [];
+    }
+
+    if (this.type === 'tags') {
+      const tagString = this.feature.attributes[this.formControlName] as string;
+      this.tags = tagString != null ?
+        tagString.split(this.delimiter).map(m => m.trim()) : [];
     }
 
     // translate coded values
@@ -109,7 +123,11 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
 
   onMultiselectChanged(item: string): void {
     this.feature.attributes[this.formControlName] =
-      this.multiselectItems.length > 0 ? this.multiselectItems.join(this.mulitselectDelimiter + ' ') : null;
+      this.multiselectItems.length > 0 ? this.multiselectItems.join(this.delimiter + ' ') : null;
+  }
+
+  onTagsChanged(e: any): void {
+    console.log(e);
   }
 
   private getFeatureLayer(): FeatureLayer {
@@ -128,6 +146,32 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
     } else {
       this.type = this.field.type;
     }
+  }
+
+  /**
+   * add tag
+   */
+
+  showAddTagDialogClick(template: TemplateRef<any>): void {
+    this.addTagNumber = undefined;
+    this.addTagText = undefined;
+    this.modalRef = this.modalService.show(template, { class: 'modal-sm modal-dialog-centered' });
+  }
+
+  addTagClick(): void {
+    if (this.addTagText) {
+      const tag = UtilService.getToLine(this.addTagNumber, this.addTagText);
+      if (tag && tag.trim() !== '') {
+        this.tags.push(tag);
+        this.feature.attributes[this.formControlName] =
+          this.tags.length > 0 ? this.tags.join(this.delimiter + ' ') : null;
+      }
+    }
+    this.modalRef.hide();
+  }
+
+  cancelTagClick(): void {
+    this.modalRef.hide();
   }
 
   /**

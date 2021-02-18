@@ -63,6 +63,7 @@ export class Config {
     defaultVersion: string;
     defaultExtent: ExtentConfig;
     translateTableName: string;
+    workAbbreviationTableName: string;
     languages: string[];
     versionManagement: VersionManagementConfig;
     gp: GpConfig;

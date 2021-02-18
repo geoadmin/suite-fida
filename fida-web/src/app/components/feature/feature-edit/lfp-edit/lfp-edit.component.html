@@ -255,9 +255,8 @@
                 </div>
             </div>
             <div class="col-8">
-                <app-attribute-value-edit [feature]="feature" formControlName="RUECKVERSICHRG_BEMERK" type="multiselect"
-                    [multiselectList]='materialisierungList' placeholder="Rückversicherung Bemerkung"
-                    [readonly]="readonly" >
+                <app-attribute-value-edit [feature]="feature" formControlName="RUECKVERSICHRG_BEMERK" type="tags"
+                    [list]="materialisierungList" placeholder="Rückversicherung Bemerkung" [readonly]="readonly">
                 </app-attribute-value-edit>
             </div>
         </div>
@@ -450,9 +449,10 @@
                     translate }}</button>
             </div>
         </div>
-        <div *ngFor="let feature of getNachfuehrungFeatures()">
+        <div *ngFor="let relfeature of getNachfuehrungFeatures()">
             <div *ngIf="feature.state !== 'deleted'">
-                <app-nachfuehrung-edit [feature]="feature" [formGroup]="formGroup" [readonly]="readonly">
+                <app-nachfuehrung-edit [feature]="relfeature" [formGroup]="formGroup" [readonly]="readonly"
+                    [language]="feature.language">
                 </app-nachfuehrung-edit>
             </div>
         </div>

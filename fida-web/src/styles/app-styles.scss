@@ -63,7 +63,8 @@ textarea.form-control {
 
 .attribute-label {
   display: flex;
-  align-items: center;
+  align-items: normal;
+  padding-top: 3px;
 }
 
 // WORKAROUND: wiso wird das eingebundene ng-multiselect-dropdown.themes.scss vom alten css überschrieben???
@@ -227,6 +228,7 @@ a[role="tab"] {
 
 .fida-widget-body {
   margin: 0 0 var(--fida-widget-footer-height) 0;
+  height: 100%;
   max-height: calc(
     100vh - var(--fida-widget-footer-height) - var(--header-height) - var(--fida-widget-header-height) - 40px
   );

@@ -37,7 +37,8 @@
                 </div>
                 <div class="col-3 attribute-label">{{ 'row.fida_nachfuehrunglfp.arbeitskuerzeltext' | translate }}</div>
                 <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="ARBEITSKUERZELTEXT">
+                    <app-attribute-value-edit [feature]="feature" formControlName="ARBEITSKUERZELTEXT" type="multiselect"
+                    [list]="workAbbreviationList" [readonly]="readonly" > 
                     </app-attribute-value-edit>
                 </div>
             </div>

@@ -1,9 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import Geometry from '@arcgis/core/geometry/Geometry';
-import Point from '@arcgis/core/geometry/Point';
 import { ConfigService } from '../configs/config.service';
-import { ParcelInfo } from '../models/ParcelInfo.model';
-import { FeatureService } from './feature.service';
+import { FidaFeature } from '../models/FidaFeature.model';
 import { MessageService } from './message.service';
 import { QueryService } from './query.service';
 
@@ -26,11 +24,11 @@ export class PureComService {
       // mappning
       // 0=de, 1=fr, 2=it, 3=rm (set 'de' for 'rm')
       const langMap = ['de', 'fr', 'it', 'de'];
-
+      let langCom = 0; // default
       if (features.length > 0) {
-        const langCom = features[0].attributes.COM_LANG;
-        return langMap[langCom];
+        langCom = features[0].attributes.COM_LANG;
       }
+      return langMap[langCom];
     } catch (error) {
       this.messageService.error('PureCome-Call failed', error);
     }

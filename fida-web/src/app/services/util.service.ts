@@ -88,6 +88,17 @@ export class UtilService {
    * TO LINE METHODS
    */
 
+  public static getToLine(value1: any, value2: any): string {
+    const list: string[] = [];
+    if (value1 != null) {
+      this.addToList(list, value1.toString());
+    }
+    if (value2 != null) {
+      this.addToList(list, value2.toString());
+    }
+    return list.join(' ');
+  }
+
   public static getVornameNameToLine(feature: FidaFeature): string {
     const list: string[] = [];
     this.addToList(list, feature.attributes.VORNAME);

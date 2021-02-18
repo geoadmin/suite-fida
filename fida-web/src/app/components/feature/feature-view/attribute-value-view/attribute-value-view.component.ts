@@ -57,8 +57,7 @@ export class AttributeValueViewComponent implements OnInit {
   }
 
   isMultiselect(): boolean {
-    console.log(this.name, this.type, this.type === 'multiselect');
-    return this.type === 'multiselect';
+    return this.type === 'multiselect' || this.type === 'tags';
   }
 
 }

@@ -51,5 +51,9 @@ export class FidaFeature extends Feature {
      * current tab open in view/edit
      */
     activeTab: string;
+    /**
+     * language from feature depending on location
+     */
+    language: string;
 }
 

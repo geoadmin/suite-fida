@@ -72,6 +72,7 @@ export class FidaTranslateLoader implements TranslateLoader {
   }
 
   private getDatabaseTranslationKey(feature: Feature): string {
+    //TODO app einbinden
     const type = feature.attributes.OBJEKTART === 0 ? 'domain' : 'row';
     const group = feature.attributes.GRUPPENAME.toLowerCase();
     const key = feature.attributes.KEY.toLowerCase();

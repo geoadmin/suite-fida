@@ -68,4 +68,14 @@ export class FidaTranslateService {
   public translate(key: string): string {
     return this.translateService.instant(key);
   }
+
+  public translateList(keys: string[]): string[] {
+    return this.translateService.instant(keys);
+  }
+
+  public translateListByLang(keys: string[], lang: string): Observable<string[]> {
+    return this.translateService.getTranslation(lang.toLocaleLowerCase()).pipe(map(translations => {
+      return keys.map(key => translations[key]);
+    }));
+  }
 }

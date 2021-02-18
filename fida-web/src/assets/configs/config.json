@@ -1,5 +1,5 @@
 {
-    "appVersion": "deployed: 11.02.2021",
+    "appVersion": "deployed: 18.02.2021",
     "roles": {
         "admin": "org_admin"
     },
@@ -7,6 +7,7 @@
     "layerBaseUrl": "[EVIRONMENT_ARCGISURL]/rest/services/FIDA/FIDA/FeatureServer",
     "defaultVersion": "SDE.DEFAULT",
     "translateTableName": "FIDA_UEBERSETZUNG",
+    "workAbbreviationTableName": "FIDA_ARBEITSKUERZELLFP",
     "languages": [
         "de",
         "fr",

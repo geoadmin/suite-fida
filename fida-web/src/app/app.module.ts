@@ -13,6 +13,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { TagInputModule } from 'ngx-chips';
 
 // components
 import { AppComponent } from './app.component';
@@ -95,6 +96,7 @@ export function createCompiler(compilerFactory: CompilerFactory): Compiler {
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    TagInputModule,
     SimpleNotificationsModule.forRoot(),
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),

@@ -3,11 +3,20 @@
     <!-- value -->
     <div [ngSwitch]="type">
 
+        <!-- tags value -->
+        <div *ngSwitchCase="'tags'">
+            <tag-input class="float-left" [(ngModel)]='tags' [placeholder]="''" formControlName="valueControl"
+                theme='bootstrap'>
+            </tag-input>
+            <button class="btn btn-primary float-left" (click)="showAddTagDialogClick(addTagTemplate)"><i
+                    class='fas fa-plus'></i></button>
+        </div>
+
         <!-- multiselect value -->
         <div *ngSwitchCase="'multiselect'">
-            <ng-multiselect-dropdown formControlName="valueControl" [settings]="multiselectSettings"
-                [data]="multiselectList" [(ngModel)]="multiselectItems" [placeholder]="placeholder"
-                (onSelect)="onMultiselectChanged($event)" (onDeSelect)="onMultiselectChanged($event)">
+            <ng-multiselect-dropdown formControlName="valueControl" [settings]="multiselectSettings" [data]="list"
+                [(ngModel)]="multiselectItems" [placeholder]="placeholder" (onSelect)="onMultiselectChanged($event)"
+                (onDeSelect)="onMultiselectChanged($event)">
             </ng-multiselect-dropdown>
         </div>
 
@@ -58,4 +67,32 @@
 </div>
 
 <!-- readonly -->
-<app-attribute-value-view *ngIf="readonly" [feature]="feature" [name]="formControlName" [type]="type"></app-attribute-value-view>
+<app-attribute-value-view *ngIf="readonly" [feature]="feature" [name]="formControlName" [type]="type">
+</app-attribute-value-view>
+
+<!-- delete dialog -->
+<ng-template #addTagTemplate>
+    <div class="modal-body text-center container">
+        <div class="row form-group">
+            <div class="col-3 form-group">
+                <input type="number" class="form-control" [(ngModel)]="addTagNumber">
+            </div>
+            <div class="col-9 form-group">
+                <select [(ngModel)]="addTagText" class="form-control">
+                    <option *ngFor="let item of list" [ngValue]="item">
+                        {{ item }}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 mt-2">
+                <button type="button" class="btn btn-default" (click)="cancelTagClick()">{{ 'app.global.cancel' |
+                    translate
+                    }}</button>
+                <button type="button" class="btn btn-danger ml-2" (click)="addTagClick()">{{ 'app.global.add' |
+                    translate }}</button>
+            </div>
+        </div>
+    </div>
+</ng-template>

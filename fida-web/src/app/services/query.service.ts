@@ -148,9 +148,7 @@ export class QueryService {
 
   public url(url: string, objectIds?: number[]): Promise<FidaFeature[]> {
     const query = new Query();
-    if (objectIds != null) {
-      query.where = `OBJECTID IN (${objectIds.join(',')})`;
-    }
+    query.where = objectIds != null ? `OBJECTID IN (${objectIds.join(',')})` : '1=1';
     query.outFields = ['*'];
 
     const queryTask = new QueryTask();
