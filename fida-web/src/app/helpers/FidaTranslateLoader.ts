@@ -7,13 +7,14 @@ import { from, Observable, of, zip } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ConfigService } from '../configs/config.service';
 import { FidaFeature } from '../models/FidaFeature.model';
+import { TranslationCacheService } from '../services/translation-cache.service';
 
 export class FidaTranslateLoader implements TranslateLoader {
-  private databaseTranslations: any = {};
 
   constructor(
     private httpClient: HttpClient,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private translationCacheService: TranslationCacheService
   ) { }
 
   public getTranslation(lang: string): Observable<any> {
@@ -26,20 +27,21 @@ export class FidaTranslateLoader implements TranslateLoader {
   }
 
   private loadDatabaseTranslations(lang: string): Observable<any> {
-    const databaseTranslation: any = this.databaseTranslations[lang];
+    const databaseTranslation: any = this.translationCacheService.getDatabaseTranslation(lang);
 
     if (databaseTranslation) {
       return of(databaseTranslation);
     }
 
     return this.loadAndConvertDatabaseTranslations().pipe(map(() => {
-      return this.databaseTranslations[lang];
+      return this.translationCacheService.getDatabaseTranslation(lang);
     }));
   }
 
   private loadAndConvertDatabaseTranslations(): Observable<any> {
     return this.url(this.configService.getTranslateTableUrl()).pipe(map((features: FidaFeature[]) => {
-      this.databaseTranslations = this.createEmptyDatabaseTranslations();
+      const languages = this.configService.getLanguages();
+      const databaseTranslations = this.translationCacheService.createEmptyDatabaseTranslations(languages);
 
       features.forEach(feature => {
         const translationKey = this.getDatabaseTranslationKey(feature);
@@ -51,24 +53,15 @@ export class FidaTranslateLoader implements TranslateLoader {
         }
 
         // convert db-dictionary to specific language lists
-        for (const langKey of Object.keys(this.databaseTranslations)) {
+        for (const langKey of Object.keys(databaseTranslations)) {
           const translation = valDict[langKey];
           if (translation) {
-            this.databaseTranslations[langKey][translationKey] = translation;
+            databaseTranslations[langKey][translationKey] = translation;
           }
         }
       });
+      this.translationCacheService.setDatabaseTranslations(databaseTranslations);
     }));
-  }
-
-  private createEmptyDatabaseTranslations(): any {
-    const languages = this.configService.getLanguages();
-
-    const databaseTranslation: any = {};
-    languages.forEach(language => {
-      databaseTranslation[language] = {};
-    });
-    return databaseTranslation;
   }
 
   private getDatabaseTranslationKey(feature: Feature): string {

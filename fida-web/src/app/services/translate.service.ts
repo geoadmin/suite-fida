@@ -3,13 +3,17 @@ import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import CodedValueDomain from '@arcgis/core/layers/support/CodedValueDomain';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { TranslationCacheService } from './translation-cache.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FidaTranslateService {
 
-  constructor(private translateService: TranslateService) { }
+  constructor(
+    private translateService: TranslateService,
+    private translationCacheService: TranslationCacheService
+  ) { }
 
   public getCurrentLanguage(): string {
     return this.translateService.currentLang;
@@ -43,11 +47,9 @@ export class FidaTranslateService {
     return domain;
   }
 
-  public getTranslatedCodedValueNamesByLang(domain: CodedValueDomain, lang: string): Observable<string[]> {
+  public getTranslatedCodedValueNamesByLang(domain: CodedValueDomain, language: string): string[] {
     const keys = domain.codedValues.map(m => this.getCodedValueKey(domain, m));
-    return this.translateService.getTranslation(lang.toLocaleLowerCase()).pipe(map(translations => {
-      return keys.map(key => translations[key]);
-    }));
+    return this.translateList(keys, language);
   }
 
   private getCodedValueKey(domain: CodedValueDomain, codedValue: any): string {
@@ -69,13 +71,24 @@ export class FidaTranslateService {
     return this.translateService.instant(key);
   }
 
-  public translateList(keys: string[]): string[] {
-    return this.translateService.instant(keys);
+  public translateList(keys: string[], language: string): string[] {
+    // WARNING: if a translation of not current language is needed, do not use translationService
+    // because this will cause problems with the current-language settings...
+    if (language) {
+      return this.instantByLang(keys, language);
+    } else {
+      return this.translateService.instant(keys);
+    }
   }
 
-  public translateListByLang(keys: string[], lang: string): Observable<string[]> {
-    return this.translateService.getTranslation(lang.toLocaleLowerCase()).pipe(map(translations => {
-      return keys.map(key => translations[key]);
-    }));
+  private instantByLang(keys: string[], language: string): string[] {
+    const databaseTranslation = this.translationCacheService.getDatabaseTranslation(language);
+    const translations: string[] = [];
+    // order of key must mirrow the translation
+    keys.forEach(key => {
+      const translation = databaseTranslation[key] || key;
+      translations.push(translation);
+    });
+    return translations;
   }
 }

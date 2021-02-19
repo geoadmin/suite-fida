@@ -15,9 +15,12 @@ import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { TagInputModule } from 'ngx-chips';
 
+// services
+import { TranslationCacheService } from './services/translation-cache.service';
+import { ConfigService } from './configs/config.service';
+
 // components
 import { AppComponent } from './app.component';
-import { ConfigService } from './configs/config.service';
 import { HeaderComponent } from './components/header/header.component';
 import { MapComponent } from './components/map/map.component';
 import { FeatureEditComponent } from './components/feature/feature-edit/feature-edit.component';
@@ -105,8 +108,12 @@ export function createCompiler(compilerFactory: CompilerFactory): Compiler {
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: (http: HttpClient, configService: ConfigService) => new FidaTranslateLoader(http, configService),
-        deps: [HttpClient, ConfigService]
+        useFactory: (
+          http: HttpClient,
+          configService: ConfigService,
+          translationCacheService: TranslationCacheService
+        ) => new FidaTranslateLoader(http, configService, translationCacheService),
+        deps: [HttpClient, ConfigService, TranslationCacheService]
       }
     })
   ],

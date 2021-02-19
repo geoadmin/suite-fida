@@ -126,10 +126,6 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
       this.multiselectItems.length > 0 ? this.multiselectItems.join(this.delimiter + ' ') : null;
   }
 
-  onTagsChanged(e: any): void {
-    console.log(e);
-  }
-
   private getFeatureLayer(): FeatureLayer {
     return this.feature?.layer as FeatureLayer;
   }
@@ -149,7 +145,7 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
   }
 
   /**
-   * add tag
+   * add / remove tag
    */
 
   showAddTagDialogClick(template: TemplateRef<any>): void {
@@ -163,8 +159,7 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
       const tag = UtilService.getToLine(this.addTagNumber, this.addTagText);
       if (tag && tag.trim() !== '') {
         this.tags.push(tag);
-        this.feature.attributes[this.formControlName] =
-          this.tags.length > 0 ? this.tags.join(this.delimiter + ' ') : null;
+        this.onTagChanged();
       }
     }
     this.modalRef.hide();
@@ -172,6 +167,12 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
 
   cancelTagClick(): void {
     this.modalRef.hide();
+  }
+
+  onTagChanged(): void {
+    // convert all to string
+    const tags = this.tags.map((tag: any) => typeof tag === 'object' ? tag.value : tag);
+    this.feature.attributes[this.formControlName] = tags.length > 0 ? tags.join(this.delimiter + ' ') : null;
   }
 
   /**

@@ -44,9 +44,7 @@ export class WorkAbbreviationService {
       this.configService.getLanguages().forEach(language => {
         lists[language] = [] as string[];
         const keys = features.map(m => `domain.fida_arbeitskuerzellfp_cd.${m.attributes.CODE}`);
-        this.fidaTranslateService.translateListByLang(keys, language.toLocaleLowerCase()).subscribe((translatedAttributes) => {
-          lists[language] = translatedAttributes;
-        });
+        lists[language] = this.fidaTranslateService.translateList(keys, language);
       });
     }
     return lists;

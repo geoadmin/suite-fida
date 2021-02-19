@@ -4,11 +4,11 @@
     <div [ngSwitch]="type">
 
         <!-- tags value -->
-        <div *ngSwitchCase="'tags'">
-            <tag-input class="float-left" [(ngModel)]='tags' [placeholder]="''" formControlName="valueControl"
-                theme='bootstrap'>
+        <div *ngSwitchCase="'tags'" class="d-flex">
+            <tag-input class="flex-fill" [(ngModel)]='tags' [placeholder]="''" formControlName="valueControl"
+                theme='bootstrap' (onAdd)="onTagChanged()" (onRemove)="onTagChanged()">
             </tag-input>
-            <button class="btn btn-primary float-left" (click)="showAddTagDialogClick(addTagTemplate)"><i
+            <button class="btn btn-primary" (click)="showAddTagDialogClick(addTagTemplate)"><i
                     class='fas fa-plus'></i></button>
         </div>
 

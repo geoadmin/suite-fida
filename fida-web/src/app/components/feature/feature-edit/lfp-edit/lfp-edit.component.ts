@@ -38,12 +38,7 @@ export class LfpEditComponent implements OnInit {
     }
 
     const materialisierungDomain = this.configService.getDomainByName('FIDA_MATERIALISIERUNG_CD');
-    const appLanguage = this.fidaTranslateService.getCurrentLanguage();
-    // TODO use feature.language...
-    this.fidaTranslateService.getTranslatedCodedValueNamesByLang(materialisierungDomain, appLanguage)
-      .subscribe((translatedNames) => {
-        this.materialisierungList = translatedNames;
-      });
+    this.materialisierungList = this.fidaTranslateService.getTranslatedCodedValueNamesByLang(materialisierungDomain, this.feature.language);
 
     // for optimization force a load
     await this.workAbbreviationService.getWorkAbbreviationList(this.feature.language);

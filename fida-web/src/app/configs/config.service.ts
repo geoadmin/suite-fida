@@ -135,7 +135,7 @@ export class ConfigService {
         const tableId = this.findLayerId(this.config.workAbbreviationTableName);
         return `${this.config.layerBaseUrl}/${tableId}`;
     }
-    
+
     public getLanguages(): string[] {
         return this.config.languages;
     }
