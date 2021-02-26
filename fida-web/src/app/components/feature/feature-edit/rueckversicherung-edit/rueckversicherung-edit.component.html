@@ -40,6 +40,10 @@
                     <app-attribute-value-edit [feature]="feature" formControlName="MATERIALISIERUNG" [required]="true">
                     </app-attribute-value-edit>
                 </div>
+                <div class="col-3 attribute-label">{{ 'row.fida_rueckversicherunglfp.bemerkung' | translate }}</div>
+                <div class="col-3">
+                    <app-attribute-value-edit [feature]="feature" formControlName="BEMERKUNG"></app-attribute-value-edit>
+                </div>
             </div>
 
             <!-- delete button -->
