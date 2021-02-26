@@ -189,7 +189,7 @@
     <QualityCondition name="FIDA_LSN WithinZRange" testDescriptor="QaWithinZRange(0)" allowErrors="False">
       <Parameters>
         <Dataset parameter="featureClass" value="FIDA_LSN" workspace="FIDA" />
-		<Scalar parameter="minimumZValue" value= "190.0" />
+		<Scalar parameter="minimumZValue" value= "110.0" />
 		<Scalar parameter="maximumZValue" value= "4700.00" />		
       </Parameters>
     </QualityCondition>		

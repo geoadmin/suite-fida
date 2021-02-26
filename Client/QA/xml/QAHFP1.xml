@@ -560,7 +560,7 @@
     <QualityCondition name="FIDA_HFP REG LK25" testDescriptor="QaRegularExpression(0)" allowErrors="False">
       <Parameters>
         <Dataset parameter="table" value="FIDA_HFP" workspace="FIDA" />
-		<Scalar parameter="pattern" value= "1[0-9]{3}" />
+		<Scalar parameter="pattern" value= "[1-2][0-9]{3}" />
 		<Scalar parameter="fieldName" value= "LK25" />
 		<Scalar parameter="FieldListType" value= "RelevantFields" />
       </Parameters>
