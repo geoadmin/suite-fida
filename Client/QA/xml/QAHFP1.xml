@@ -4,6 +4,7 @@
     <QualitySpecification name="FIDA Base" listOrder="0">
       <Elements>
 		<!-- FIDA_HFP -->
+        <Element qualityCondition="FIDA_HFP FLU" />	
         <Element qualityCondition="FIDA_HFP OBJEKTART is mandatory" />		
         <Element qualityCondition="FIDA_HFP LN02 is mandatory" />
         <Element qualityCondition="FIDA_HFP LV95E is mandatory" />
@@ -103,6 +104,12 @@
     </QualitySpecification>
   </QualitySpecifications>
   <QualityConditions>
+   <QualityCondition name="FIDA_HFP FLU" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_HFP" workspace="FIDA" />
+        <Scalar parameter="constraint" value="NOT (GENLAGELV95 &gt; 6.9 AND ZUVLAGELV95 = 1)" />
+      </Parameters>
+    </QualityCondition>
    <QualityCondition name="FIDA_HFP OBJEKTART is mandatory" testDescriptor="QaConstraint(0)" allowErrors="False">
       <Parameters>
         <Dataset parameter="table" value="FIDA_HFP" workspace="FIDA" />
