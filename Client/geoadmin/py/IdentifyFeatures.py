@@ -87,6 +87,8 @@ class IdentifyFeatures:
         self.__params["layers"] = "all:" + layers
         self.__params["returnGeometry"] = "false"
         self.__params["sr"] = 2056
+        _status, _results = self.api3identify()
+        self.__lk25 = _results["results"][0]["featureId"]
 
     @property
     def getpt(self):
@@ -115,6 +117,10 @@ class IdentifyFeatures:
     @property
     def getenvelope(self):
         return self.__envelope
+
+    @property
+    def getlk25(self):
+        return self.__lk25
 
     @property
     def __getproxy(self):
@@ -436,4 +442,5 @@ class IdentifyFeatures:
             else:
                 _parzinfos[_idx].update({"Bezirk": self.__query_bezirk_name(_beznr)})
             _parzinfos[_idx].update({"Land": _icc})
+            _parzinfos[_idx].update({"LK25NR": self.__lk25})
         return json.dumps(_parzinfos)

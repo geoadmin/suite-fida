@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DataQuality xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:EsriDE.ProSuite.QA.QualitySpecifications-2.0" xsi:noNamespaceSchemaLocation="./EsriDE.ProSuite.QA.QualitySpecifications-2.0.xsd">
+  <QualitySpecifications>
+    <QualitySpecification name="FIDA Base" listOrder="0">
+      <Elements>
+        <Element qualityCondition="FIDA_KONTAKT FK_FIDA_LFP/HFP is not NULL" />
+		<Element qualityCondition="FIDA_KONTAKT DomainCheck" />
+		<Element qualityCondition="FIDA_KONTAKT NoNull" />	
+		<Element qualityCondition="FIDA_KONTAKT 2 FIDA_LFP FK" />
+		<Element qualityCondition="FIDA_KONTAKT 2 FIDA_HFP FK" />
+		<Element qualityCondition="FIDA_KONTAKT GlobalID unique" />		
+		<Element qualityCondition="FIDA_KONTAKT TrimmedText" />
+      </Elements>
+    </QualitySpecification>
+  </QualitySpecifications>
+  <QualityConditions>
+   <QualityCondition name="FIDA_KONTAKT FK_FIDA_LFP/HFP is not NULL" testDescriptor="QaConstraint(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_KONTAKT" workspace="FIDA" />
+        <Scalar parameter="constraint" value="FK_FIDA_HFP IS NOT NULL OR FK_FIDA_LFP IS NOT NULL" />
+      </Parameters>
+    </QualityCondition>
+    <QualityCondition name="FIDA_KONTAKT DomainCheck" testDescriptor="QaGdbConstraintFactory" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_KONTAKT" workspace="FIDA" />
+        <Scalar parameter="AllowNullValuesForCodedValueDomains" value="FALSE" />
+        <Scalar parameter="AllowNullValuesForRangeDomains" value="FALSE" />		
+      </Parameters>
+    </QualityCondition>
+    <QualityCondition name="FIDA_KONTAKT NoNull" testDescriptor="QaRequiredFields(3)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_KONTAKT" workspace="FIDA" />
+        <Scalar parameter="requiredFieldNamesString" value= "ART" />
+		<Scalar parameter="allowEmptyStrings" value= "False" />
+		<Scalar parameter="allowMissingFields" value= "False" />
+      </Parameters>
+    </QualityCondition>
+    <QualityCondition name="FIDA_KONTAKT 2 FIDA_LFP FK" testDescriptor="QaForeignKey(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_KONTAKT" workspace="FIDA" />
+        <Scalar parameter="foreignKeyField" value= "FK_FIDA_LFP" />
+		<Dataset parameter="referencedTable" value= "FIDA_LFP" workspace="FIDA" />
+		<Scalar parameter="referencedKeyField" value= "GlobalID" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_KONTAKT 2 FIDA_HFP FK" testDescriptor="QaForeignKey(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_KONTAKT" workspace="FIDA" />
+        <Scalar parameter="foreignKeyField" value= "FK_FIDA_HFP" />
+		<Dataset parameter="referencedTable" value= "FIDA_HFP" workspace="FIDA" />
+		<Scalar parameter="referencedKeyField" value= "GlobalID" />
+      </Parameters>
+    </QualityCondition>	
+    <QualityCondition name="FIDA_KONTAKT GlobalID unique" testDescriptor="QaUnique(0)">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_KONTAKT" workspace="FIDA" />
+        <Scalar parameter="unique" value="GlobalID" />
+      </Parameters>
+    </QualityCondition>
+    <QualityCondition name="FIDA_KONTAKT TrimmedText" testDescriptor="QaTrimmedTextFields(0)" allowErrors="False">
+      <Parameters>
+        <Dataset parameter="table" value="FIDA_KONTAKT" workspace="FIDA" />
+      </Parameters>
+    </QualityCondition>	
+  </QualityConditions>
+  <TestDescriptors>
+    <TestDescriptor name="QaConstraint(0)" allowErrors="false">
+      <TestClass type="EsriDE.ProSuite.QA.Tests.QaConstraint" assembly="EsriDE.ProSuite.QA.Tests" constructorIndex="0" />
+    </TestDescriptor>
+    <TestDescriptor name="QaGdbConstraintFactory" allowErrors="false">
+      <TestFactory type="EsriDE.ProSuite.QA.TestFactories.QaGdbConstraintFactory" assembly="EsriDE.ProSuite.QA.TestFactories" />
+    </TestDescriptor>
+    <TestDescriptor name="QaRequiredFields(3)" allowErrors="false">
+      <TestClass type="EsriDE.ProSuite.QA.Tests.QaRequiredFields" assembly="EsriDE.ProSuite.QA.Tests" constructorIndex="3" />
+    </TestDescriptor>
+    <TestDescriptor name="QaForeignKey(0)" allowErrors="false">
+      <TestClass type="EsriDE.ProSuite.QA.Tests.QaForeignKey" assembly="EsriDE.ProSuite.QA.Tests" constructorIndex="0" />
+    </TestDescriptor>
+    <TestDescriptor name="QaUnique(0)" allowErrors="false">
+      <TestClass type="EsriDE.ProSuite.QA.Tests.QaUnique" assembly="EsriDE.ProSuite.QA.Tests" constructorIndex="0" />
+    </TestDescriptor>
+    <TestDescriptor name="QaTrimmedTextFields(0)" allowErrors="false">
+      <TestClass type="EsriDE.ProSuite.QA.Tests.QaTrimmedTextFields" assembly="EsriDE.ProSuite.QA.Tests" constructorIndex="0" />
+    </TestDescriptor>
+  </TestDescriptors>
+  <Workspaces>
+	<Workspace id="FIDA" modelName="FIDA" />
+  </Workspaces>
+</DataQuality>
