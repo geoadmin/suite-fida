@@ -365,6 +365,10 @@ export class FeatureService {
     if (id == null) {
       return feature.layer.id;
     }
+    if (feature.layer.id === 'HFP') {
+      const canton = feature.attributes.HFPKANTON;
+      return `${feature.layer.id}: ${canton} ${id}`;
+    }
     return `${feature.layer.id}-${id}`;
   }
 

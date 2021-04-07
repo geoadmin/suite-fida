@@ -50,6 +50,7 @@ import { FidaTranslateLoader } from './helpers/FidaTranslateLoader';
 import { DifferenceTreeComponent } from './components/version-manager/version-reconcile-dialog/difference-tree/difference-tree.component';
 import { DifferenceListTreeComponent } from './components/version-manager/version-reconcile-dialog/difference-list-tree/difference-list-tree.component';
 import { DifferenceAttributeTreeComponent } from './components/version-manager/version-reconcile-dialog/difference-attribute-tree/difference-attribute-tree.component';
+import { HfpPunktEditComponent } from './components/feature/feature-edit/hfp-punkt-edit/hfp-punkt-edit.component';
 
 // config
 export function initApp(configService: ConfigService): any {
@@ -91,7 +92,8 @@ export function createCompiler(compilerFactory: CompilerFactory): Compiler {
     KontaktViewComponent,
     DifferenceTreeComponent,
     DifferenceListTreeComponent,
-    DifferenceAttributeTreeComponent
+    DifferenceAttributeTreeComponent,
+    HfpPunktEditComponent
   ],
   imports: [
     FormsModule,

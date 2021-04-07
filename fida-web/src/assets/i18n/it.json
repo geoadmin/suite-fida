@@ -68,5 +68,15 @@
   "app.toc.title": "IT:Layerauswahl",
   "app.global.ok": "Ok",
   "app.global.add": "IT:Hinzufügen",
-  "app.feature_edit.large_diff_dialog_text": "FR:Änderungen an LV95E und LV95N von über {{max}}m ist nicht zugelassen. Bitte einen neuen Punkt erstellen."
+  "app.hfp.zuvLageHoehe": "IT:ZuvLage/Höhe",
+  "app.hfp.genLageHoehe": "IT:GenLage/Höhe",
+  "app.hfp.ellipsoidh": "IT:Ellips.",
+  "app.relationship.general_hfp": "IT:Punkt: Versicherung",
+  "app.relationship.anhang_hfp": "IT:Bilder/Skizzen",
+  "app.relationship.grundbuch_hfp": "IT:Administrative Eingeilung",
+  "app.relationship.nachfuehrung_hfp": "IT:Nachführung",
+  "app.relationship.schaeden_hfp": "IT:Schadenmeldungen",
+  "app.relationship.auslandpunkt_hfp": "IT:Auslandpunkt",
+  "app.relationship.schweremessung_hfp": "IT:Schweremessung",
+  "app.feature_edit.large_diff_dialog_text": "IT:Änderungen an LV95E und LV95N von über {{max}}m ist nicht zugelassen. Bitte einen neuen Punkt erstellen."
 }

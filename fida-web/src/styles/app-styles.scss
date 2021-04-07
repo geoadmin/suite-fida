@@ -133,6 +133,10 @@ input.ng-invalid:focus {
   padding-right: 5px;
 }
 
+.divide {
+  border-top: 2px solid var(--light);
+}
+
 // hack
 @media (min-width: 576px) {
   .container,
@@ -171,6 +175,7 @@ input.ng-invalid:focus {
 // ----------------------------------------------------------------------------------------------------
 .nav {
   border-bottom: 1px solid var(--light);
+  background-color: #f8f9fa;
 }
 
 a[role="tab"] {

@@ -1,0 +1,249 @@
+<div [formGroup]="formGroup">
+
+    <!--Kanton / Nr-->
+    <div class="row">
+        <div class="col-3 attribute-label">{{ 'row.fida_hfp.hfpkanton' | translate }}</div>
+        <div class="col-3">
+            <app-attribute-value-edit [feature]="feature" formControlName="HFPKANTON" [required]="true">
+            </app-attribute-value-edit>
+        </div>
+        <div class="col-3 attribute-label">{{ 'row.fida_hfp.hfpnr' | translate }}</div>
+        <div class="col-3">
+            <app-attribute-value-edit [feature]="feature" formControlName="HFPNR" [required]="true">
+            </app-attribute-value-edit>
+        </div>
+    </div>
+
+    <!--Staties -->
+    <div class="row mt-m1">
+        <div class="col-3 attribute-label">{{ 'row.fida_hfp.punkt_status' | translate }}</div>
+        <div class="col-3">
+            <app-attribute-value-edit [feature]="feature" formControlName="PUNKT_STATUS" [required]="true">
+            </app-attribute-value-edit>
+        </div>
+        <div class="col-3 attribute-label">{{ 'row.fida_hfp.realisierung_status' | translate }}</div>
+        <div class="col-3">
+            <app-attribute-value-edit [feature]="feature" formControlName="REALISIERUNG_STATUS" [required]="true">
+            </app-attribute-value-edit>
+        </div>
+    </div>
+
+    <!--Koordinaten -->
+    <div class="row mt-3 pt-3">
+        <div class="col-4">
+            <div class="d-flex felx-row-reverse">
+                <span class="attribute-label mr-2">E</span>
+                <app-attribute-value-edit class="flex-fill" [feature]="feature" formControlName="LV95E"
+                    [required]="true">
+                </app-attribute-value-edit>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="d-flex felx-row-reverse">
+                <span class="attribute-label mr-2">N</span>
+                <app-attribute-value-edit class="flex-fill" [feature]="feature" formControlName="LV95N"
+                    [required]="true">
+                </app-attribute-value-edit>
+            </div>
+        </div>
+        <div class="col-2 attribute-label">{{ 'row.fida_hfp.ln02' | translate }}</div>
+        <div class="col-2">
+            <app-attribute-value-edit [feature]="feature" formControlName="LN02" [required]="true">
+            </app-attribute-value-edit>
+        </div>
+    </div>
+
+    <div class="row mt-m1">
+        <div class="col-2 attribute-label">{{ 'app.hfp.genLageHoehe' | translate }}</div>
+        <div class="col-2">
+            <app-attribute-value-edit [feature]="feature" formControlName="GENLAGELV95" [required]="true">
+            </app-attribute-value-edit>
+        </div>
+        <div class="col-2 pl-4">
+            <app-attribute-value-edit [feature]="feature" formControlName="GENHOEHELN02" [required]="true">
+            </app-attribute-value-edit>
+        </div>
+        <div class="col-2">
+        </div>
+        <div class="col-1 attribute-label">{{ 'row.fida_hfp.lhn95' | translate }}</div>
+        <div class="col-3">
+            <app-attribute-value-edit [feature]="feature" formControlName="LHN95"></app-attribute-value-edit>
+        </div>
+    </div>
+
+    <div class="row mt-m1">
+        <div class="col-2 attribute-label">{{ 'app.hfp.zuvLageHoehe' | translate }}</div>
+        <div class="col-2">
+            <app-attribute-value-edit [feature]="feature" formControlName="ZUVLAGELV95" [required]="true">
+            </app-attribute-value-edit>
+        </div>
+        <div class="col-2  pl-4">
+            <app-attribute-value-edit [feature]="feature" formControlName="ZUVHOEHELN02" [required]="true">
+            </app-attribute-value-edit>
+        </div>
+        <div class="col-2">
+        </div>
+        <div class="col-1 attribute-label">{{ 'app.hfp.ellipsoidh' | translate }}</div>
+        <div class="col-3">
+            <app-attribute-value-edit [feature]="feature" formControlName="ELLIPSOIDH"></app-attribute-value-edit>
+        </div>
+    </div>
+
+    <!--Punktart -->
+    <div class="row mt-3 pt-3">
+        <div class="col-3 attribute-label">{{ 'row.fida_hfp.objektart' | translate }}</div>
+        <div class="col-5">
+            <app-attribute-value-edit [feature]="feature" formControlName="OBJEKTART" [required]="true">
+            </app-attribute-value-edit>
+        </div>
+    </div>
+
+    <!--Kennzeichnung / Inschrift -->
+    <div class="row mt-m1">
+        <div class="col-3 attribute-label">{{ 'row.fida_hfp.kennzeichnung ' | translate }}</div>
+        <div class="col-5">
+            <app-attribute-value-edit [feature]="feature" formControlName="KENNZEICHNUNG" [required]="true">
+            </app-attribute-value-edit>
+        </div>
+        <div class="col-2 attribute-label">{{ 'row.fida_hfp.inschrift' | translate }}</div>
+        <div class="col-2">
+            <app-attribute-value-edit [feature]="feature" formControlName="INSCHRIFT">
+            </app-attribute-value-edit>
+        </div>
+    </div>
+
+    <!--Punktbeschreibung -->
+    <div class="row mt-2">
+        <div class="col-3 attribute-label">{{ 'row.fida_hfp.punktbeschreibung' | translate }}</div>
+        <div class="col-9">
+            <app-attribute-value-edit [feature]="feature" formControlName="PUNKTBESCHREIBUNG" type="textarea">
+            </app-attribute-value-edit>
+        </div>
+    </div>
+
+    <!--Bemerkung Baustein -->
+    <div class="row mt-2">
+        <div class="col-3 attribute-label">{{ 'row.fida_hfp.bemerkung_baustein' | translate }}</div>
+        <div class="col-9">
+            <app-attribute-value-edit [feature]="feature" formControlName="BEMERKUNG_BAUSTEIN">
+            </app-attribute-value-edit>
+        </div>
+    </div>
+
+     <!--Bemerkung -->
+     <div class="row mt-2">
+        <div class="col-3 attribute-label">{{ 'row.fida_hfp.bemerkung' | translate }}</div>
+        <div class="col-9">
+            <app-attribute-value-edit [feature]="feature" formControlName="BEMERKUNG" type="textarea">
+            </app-attribute-value-edit>
+        </div>
+    </div>
+
+    <!--LK / Ortsbezeichnung -->
+    <div class="row mt-2">
+        <div class="col-3 attribute-label">{{ 'row.fida_hfp.lk25' | translate }}</div>
+        <div class="col-3">
+            <app-attribute-value-edit [feature]="feature" formControlName="LK25" [required]="true">
+            </app-attribute-value-edit>
+        </div>
+        <div class="col-3 attribute-label">{{ 'row.fida_hfp.ortbezeichnung' | translate }}</div>
+        <div class="col-3">
+            <app-attribute-value-edit [feature]="feature" formControlName="ORTBEZEICHNUNG">
+            </app-attribute-value-edit>
+        </div>
+    </div>
+
+    <!--Referenzepoche / Geschwindigkeit-->
+    <div class="row mt-m1">
+        <div class="col-3 attribute-label">{{ 'row.fida_hfp.referenzepoche' | translate }}</div>
+        <div class="col-3">
+            <app-attribute-value-edit [feature]="feature" formControlName="REFERENZEPOCHE">
+            </app-attribute-value-edit>
+        </div>
+        <div class="col-3 attribute-label">{{ 'row.fida_hfp.geschwindigkeit_up' | translate }}</div>
+        <div class="col-3">
+            <app-attribute-value-edit [feature]="feature" formControlName="GESCHWINDIGKEIT_UP">
+            </app-attribute-value-edit>
+        </div>
+    </div>
+
+    <!--Stabilität / Verankerung -->
+    <div class="row mt-m1">
+        <div class="col-3 attribute-label">{{ 'row.fida_hfp.stabilitaet' | translate }}</div>
+        <div class="col-3">
+            <app-attribute-value-edit [feature]="feature" formControlName="STABILITAET" [required]="true">
+            </app-attribute-value-edit>
+        </div>
+        <div class="col-3 attribute-label">{{ 'row.fida_hfp.verankerung' | translate }}</div>
+        <div class="col-3">
+            <app-attribute-value-edit [feature]="feature" formControlName="VERANKERUNG">
+            </app-attribute-value-edit>
+        </div>
+    </div>
+
+    <!--Schutzart / Begehbar -->
+    <div class="row mt-m1">
+        <div class="col-3 attribute-label">{{ 'row.fida_hfp.schutzart' | translate }}</div>
+        <div class="col-3">
+            <app-attribute-value-edit [feature]="feature" formControlName="SCHUTZART" [required]="true">
+            </app-attribute-value-edit>
+        </div>
+        <div class="col-3 attribute-label">{{ 'row.fida_hfp.begehbar' | translate }}</div>
+        <div class="col-3">
+            <app-attribute-value-edit [feature]="feature" formControlName="BEGEHBAR" [required]="true">
+            </app-attribute-value-edit>
+        </div>
+    </div>
+
+    <!--Sektor / ENV-Nummer -->
+    <div class="row mt-m1">
+        <div class="col-3 attribute-label">{{ 'row.fida_hfp.sektor' | translate }}</div>
+        <div class="col-3">
+            <app-attribute-value-edit [feature]="feature" formControlName="SEKTOR">
+            </app-attribute-value-edit>
+        </div>
+        <div class="col-3 attribute-label">{{ 'row.fida_hfp.envnummer' | translate }}</div>
+        <div class="col-3">
+            <app-attribute-value-edit [feature]="feature" formControlName="ENVNUMMER">
+            </app-attribute-value-edit>
+        </div>
+    </div>
+
+    <!--Identität -->
+    <div class="row mt-2">
+        <div class="col-3 attribute-label">{{ 'row.fida_hfp.identitaet' | translate }}</div>
+        <div class="col-9">
+            <app-attribute-value-edit [feature]="feature" formControlName="IDENTITAET" type="textarea">
+            </app-attribute-value-edit>
+        </div>
+    </div>
+
+    <!--Zugang -->
+    <div class="row mt-2">
+        <div class="col-3 attribute-label">{{ 'row.fida_hfp.zugang' | translate }}</div>
+        <div class="col-9">
+            <app-attribute-value-edit [feature]="feature" formControlName="ZUGANG" type="textarea">
+            </app-attribute-value-edit>
+        </div>
+    </div>
+
+    <!--Bild-Beschreibung oben -->
+    <div class="row mt-2">
+        <div class="col-3 attribute-label">{{ 'row.fida_hfp.bild_b_besch_oben' | translate }}</div>
+        <div class="col-9">
+            <app-attribute-value-edit [feature]="feature" formControlName="BILD_B_BESCH_OBEN" type="textarea">
+            </app-attribute-value-edit>
+        </div>
+    </div>
+
+    <!--Bild-Beschreibung unten -->
+    <div class="row mt-2">
+        <div class="col-3 attribute-label">{{ 'row.fida_hfp.bild_b_besch_unten' | translate }}</div>
+        <div class="col-9">
+            <app-attribute-value-edit [feature]="feature" formControlName="BILD_B_BESCH_UNTEN" type="textarea">
+            </app-attribute-value-edit>
+        </div>
+    </div>>
+
+
+</div>
