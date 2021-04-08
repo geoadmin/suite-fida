@@ -147,7 +147,7 @@ export class UtilService {
 
     if (relationshipName === RelationshipName.nachfuehrung) {
       const date = this.esriToDate(feature.attributes.NACHFUEHRUNGSDATUM);
-      return this.formatDate(date, 'yyyy-mm-dd') || '-no date-';
+      return this.formatDate(date, 'dd.mm.yyyy') || '-no date-';
     }
 
     if (relationshipName === RelationshipName.rueckversicherung) {
@@ -156,12 +156,12 @@ export class UtilService {
 
     if (relationshipName === RelationshipName.schaeden) {
       const date = this.esriToDate(feature.attributes.DATUM);
-      return this.formatDate(date, 'yyyy-mm-dd') || '-no date-';
+      return this.formatDate(date, 'dd.mm.yyyy') || '-no date-';
     }
 
     if (relationshipName === RelationshipName.schweremessung) {
       const date = this.esriToDate(feature.attributes.DATUM);
-      return this.formatDate(date, 'yyyy-mm-dd') || '-no date-';
+      return this.formatDate(date, 'dd.mm.yyyy') || '-no date-';
     }
   }
 

@@ -304,26 +304,6 @@
             </div>
         </div>
 
-        <!--BILD_B_BESCH_OBEN -->
-        <div class="row mt-2">
-            <div class="col-4">
-            </div>
-            <div class="col-8">
-                <app-attribute-value-edit [feature]="feature" formControlName="BILD_B_BESCH_OBEN" type="textarea"
-                    placeholder="BILD_B_BESCH_OBEN"></app-attribute-value-edit>
-            </div>
-        </div>
-
-        <!--BILD_B_BESCH_UNTEN -->
-        <div class="row mt-2">
-            <div class="col-4">
-            </div>
-            <div class="col-8">
-                <app-attribute-value-edit [feature]="feature" formControlName="BILD_B_BESCH_UNTEN" type="textarea"
-                    placeholder="BILD_B_BESCH_UNTEN"></app-attribute-value-edit>
-            </div>
-        </div>
-
         <!--Erläuterung -->
         <div class="row mt-2">
             <div class="col-4">
@@ -426,6 +406,23 @@
     <!--anhang features -->
     <div role="tabpanel" class="tab-pane fade py-2" id="lfp_anhang_tab" [class.active]="isActiveTab('lfp_anhang_tab')"
         [class.show]="isActiveTab('lfp_anhang_tab')">
+          <!--Bild-Beschreibung oben -->
+          <div class="row">
+            <div class="col-3 attribute-label">{{ 'row.fida_hfp.bild_b_besch_oben' | translate }}</div>
+            <div class="col-9">
+                <app-attribute-value-edit [feature]="feature" formControlName="BILD_B_BESCH_OBEN" type="textarea">
+                </app-attribute-value-edit>
+            </div>
+        </div>
+        <!--Bild-Beschreibung unten -->
+        <div class="row mt-2 mb-4">
+            <div class="col-3 attribute-label">{{ 'row.fida_hfp.bild_b_besch_unten' | translate }}</div>
+            <div class="col-9">
+                <app-attribute-value-edit [feature]="feature" formControlName="BILD_B_BESCH_UNTEN" type="textarea">
+                </app-attribute-value-edit>
+            </div>
+        </div>
+        <!--loop -->
         <div class="row mb-2" [hidden]="readonly">
             <div class="col-12">
                 <button type="button" class="btn btn-primary" (click)="addAnhangClick()">{{ 'app.global.create' |

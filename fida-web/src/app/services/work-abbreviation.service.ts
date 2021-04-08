@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
-import CodedValueDomain from '@arcgis/core/layers/support/CodedValueDomain';
+import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
+import { TypeaheadMatch } from 'ngx-bootstrap/typeahead';
 import { ConfigService } from '../configs/config.service';
 import { FidaFeature } from '../models/FidaFeature.model';
 import { MessageService } from './message.service';
@@ -11,6 +12,9 @@ import { FidaTranslateService } from './translate.service';
 })
 export class WorkAbbreviationService {
   private workAbbreviationLists: any;
+  public searchLoading: boolean;
+  public searchNoResults: boolean;
+  public selectedSearchItem: any;
 
   constructor(
     @Inject(ConfigService) private configService: ConfigService,
@@ -48,5 +52,35 @@ export class WorkAbbreviationService {
       });
     }
     return lists;
+  }
+
+  public async queryWorkAbbreviations(featureLayer: FeatureLayer, searchText: string): Promise<any> {
+
+    const search = searchText.toLocaleLowerCase();
+    const where = `LOWER(ARBEITSKUERZELTEXT) like '%${search}%'`;
+
+    return this.queryService.where(featureLayer, where).then(features => {
+      return features.map(feature => {
+        return {
+          feature,
+          name: feature.attributes.ARBEITSKUERZELTEXT
+        };
+      });
+    });
+  }
+
+  public onSearchLoading(e: boolean): void {
+    this.searchLoading = e;
+    if (this.searchLoading) {
+      this.selectedSearchItem = undefined;
+    }
+  }
+
+  public onSearchNoResults(e: boolean): void {
+    this.searchNoResults = e;
+  }
+
+  public onSearchSelect(e: TypeaheadMatch): void {
+    this.selectedSearchItem = e.item;
   }
 }

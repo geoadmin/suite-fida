@@ -51,6 +51,10 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
   private delimiter = ',';
   private modalRef: BsModalRef;
 
+  //public typeaheadList: Observable<string>;
+  //public typeaheadText: string;
+
+
   constructor(
     private translateService: FidaTranslateService,
     private modalService: BsModalService

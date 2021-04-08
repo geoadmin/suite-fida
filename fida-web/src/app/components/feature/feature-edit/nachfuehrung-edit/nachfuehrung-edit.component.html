@@ -29,35 +29,41 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div *ngIf="feature.attributes.UNTERHALTART !== undefined" class="col-3 attribute-label">{{ 'row.fida_nachfuehrunglfp.unterhaltart' | translate }}</div>
-                <div *ngIf="feature.attributes.UNTERHALTART !== undefined" class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="UNTERHALTART" [required]="true">
-                    </app-attribute-value-edit>
-                </div>
+            <div class="row mt-2">
                 <div class="col-3 attribute-label">{{ 'row.fida_nachfuehrunglfp.arbeitskuerzeltext' | translate }}</div>
-                <div class="col-3">
+                <div class="col-9">
                     <app-attribute-value-edit [feature]="feature" formControlName="ARBEITSKUERZELTEXT" type="multiselect"
                     [list]="workAbbreviationList" [readonly]="readonly" [required]="false"> 
                     </app-attribute-value-edit>
                 </div>
             </div>
-
-            <div class="row">
+            
+            <div class="row mt-m1">
                 <div *ngIf="feature.attributes.ERLEDARBBESCHREIBUNG !== undefined" class="col-3 attribute-label">{{ 'row.fida_nachfuehrunglfp.erledarbbeschreibung' | translate }}</div>
-                <div *ngIf="feature.attributes.ERLEDARBBESCHREIBUNG !== undefined" class="col-3">
+                <div *ngIf="feature.attributes.ERLEDARBBESCHREIBUNG !== undefined" class="col-9">
                     <app-attribute-value-edit [feature]="feature" formControlName="ERLEDARBBESCHREIBUNG"
                     [required]="false">
                     </app-attribute-value-edit>
                 </div>
+            </div>
+
+            <div class="row mt-m1">
                 <div *ngIf="feature.attributes.BESCHAEDIGUNG_PENDENZ !== undefined" class="col-3 attribute-label">{{ 'row.fida_nachfuehrunglfp.beschaedigung_pendenz' | translate }}</div>
-                <div *ngIf="feature.attributes.BESCHAEDIGUNG_PENDENZ !== undefined" class="col-3">
+                <div *ngIf="feature.attributes.BESCHAEDIGUNG_PENDENZ !== undefined" class="col-9">
                     <app-attribute-value-edit [feature]="feature" formControlName="BESCHAEDIGUNG_PENDENZ">
                     </app-attribute-value-edit>
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row mt-m1">
+                <div *ngIf="feature.attributes.BEMERKUNG !== undefined" class="col-3 attribute-label">{{ 'row.fida_nachfuehrunglfp.bemerkung' | translate }}</div>
+                <div *ngIf="feature.attributes.BEMERKUNG !== undefined" class="col-9">
+                    <app-attribute-value-edit [feature]="feature" formControlName="BEMERKUNG">
+                    </app-attribute-value-edit>
+                </div>
+            </div>
+
+            <div class="row mt-2">
                 <div class="col-3 attribute-label">{{ 'row.fida_nachfuehrunglfp.ersterstellung' | translate }}</div>
                 <div class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="ERSTERSTELLUNG" [required]="true">
@@ -69,14 +75,15 @@
                     </app-attribute-value-edit>
                 </div>
             </div>
-
-            <div class="row">
-                <div *ngIf="feature.attributes.BEMERKUNG !== undefined" class="col-3 attribute-label">{{ 'row.fida_nachfuehrunglfp.bemerkung' | translate }}</div>
-                <div *ngIf="feature.attributes.BEMERKUNG !== undefined" class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="BEMERKUNG">
+            <div class="row mt-m1">
+                <div *ngIf="feature.attributes.UNTERHALTART !== undefined" class="col-3 attribute-label">{{ 'row.fida_nachfuehrunglfp.unterhaltart' | translate }}</div>
+                <div *ngIf="feature.attributes.UNTERHALTART !== undefined" class="col-3">
+                    <app-attribute-value-edit [feature]="feature" formControlName="UNTERHALTART" [required]="true">
                     </app-attribute-value-edit>
                 </div>
+                
             </div>
+
 
             <!-- delete button -->
             <div class="row mt-2" [hidden]="readonly">

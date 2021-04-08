@@ -20,6 +20,16 @@
             </ng-multiselect-dropdown>
         </div>
 
+        <!-- typeahead value -->
+        <!-- <div *ngSwitchCase="'typeahead'">
+            <input formControlName="valueControl" [(ngModel)]="searchText" [typeahead]="typeaheadList" [typeaheadAsync]="true" typeaheadOptionField="name"
+            [typeaheadWaitMs]="100" [typeaheadMinLength]="2"
+            (typeaheadLoading)="typeaheadService.onSearchLoading($event)"
+            (typeaheadNoResults)="typeaheadService.onSearchNoResults($event)"
+            (typeaheadOnSelect)="typeaheadService.onSearchSelect($event)" placeholder="{{ 'app.kontakt_manager.search' | translate }}"
+            class="form-control h-100">
+        </div> -->
+
         <!-- domain value -->
         <div *ngSwitchCase="'domain'">
             <select formControlName="valueControl" [(ngModel)]="feature?.attributes[formControlName]"
