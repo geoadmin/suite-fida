@@ -20,21 +20,22 @@
             data-toggle="tab">{{ 'app.relationship.grundbuch_hfp' |
             translate }}</a>
     </li>
-    <li class="nav-item" (click)="tabClick('hfp_auslandpunkt_tab')">
-        <a class="nav-link" [class.active]="isActiveTab('hfp_auslandpunkt_tab')" href="#hfp_auslandpunkt_tab" role="tab"
-            data-toggle="tab">{{ 'app.relationship.auslandpunkt'
-            | translate }}</a>
+    <li class="nav-item" (click)="tabClick('hfp_schaeden_tab')">
+        <a class="nav-link" [class.active]="isActiveTab('hfp_schaeden_tab')" href="#hfp_schaeden_tab" role="tab"
+            data-toggle="tab">{{ 'app.relationship.schaeden' |
+            translate }}</a>
     </li>
     <li class="nav-item" (click)="tabClick('hfp_schweremessung_tab')">
         <a class="nav-link" [class.active]="isActiveTab('hfp_schweremessung_tab')" href="#hfp_schweremessung_tab"
             role="tab" data-toggle="tab">{{
             'app.relationship.schweremessung' | translate }}</a>
     </li>
-    <li class="nav-item" (click)="tabClick('hfp_schaeden_tab')">
-        <a class="nav-link" [class.active]="isActiveTab('hfp_schaeden_tab')" href="#hfp_schaeden_tab" role="tab"
-            data-toggle="tab">{{ 'app.relationship.schaeden' |
-            translate }}</a>
+    <li class="nav-item" (click)="tabClick('hfp_auslandpunkt_tab')">
+        <a class="nav-link" [class.active]="isActiveTab('hfp_auslandpunkt_tab')" href="#hfp_auslandpunkt_tab" role="tab"
+            data-toggle="tab">{{ 'app.relationship.auslandpunkt'
+            | translate }}</a>
     </li>
+    
     <li class="nav-item" (click)="tabClick('hfp_kontakt_tab')">
         <a class="nav-link" [class.active]="isActiveTab('hfp_kontakt_tab')" href="#hfp_kontakt_tab" role="tab"
             data-toggle="tab">{{ 'app.relationship.kontakt' |
@@ -98,7 +99,8 @@
         </div>
         <div *ngFor="let feature of getNachfuehrungFeatures()">
             <div *ngIf="feature.state !== 'deleted'">
-                <app-nachfuehrung-edit [feature]="feature" [formGroup]="formGroup" [readonly]="readonly">
+                <app-nachfuehrung-edit [feature]="feature" [formGroup]="formGroup" [readonly]="readonly"
+                    [withTypeahead]="true">
                 </app-nachfuehrung-edit>
             </div>
         </div>
@@ -106,17 +108,15 @@
 
     <!--grundbuch features -->
     <div role="tabpanel" class="tab-pane fade py-2" id="hfp_grundbuch_tab" [class.spinner]="redefining"
-        [class.active]="isActiveTab('hfp_auslandpunkt_tab')" [class.show]="isActiveTab('hfp_auslandpunkt_tab')">
+        [class.active]="isActiveTab('hfp_grundbuch_tab')" [class.show]="isActiveTab('hfp_grundbuch_tab')">
         <div class="row mb-2" [hidden]="readonly">
             <div class="col-12">
-                <button type="button" class="btn btn-primary mr-2" (click)="addGrundbuchClick()">{{ 'app.global.create'
-                    | translate }}</button>
                 <button type="button" class="btn btn-danger" (click)="redefineGrundbuchDataClick()">redefine</button>
             </div>
         </div>
         <div *ngFor="let feature of getGrundbuchFeatures()">
             <div *ngIf="feature.state !== 'deleted'">
-                <app-grundbuch-edit [feature]="feature" [formGroup]="formGroup" [readonly]="readonly">
+                <app-grundbuch-edit [feature]="feature" [formGroup]="formGroup" [readonly]="true">
                 </app-grundbuch-edit>
             </div>
         </div>

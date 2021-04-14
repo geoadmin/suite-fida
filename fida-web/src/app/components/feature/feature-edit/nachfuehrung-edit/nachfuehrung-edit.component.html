@@ -31,10 +31,15 @@
 
             <div class="row mt-2">
                 <div class="col-3 attribute-label">{{ 'row.fida_nachfuehrunglfp.arbeitskuerzeltext' | translate }}</div>
-                <div class="col-9">
+                <div *ngIf="!withTypeahead" class="col-9">
                     <app-attribute-value-edit [feature]="feature" formControlName="ARBEITSKUERZELTEXT" type="multiselect"
                     [list]="workAbbreviationList" [readonly]="readonly" [required]="false"> 
-                    </app-attribute-value-edit>
+                    </app-attribute-value-edit>                    
+                </div>
+                <div *ngIf="withTypeahead" class="col-9">
+                    <app-attribute-value-edit [feature]="feature" formControlName="ARBEITSKUERZELTEXT" type="typeahead"
+                    [typeaheadFeatureLayer]="featureLayer" [readonly]="readonly" [required]="false"> 
+                    </app-attribute-value-edit>                    
                 </div>
             </div>
             

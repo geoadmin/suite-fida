@@ -7,6 +7,7 @@ import { FeatureState, FidaFeature, RelationshipName } from 'src/app/models/Fida
 import { UtilService } from 'src/app/services/util.service';
 import { WorkAbbreviationService } from 'src/app/services/work-abbreviation.service';
 import { Observable } from 'rxjs';
+import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 
 @Component({
   selector: 'app-nachfuehrung-edit',
@@ -18,8 +19,10 @@ export class NachfuehrungEditComponent implements OnInit {
   @Input() formGroup: FormGroup;
   @Input() readonly = false;
   @Input() language: string;
+  @Input() withTypeahead = false; // defines which control für ARBEITSKUERZELTEXT is used
   public componentId: string;
   public workAbbreviationList: string[];
+  public featureLayer: FeatureLayer;
 
   constructor(
     private workAbbreviationService: WorkAbbreviationService,
@@ -34,18 +37,12 @@ export class NachfuehrungEditComponent implements OnInit {
       this.formGroup.addControl(key, new FormControl());
     }
 
-    this.workAbbreviationList = await this.workAbbreviationService.getWorkAbbreviationList(this.language);
-
-    // define "arbeitskuerzeltext" typeahead
-    /*const featureLayer = this.featureService.getFeatureLayer(this.feature);
-    const nachfuehrungFeatureLayer = await this.featureService.getRelatedFeatureLayerByName(featureLayer, RelationshipName.nachfuehrung);
-
-    this.searchList = new Observable((observer: any) => {
-      observer.next(this.searchText);
-    }).pipe(mergeMap((searchText: string) => {
-      return this.typeaheadService.queryArbeitskuerzeltext(nachfuehrungFeatureLayer, searchText);
-    }));
-    */
+    // prepare for ARBEITSKUERZELTEXT control
+    if (this.withTypeahead === true) {
+      this.featureLayer = this.featureService.getFeatureLayer(this.feature);
+    } else {
+      this.workAbbreviationList = await this.workAbbreviationService.getWorkAbbreviationList(this.language);
+    }
   }
 
   deleteClick(): void {

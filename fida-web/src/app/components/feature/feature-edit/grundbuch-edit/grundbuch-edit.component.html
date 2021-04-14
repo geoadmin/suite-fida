@@ -22,7 +22,7 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row mt-m1">
                 <div class="col-3 attribute-label">{{ 'row.fida_grundbuchlfp.bezirk' | translate }}</div>
                 <div class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="BEZIRK"></app-attribute-value-edit>
@@ -34,14 +34,7 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div *ngIf="feature.attributes.ORTBEZEICHNUNG !== undefined" class="col-3 attribute-label">
-                    {{ 'row.fida_grundbuchhfp.ortbezeichnung' | translate }}</div>
-                <div *ngIf="feature.attributes.ORTBEZEICHNUNG !== undefined" class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="ORTBEZEICHNUNG">
-                    </app-attribute-value-edit>
-                </div>
-
+            <div class="row mt-m1">
                 <div *ngIf="feature.attributes.PARZ !== undefined" class="col-3 attribute-label">{{
                     'row.fida_grundbuchlfp.parz' | translate }}</div>
                 <div *ngIf="feature.attributes.PARZ !== undefined" class="col-3">

@@ -138,11 +138,14 @@ export class UtilService {
 
   public static getFeatureHeader(feature: FidaFeature, relationshipName?: RelationshipName): string {
     if (relationshipName === RelationshipName.grundbuch) {
-      return `${feature.attributes.GEMEINDE} - ${feature.attributes.PARZ}`;
+      if (feature.attributes.PARZ) {
+        return `${feature.attributes.GEMEINDE} - ${feature.attributes.PARZ}`;
+      }
+      return `${feature.attributes.GEMEINDE}`;
     }
 
     if (relationshipName === RelationshipName.auslandpunkt) {
-      return feature.attributes.PUNKTNAME;
+      return feature.attributes.PUNKTNAME || '- no name -';
     }
 
     if (relationshipName === RelationshipName.nachfuehrung) {

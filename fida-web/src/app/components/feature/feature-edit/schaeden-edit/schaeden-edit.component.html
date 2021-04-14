@@ -22,28 +22,31 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row mt-m1">
                 <div class="col-3 attribute-label">{{ 'row.fida_schaedenhfp.status' | translate }}</div>
                 <div class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="STATUS" [required]="true">
                     </app-attribute-value-edit>
                 </div>
-                <div class="col-3 attribute-label">{{ 'row.fida_schaedenhfp.meldung' | translate }}</div>
-                <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="MELDUNG" [required]="true">
-                    </app-attribute-value-edit>
-                </div>
-            </div>
-
-            <div class="row">
                 <div class="col-3 attribute-label">{{ 'row.fida_schaedenhfp.ort' | translate }}</div>
                 <div class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="ORT">
                     </app-attribute-value-edit>
                 </div>
-                <div class="col-3 attribute-label">{{ 'row.fida_schaedenhfp.massnahme_bemerkung' | translate }}</div>
-                <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="MASSNAHME_BEMERKUNG">
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-3 attribute-label">{{ 'row.fida_schaedenhfp.meldung' | translate }}</div>
+                <div class="col-9">
+                    <app-attribute-value-edit [feature]="feature" formControlName="MELDUNG" [required]="true">
+                    </app-attribute-value-edit>
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-3 attribute-label text-break-spaces">{{ 'row.fida_schaedenhfp.massnahme_bemerkung' | translate }}</div>
+                <div class="col-9">
+                    <app-attribute-value-edit [feature]="feature" formControlName="MASSNAHME_BEMERKUNG" type="textarea">
                     </app-attribute-value-edit>
                 </div>
             </div>
@@ -51,7 +54,8 @@
             <!-- delete button -->
             <div class="row mt-2" [hidden]="readonly">
                 <div class="col-12">
-                    <button type="button" class="btn btn-danger float-right" (click)="deleteClick()">{{ 'app.global.delete' | translate }}</button>
+                    <button type="button" class="btn btn-danger float-right" (click)="deleteClick()">{{
+                        'app.global.delete' | translate }}</button>
                 </div>
             </div>
         </div>

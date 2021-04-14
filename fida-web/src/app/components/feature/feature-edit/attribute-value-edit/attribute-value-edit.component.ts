@@ -11,6 +11,10 @@ import CodedValueDomain from '@arcgis/core/layers/support/CodedValueDomain';
 import Field from '@arcgis/core/layers/support/Field';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { TypeaheadMatch } from 'ngx-bootstrap/typeahead';
+import { QueryService } from 'src/app/services/query.service';
+import { mergeMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-attribute-value-edit',
@@ -37,6 +41,7 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
   @Input() required = false;
   @Input() readonly = false;
   @Input() list: string[] = [];
+  @Input() typeaheadFeatureLayer: FeatureLayer;
 
   public formGroup: FormGroup;
   public disabled: boolean;
@@ -48,15 +53,19 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
   public addTagText: string;
   public multiselectItems: string[] = [];
   public multiselectSettings: IDropdownSettings;
+  public typeaheadLoading: boolean;
+  public typeaheadNoResults: boolean;
+  public typeaheadSelectedItem: string;
+  public typeaheadList: Observable<any>;
+  public typeaheadText: string;
+
   private delimiter = ',';
   private modalRef: BsModalRef;
-
-  //public typeaheadList: Observable<string>;
-  //public typeaheadText: string;
 
 
   constructor(
     private translateService: FidaTranslateService,
+    private queryService: QueryService,
     private modalService: BsModalService
   ) { }
 
@@ -104,6 +113,14 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
         tagString.split(this.delimiter).map(m => m.trim()) : [];
     }
 
+    if (this.type === 'typeahead') {
+    this.typeaheadList = new Observable((observer: any) => {
+      observer.next(this.feature.attributes[this.formControlName]);
+    }).pipe(mergeMap((searchText: string) => {
+      return this.queryTypeaheadFeatures(searchText);
+    }));
+    }
+
     // translate coded values
     if (this.type === 'domain') {
       const codedValueDomain = this.field.domain as CodedValueDomain;
@@ -146,6 +163,36 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
     } else {
       this.type = this.field.type;
     }
+  }
+
+  /**
+   * typeahead
+   */
+
+  public async queryTypeaheadFeatures(searchText: string): Promise<any> {
+    const where = `LOWER(${this.formControlName}) like '%${searchText.toLocaleLowerCase()}%'`;
+    const outFields = [this.formControlName];
+
+    return this.queryService.whereDistinct(this.typeaheadFeatureLayer, where, outFields).then(features => {
+      return features.map(feature => {
+        return feature.attributes[this.formControlName];
+      });
+    });
+  }
+
+  public onTypeaheadLoading(e: boolean): void {
+    this.typeaheadLoading = e;
+    if (this.typeaheadLoading) {
+      this.typeaheadSelectedItem = undefined;
+    }
+  }
+
+  public onTypeaheadNoResults(e: boolean): void {
+    this.typeaheadNoResults = e;
+  }
+
+  public onTypeaheadSelect(e: TypeaheadMatch): void {
+    this.typeaheadSelectedItem = e.item;
   }
 
   /**

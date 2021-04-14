@@ -121,6 +121,23 @@ export class QueryService {
     });
   }
 
+  public whereDistinct(featureLayer: FeatureLayer, where: string, outFields: string[]): Promise<FidaFeature[]> {
+    const query = new Query();
+    query.where = where;
+    query.outFields = outFields;
+    query.returnGeometry = false;
+    query.returnDistinctValues = true;
+
+    return new Promise((resolve, reject) => {
+      featureLayer.queryFeatures(query)
+        .then((result: any) => resolve(this.convertToFidaFeature(result.features)))
+        .catch((error: EsriError) => {
+          this.messageService.error('Query failed.', error);
+          reject(error);
+        });
+    });
+  }
+
   public feature(featureLayer: FeatureLayer, objectid: number): Promise<FidaFeature> {
     const query = new Query();
     query.where = `OBJECTID=${objectid}`;

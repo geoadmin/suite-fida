@@ -311,7 +311,9 @@ export class FeatureService {
       grundbuchFeature.attributes.KANTON = parcelInfo.Kanton.substring(0, 2);
       grundbuchFeature.attributes.BEZIRK = parcelInfo.Bezirk;
       grundbuchFeature.attributes.GEMEINDE = parcelInfo.Gemeinde;
-      grundbuchFeature.attributes.PARZ = parcelInfo.ParzNummer;
+      if (grundbuchFeature.attributes.PARZ !== undefined) {
+        grundbuchFeature.attributes.PARZ = parcelInfo.ParzNummer;
+      }
       grundbuchFeature.state = FeatureState.Create;
       grundbuchFeature.layer = grundbuchLayer;
       grundbuchFeature.originalAttributes = { ...grundbuchFeature.attributes };

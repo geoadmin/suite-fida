@@ -46,10 +46,6 @@ export class HfpEditComponent implements OnInit {
     return featurelist;
   }
 
-  async addGrundbuchClick(): Promise<any> {
-    await this.featureService.createRelatedFeature(this.feature, RelationshipName.grundbuch);
-  }
-
   getGrundbuchFeatures(): FidaFeature[] {
     return this.feature?.relatedFeatures?.grundbuch?.filter((f: FidaFeature) => f.state !== FeatureState.Delete);
   }

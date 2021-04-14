@@ -1,31 +1,40 @@
 <div class="card" [formGroup]="formGroup">
 
     <!-- header -->
-    <div class="card-header mb-0 collapsed" type="button" data-toggle="collapse" [attr.data-target]="'#' + componentId"
+    <div class="card-header mb-0" type="button" data-toggle="collapse" [attr.data-target]="'#' + componentId"
         aria-expanded="false">{{ getHeaderText() }}
     </div>
 
     <!-- body -->
-    <div [id]="componentId" class="collapse" [class.readonly]="readonly">
+    <div [id]="componentId" class="" [class.readonly]="readonly">
         <div class="card-body">
 
             <div class="row">
+                <div class="col-3 attribute-label">{{ 'row.fida_auslandpunkthfp.hoehenbezugsrahmen' | translate }}</div>
+                <div class="col-9">
+                    <app-attribute-value-edit [feature]="feature" formControlName="HOEHENBEZUGSRAHMEN"
+                        [required]="true">
+                    </app-attribute-value-edit>
+                </div>
+            </div>
+
+            <div class="row mt-2">
                 <div class="col-3 attribute-label">{{ 'row.fida_auslandpunkthfp.punktname' | translate }}</div>
                 <div class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="PUNKTNAME" [required]="true">
                     </app-attribute-value-edit>
                 </div>
-                <div class="col-3 attribute-label">{{ 'row.fida_auslandpunkthfp.hoehe' | translate }}</div>
+                <div class="col-3 attribute-label">{{ 'row.fida_auslandpunkthfp.datum_herkunft' | translate }}</div>
                 <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="HOEHE" [required]="true">
+                    <app-attribute-value-edit [feature]="feature" formControlName="DATUM_HERKUNFT">
                     </app-attribute-value-edit>
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-3 attribute-label">{{ 'row.fida_auslandpunkthfp.hoehenbezugsrahmen' | translate }}</div>
+            <div class="row mt-m1">
+                <div class="col-3 attribute-label">{{ 'row.fida_auslandpunkthfp.hoehe' | translate }}</div>
                 <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="HOEHENBEZUGSRAHMEN" [required]="true">
+                    <app-attribute-value-edit [feature]="feature" formControlName="HOEHE" [required]="true">
                     </app-attribute-value-edit>
                 </div>
                 <div class="col-3 attribute-label">{{ 'row.fida_auslandpunkthfp.deltahoehe' | translate }}</div>
@@ -35,18 +44,11 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-3 attribute-label">{{ 'row.fida_auslandpunkthfp.datum_herkunft' | translate }}</div>
-                <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="DATUM_HERKUNFT">
-                    </app-attribute-value-edit>
-                </div>
-            </div>
-
             <!-- delete button -->
             <div class="row mt-2" [hidden]="readonly">
                 <div class="col-12">
-                    <button type="button" class="btn btn-danger float-right" (click)="deleteClick()">{{ 'app.global.delete' | translate }}</button>
+                    <button type="button" class="btn btn-danger float-right" (click)="deleteClick()">{{
+                        'app.global.delete' | translate }}</button>
                 </div>
             </div>
         </div>
