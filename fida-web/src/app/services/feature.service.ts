@@ -337,9 +337,9 @@ export class FeatureService {
   public updateAttributesFromGeometry(feature: FidaFeature): void {
     const point = feature.geometry as Point;
     if (point) {
-      feature.attributes.LV95E = point.x;
-      feature.attributes.LV95N = point.y;
-      feature.attributes.LN02 = point.z;
+      feature.attributes.LV95E = point.x.toFixed(3);
+      feature.attributes.LV95N = point.y.toFixed(3);
+      feature.attributes.LN02 = point.z.toFixed(3);
     }
   }
 
