@@ -19,6 +19,9 @@ import { TagInputModule } from 'ngx-chips';
 import { TranslationCacheService } from './services/translation-cache.service';
 import { ConfigService } from './configs/config.service';
 
+// directives
+import { HasEditPermissionDirective } from './directives/has-edit-permission.directive';
+
 // components
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -51,6 +54,7 @@ import { DifferenceTreeComponent } from './components/version-manager/version-re
 import { DifferenceListTreeComponent } from './components/version-manager/version-reconcile-dialog/difference-list-tree/difference-list-tree.component';
 import { DifferenceAttributeTreeComponent } from './components/version-manager/version-reconcile-dialog/difference-attribute-tree/difference-attribute-tree.component';
 import { HfpPunktEditComponent } from './components/feature/feature-edit/hfp-punkt-edit/hfp-punkt-edit.component';
+import { HasNoEditPermissionDirective } from './directives/has-no-edit-permission.directive';
 
 // config
 export function initApp(configService: ConfigService): any {
@@ -93,7 +97,9 @@ export function createCompiler(compilerFactory: CompilerFactory): Compiler {
     DifferenceTreeComponent,
     DifferenceListTreeComponent,
     DifferenceAttributeTreeComponent,
-    HfpPunktEditComponent
+    HfpPunktEditComponent,
+    HasEditPermissionDirective,
+    HasNoEditPermissionDirective
   ],
   imports: [
     FormsModule,

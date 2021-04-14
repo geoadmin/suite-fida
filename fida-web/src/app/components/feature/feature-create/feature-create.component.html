@@ -7,7 +7,7 @@
     </div>
 
     <!-- body -->
-    <div class="">
+    <div *ngIf="editableLayers.length > 0">
 
         <!--- when inactive -->
         <div *ngIf="!activated" class="d-flex felx-row">
@@ -24,7 +24,11 @@
         <div *ngIf="activated" class="d-flex felx-row">
             <button type="button" class="btn btn-default flex-fill" (click)="cancelClick()">{{ 'app.global.cancel' | translate }}</button>
             <button type="button" class="btn btn-primary flex-fill" (click)="createClick()">{{ 'app.global.create' | translate }}</button>
-        </div>
-        
+        </div>        
     </div>
+
+    <div *ngIf="editableLayers.length === 0">
+        <label class="m-2">{{ 'app.feature_create.noLayers' | translate }}</label>
+    </div>
+
 </div>

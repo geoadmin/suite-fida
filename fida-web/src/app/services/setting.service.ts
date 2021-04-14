@@ -31,4 +31,8 @@ export class SettingService {
   public setDefaultVersion(): void {
     this.setGdbVersionName(this.configSevice.getDefaultVersionName());
   }
+
+  public isDefaultVersion(): boolean {
+    return this.gdbVersionName === this.configSevice.getDefaultVersionName();
+  }
 }

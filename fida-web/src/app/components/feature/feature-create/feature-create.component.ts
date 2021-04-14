@@ -12,6 +12,7 @@ import Expand from '@arcgis/core/widgets/Expand';
 import SimpleMarkerSymbol from '@arcgis/core/symbols/SimpleMarkerSymbol';
 import { FeatureState, FidaFeature } from 'src/app/models/FidaFeature.model';
 import { UtilService } from 'src/app/services/util.service';
+import { PermissionService } from 'src/app/services/permission.service';
 
 @Component({
   selector: 'app-feature-create',
@@ -36,6 +37,7 @@ export class FeatureCreateComponent implements OnInit, OnDestroy {
     private widgetsService: WidgetsService,
     private mapService: MapService,
     private layerService: LayerService,
+    private permissionService: PermissionService,
     private widgetNotifyService: WidgetNotifyService
   ) { }
 
@@ -93,6 +95,11 @@ export class FeatureCreateComponent implements OnInit, OnDestroy {
   }
 
   private initLayers(): void {
+    // check permissions
+    if (!this.permissionService.hasEditPermission()) {
+      return;
+    }
+
     if (this.editableLayers.length === 0) {
       this.editableLayers = this.layerService.getEditableFeatureLayers();
 

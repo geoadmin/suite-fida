@@ -78,6 +78,7 @@
   "app.relationship.schaeden_hfp": "Schadenmeldungen",
   "app.relationship.auslandpunkt_hfp": "Auslandpunkt",
   "app.relationship.schweremessung_hfp": "Schweremessung",
+  "app.feature_create.noLayers": "Keine Berechtigung.",
   "app.feature_edit.large_diff_dialog_text": "Änderungen an LV95E und LV95N von über {{max}}m ist nicht zugelassen. Bitte einen neuen Punkt erstellen."
 
 }
