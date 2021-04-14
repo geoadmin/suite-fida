@@ -29,8 +29,8 @@
             'app.feature_view.edit_geometry' | translate }}</button>
         <button *appHasEditPermission type="button" class="btn btn-danger float-right"
             (click)="showDeleteDialogClick(deleteDialotTemplate)">{{ 'app.feature_view.delete' | translate }}</button>
-        <button type="button" class="btn btn-warning float-right mr-5 d-none"
-            (click)="addTestTranslationToDb()">addToDb</button>
+        <button type="button" class="btn btn-primary float-right"
+            (click)="exportClick(deleteDialotTemplate)">{{ 'app.feature_view.export' | translate }}</button>
     </div>
 </div>
 

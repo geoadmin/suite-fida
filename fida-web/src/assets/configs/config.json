@@ -30,7 +30,8 @@
         "getParcelInfoUrl": "[EVIRONMENT_ARCGISURL]/rest/services/FIDA/GetParzInfo/GPServer/GetParzInfo",
         "heightUrl": "https://api3.geo.admin.ch/rest/services/height",
         "lk25Url": "https://api3.geo.admin.ch/rest/services/api/MapServer/identify",
-        "pureComUrl": "[EVIRONMENT_ARCGISURL]/rest/services/PURE/Pure_Com/FeatureServer/0"
+        "pureComUrl": "[EVIRONMENT_ARCGISURL]/rest/services/PURE/Pure_Com/FeatureServer/0",
+        "exportToFile": "[EVIRONMENT_ARCGISURL]/rest/services/FIDA/FidaExportToFile/GPServer/FidaExportToFile"
     },
     "geometryFields": [
         "LV95E",

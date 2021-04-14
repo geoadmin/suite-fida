@@ -43,6 +43,36 @@ export class QueryService {
     });
   }
 
+  public geoprocessJob(url: string, parameters: any): Promise<any> {
+    const geoprocessorParameters: __esri.GeoprocessorProperties = {
+      url
+    };
+    const geoprocessor = new Geoprocessor(geoprocessorParameters);
+
+    return new Promise((resolve, reject) => {
+      geoprocessor.submitJob(parameters)
+        .then((jobInfo: any) => {
+
+          // wait-options
+          const options = {
+            statusCallback: (jobInfoStatus: any) => {
+              console.log('job-status: ' + jobInfoStatus.jobStatus);
+            }
+          };
+
+          // once the job completes
+          geoprocessor.waitForJobCompletion(jobInfo.jobId, options).then((jobInfoComplete) => {
+            resolve(jobInfoComplete);
+          });
+        })
+
+        .catch((error: EsriError) => {
+          this.messageService.error('Geoprocess failed.', error);
+          reject(error);
+        });
+    });
+  }
+
   public attachments(featureLayer: FeatureLayer, objectIds: number[]): Promise<any> {
     const query = {
       objectIds

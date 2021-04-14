@@ -8,6 +8,7 @@ import { environment } from '../../environments/environment';
 import esriRequest from '@arcgis/core/request';
 import esriConfig from '@arcgis/core/config';
 import CodedValueDomain from '@arcgis/core/layers/support/CodedValueDomain';
+import { System } from 'src/environments/environment interface';
 
 
 @Injectable({ providedIn: 'root' })
@@ -34,6 +35,8 @@ export class ConfigService {
         this.config.gp.getParcelInfoUrl = this.config.gp.getParcelInfoUrl
             .replace(this.config.arcGisUrlPlaceholder, environment.arcGisServer);
         this.config.gp.pureComUrl = this.config.gp.pureComUrl
+            .replace(this.config.arcGisUrlPlaceholder, environment.arcGisServer);
+        this.config.gp.exportToFile = this.config.gp.exportToFile
             .replace(this.config.arcGisUrlPlaceholder, environment.arcGisServer);
 
         // load arcgis-server-config
@@ -70,6 +73,10 @@ export class ConfigService {
                 .catch((error) => reject({ response: error }));
         });
 
+    }
+
+    public getSystem(): System {
+        return environment.system;
     }
 
     public getArcGisPortal(): string {

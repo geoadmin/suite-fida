@@ -42,6 +42,7 @@ export class GpConfig {
     heightUrl: string;
     lk25Url: string;
     pureComUrl: string;
+    exportToFile: string;
 }
 
 export class SearchSourceConfig {

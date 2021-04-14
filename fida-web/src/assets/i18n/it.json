@@ -79,5 +79,6 @@
   "app.relationship.auslandpunkt_hfp": "IT:Auslandpunkt",
   "app.relationship.schweremessung_hfp": "IT:Schweremessung",
   "app.feature_create.noLayers": "IT:Keine Berechtigung.",
+  "app.feature_view.export": "IT:Export",
   "app.feature_edit.large_diff_dialog_text": "IT:Änderungen an LV95E und LV95N von über {{max}}m ist nicht zugelassen. Bitte einen neuen Punkt erstellen."
 }

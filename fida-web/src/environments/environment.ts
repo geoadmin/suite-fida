@@ -2,12 +2,12 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-import { EnvironmentInterface } from './environment interface';
+import { EnvironmentInterface, System } from './environment interface';
 
 export const environment: EnvironmentInterface = {
-  production: false,
   arcGisServer: 'https://s7t2530a.adr.admin.ch/arcgis/',
-  arcGisPortal: 'https://s7t4530a.adr.admin.ch/arcgis/'
+  arcGisPortal: 'https://s7t4530a.adr.admin.ch/arcgis/',
+  system: System.Test
 };
 
 /*

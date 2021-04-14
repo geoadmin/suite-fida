@@ -4,6 +4,7 @@ import { CompleteState, WidgetNotifyService } from 'src/app/services/widget-noti
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { FeatureState, FidaFeature } from 'src/app/models/FidaFeature.model';
 import { FormGroup } from '@angular/forms';
+import { ExportService } from 'src/app/services/export.service';
 
 export enum FeatureMode {
   View = 'view',
@@ -26,6 +27,7 @@ export class FeatureViewComponent implements OnInit, OnDestroy {
     @Inject(ChangeDetectorRef) private changeDetectorRef: ChangeDetectorRef,
     @Inject(FeatureService) private featureService: FeatureService,
     @Inject(WidgetNotifyService) private widgetNotifyService: WidgetNotifyService,
+    @Inject(ExportService) private exportService: ExportService,
     @Inject(BsModalService) private modalService: BsModalService
   ) { }
 
@@ -118,10 +120,11 @@ export class FeatureViewComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * TEST
+   * export
    */
 
-  addTestTranslationToDb(): void {
-    this.featureService.addTestTranslationToDb();
+  exportClick(): void {
+    const featureLayer = this.featureService.getFeatureLayer(this.feature);
+    this.exportService.exportToFile(featureLayer, [this.feature.attributes.OBJECTID], 'PDF');
   }
 }
