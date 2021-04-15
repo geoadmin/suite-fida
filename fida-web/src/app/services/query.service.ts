@@ -12,6 +12,7 @@ import esriRequest from '@arcgis/core/request';
 import { environment } from '../../environments/environment';
 import Geoprocessor from '@arcgis/core/tasks/Geoprocessor';
 import { FidaFeature } from '../models/FidaFeature.model';
+import JobInfo from '@arcgis/core/tasks/support/JobInfo';
 
 
 @Injectable({
@@ -37,37 +38,59 @@ export class QueryService {
           resolve(result);
         })
         .catch((error: EsriError) => {
-          this.messageService.error('Geoprocess failed.', error);
           reject(error);
         });
     });
   }
 
-  public geoprocessJob(url: string, parameters: any): Promise<any> {
-    const geoprocessorParameters: __esri.GeoprocessorProperties = {
-      url
-    };
+  public geoprocessSubmitJob(url: string, parameters: any, statusCallback: (jobInfo: JobInfo) => void): Promise<JobInfo> {
+    const geoprocessorParameters: __esri.GeoprocessorProperties = { url };
     const geoprocessor = new Geoprocessor(geoprocessorParameters);
 
     return new Promise((resolve, reject) => {
       geoprocessor.submitJob(parameters)
         .then((jobInfo: any) => {
-
-          // wait-options
-          const options = {
-            statusCallback: (jobInfoStatus: any) => {
-              console.log('job-status: ' + jobInfoStatus.jobStatus);
-            }
-          };
+          statusCallback(jobInfo);
 
           // once the job completes
-          geoprocessor.waitForJobCompletion(jobInfo.jobId, options).then((jobInfoComplete) => {
-            resolve(jobInfoComplete);
-          });
+          geoprocessor.waitForJobCompletion(jobInfo.jobId, { statusCallback })
+            .then((jobInfoComplete: JobInfo) => resolve(jobInfoComplete))
+            .catch((error: EsriError) => {
+              reject(error);
+            });
         })
 
         .catch((error: EsriError) => {
-          this.messageService.error('Geoprocess failed.', error);
+          reject(error);
+        });
+    });
+  }
+
+  public geoprocessGetResult(url: string, jobId: string, resultName: string): Promise<any> {
+    const geoprocessorParameters: __esri.GeoprocessorProperties = { url };
+    const geoprocessor = new Geoprocessor(geoprocessorParameters);
+
+    return new Promise((resolve, reject) => {
+      geoprocessor.getResultData(jobId, resultName)
+        .then((result: any) => {
+          resolve(result);
+        })
+        .catch((error: EsriError) => {
+          reject(error);
+        });
+    });
+  }
+
+  public geoprocessCancel(url: string, jobId: string): Promise<JobInfo> {
+    const geoprocessorParameters: __esri.GeoprocessorProperties = { url };
+    const geoprocessor = new Geoprocessor(geoprocessorParameters);
+
+    return new Promise((resolve, reject) => {
+      geoprocessor.cancelJob(jobId)
+        .then((result: any) => {
+          resolve(result);
+        })
+        .catch((error: EsriError) => {
           reject(error);
         });
     });

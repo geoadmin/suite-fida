@@ -66,8 +66,7 @@ export class GeometryEditComponent implements OnInit {
 
     await Promise.all([
       this.featureService.updateGeometry(this.originalFeature),
-      this.featureService.redefineGrundbuchFeatures(this.originalFeature),
-      this.featureService.updateLK25(this.originalFeature)
+      this.featureService.redefineGrundbuchFeatures(this.originalFeature)
     ]);
     this.featureService.updateAttributesFromGeometry(this.originalFeature);
     const success = await this.featureService.saveFeature(this.originalFeature);

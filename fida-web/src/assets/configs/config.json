@@ -1,5 +1,5 @@
 {
-    "appVersion": "deployed: 14.04.2021",
+    "appVersion": "deployed: 15.04.2021",
     "roles": {
         "admin": "org_admin"
     },
@@ -69,7 +69,7 @@
             "fkField": "FK_FIDA_HFP",
             "properties": {
                 "id": "HFP",
-                "visible": true
+                "visible": false
             },
             "relationships": {
                 "anhang": "Anhang",

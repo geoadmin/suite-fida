@@ -7,4 +7,5 @@ export class ParcelInfo {
     Bezirk: string;
     Kanton: string;
     Land: string;
+    LK25NR: string;
 }

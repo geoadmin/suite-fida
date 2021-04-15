@@ -1,4 +1,4 @@
-<div *ngIf="feature" class="feature-view">
+<div *ngIf="feature" class="feature-view" [class.spinner]="exporting">
     <div class="feature-view-container">
 
         <!-- header -->
@@ -17,7 +17,7 @@
 
             <!-- lsn feature -->
             <app-lsn-edit *ngSwitchCase="'LSN'" [feature]="feature" [formGroup]="form" [readonly]="true"></app-lsn-edit>
-            
+
         </div>
     </div>
 
@@ -25,22 +25,33 @@
     <div class="fida-widget-footer">
         <button *appHasEditPermission type="button" class="btn btn-primary float-right ml-2" (click)="editClick()">{{
             'app.feature_view.edit_attributes' | translate }}</button>
-        <button *appHasEditPermission type="button" class="btn btn-primary float-right ml-2" (click)="editGeometryClick()">{{
+        <!--<button *appHasEditPermission type="button" class="btn btn-primary float-right ml-2" (click)="editGeometryClick()">{{
             'app.feature_view.edit_geometry' | translate }}</button>
-        <button *appHasEditPermission type="button" class="btn btn-danger float-right"
-            (click)="showDeleteDialogClick(deleteDialotTemplate)">{{ 'app.feature_view.delete' | translate }}</button>
-        <button type="button" class="btn btn-primary float-right"
-            (click)="exportClick(deleteDialotTemplate)">{{ 'app.feature_view.export' | translate }}</button>
+        <button *appHasEditPermission type="button" class="btn btn-danger float-right ml-2"
+            (click)="showDeleteDialogClick(deleteDialogTemplate)">{{ 'app.feature_view.delete' | translate }}</button>-->
+        <button type="button" class="btn btn-primary float-right ml-2" (click)="exportClick()">{{ 'app.global.export' |
+            translate }}</button>
+        <button type="button" class="btn btn-primary float-right ml-2" (click)="exportPdfClick(downloadPdfDialogTemplate)">{{
+            'app.feature_view.createPdf' | translate }}</button>
     </div>
 </div>
 
 <!-- delete dialog -->
-<ng-template #deleteDialotTemplate>
+<ng-template #deleteDialogTemplate>
     <div class="modal-body text-center">
         <p>{{ 'app.feature_view.delete_dialog_text' | translate : {name: getFeatureName()} }}</p>
         <button type="button" class="btn btn-default" (click)="deleteCancelClick()">{{ 'app.global.cancel' | translate
             }}</button>
         <button type="button" class="btn btn-danger ml-2" (click)="deleteClick()">{{ 'app.global.delete' | translate
+            }}</button>
+    </div>
+</ng-template>
+
+<ng-template #downloadPdfDialogTemplate>
+    <div class="modal-body text-center">
+        <button type="button" class="btn btn-default" (click)="downloadPdfCancelClick()">{{ 'app.global.cancel' | translate
+            }}</button>
+        <button type="button" class="btn btn-danger ml-2" (click)="downloadPdfClick()">{{ 'app.feature_view.downloadPdf' | translate
             }}</button>
     </div>
 </ng-template>

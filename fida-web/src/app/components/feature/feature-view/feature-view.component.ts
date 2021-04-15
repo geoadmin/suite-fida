@@ -5,6 +5,8 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { FeatureState, FidaFeature } from 'src/app/models/FidaFeature.model';
 import { FormGroup } from '@angular/forms';
 import { ExportService } from 'src/app/services/export.service';
+import { ExportManagerComponent } from '../../export-manager/export-manager.component';
+import JobInfo from '@arcgis/core/tasks/support/JobInfo';
 
 export enum FeatureMode {
   View = 'view',
@@ -21,6 +23,8 @@ export enum FeatureMode {
 export class FeatureViewComponent implements OnInit, OnDestroy {
   public feature: FidaFeature;
   private modalRef: BsModalRef;
+  public exporting = false;
+  public downloadUrl: string;
   public form: FormGroup = new FormGroup({}); // Temporary
 
   constructor(
@@ -124,7 +128,34 @@ export class FeatureViewComponent implements OnInit, OnDestroy {
    */
 
   exportClick(): void {
+    const modalRef = this.modalService.show(ExportManagerComponent,
+      { class: 'modal-dialog-centered', initialState: { feature: this.feature } });
+
+    modalRef.content.onCancel.subscribe(() => {
+      modalRef.hide();
+    });
+  }
+
+  async exportPdfClick(downloadPdfDialogTemplate: TemplateRef<any>): Promise<void> {
     const featureLayer = this.featureService.getFeatureLayer(this.feature);
-    this.exportService.exportToFile(featureLayer, [this.feature.attributes.OBJECTID], 'PDF');
+    const objectIds = [this.feature.attributes.OBJECTID];
+
+    this.exporting = true;
+    this.changeDetectorRef.detectChanges();
+
+    this.downloadUrl = await this.exportService.exportToFile(featureLayer, objectIds, 'PDF', (jobInfo: JobInfo) => { });
+    this.modalRef = this.modalService.show(downloadPdfDialogTemplate, { class: 'modal-sm modal-dialog-centered' });
+
+    this.exporting = false;
+    this.changeDetectorRef.detectChanges();
+  }
+
+  downloadPdfCancelClick(): void {
+    this.modalRef.hide();
+  }
+
+  downloadPdfClick(): void {
+    window.open(this.downloadUrl, '_blank');
+    this.modalRef.hide();
   }
 }

@@ -55,7 +55,7 @@ describe('ParcelInfoService', () => {
       results: [{
         value: [{
           egris_egrid: '1', ParzNummer: '2800', Kanton: 'SG', BLABLA: 'blabla',
-          Gemeinde: 'Wartau', BFSNummer: 3276, Bezirk: 'Werdenberg', Land: 'CH'
+          Gemeinde: 'Wartau', BFSNummer: 3276, Bezirk: 'Werdenberg', Land: 'CH', LK25NR: '111'
         }]
       }]
     };
@@ -71,6 +71,7 @@ describe('ParcelInfoService', () => {
     expect(parcelInfos[0].BFSNummer).toBe(3276);
     expect(parcelInfos[0].Bezirk).toBe('Werdenberg');
     expect(parcelInfos[0].Land).toBe('CH');
+    expect(parcelInfos[0].LK25NR).toBe('111');
   });
 
   it('getParcelInfo: no value', async () => {

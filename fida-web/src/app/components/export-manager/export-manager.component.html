@@ -1,0 +1,57 @@
+<div class="export-manager modal-body px-0 pt-0">
+
+    <!-- header -->
+    <div class="fida-widget-header">
+        <label>{{ 'app.export_manager.title' | translate }}</label>
+        <button class="btn esri-icon-close float-right" (click)="cancelClick()"></button>
+    </div>
+
+    <!-- body -->
+    <div class="fida-widget-body container pt-3 pb-1" [class.spinner]="processing">
+
+        <!-- format -->
+        <div class="row">
+            <div class="col-6 attribute-label">
+                {{ 'app.export_manager.format' | translate }}
+            </div>
+            <div class="col-6">
+                <select [(ngModel)]="format" class="form-control">
+                    <option *ngFor="let formatItem of formats" [ngValue]="formatItem"
+                        [selected]="formatItem === format">
+                        {{ formatItem }}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <!-- log -->
+        <div class="row mt-2">
+            <div class="col-12">
+                Job-ID: {{ jobInfo?.jobId }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                Job-Status: {{ jobInfo?.jobStatus }}
+            </div>
+        </div>
+        <div class="row" [hidden]="!downloadUrl">
+            <div class="col-12">
+                <a id="download" [href]="downloadUrl" target="_blank">{{ 'app.export_manager.downloadFile' | translate
+                    }}</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- footer -->
+    <div class="fida-widget-footer">
+        <button *ngIf="!processing" type="button" class="btn btn-primary float-right ml-2" (click)="exportClick()">{{
+            'app.export_manager.createFile' |
+            translate }}</button>
+        <button *ngIf="processing" type="button" class="btn btn-primary float-right ml-2" (click)="cancelJobClick()">{{
+            'app.export_manager.cancelJob' |
+            translate }}</button>
+        <button type="button" class="btn btn-default float-right" (click)="cancelClick()">{{ 'app.global.cancel' |
+            translate }}</button>
+    </div>
+</div>

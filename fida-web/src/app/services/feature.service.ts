@@ -10,7 +10,6 @@ import { ParcelInfoService } from './parcel-info.service';
 import { RelationshipsConfig } from '../configs/config.model';
 import Point from '@arcgis/core/geometry/Point';
 import { HeightService } from './height.service';
-import { Lk25Service } from './lk25.service';
 
 
 @Injectable({
@@ -24,8 +23,7 @@ export class FeatureService {
     private messageService: MessageService,
     private queryService: QueryService,
     private parcelInfoService: ParcelInfoService,
-    private heightService: HeightService,
-    private lk25Service: Lk25Service
+    private heightService: HeightService
   ) { }
 
   public async saveFeature(feature: FidaFeature): Promise<boolean> {
@@ -318,11 +316,15 @@ export class FeatureService {
       grundbuchFeature.layer = grundbuchLayer;
       grundbuchFeature.originalAttributes = { ...grundbuchFeature.attributes };
       feature.relatedFeatures.grundbuch.push(grundbuchFeature);
+
+      // set LK25
+      feature.attributes.LK25 = Number(parcelInfo.LK25NR);
     });
 
     if (parcelInfos.length === 0) {
       this.messageService.warning('No Grundbuchdaten found.');
     }
+
   }
 
   public updateGeometryFromAttributes(feature: FidaFeature): void {
@@ -348,14 +350,6 @@ export class FeatureService {
     if (point) {
       const height = await this.heightService.getHeight(point);
       point.z = height;
-    }
-  }
-
-  public async updateLK25(feature: FidaFeature): Promise<void> {
-    const point = feature.geometry as Point;
-    if (point) {
-      const tileId = await this.lk25Service.getTileId(point);
-      feature.attributes.LK25 = tileId;
     }
   }
 

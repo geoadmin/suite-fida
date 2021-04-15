@@ -43,7 +43,6 @@ export class FeatureEditComponent implements OnInit {
         this.showSpinner = true;
         await Promise.all([
           this.featureService.updateGeometry(this.feature),
-          this.featureService.updateLK25(this.feature),
           this.featureService.redefineGrundbuchFeatures(this.feature)
         ]);
         this.featureService.updateAttributesFromGeometry(this.feature);

@@ -80,5 +80,9 @@
   "app.relationship.schweremessung_hfp": "FR:Schweremessung",
   "app.feature_create.noLayers": "FR:Keine Berechtigung.",
   "app.feature_view.export": "FR:Export",
+  "app.export_manager.title": "FR:Export",
+  "app.export_manager.format": "FR:Format",
+  "app.export_manager.cancelJob": "FR:Export abbrechen",
+  "app.feature_view.exportPdf": "FR:Export PDF",
   "app.feature_edit.large_diff_dialog_text": "FR: Änderungen an LV95E und LV95N von über {{max}}m ist nicht zugelassen. Bitte einen neuen Punkt erstellen."
 }

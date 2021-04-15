@@ -6,15 +6,15 @@ import {
 import { FidaTranslateService } from 'src/app/services/translate.service';
 import { FidaFeature } from 'src/app/models/FidaFeature.model';
 import { UtilService } from 'src/app/services/util.service';
-import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
-import CodedValueDomain from '@arcgis/core/layers/support/CodedValueDomain';
-import Field from '@arcgis/core/layers/support/Field';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { TypeaheadMatch } from 'ngx-bootstrap/typeahead';
 import { QueryService } from 'src/app/services/query.service';
 import { mergeMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
+import CodedValueDomain from '@arcgis/core/layers/support/CodedValueDomain';
+import Field from '@arcgis/core/layers/support/Field';
 
 @Component({
   selector: 'app-attribute-value-edit',

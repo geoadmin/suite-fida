@@ -79,7 +79,14 @@
   "app.relationship.auslandpunkt_hfp": "Auslandpunkt",
   "app.relationship.schweremessung_hfp": "Schweremessung",
   "app.feature_create.noLayers": "Keine Berechtigung.",
-  "app.feature_view.export": "Export",
+  "app.global.export": "Export",
+  "app.export_manager.title": "Export",
+  "app.export_manager.format": "Format",
+  "app.export_manager.cancelJob": "Export abbrechen",
+  "app.export_manager.createFile": "Export-Datei erstellen",
+  "app.export_manager.downloadFile": "Export-Datei herunterladen",
+  "app.feature_view.createPdf": "PDF-Datei erstellen",
+  "app.feature_view.downloadPdf": "PDF-Datei herunterladen",
   "app.feature_edit.large_diff_dialog_text": "Änderungen an LV95E und LV95N von über {{max}}m ist nicht zugelassen. Bitte einen neuen Punkt erstellen."
 
 }
