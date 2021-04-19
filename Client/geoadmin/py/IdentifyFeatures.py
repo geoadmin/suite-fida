@@ -331,6 +331,16 @@ class IdentifyFeatures:
                             _clean, "", "{0} {1} {2}".format(_sa[0], _sa[1], _sa[2])
                         ),
                     )
+                elif len(_sa) == 9:
+                    return (
+                        True,
+                        re.sub(
+                            _clean,
+                            "",
+                            "{0} {1} {2} {3}".format(_sa[0], _sa[1], _sa[2], _sa[3]),
+                        ),
+                    )
+
                 else:
                     False, "could not decode label"
             else:
