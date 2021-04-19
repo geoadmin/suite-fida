@@ -58,15 +58,17 @@ def init(args):
         arcpy.AddError(_err)
         _status = -1
 
-    try:
-        _args["dist"] = float(args[dist_idx])
-    except OverflowError as ove:
-        arcpy.AddError(ove)
-        _status = -1
-    except Exception as _err:
-        arcpy.AddError(_err)
-        _status = -1
-
+    if len(args) > 3:
+        try:
+            _args["dist"] = float(args[dist_idx])
+        except OverflowError as ove:
+            arcpy.AddError(ove)
+            _status = -1
+        except Exception as _err:
+            arcpy.AddError(_err)
+            _status = -1
+    else:
+        _args["dist"] = 0.0
     return _status, _args
 
 
@@ -76,7 +78,7 @@ def main(args):
     """
     try:
         _idf = IdentifyFeatures((args["e"], args["n"]), args["dist"])
-        _parz_info = _idf.getparzinfo(0.0)
+        _parz_info = _idf.getparzinfo(float(args["dist"]))
         # arcpy.AddMessage(_parz_info)
         arcpy.SetParameter(arcpy.GetArgumentCount() - 2, _parz_info)
         arcpy.AddMessage("{0} parcell(s) found".format(len(json.loads(_parz_info))))
@@ -104,7 +106,7 @@ if __name__ == "__main__":
 
     Raises:
     """
-    _version = 0.3
+    _version = 0.4
     arcpy.SetParameter(arcpy.GetArgumentCount() - 1, _version)
     _exitcode, _args = init(sys.argv)
     if _exitcode == 0:
