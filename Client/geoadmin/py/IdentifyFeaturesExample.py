@@ -58,6 +58,7 @@ if __name__ == "__main__":
     _version = 0.2
 
     show_example(IdentifyFeatures())
+    show_example(IdentifyFeatures((2790105.995, 1162114.837)))
     show_example(IdentifyFeatures((2583759.0, 1210591.0)))
     show_example(IdentifyFeatures((2583759.0, 1210591.0), 5000.0))
     show_example(

@@ -324,6 +324,13 @@ class IdentifyFeatures:
                     return True, re.sub(_clean, "", _sa[0])
                 elif len(_sa) == 7:
                     return True, re.sub(_clean, "", "{0} {1}".format(_sa[0], _sa[1]))
+                elif len(_sa) == 8:
+                    return (
+                        True,
+                        re.sub(
+                            _clean, "", "{0} {1} {2}".format(_sa[0], _sa[1], _sa[2])
+                        ),
+                    )
                 else:
                     False, "could not decode label"
             else:
