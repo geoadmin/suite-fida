@@ -428,7 +428,7 @@ class IdentifyFeatures:
             for _idx in range(len(_parzinfos)):
                 if (
                     _parzinfos[_idx]["Kanton"] == _kt
-                    and _parzinfos[_idx]["Gemeinde"] == _gdename
+                    and (_parzinfos[_idx]["Gemeinde"] == _gdename or _parzinfos[_idx]["Gemeinde"] == "")
                 ):
                     _parzinfos[_idx].update({"BFSNummer": _bfsnr})
                     _found = True
