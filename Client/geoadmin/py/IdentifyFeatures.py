@@ -89,7 +89,10 @@ class IdentifyFeatures:
         self.__params["returnGeometry"] = "false"
         self.__params["sr"] = 2056
         _status, _results = self.api3identify()
-        self.__lk25 = _results["results"][0]["featureId"]
+        if len(_results["results"]) > 0:
+            self.__lk25 = _results["results"][0]["featureId"]
+        else:
+            self.__lk25 = ""
 
     @property
     def getpt(self):
@@ -426,9 +429,9 @@ class IdentifyFeatures:
             _found = False
             # add municipality if no parcel found
             for _idx in range(len(_parzinfos)):
-                if (
-                    _parzinfos[_idx]["Kanton"] == _kt
-                    and (_parzinfos[_idx]["Gemeinde"] == _gdename or _parzinfos[_idx]["Gemeinde"] == "")
+                if _parzinfos[_idx]["Kanton"] == _kt and (
+                    _parzinfos[_idx]["Gemeinde"] == _gdename
+                    or _parzinfos[_idx]["Gemeinde"] == ""
                 ):
                     _parzinfos[_idx].update({"BFSNummer": _bfsnr})
                     _found = True
