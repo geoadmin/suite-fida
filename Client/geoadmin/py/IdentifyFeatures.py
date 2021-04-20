@@ -11,7 +11,8 @@
 
 import json
 import os
-import re
+
+# import re
 import sys
 
 import requests
@@ -314,35 +315,37 @@ class IdentifyFeatures:
             _json = json.loads(_req.content)
             _results = _json["results"]
             if len(_results) == 1:
-                _clean = re.compile("<.*?>")
+                # _clean = re.compile("<.*?>")
                 # return (
                 #    True,
                 #    re.sub(_clean, "", _results[0]["attrs"]["label"].split(" ")[0]),
                 # )
-                _sa = _results[0]["attrs"]["label"].split(" ")
-                if len(_sa) == 6:
-                    return True, re.sub(_clean, "", _sa[0])
-                elif len(_sa) == 7:
-                    return True, re.sub(_clean, "", "{0} {1}".format(_sa[0], _sa[1]))
-                elif len(_sa) == 8:
-                    return (
-                        True,
-                        re.sub(
-                            _clean, "", "{0} {1} {2}".format(_sa[0], _sa[1], _sa[2])
-                        ),
-                    )
-                elif len(_sa) == 9:
-                    return (
-                        True,
-                        re.sub(
-                            _clean,
-                            "",
-                            "{0} {1} {2} {3}".format(_sa[0], _sa[1], _sa[2], _sa[3]),
-                        ),
-                    )
-
-                else:
-                    False, "could not decode label"
+                _label = _results[0]["attrs"]["label"]
+                return True, _label[3 : _label.find("</b>")]
+                # _sa = _results[0]["attrs"]["label"].split(" ")
+                # if len(_sa) == 6:
+                #     return True, re.sub(_clean, "", _sa[0])
+                # elif len(_sa) == 7:
+                #     return True, re.sub(_clean, "", "{0} {1}".format(_sa[0], _sa[1]))
+                # elif len(_sa) == 8:
+                #     return (
+                #         True,
+                #         re.sub(
+                #             _clean, "", "{0} {1} {2}".format(_sa[0], _sa[1], _sa[2])
+                #         ),
+                #     )
+                # elif len(_sa) == 9:
+                #     return (
+                #         True,
+                #         re.sub(
+                #             _clean,
+                #             "",
+                #             "{0} {1} {2} {3}".format(_sa[0], _sa[1], _sa[2], _sa[3]),
+                #         ),
+                #     )
+                #
+                # else:
+                #     False, "could not decode label"
             else:
                 return False, "egris_egrid not found"
         else:
