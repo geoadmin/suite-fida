@@ -137,14 +137,14 @@ export class FeatureViewComponent implements OnInit, OnDestroy {
   }
 
   async exportPdfClick(downloadPdfDialogTemplate: TemplateRef<any>): Promise<void> {
-    const featureLayer = this.featureService.getFeatureLayer(this.feature);
-    const objectIds = [this.feature.attributes.OBJECTID];
-
     this.exporting = true;
     this.changeDetectorRef.detectChanges();
 
-    this.downloadUrl = await this.exportService.exportToFile(featureLayer, objectIds, 'PDF', (jobInfo: JobInfo) => { });
     this.modalRef = this.modalService.show(downloadPdfDialogTemplate, { class: 'modal-sm modal-dialog-centered' });
+
+    const featureLayer = this.featureService.getFeatureLayer(this.feature);
+    const objectIds = [this.feature.attributes.OBJECTID];
+    this.downloadUrl = await this.exportService.exportToFile(featureLayer, objectIds, 'PDF', (jobInfo: JobInfo) => { });
 
     this.exporting = false;
     this.changeDetectorRef.detectChanges();

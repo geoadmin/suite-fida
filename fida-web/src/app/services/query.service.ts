@@ -185,7 +185,21 @@ export class QueryService {
       featureLayer.queryFeatures(query)
         .then((result: any) => resolve(this.convertToFidaFeature(result.features)))
         .catch((error: EsriError) => {
-          this.messageService.error('Query failed.', error);
+          this.messageService.error('Distinct-Query failed.', error);
+          reject(error);
+        });
+    });
+  }
+
+  public count(featureLayer: FeatureLayer, where: string): Promise<number> {
+    const query = new Query();
+    query.where = where;
+
+    return new Promise((resolve, reject) => {
+      featureLayer.queryFeatureCount(query)
+        .then((result: any) => resolve(Number(result)))
+        .catch((error: EsriError) => {
+          this.messageService.error('Count-Query failed.', error);
           reject(error);
         });
     });

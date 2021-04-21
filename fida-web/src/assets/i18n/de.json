@@ -87,6 +87,8 @@
   "app.export_manager.downloadFile": "Export-Datei herunterladen",
   "app.feature_view.createPdf": "PDF-Datei erstellen",
   "app.feature_view.downloadPdf": "PDF-Datei herunterladen",
+  "app.validation.value_required": "'{{field}}' ist obligatorisch.",
+  "app.validation.value_length": "Value cannot contain more than {{length}} characters.",
+  "app.validation.value_unique": "'{{field}}' mit selben Wert existiert bereits.",
   "app.feature_edit.large_diff_dialog_text": "Änderungen an LV95E und LV95N von über {{max}}m ist nicht zugelassen. Bitte einen neuen Punkt erstellen."
-
 }

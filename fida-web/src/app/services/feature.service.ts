@@ -10,6 +10,7 @@ import { ParcelInfoService } from './parcel-info.service';
 import { RelationshipsConfig } from '../configs/config.model';
 import Point from '@arcgis/core/geometry/Point';
 import { HeightService } from './height.service';
+import Layer from '@arcgis/core/layers/Layer';
 
 
 @Injectable({
@@ -327,6 +328,27 @@ export class FeatureService {
 
   }
 
+  public async addErsterstellungNachfuehrung(feature: FidaFeature): Promise<any> {
+    const featureLayer = this.getFeatureLayer(feature);
+    if (this.hasRelationship(featureLayer, RelationshipName.nachfuehrung) === false) {
+      return;
+    }
+
+    const nachfuehrungFeature = await this.createRelatedFeature(feature, RelationshipName.nachfuehrung);
+    let date = new Date();
+
+    if (featureLayer.id === LayerId.HFP) {
+      date = new Date(new Date().getFullYear(), 0, 1);
+    }
+
+    if (featureLayer.id === LayerId.LFP) {
+      nachfuehrungFeature.attributes.NACHFUEHRUNGSPERIMETER = date.getFullYear();
+    }
+
+    nachfuehrungFeature.attributes.NACHFUEHRUNGSDATUM = date;
+    nachfuehrungFeature.attributes.ERSTERSTELLUNG = 1;
+  }
+
   public updateGeometryFromAttributes(feature: FidaFeature): void {
     const point = (feature.geometry as Point);
     if (point && feature.attributes.LV95E != null && feature.attributes.LV95N != null) {
@@ -423,7 +445,7 @@ export class FeatureService {
     return relatedFeatureLayer;
   }
 
-  private hasRelationship(featureLayer: FeatureLayer, relationshipName: RelationshipName): boolean {
+  public hasRelationship(featureLayer: FeatureLayer, relationshipName: RelationshipName): boolean {
     // find esri-relationship-name (stored in config)
     const relationshipsConfig = this.configService.getRelationshipsConfigs(featureLayer.id);
     const name = (relationshipsConfig as any)[relationshipName.toString()];

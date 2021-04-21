@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, OnInit, TemplateRef } from '@angular/core
 import { FormGroup } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ConfigService } from 'src/app/configs/config.service';
-import { FeatureState, FidaFeature } from 'src/app/models/FidaFeature.model';
+import { FeatureState, FidaFeature, RelationshipName } from 'src/app/models/FidaFeature.model';
 import { FeatureService } from 'src/app/services/feature.service';
 import { CompleteState, WidgetNotifyService } from 'src/app/services/widget-notify.service';
 
@@ -43,9 +43,11 @@ export class FeatureEditComponent implements OnInit {
         this.showSpinner = true;
         await Promise.all([
           this.featureService.updateGeometry(this.feature),
-          this.featureService.redefineGrundbuchFeatures(this.feature)
+          this.featureService.redefineGrundbuchFeatures(this.feature),
+          this.featureService.addErsterstellungNachfuehrung(this.feature)
         ]);
         this.featureService.updateAttributesFromGeometry(this.feature);
+
         this.showSpinner = false;
       }
     });

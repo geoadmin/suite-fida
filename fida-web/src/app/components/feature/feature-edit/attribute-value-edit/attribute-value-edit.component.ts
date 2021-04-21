@@ -15,6 +15,7 @@ import { Observable } from 'rxjs';
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import CodedValueDomain from '@arcgis/core/layers/support/CodedValueDomain';
 import Field from '@arcgis/core/layers/support/Field';
+import { UniqueValidator } from 'src/app/helpers/UniqueValidator';
 
 @Component({
   selector: 'app-attribute-value-edit',
@@ -40,12 +41,14 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
   @Input() type: string;
   @Input() required = false;
   @Input() readonly = false;
+  @Input() unique = false;
   @Input() list: string[] = [];
   @Input() typeaheadFeatureLayer: FeatureLayer;
 
   public formGroup: FormGroup;
   public disabled: boolean;
   public field: Field;
+  public displayFieldName: string;
   public date: Date;
   public codedValues: object[];
   public tags: string[] = [];
@@ -87,6 +90,9 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
       return;
     }
 
+    // display is needed for the validation-message
+    this.displayFieldName = this.translateFormControlName();
+
     // define type
     this.defineFieldType();
 
@@ -114,11 +120,11 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
     }
 
     if (this.type === 'typeahead') {
-    this.typeaheadList = new Observable((observer: any) => {
-      observer.next(this.feature.attributes[this.formControlName]);
-    }).pipe(mergeMap((searchText: string) => {
-      return this.queryTypeaheadFeatures(searchText);
-    }));
+      this.typeaheadList = new Observable((observer: any) => {
+        observer.next(this.feature.attributes[this.formControlName]);
+      }).pipe(mergeMap((searchText: string) => {
+        return this.queryTypeaheadFeatures(searchText);
+      }));
     }
 
     // translate coded values
@@ -127,15 +133,23 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
       this.codedValues = this.translateService.translateCodedValueDomain(codedValueDomain).codedValues ?? [];
     }
 
-    // define validation form-control
+    this.defineValidation(formControl);
+  }
+
+  private defineValidation(formControl: FormControl): void {
     const validators: any = [];
+    const asyncValidators: any = [];
     if (this.field.nullable === false || this.required === true) {
       validators.push(Validators.required);
     }
     if (this.field.length && this.field.length > 0) {
       validators.push(Validators.maxLength(this.field.length));
     }
+    if (!this.readonly && this.unique) {
+      asyncValidators.push(UniqueValidator.createValidator(this.getFeatureLayer(), this.field, this.queryService));
+    }
     formControl.setValidators(validators);
+    formControl.setAsyncValidators(asyncValidators);
   }
 
   onDateChanged(): void {
@@ -163,6 +177,12 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
     } else {
       this.type = this.field.type;
     }
+  }
+
+  translateFormControlName(): string {
+    // TODO: find better way
+    const layerName = (this.feature.layer as any)?.templates[0]?.name || '';
+    return this.translateService.translateAttributeName(layerName, this.formControlName);
   }
 
   /**
