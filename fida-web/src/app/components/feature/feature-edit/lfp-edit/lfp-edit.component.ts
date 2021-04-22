@@ -18,6 +18,7 @@ export class LfpEditComponent implements OnInit {
   @Input() readonly = false;
   public redefining = false;
   public materialisierungList: string[];
+  public editMode = false;
 
   constructor(
     private featureService: FeatureService,
@@ -28,11 +29,13 @@ export class LfpEditComponent implements OnInit {
   ) { }
 
   async ngOnInit(): Promise<void> {
+    this.editMode = this.feature.attributes.OBJECTID != null;
+
     for (const key of Object.keys(this.feature.attributes)) {
       this.formGroup.addControl(key, new FormControl());
     }
 
-    // set feature language 
+    // set feature language
     if (!this.feature.language) {
       this.feature.language = await this.pureComeService.getLang(this.feature.geometry);
     }

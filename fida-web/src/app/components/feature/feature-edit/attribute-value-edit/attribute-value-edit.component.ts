@@ -75,6 +75,8 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
   ngOnInit(): void {
     if (!this.placeholder) {
       this.placeholder = '';
+    } else {
+      this.placeholder = this.translateService.translate(this.placeholder);
     }
 
     // create form-control
