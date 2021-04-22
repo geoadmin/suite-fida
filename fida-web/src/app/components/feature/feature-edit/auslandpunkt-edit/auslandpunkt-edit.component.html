@@ -13,7 +13,7 @@
                 <div class="col-3 attribute-label">{{ 'row.fida_auslandpunkthfp.hoehenbezugsrahmen' | translate }}</div>
                 <div class="col-9">
                     <app-attribute-value-edit [feature]="feature" formControlName="HOEHENBEZUGSRAHMEN"
-                        [required]="true">
+                        [isRequired]="true">
                     </app-attribute-value-edit>
                 </div>
             </div>
@@ -21,7 +21,7 @@
             <div class="row mt-2">
                 <div class="col-3 attribute-label">{{ 'row.fida_auslandpunkthfp.punktname' | translate }}</div>
                 <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="PUNKTNAME" [required]="true">
+                    <app-attribute-value-edit [feature]="feature" formControlName="PUNKTNAME" [isRequired]="true">
                     </app-attribute-value-edit>
                 </div>
                 <div class="col-3 attribute-label">{{ 'row.fida_auslandpunkthfp.datum_herkunft' | translate }}</div>
@@ -34,12 +34,12 @@
             <div class="row mt-m1">
                 <div class="col-3 attribute-label">{{ 'row.fida_auslandpunkthfp.hoehe' | translate }}</div>
                 <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="HOEHE" [required]="true">
+                    <app-attribute-value-edit [feature]="feature" formControlName="HOEHE" [isRequired]="true">
                     </app-attribute-value-edit>
                 </div>
                 <div class="col-3 attribute-label">{{ 'row.fida_auslandpunkthfp.deltahoehe' | translate }}</div>
                 <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="DELTAHOEHE" [required]="true">
+                    <app-attribute-value-edit [feature]="feature" formControlName="DELTAHOEHE" [isRequired]="true">
                     </app-attribute-value-edit>
                 </div>
             </div>

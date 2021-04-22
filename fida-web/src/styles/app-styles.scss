@@ -305,6 +305,27 @@ a[role="tab"] {
   padding-right: 0;
 }
 
+.esri-coordinate-conversion {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  margin: 0;
+  padding-left: 5px;
+}
+
+.esri-coordinate-conversion__conversions-view {
+  margin: 0;
+}
+
+.esri-coordinate-conversion__row{
+ height: inherit;
+ padding: 0;
+}
+
+.esri-coordinate-conversion__tools .esri-widget--button{
+  border: none;
+}
+
 // ----------------------------------------------------------------------------------------------------
 // spinner styles
 // ----------------------------------------------------------------------------------------------------

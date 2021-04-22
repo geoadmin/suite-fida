@@ -13,18 +13,18 @@
                 <div class="col-3 attribute-label">{{ 'row.fida_nachfuehrunglfp.nachfuehrungsdatum' | translate }}</div>
                 <div class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="NACHFUEHRUNGSDATUM"
-                        [required]="true">
+                        [isRequired]="true">
                     </app-attribute-value-edit>
                 </div>
                 <div *ngIf="feature.attributes.NACHFUER_HERKUNFT !== undefined" class="col-3 attribute-label">{{ 'row.fida_nachfuehrunghfp.nachfuer_herkunft' | translate }}</div>
                 <div *ngIf="feature.attributes.NACHFUER_HERKUNFT !== undefined" class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="NACHFUER_HERKUNFT" [required]="true">
+                    <app-attribute-value-edit [feature]="feature" formControlName="NACHFUER_HERKUNFT" [isRequired]="true">
                     </app-attribute-value-edit>
                 </div>
                 <div *ngIf="feature.attributes.NACHFUEHRUNGSPERIMETER !== undefined" class="col-3 attribute-label">{{ 'row.fida_nachfuehrunglfp.nachfuehrungsperimeter' | translate }}</div>
                 <div *ngIf="feature.attributes.NACHFUEHRUNGSPERIMETER !== undefined" class="col-3">
                     <app-attribute-value-edit [feature]="feature" formControlName="NACHFUEHRUNGSPERIMETER"
-                        [required]="true">
+                        [isRequired]="true">
                     </app-attribute-value-edit>
                 </div>
             </div>
@@ -33,12 +33,12 @@
                 <div class="col-3 attribute-label">{{ 'row.fida_nachfuehrunglfp.arbeitskuerzeltext' | translate }}</div>
                 <div *ngIf="!withTypeahead" class="col-9">
                     <app-attribute-value-edit [feature]="feature" formControlName="ARBEITSKUERZELTEXT" type="multiselect"
-                    [list]="workAbbreviationList" [readonly]="readonly" [required]="false"> 
+                    [list]="workAbbreviationList" [readonly]="readonly" [isRequired]="false"> 
                     </app-attribute-value-edit>                    
                 </div>
                 <div *ngIf="withTypeahead" class="col-9">
                     <app-attribute-value-edit [feature]="feature" formControlName="ARBEITSKUERZELTEXT" type="typeahead"
-                    [typeaheadFeatureLayer]="featureLayer" [readonly]="readonly" [required]="false"> 
+                    [typeaheadFeatureLayer]="featureLayer" [readonly]="readonly" [isRequired]="false"> 
                     </app-attribute-value-edit>                    
                 </div>
             </div>
@@ -47,7 +47,7 @@
                 <div *ngIf="feature.attributes.ERLEDARBBESCHREIBUNG !== undefined" class="col-3 attribute-label">{{ 'row.fida_nachfuehrunglfp.erledarbbeschreibung' | translate }}</div>
                 <div *ngIf="feature.attributes.ERLEDARBBESCHREIBUNG !== undefined" class="col-9">
                     <app-attribute-value-edit [feature]="feature" formControlName="ERLEDARBBESCHREIBUNG"
-                    [required]="false">
+                    [isRequired]="false">
                     </app-attribute-value-edit>
                 </div>
             </div>
@@ -71,19 +71,19 @@
             <div class="row mt-2">
                 <div class="col-3 attribute-label">{{ 'row.fida_nachfuehrunglfp.ersterstellung' | translate }}</div>
                 <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="ERSTERSTELLUNG" [required]="true">
+                    <app-attribute-value-edit [feature]="feature" formControlName="ERSTERSTELLUNG" [isRequired]="true">
                     </app-attribute-value-edit>
                 </div>
                 <div class="col-3 attribute-label">{{ 'row.fida_nachfuehrunglfp.protokollsichtbar' | translate }}</div>
                 <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="PROTOKOLLSICHTBAR" [required]="true">
+                    <app-attribute-value-edit [feature]="feature" formControlName="PROTOKOLLSICHTBAR" [isRequired]="true">
                     </app-attribute-value-edit>
                 </div>
             </div>
             <div class="row mt-m1">
                 <div *ngIf="feature.attributes.UNTERHALTART !== undefined" class="col-3 attribute-label">{{ 'row.fida_nachfuehrunglfp.unterhaltart' | translate }}</div>
                 <div *ngIf="feature.attributes.UNTERHALTART !== undefined" class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="UNTERHALTART" [required]="true">
+                    <app-attribute-value-edit [feature]="feature" formControlName="UNTERHALTART" [isRequired]="true">
                     </app-attribute-value-edit>
                 </div>
                 

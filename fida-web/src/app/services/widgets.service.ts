@@ -6,6 +6,7 @@ import Search from '@arcgis/core/widgets/Search';
 import Zoom from '@arcgis/core/widgets/Zoom';
 import LayerList from '@arcgis/core/widgets/LayerList';
 import Home from '@arcgis/core/widgets/Home';
+import CoordinateConversion from '@arcgis/core/widgets/CoordinateConversion';
 import Extent from '@arcgis/core/geometry/Extent';
 import Viewpoint from '@arcgis/core/Viewpoint';
 import { FidaTranslateService } from './translate.service';
@@ -21,6 +22,7 @@ export class WidgetsService {
   private layerListWidget: Expand;
   private zoomWidget: Zoom;
   private homeWidget: Home;
+  private coordinateWidget: CoordinateConversion;
 
   constructor(
     private translateService: FidaTranslateService,
@@ -108,6 +110,13 @@ export class WidgetsService {
       view: mapView
     });
     return this.zoomWidget;
+  }
+
+  public getCoordinateWidget(mapView: MapView): CoordinateConversion {
+    this.coordinateWidget = new CoordinateConversion({
+      view: mapView
+    });
+    return this.coordinateWidget;
   }
 
   public getHomeWidget(mapView: MapView, extent: Extent): Home {

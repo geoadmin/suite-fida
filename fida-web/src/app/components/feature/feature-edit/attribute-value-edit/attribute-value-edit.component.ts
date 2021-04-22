@@ -39,9 +39,9 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
   @Input() formControlName: string; // must be the same as feature-attribute-name
   @Input() placeholder: string;
   @Input() type: string;
-  @Input() required = false;
+  @Input() isRequired = false;
   @Input() readonly = false;
-  @Input() unique = false;
+  @Input() isUnique = false;
   @Input() list: string[] = [];
   @Input() typeaheadFeatureLayer: FeatureLayer;
 
@@ -135,19 +135,21 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
       this.codedValues = this.translateService.translateCodedValueDomain(codedValueDomain).codedValues ?? [];
     }
 
-    this.defineValidation(formControl);
+    if (!this.readonly) {
+      this.defineValidation(formControl);
+    }
   }
 
   private defineValidation(formControl: FormControl): void {
     const validators: any = [];
     const asyncValidators: any = [];
-    if (this.field.nullable === false || this.required === true) {
+    if (this.field.nullable === false || this.isRequired === true) {
       validators.push(Validators.required);
     }
     if (this.field.length && this.field.length > 0) {
       validators.push(Validators.maxLength(this.field.length));
     }
-    if (!this.readonly && this.unique) {
+    if (this.isUnique) {
       asyncValidators.push(UniqueValidator.createValidator(this.getFeatureLayer(), this.field, this.queryService));
     }
     formControl.setValidators(validators);

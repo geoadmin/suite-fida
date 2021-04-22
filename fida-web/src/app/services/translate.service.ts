@@ -1,8 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import CodedValueDomain from '@arcgis/core/layers/support/CodedValueDomain';
-import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+const esriIntl = import('@arcgis/core/intl');
 import { TranslationCacheService } from './translation-cache.service';
 
 @Injectable({
@@ -22,6 +21,7 @@ export class FidaTranslateService {
   public setCurrentLanguage(language: string): void {
     this.translateService.setDefaultLang(language);
     this.translateService.use(language);
+    esriIntl.then(intl => intl.setLocale(`${language}-CH`));
   }
 
   public getLanguages(): string[] {

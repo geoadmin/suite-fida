@@ -37,11 +37,11 @@
         <div class="row mt-4">
             <div class="col-2 attribute-label">{{ 'row.fida_lfp.objektart' | translate }}</div>
             <div class="col-2">
-                <app-attribute-value-edit [feature]="feature" formControlName="OBJEKTART" [required]="true">
+                <app-attribute-value-edit [feature]="feature" formControlName="OBJEKTART" [isRequired]="true">
                 </app-attribute-value-edit>
             </div>
             <div class="col-4">
-                <app-attribute-value-edit [feature]="feature" formControlName="LFPNR" [required]="true" [readonly]="editMode">
+                <app-attribute-value-edit [feature]="feature" formControlName="LFPNR" [isRequired]="true" [readonly]="editMode">
                 </app-attribute-value-edit>
             </div>
             <div class="col-2 attribute-label">{{ 'app.lfp.eurefNeotekNr' | translate }}</div>
@@ -58,11 +58,11 @@
         <!--Staties -->
         <div class="row mt-2">
             <div class="col-2">
-                <app-attribute-value-edit [feature]="feature" formControlName="PUNKT_STATUS" [required]="true">
+                <app-attribute-value-edit [feature]="feature" formControlName="PUNKT_STATUS" [isRequired]="true">
                 </app-attribute-value-edit>
             </div>
             <div class="col-2">
-                <app-attribute-value-edit [feature]="feature" formControlName="REALISIERUNG_STATUS" [required]="true">
+                <app-attribute-value-edit [feature]="feature" formControlName="REALISIERUNG_STATUS" [isRequired]="true">
                 </app-attribute-value-edit>
             </div>
         </div>
@@ -73,7 +73,7 @@
             </div>
             <div class="col-2 attribute-label">{{ 'row.fida_lfp.punktname' | translate }}</div>
             <div class="col-4">
-                <app-attribute-value-edit [feature]="feature" formControlName="PUNKTNAME" [required]="true">
+                <app-attribute-value-edit [feature]="feature" formControlName="PUNKTNAME" [isRequired]="true">
                 </app-attribute-value-edit>
             </div>
             <div class="col-2 attribute-label">{{ 'row.fida_lfp.lfpordnung' | translate }}</div>
@@ -88,7 +88,7 @@
                 <div class="d-flex felx-row-reverse">
                     <span class="attribute-label mr-2">E</span>
                     <app-attribute-value-edit class="flex-fill" [feature]="feature" formControlName="LV95E"
-                        [required]="true">
+                        [isRequired]="true">
                     </app-attribute-value-edit>
                 </div>
             </div>
@@ -96,13 +96,13 @@
                 <div class="d-flex felx-row-reverse">
                     <span class="attribute-label mr-2">N</span>
                     <app-attribute-value-edit class="flex-fill" [feature]="feature" formControlName="LV95N"
-                        [required]="true">
+                        [isRequired]="true">
                     </app-attribute-value-edit>
                 </div>
             </div>
             <div class="col-2 attribute-label">{{ 'row.fida_lfp.ln02' | translate }}</div>
             <div class="col-2">
-                <app-attribute-value-edit [feature]="feature" formControlName="LN02" [required]="true">
+                <app-attribute-value-edit [feature]="feature" formControlName="LN02" [isRequired]="true">
                 </app-attribute-value-edit>
             </div>
         </div>
@@ -110,11 +110,11 @@
         <div class="row mt-m1">
             <div class="col-2 attribute-label">{{ 'app.lfp.genLageHoehe' | translate }}</div>
             <div class="col-2">
-                <app-attribute-value-edit [feature]="feature" formControlName="GENLAGELV95" [required]="true">
+                <app-attribute-value-edit [feature]="feature" formControlName="GENLAGELV95" [isRequired]="true">
                 </app-attribute-value-edit>
             </div>
             <div class="col-2 pl-4">
-                <app-attribute-value-edit [feature]="feature" formControlName="GENHOEHELN02" [required]="true">
+                <app-attribute-value-edit [feature]="feature" formControlName="GENHOEHELN02" [isRequired]="true">
                 </app-attribute-value-edit>
             </div>
             <div class="col-2">
@@ -128,11 +128,11 @@
         <div class="row mt-m1">
             <div class="col-2 attribute-label">{{ 'app.lfp.zuvLageHoehe' | translate }}</div>
             <div class="col-2">
-                <app-attribute-value-edit [feature]="feature" formControlName="ZUVLAGELV95" [required]="true">
+                <app-attribute-value-edit [feature]="feature" formControlName="ZUVLAGELV95" [isRequired]="true">
                 </app-attribute-value-edit>
             </div>
             <div class="col-2  pl-4">
-                <app-attribute-value-edit [feature]="feature" formControlName="ZUVHOEHELN02" [required]="true">
+                <app-attribute-value-edit [feature]="feature" formControlName="ZUVHOEHELN02" [isRequired]="true">
                 </app-attribute-value-edit>
             </div>
             <div class="col-2">
@@ -146,7 +146,7 @@
         <div class="row mt-2">
             <div class="col-2 attribute-label">{{ 'row.fida_lfp.lk25' | translate }}</div>
             <div class="col-2">
-                <app-attribute-value-edit [feature]="feature" formControlName="LK25" [required]="true">
+                <app-attribute-value-edit [feature]="feature" formControlName="LK25" [isRequired]="true">
                 </app-attribute-value-edit>
             </div>
             <div class="col-4">
@@ -164,21 +164,21 @@
                 <div class="row">
                     <div class="col-6 attribute-label">{{ 'row.fida_lfp.kennzeichnung' | translate }}</div>
                     <div class="col-6">
-                        <app-attribute-value-edit [feature]="feature" formControlName="KENNZEICHNUNG" [required]="true">
+                        <app-attribute-value-edit [feature]="feature" formControlName="KENNZEICHNUNG" [isRequired]="true">
                         </app-attribute-value-edit>
                     </div>
                 </div>
                 <div class="row mt-m1">
                     <div class="col-6 attribute-label">{{ 'row.fida_lfp.schutzart' | translate }}</div>
                     <div class="col-6">
-                        <app-attribute-value-edit [feature]="feature" formControlName="SCHUTZART" [required]="true">
+                        <app-attribute-value-edit [feature]="feature" formControlName="SCHUTZART" [isRequired]="true">
                         </app-attribute-value-edit>
                     </div>
                 </div>
                 <div class="row mt-m1">
                     <div class="col-6 attribute-label">{{ 'row.fida_lfp.stabilitaet' | translate }}</div>
                     <div class="col-6">
-                        <app-attribute-value-edit [feature]="feature" formControlName="STABILITAET" [required]="true">
+                        <app-attribute-value-edit [feature]="feature" formControlName="STABILITAET" [isRequired]="true">
                         </app-attribute-value-edit>
                     </div>
                 </div>
@@ -277,14 +277,14 @@
                 <div class="row mt-m1">
                     <div class="col-6 attribute-label">{{ 'row.fida_lfp.absturzgefahr' | translate }}</div>
                     <div class="col-6">
-                        <app-attribute-value-edit [feature]="feature" formControlName="ABSTURZGEFAHR" [required]="true">
+                        <app-attribute-value-edit [feature]="feature" formControlName="ABSTURZGEFAHR" [isRequired]="true">
                         </app-attribute-value-edit>
                     </div>
                 </div>
                 <div class="row mt-m1">
                     <div class="col-6 attribute-label">{{ 'row.fida_lfp.begehbar' | translate }}</div>
                     <div class="col-6">
-                        <app-attribute-value-edit [feature]="feature" formControlName="BEGEHBAR" [required]="true">
+                        <app-attribute-value-edit [feature]="feature" formControlName="BEGEHBAR" [isRequired]="true">
                         </app-attribute-value-edit>
                     </div>
                 </div>
@@ -303,11 +303,11 @@
             </div>
             <div class="col-4 attribute-label">{{ 'app.lfp.gnssSichtbarkeitEmpfang' | translate }}</div>
             <div class="col-2 pr-0 mr-m1">
-                <app-attribute-value-edit [feature]="feature" formControlName="GNSSSICHTBARKEIT" [required]="true">
+                <app-attribute-value-edit [feature]="feature" formControlName="GNSSSICHTBARKEIT" [isRequired]="true">
                 </app-attribute-value-edit>
             </div>
             <div class="col-2 pl-0">
-                <app-attribute-value-edit [feature]="feature" formControlName="GSMEMPFANG" [required]="true">
+                <app-attribute-value-edit [feature]="feature" formControlName="GSMEMPFANG" [isRequired]="true">
                 </app-attribute-value-edit>
             </div>
         </div>
@@ -316,7 +316,7 @@
         <div class="row mt-4">
             <div class="col-2 attribute-label">{{ 'row.fida_lfp.herkunft' | translate }}</div>
             <div class="col-2">
-                <app-attribute-value-edit [feature]="feature" formControlName="HERKUNFT" [required]="true">
+                <app-attribute-value-edit [feature]="feature" formControlName="HERKUNFT" [isRequired]="true">
                 </app-attribute-value-edit>
             </div>
         </div>

@@ -150,4 +150,17 @@ export class FeatureEditComponent implements OnInit {
     }
   }
 
+  /**
+   *  HELP METHODS
+   */
+  
+  logInvalidControls(): void {
+    const controls = this.form.controls;
+    for (const name in controls) {
+      if (controls[name].invalid) {
+        console.log(`name: ${name}. errors: `, controls[name].errors);
+      }
+    }
+  }
+
 }

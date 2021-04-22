@@ -12,7 +12,7 @@
             <div class="row">
                 <div class="col-3 attribute-label">{{ 'row.fida_schweremessunghfp.datum' | translate }}</div>
                 <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="DATUM" [required]="true">
+                    <app-attribute-value-edit [feature]="feature" formControlName="DATUM" [isRequired]="true">
                     </app-attribute-value-edit>
                 </div>               
             </div>
@@ -20,12 +20,12 @@
             <div class="row mt-m1">
                 <div class="col-3 attribute-label">{{ 'row.fida_schweremessunghfp.schwerewert' | translate }}</div>
                 <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="SCHWEREWERT" [required]="true">
+                    <app-attribute-value-edit [feature]="feature" formControlName="SCHWEREWERT" [isRequired]="true">
                     </app-attribute-value-edit>
                 </div>
                 <div class="col-3 attribute-label">{{ 'row.fida_schweremessunghfp.schwereherkunft' | translate }}</div>
                 <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="SCHWEREHERKUNFT" [required]="true">
+                    <app-attribute-value-edit [feature]="feature" formControlName="SCHWEREHERKUNFT" [isRequired]="true">
                     </app-attribute-value-edit>
                 </div>                
             </div>

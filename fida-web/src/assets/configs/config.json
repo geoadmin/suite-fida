@@ -1,5 +1,5 @@
 {
-    "appVersion": "deployed: 21.04.2021",
+    "appVersion": "deployed: 22.04.2021",
     "roles": {
         "admin": "org_admin"
     },

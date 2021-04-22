@@ -9,7 +9,6 @@ import MapView from '@arcgis/core/views/MapView';
 import Extent from '@arcgis/core/geometry/Extent';
 import GraphicsLayer from '@arcgis/core/layers/GraphicsLayer';
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
-import EsriError from '@arcgis/core/core/Error';
 import ActionButton from '@arcgis/core/support/actions/ActionButton';
 import { CookieService } from './cookie.service';
 import { ConfigService } from '../configs/config.service';
@@ -63,12 +62,13 @@ export class MapService {
 
       // add widgets to map
       this.view.container = mapContainer.nativeElement;
-      this.view.ui.components = ['attribution'];
-      this.view.ui.add(this.widgetsService.getBasemapWidget(this.view), 'bottom-left');
+      this.view.ui.components = [];
+      this.view.ui.add(this.widgetsService.getCoordinateWidget(this.view), 'bottom-left');
       this.view.ui.add(this.widgetsService.getZoomWidget(this.view), 'top-left');
       this.view.ui.add(this.widgetsService.getHomeWidget(this.view, this.getDefaultExtent()), 'top-left');
       const searchWidget = this.widgetsService.getSearchWidget(this.view);
       this.view.ui.add(searchWidget, 'top-right');
+      this.view.ui.add(this.widgetsService.getBasemapWidget(this.view), 'top-right');
       this.view.ui.add(this.widgetsService.getLayerListWidget(this.view), 'top-right');
       this.view.ui.add(this.widgetsService.getFeatureCreateWidget(this.view), 'top-right');
       this.view.ui.add(this.widgetsService.getVersionManagerWidget(this.view), 'top-right');

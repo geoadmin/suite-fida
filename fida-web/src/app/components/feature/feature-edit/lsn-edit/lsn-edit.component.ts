@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { FidaFeature } from 'src/app/models/FidaFeature.model';
-import { FeatureService } from 'src/app/services/feature.service';
 
 @Component({
   selector: 'app-lsn-edit',

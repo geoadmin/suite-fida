@@ -12,12 +12,12 @@
             <div class="row">
                 <div class="col-3 attribute-label">{{ 'row.fida_grundbuchlfp.land' | translate }}</div>
                 <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="LAND" [required]="true">
+                    <app-attribute-value-edit [feature]="feature" formControlName="LAND" [isRequired]="true">
                     </app-attribute-value-edit>
                 </div>
                 <div class="col-3 attribute-label">{{ 'row.fida_grundbuchlfp.kanton' | translate }}</div>
                 <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="KANTON" [required]="true">
+                    <app-attribute-value-edit [feature]="feature" formControlName="KANTON" [isRequired]="true">
                     </app-attribute-value-edit>
                 </div>
             </div>
@@ -29,7 +29,7 @@
                 </div>
                 <div class="col-3 attribute-label">{{ 'row.fida_grundbuchlfp.gemeinde' | translate }}</div>
                 <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="GEMEINDE" [required]="true">
+                    <app-attribute-value-edit [feature]="feature" formControlName="GEMEINDE" [isRequired]="true">
                     </app-attribute-value-edit>
                 </div>
             </div>

@@ -12,12 +12,12 @@
             <div class="row">
                 <div class="col-3 attribute-label">{{ 'row.fida_schaedenhfp.datum' | translate }}</div>
                 <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="DATUM" [required]="true">
+                    <app-attribute-value-edit [feature]="feature" formControlName="DATUM" [isRequired]="true">
                     </app-attribute-value-edit>
                 </div>
                 <div class="col-3 attribute-label">{{ 'row.fida_schaedenhfp.uebermittler' | translate }}</div>
                 <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="UEBERMITTLER" [required]="true">
+                    <app-attribute-value-edit [feature]="feature" formControlName="UEBERMITTLER" [isRequired]="true">
                     </app-attribute-value-edit>
                 </div>
             </div>
@@ -25,7 +25,7 @@
             <div class="row mt-m1">
                 <div class="col-3 attribute-label">{{ 'row.fida_schaedenhfp.status' | translate }}</div>
                 <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="STATUS" [required]="true">
+                    <app-attribute-value-edit [feature]="feature" formControlName="STATUS" [isRequired]="true">
                     </app-attribute-value-edit>
                 </div>
                 <div class="col-3 attribute-label">{{ 'row.fida_schaedenhfp.ort' | translate }}</div>
@@ -38,7 +38,7 @@
             <div class="row mt-2">
                 <div class="col-3 attribute-label">{{ 'row.fida_schaedenhfp.meldung' | translate }}</div>
                 <div class="col-9">
-                    <app-attribute-value-edit [feature]="feature" formControlName="MELDUNG" [required]="true">
+                    <app-attribute-value-edit [feature]="feature" formControlName="MELDUNG" [isRequired]="true">
                     </app-attribute-value-edit>
                 </div>
             </div>
