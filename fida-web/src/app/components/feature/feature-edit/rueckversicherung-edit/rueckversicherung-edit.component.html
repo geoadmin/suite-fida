@@ -10,14 +10,17 @@
         <div class="card-body">
 
             <div class="row">
-                <div class="col-3 attribute-label">{{ 'row.fida_rueckversicherunglfp.punktbezeichnung' | translate }}</div>
+                <div class="col-3 attribute-label">{{ 'row.fida_rueckversicherunglfp.punktbezeichnung' | translate }}
+                </div>
                 <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="PUNKTBEZEICHNUNG" [isRequired]="true">
+                    <app-attribute-value-edit [feature]="feature" formControlName="PUNKTBEZEICHNUNG"
+                        [isRequired]="true">
                     </app-attribute-value-edit>
                 </div>
                 <div class="col-3 attribute-label">{{ 'row.fida_rueckversicherunglfp.azimut' | translate }}</div>
                 <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="AZIMUT" [isRequired]="true">
+                    <app-attribute-value-edit [feature]="feature" formControlName="AZIMUT" [isRequired]="true" [min]="0"
+                        [max]="400">
                     </app-attribute-value-edit>
                 </div>
             </div>
@@ -35,21 +38,25 @@
             </div>
 
             <div class="row">
-                <div class="col-3 attribute-label">{{ 'row.fida_rueckversicherunglfp.materialisierung' | translate }}</div>
+                <div class="col-3 attribute-label">{{ 'row.fida_rueckversicherunglfp.materialisierung' | translate }}
+                </div>
                 <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="MATERIALISIERUNG" [isRequired]="true">
+                    <app-attribute-value-edit [feature]="feature" formControlName="MATERIALISIERUNG"
+                        [isRequired]="true">
                     </app-attribute-value-edit>
                 </div>
                 <div class="col-3 attribute-label">{{ 'row.fida_rueckversicherunglfp.bemerkung' | translate }}</div>
                 <div class="col-3">
-                    <app-attribute-value-edit [feature]="feature" formControlName="BEMERKUNG"></app-attribute-value-edit>
+                    <app-attribute-value-edit [feature]="feature" formControlName="BEMERKUNG">
+                    </app-attribute-value-edit>
                 </div>
             </div>
 
             <!-- delete button -->
             <div class="row mt-2" [hidden]="readonly">
                 <div class="col-12">
-                    <button type="button" class="btn btn-danger float-right" (click)="deleteClick()">{{ 'app.global.delete' | translate }}</button>
+                    <button type="button" class="btn btn-danger float-right" (click)="deleteClick()">{{
+                        'app.global.delete' | translate }}</button>
                 </div>
             </div>
         </div>

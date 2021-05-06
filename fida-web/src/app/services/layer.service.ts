@@ -1,4 +1,4 @@
-import { Injectable, ComponentFactoryResolver, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ConfigService } from '../configs/config.service';
 import { TemplateService } from './template.service';
 import { LayerConfig, LayerType } from '../configs/config.model';
@@ -8,6 +8,7 @@ import Portal from '@arcgis/core/portal/Portal';
 import Basemap from '@arcgis/core/Basemap';
 import Layer from '@arcgis/core/layers/Layer';
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
+import EsriError from '@arcgis/core/core/Error';
 
 
 @Injectable({ providedIn: 'root' })
@@ -87,6 +88,15 @@ export class LayerService {
   private setUser(): void {
     this.portal.load().then(() => {
       this.settingService.user = this.portal.user;
+
+      // check of admin
+      this.portal.user.fetchGroups().then((groups) => {
+        const adminGroupName = this.configService.getRolesConfig().adminGroupName;
+        this.settingService.isAdmin = groups.some(e => e.title === adminGroupName);
+
+      }).catch((error: EsriError) => {
+        throw new Error(`PortalGroups could not be loaded: ${error.message}`);
+      });
     });
   }
 

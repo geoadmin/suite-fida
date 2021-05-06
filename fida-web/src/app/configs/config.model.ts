@@ -53,7 +53,7 @@ export class SearchSourceConfig {
 }
 
 export class RolesConfig {
-    admin: string;
+    adminGroupName: string;
 }
 
 export class Config {

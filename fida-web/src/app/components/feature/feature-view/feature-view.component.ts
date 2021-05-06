@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, TemplateRef } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnInit, TemplateRef } from '@angular/core';
 import { FeatureService } from 'src/app/services/feature.service';
 import { CompleteState, WidgetNotifyService } from 'src/app/services/widget-notify.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
@@ -20,10 +20,11 @@ export enum FeatureMode {
   templateUrl: './feature-view.component.html',
   styleUrls: ['./feature-view.component.scss']
 })
-export class FeatureViewComponent implements OnInit, OnDestroy {
+export class FeatureViewComponent implements OnInit {
   public feature: FidaFeature;
   private modalRef: BsModalRef;
   public exporting = false;
+  public processing = false;
   public downloadUrl: string;
   public form: FormGroup = new FormGroup({}); // Temporary
 
@@ -36,10 +37,6 @@ export class FeatureViewComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-  }
-
-  ngOnDestroy(): void {
-    // console.log('Items destroyed');
   }
 
   public setFeature(feature: FidaFeature): void {
@@ -73,6 +70,7 @@ export class FeatureViewComponent implements OnInit, OnDestroy {
 
   editClick(): void {
     const subscription = this.widgetNotifyService.onFeatureEditCompleteSubject.subscribe((completeState: CompleteState) => {
+
       this.enablePopup(true);
       subscription.unsubscribe();
       if (completeState === CompleteState.Closed) {
@@ -101,7 +99,7 @@ export class FeatureViewComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * feature delete
+   * feature / point delete
    */
 
   getFeatureName(): string {
@@ -112,10 +110,25 @@ export class FeatureViewComponent implements OnInit, OnDestroy {
     this.modalRef = this.modalService.show(deleteDialogTemplate, { class: 'modal-sm modal-dialog-centered' });
   }
 
-  async deleteClick(): Promise<void> {
+  async deletePointClick(): Promise<void> {
+    this.processing = true;
+
+    await this.featureService.setToDeleted(this.feature);
+    await this.featureService.saveFeature(this.feature);
+
+    this.processing = false;
+    this.changeDetectorRef.detectChanges();
+    this.modalRef.hide();
+  }
+
+  async deleteFeatureClick(): Promise<void> {
+    this.processing = true;
+
     this.feature.state = FeatureState.Delete;
     await this.featureService.saveFeature(this.feature);
     this.widgetNotifyService.onFeatureDeleteSubject.next(this.feature);
+
+    this.processing = false;
     this.modalRef.hide();
   }
 

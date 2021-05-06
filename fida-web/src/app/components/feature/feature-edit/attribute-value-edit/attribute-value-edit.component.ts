@@ -42,6 +42,8 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
   @Input() isRequired = false;
   @Input() readonly = false;
   @Input() isUnique = false;
+  @Input() min: number;
+  @Input() max: number;
   @Input() list: string[] = [];
   @Input() typeaheadFeatureLayer: FeatureLayer;
 
@@ -143,6 +145,7 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
   private defineValidation(formControl: FormControl): void {
     const validators: any = [];
     const asyncValidators: any = [];
+
     if (this.field.nullable === false || this.isRequired === true) {
       validators.push(Validators.required);
     }
@@ -152,12 +155,19 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
     if (this.isUnique) {
       asyncValidators.push(UniqueValidator.createValidator(this.getFeatureLayer(), this.field, this.queryService));
     }
+    if (this.min !== undefined) {
+      validators.push(Validators.min(this.min));
+    }
+    if (this.max !== undefined) {
+      validators.push(Validators.max(this.max));
+    }
+
     formControl.setValidators(validators);
     formControl.setAsyncValidators(asyncValidators);
   }
 
   onDateChanged(): void {
-    this.feature.attributes[this.formControlName] = this.date ? this.date.valueOf() : null;
+    this.feature.attributes[this.formControlName] = UtilService.dateToEsri(this.date);
   }
 
   onMultiselectChanged(item: string): void {

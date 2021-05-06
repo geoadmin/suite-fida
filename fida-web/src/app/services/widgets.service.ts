@@ -161,6 +161,7 @@ export class WidgetsService {
     this.searchWidget.expandTooltip = this.translateService.translate('app.search.title');
     this.layerListWidget.expandTooltip = this.translateService.translate('app.toc.title');
     this.homeWidget.label = this.translateService.translate('app.home.title');
+    this.refreshCoordinateNames();
   }
 
   private refreshSearchSource(search: Search): void {
@@ -169,5 +170,15 @@ export class WidgetsService {
     search.sources.addMany(this.searchSourceService.getSearchSource());
     search.allPlaceholder = this.translateService.translate('app.search.all_placeholder');
     search.activeSourceIndex = activeSourceIndex;
+  }
+
+  private refreshCoordinateNames(): void {
+    // not working properly on change
+    /*const format = this.coordinateWidget.formats.find(f => {
+      return f.name === 'basemap';
+    });
+    if (format) {
+      format.name = 'CH1903+ / LV95';
+    }*/
   }
 }

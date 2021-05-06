@@ -65,8 +65,14 @@ export class FidaTranslateLoader implements TranslateLoader {
   }
 
   private getDatabaseTranslationKey(feature: Feature): string {
-    //TODO app einbinden
-    const type = feature.attributes.OBJEKTART === 0 ? 'domain' : 'row';
+    let type = 'domain'; // OBJECTART=0
+
+    if (feature.attributes.OBJEKTART === 1) {
+      type = 'row';
+    } else if (feature.attributes.OBJEKTART === 3) {
+      type = 'app';
+    }
+
     const group = feature.attributes.GRUPPENAME.toLowerCase();
     const key = feature.attributes.KEY.toLowerCase();
     return `${type}.${group}.${key}`;
@@ -74,7 +80,7 @@ export class FidaTranslateLoader implements TranslateLoader {
 
   private url(url: string): Observable<any> {
     const query = new Query();
-    query.where = '1=1';
+    query.where = 'OBJEKTART in (0,1,3)';
     query.outFields = ['*'];
 
     const queryTask = new QueryTask();

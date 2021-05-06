@@ -10,6 +10,7 @@ import { WidgetNotifyService } from './widget-notify.service';
 export class SettingService {
   private gdbVersionName: string;
   public user: PortalUser;
+  public isAdmin = false;
 
   constructor(
     @Inject(WidgetNotifyService) private widgetNotifyService: WidgetNotifyService,

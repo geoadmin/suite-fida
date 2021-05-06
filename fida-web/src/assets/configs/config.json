@@ -1,7 +1,7 @@
 {
-    "appVersion": "deployed: 22.04.2021",
+    "appVersion": "deployed: 06.05.2021",
     "roles": {
-        "admin": "org_admin"
+        "adminGroupName": "FIDAADMIN"
     },
     "arcGisUrlPlaceholder": "[EVIRONMENT_ARCGISURL]",
     "layerBaseUrl": "[EVIRONMENT_ARCGISURL]/rest/services/FIDA/FIDA/FeatureServer",

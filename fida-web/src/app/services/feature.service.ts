@@ -11,6 +11,7 @@ import { RelationshipsConfig } from '../configs/config.model';
 import Point from '@arcgis/core/geometry/Point';
 import { HeightService } from './height.service';
 import Layer from '@arcgis/core/layers/Layer';
+import { UtilService } from './util.service';
 
 
 @Injectable({
@@ -347,6 +348,26 @@ export class FeatureService {
 
     nachfuehrungFeature.attributes.NACHFUEHRUNGSDATUM = date;
     nachfuehrungFeature.attributes.ERSTERSTELLUNG = 1;
+    nachfuehrungFeature.attributes.PROTOKOLLSICHTBAR = 0;
+  }
+
+  public async addGeloeschtNachfuehrung(feature: FidaFeature): Promise<any> {
+    const featureLayer = this.getFeatureLayer(feature);
+    if (this.hasRelationship(featureLayer, RelationshipName.nachfuehrung) === false) {
+      return;
+    }
+
+    const nachfuehrungFeature = await this.createRelatedFeature(feature, RelationshipName.nachfuehrung);
+    const date = new Date();
+
+    if (featureLayer.id === LayerId.LFP) {
+      nachfuehrungFeature.attributes.NACHFUEHRUNGSPERIMETER = date.getFullYear();
+    }
+
+    nachfuehrungFeature.attributes.NACHFUEHRUNGSDATUM = UtilService.dateToEsri(date);
+    nachfuehrungFeature.attributes.ERSTERSTELLUNG = 0;
+    nachfuehrungFeature.attributes.PROTOKOLLSICHTBAR = 0;
+    nachfuehrungFeature.attributes.ARBEITSKUERZELTEXT = 'Punkt gelöscht'; // TODO übersetzen?
   }
 
   public updateGeometryFromAttributes(feature: FidaFeature): void {
@@ -373,6 +394,11 @@ export class FeatureService {
       const height = await this.heightService.getHeight(point);
       point.z = height;
     }
+  }
+
+  public async setToDeleted(feature: FidaFeature): Promise<void> {
+    feature.attributes.PUNKT_STATUS = 2;
+    await this.addGeloeschtNachfuehrung(feature);
   }
 
   public getFeatureName(feature: FidaFeature): string {

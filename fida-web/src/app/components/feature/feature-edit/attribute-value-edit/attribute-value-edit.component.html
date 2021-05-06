@@ -71,11 +71,17 @@
     </div>
 
     <!-- validation -->
-    <div class="error-text" *ngIf="formGroup.controls.valueControl.errors?.required" style="width: 130px;">
+    <div class="error-text" *ngIf="formGroup.controls.valueControl.errors?.required" style="width: 160px;">
         {{ 'app.validation.value_required' | translate : {field: displayFieldName} }}
     </div>
     <div class="error-text" *ngIf="formGroup.controls.valueControl.errors?.maxlength" style="width: 325px;">
         {{ 'app.validation.value_length' | translate : {length: field?.length, field: displayFieldName} }}
+    </div>
+    <div class="error-text" *ngIf="formGroup.controls.valueControl.errors?.max" style="width: 325px;">
+        {{ 'app.validation.value_max' | translate : {max: max, field: displayFieldName} }}
+    </div>
+    <div class="error-text" *ngIf="formGroup.controls.valueControl.errors?.min" style="width: 325px;">
+        {{ 'app.validation.value_min' | translate : {min: min, field: displayFieldName} }}
     </div>
     <div class="error-text" *ngIf="formGroup.controls.valueControl.errors?.invalidUnique" style="width: 325px;">
         {{ 'app.validation.value_unique' | translate : {field: displayFieldName} }}

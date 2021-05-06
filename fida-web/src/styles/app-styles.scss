@@ -56,6 +56,7 @@ body {
   border-color: var(--control-border);
 }
 
+
 .form-group {
   margin: 0;
 }
@@ -63,6 +64,11 @@ body {
 textarea.form-control {
   height: auto;
   padding: 3px;
+}
+
+input.form-control:focus {
+  z-index: 1 !important;
+  position: relative;
 }
 
 .attribute-label {
@@ -326,6 +332,10 @@ a[role="tab"] {
 .esri-coordinate-conversion__tools .esri-widget--button{
   border: none;
 }
+
+/*.esri-coordinate-conversion__select-row {
+  flex: 0 0 105px;
+}*/
 
 // ----------------------------------------------------------------------------------------------------
 // spinner styles

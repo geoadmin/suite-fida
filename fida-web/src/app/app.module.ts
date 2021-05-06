@@ -55,6 +55,7 @@ import { DifferenceListTreeComponent } from './components/version-manager/versio
 import { DifferenceAttributeTreeComponent } from './components/version-manager/version-reconcile-dialog/difference-attribute-tree/difference-attribute-tree.component';
 import { HfpPunktEditComponent } from './components/feature/feature-edit/hfp-punkt-edit/hfp-punkt-edit.component';
 import { HasNoEditPermissionDirective } from './directives/has-no-edit-permission.directive';
+import { HasAdminEditPermissionDirective } from './directives/has-admin-edit-permission.directive';
 import { ExportManagerComponent } from './components/export-manager/export-manager.component';
 
 // config
@@ -99,6 +100,7 @@ export function createCompiler(compilerFactory: CompilerFactory): Compiler {
     DifferenceListTreeComponent,
     DifferenceAttributeTreeComponent,
     HfpPunktEditComponent,
+    HasAdminEditPermissionDirective,
     HasEditPermissionDirective,
     HasNoEditPermissionDirective,
     ExportManagerComponent

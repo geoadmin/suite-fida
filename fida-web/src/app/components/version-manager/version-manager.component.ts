@@ -28,7 +28,6 @@ export class VersionManagerComponent implements OnInit, OnDestroy {
   constructor(
     private widgetsService: WidgetsService,
     private versionManagementService: VersionManagementService,
-    private configService: ConfigService,
     private settingService: SettingService,
     private modalService: BsModalService
   ) { }
@@ -56,11 +55,8 @@ export class VersionManagerComponent implements OnInit, OnDestroy {
   }
 
   isOwner(version: GdbVersion): boolean {
-    return version.versionName?.startsWith(this.settingService.user.username) || (this.isAdmin() && !this.isDefaultVersion(version));
-  }
-
-  isAdmin(): boolean {
-    return this.settingService.user.role === this.configService.getRolesConfig().admin;
+    return version.versionName?.startsWith(this.settingService.user.username)
+      || (this.settingService.isAdmin && !this.isDefaultVersion(version));
   }
 
   setActiveVersionClick(version: GdbVersion): void {

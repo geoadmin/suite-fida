@@ -22,7 +22,7 @@
 <ng-template #saveDialogTemplate>
     <div class="modal-body text-center" [class.spinner]="showSpinner">
         <p>{{ 'app.geometry_edit.save_dialog_text' | translate }}</p>
-        <button type="button" class="btn btn-primary" (click)="saveNoClick()">{{ 'app.global.no' | translate }}</button>
-        <button type="button" class="btn btn-danger ml-2" (click)="saveYesClick()">{{ 'app.global.yes' | translate }}</button>
+        <button type="button" class="btn btn-danger" (click)="saveNoClick()">{{ 'app.global.no' | translate }}</button>
+        <button type="button" class="btn btn-primary ml-2" (click)="saveYesClick()">{{ 'app.global.yes' | translate }}</button>
     </div>
 </ng-template>
