@@ -41,7 +41,7 @@
                 </app-attribute-value-edit>
             </div>
             <div class="col-4">
-                <app-attribute-value-edit [feature]="feature" formControlName="LFPNR" [isRequired]="true" [readonly]="editMode">
+                <app-attribute-value-edit [feature]="feature" formControlName="LFPNR" [isRequired]="true" [readonly]="editMode" [isUnique]="true">
                 </app-attribute-value-edit>
             </div>
             <div class="col-2 attribute-label">{{ 'app.lfp.eurefNeotekNr' | translate }}</div>

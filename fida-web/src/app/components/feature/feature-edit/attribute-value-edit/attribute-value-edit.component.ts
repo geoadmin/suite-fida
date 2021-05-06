@@ -42,6 +42,7 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
   @Input() isRequired = false;
   @Input() readonly = false;
   @Input() isUnique = false;
+  @Input() additionalUniqueField: string;
   @Input() min: number;
   @Input() max: number;
   @Input() list: string[] = [];
@@ -153,7 +154,10 @@ export class AttributeValueEditComponent implements OnInit, ControlValueAccessor
       validators.push(Validators.maxLength(this.field.length));
     }
     if (this.isUnique) {
-      asyncValidators.push(UniqueValidator.createValidator(this.getFeatureLayer(), this.field, this.queryService));
+      // TODO: wenn async-valid enabled, wird der speichern-button nicht mehr freigeschaltet.
+      /*const additionalField = this.getFeatureLayer().fields.find(f => f.name === this.additionalUniqueField);
+      asyncValidators.push(UniqueValidator.createValidator(
+        this.getFeatureLayer(), this.feature, this.field, additionalField, this.queryService));*/
     }
     if (this.min !== undefined) {
       validators.push(Validators.min(this.min));

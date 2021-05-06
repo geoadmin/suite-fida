@@ -9,7 +9,8 @@
         </div>
         <div class="col-3 attribute-label">{{ 'row.fida_hfp.hfpnr' | translate }}</div>
         <div class="col-3">
-            <app-attribute-value-edit [feature]="feature" formControlName="HFPNR" [isRequired]="true">
+            <app-attribute-value-edit [feature]="feature" formControlName="HFPNR" [isRequired]="true" [isUnique]="true"
+                additionalUniqueField="HFPKANTON">
             </app-attribute-value-edit>
         </div>
     </div>
@@ -130,8 +131,8 @@
         </div>
     </div>
 
-     <!--Bemerkung -->
-     <div class="row mt-2">
+    <!--Bemerkung -->
+    <div class="row mt-2">
         <div class="col-3 attribute-label">{{ 'row.fida_hfp.bemerkung' | translate }}</div>
         <div class="col-9">
             <app-attribute-value-edit [feature]="feature" formControlName="BEMERKUNG" type="textarea">
