@@ -34,6 +34,9 @@
         <div *ngSwitchCase="'domain'">
             <select formControlName="valueControl" [(ngModel)]="feature?.attributes[formControlName]"
                 [name]="formControlName" [placeholder]="placeholder" class="form-control">
+                <option [ngValue]="null"
+                    [selected]="null === feature?.attributes[formControlName]">
+                </option>
                 <option *ngFor="let codedValue of codedValues" [ngValue]="codedValue.code"
                     [selected]="codedValue.code === feature?.attributes[formControlName]">
                     {{ codedValue.name }}
